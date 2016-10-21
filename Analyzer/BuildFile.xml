@@ -1,0 +1,10 @@
+<use name="BaconAna/DataFormats"/>
+<use name="BaconAna/Utils"/>
+<use name="CondFormats/JetMETObjects"/>
+<use name="PhysicsTools/KinFitter"/>
+<use name="root"/>
+<use name="roottmva"/>
+<flags CXXFLAGS="-g -Wall"/>
+<export>
+  <lib   name="1"/>
+</export>
