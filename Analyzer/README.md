@@ -16,14 +16,11 @@ Setup
 
  * Setup BaconAnalyzer, Development Packages
 
-    `git clone https://github.com/mcremone/BaconAnalyzer.git`
+    `git clone https://github.com/DAZSLE/BaconAnalyzer.git`
 
     `cd BaconAnalyzer`
 
-    `git checkout $BRANCH`
-    
-    `source setup.sh`
-
+   
  * Compile
 
    scram b -j 10
