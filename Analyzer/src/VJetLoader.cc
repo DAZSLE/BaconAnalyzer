@@ -162,6 +162,12 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fLabels.push_back("M2sdb2");
   fLabels.push_back("D2sdb1");
   fLabels.push_back("D2sdb2");
+  fLabels.push_back("N2b1");
+  fLabels.push_back("N2b2");
+  fLabels.push_back("M2b1");
+  fLabels.push_back("M2b2");
+  fLabels.push_back("D2b1");
+  fLabels.push_back("D2b2");
 
   std::stringstream pSNJ;   pSNJ << "n" << iJetLabel << "s";
   std::stringstream pSTJ;   pSTJ << iJetLabel << "0_isTightVJet";
@@ -342,6 +348,12 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     iVals[lBase+i0*lNLabel+42] = pAddJet->e3_v1_sdb2/(pAddJet->e2_sdb2);
     iVals[lBase+i0*lNLabel+43] = pAddJet->e3_sdb1/(pAddJet->e2_sdb1*pAddJet->e2_sdb1*pAddJet->e2_sdb1);
     iVals[lBase+i0*lNLabel+44] = pAddJet->e3_sdb2/(pAddJet->e2_sdb2*pAddJet->e2_sdb2*pAddJet->e2_sdb2);
+    iVals[lBase+i0*lNLabel+45] = pAddJet->e3_v2_b1/(pAddJet->e2_b1*pAddJet->e2_b1);
+    iVals[lBase+i0*lNLabel+46] = pAddJet->e3_v2_b2/(pAddJet->e2_b2*pAddJet->e2_b2);
+    iVals[lBase+i0*lNLabel+47] = pAddJet->e3_v1_b1/(pAddJet->e2_b1);
+    iVals[lBase+i0*lNLabel+48] = pAddJet->e3_v1_b2/(pAddJet->e2_b2);
+    iVals[lBase+i0*lNLabel+49] = pAddJet->e3_b1/(pAddJet->e2_b1*pAddJet->e2_b1*pAddJet->e2_b1);
+    iVals[lBase+i0*lNLabel+50] = pAddJet->e3_b2/(pAddJet->e2_b2*pAddJet->e2_b2*pAddJet->e2_b2);
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
     fhadronFlavor   = iObjects[0]->hadronFlavor;

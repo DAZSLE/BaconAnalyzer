@@ -16,6 +16,7 @@
 #include "../include/MuonLoader.hh"
 #include "../include/PhotonLoader.hh"
 #include "../include/TauLoader.hh"
+#include "../include/JetLoader.hh"
 #include "../include/VJetLoader.hh"
 #include "../include/RunLumiRangeMap.h"
 
@@ -32,6 +33,7 @@ MuonLoader      *fMuon       = 0;
 ElectronLoader  *fElectron   = 0; 
 TauLoader       *fTau        = 0; 
 PhotonLoader    *fPhoton     = 0; 
+JetLoader       *fJet4       = 0;
 VJetLoader      *fVJet8      = 0;
 VJetLoader      *fVJet15     = 0;
 RunLumiRangeMap *fRangeMap   = 0; 
@@ -67,14 +69,15 @@ int main( int argc, char **argv ) {
   TTree *lTree = load(lName); 
   
   // Declare Readers 
-  fEvt       = new EvtLoader     (lTree,lName);                                           // fEvt, fEvtBr, fVertices, fVertexBr
-  fMuon      = new MuonLoader    (lTree);                                                 // fMuon and fMuonBr, fN = 2 - muonArr and muonBr
-  fElectron  = new ElectronLoader(lTree);                                                 // fElectrons and fElectronBr, fN = 2
-  fTau       = new TauLoader     (lTree);                                                 // fTaus and fTaurBr, fN = 1
-  fPhoton    = new PhotonLoader  (lTree);                                                 // fPhotons and fPhotonBr, fN = 1
-  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS");   // fVJets, fVJetBr => AK8PUPPI
+  fEvt       = new EvtLoader     (lTree,lName);                                             // fEvt, fEvtBr, fVertices, fVertexBr
+  fMuon      = new MuonLoader    (lTree);                                                   // fMuon and fMuonBr, fN = 2 - muonArr and muonBr
+  fElectron  = new ElectronLoader(lTree);                                                   // fElectrons and fElectronBr, fN = 2
+  fTau       = new TauLoader     (lTree);                                                   // fTaus and fTaurBr, fN = 1
+  fPhoton    = new PhotonLoader  (lTree);                                                   // fPhotons and fPhotonBr, fN = 1
+  fJet4      = new JetLoader     (lTree);                                                   // fJets, fJetBr => AK4PUPPI
+  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS");     // fVJets, fVJetBr => AK8PUPPI
   fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi","CA15CHS","AddCA15CHS");
-  if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                   // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
+  if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                     // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
 
   TFile *lFile = new TFile("Output.root","RECREATE");
   TTree *lOut  = new TTree("Events","Events");
@@ -87,6 +90,7 @@ int main( int argc, char **argv ) {
   fVJet15   ->setupTree      (lOut,"CA15Puppijet");
   fVJet15   ->setupTreeZprime(lOut,"CA15Puppijet");
   fVJet15   ->setupTreeCHS   (lOut,"CA15CHSjet");
+  fJet4     ->setupTree      (lOut,"AK4Puppijet");
   fMuon     ->setupTree      (lOut); 
   fElectron ->setupTree      (lOut); 
   fTau      ->setupTree      (lOut); 
@@ -159,6 +163,10 @@ int main( int argc, char **argv ) {
       fEvt->fselectBits =  fEvt->fselectBits | 4;
       if(fVJet15->selectedVJetsCHS.size()>0)      fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[0],1.5);
     }
+
+    // AK4Puppi Jets
+    fJet4     ->load(i0); 
+    fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets);
 
     // Select at least one AK8 or one CA15 jet
     if(!(fEvt->fselectBits & 2) || !(fEvt->fselectBits & 4)) continue;
