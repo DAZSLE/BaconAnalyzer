@@ -17,11 +17,17 @@ Setup
  * Setup extra packages
 
     `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/DataFormats/ .`
+
     `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/PhysicsTools/ .`
+
     `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/PhysicsTools/ .`
+
     `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/RecoBTag/ .`
+
     `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/RecoBTau/ .`
+
     `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/RecoMET/ .`
+
     `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/ShowerDeconstruction/ .`
 
  * Setup BaconAnalyzer, Development Packages
