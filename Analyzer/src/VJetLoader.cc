@@ -410,11 +410,17 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
 void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1,TLorentzVector iJet2,double dR){
   TLorentzVector iJet1;
   int nmatched(0);
+  float mindR=dR;
   for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
-    if ((iJets1[i0].DeltaR(iJet2) < dR)) nmatched++;
+    if ((iJets1[i0].DeltaR(iJet2) < mindR)) {
+    nmatched++;
     iJet1 = iJets1[i0];
+    mindR=iJets1[i0].DeltaR(iJet2);	
+    //std::cout<<iJet1.Pt()<<"   "<<iJet2.Pt()<< "   "<<iJets1[i0].DeltaR(iJet2)<<" maatch " << mindR <<std::endl;
+    }
   }
-  if (nmatched == 1 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.2*fabs(iJet2.Pt()))){
+  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){ //nhan suggestion to increase from 20 to 35%
+   //  std::cout<<" maatch " <<std::endl;    
     fillVJetCHS(fLooseVJetsCHS);
   }
 }
