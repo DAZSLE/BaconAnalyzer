@@ -14,15 +14,27 @@ Setup
 
     `cp -r /afs/cern.ch/work/m/mcremone/public/CMSSW_7_6_2/src/BaconAna/Utils/python BaconAna/Utils/`
 
+ * Setup extra packages
+
+    `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/DataFormats/ .`
+
+    `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/PhysicsTools/ .`
+
+    `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/PhysicsTools/ .`
+
+    `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/RecoBTag/ .`
+
+    `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/RecoBTau/ .`
+
+    `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/RecoMET/ .`
+
+    `cp -r /afs/cern.ch/work/p/pharris/public/bacon/prod/CMSSW_8_0_20/src/ShowerDeconstruction/ .`
+
  * Setup BaconAnalyzer, Development Packages
 
-    `git clone https://github.com/mcremone/BaconAnalyzer.git`
+    `git clone https://github.com/DAZSLE/BaconAnalyzer.git`
 
     `cd BaconAnalyzer`
-
-    `git checkout $BRANCH`
-    
-    `source setup.sh`
 
  * Compile
 
@@ -50,9 +62,9 @@ Baconbits production
 
 2) Make output directory
 
-   `mkdir $YOURANALYSISbits`
+   `mkdir $YOURANALYSISbits` e.g. `mkdir zprimebits`
 
-3) Make configuration files for the $OPTION samples (or All)
+3) Make configuration files for the $OPTION samples (or All) specified in `production/submit$YOURANALYSIS.sh`
 
    `cd production/`
    
@@ -65,4 +77,3 @@ Baconbits production
    `./combine$YOURANALYSIS.sh $OPTION`
 
 Baconbits are stored in $YOURANALYSISbits/*.root
-
