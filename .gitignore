@@ -14,13 +14,12 @@ python/__init__.py
 Analyzer/python/__init__.py
 *.root
 Analyzer/scratch/
-Analyzer/plot
-Analyzer/plot
-Analyzer/plot
 Analyzer/zprimebits/
 Analyzer/zprime/
 Analyzer/scripts/
 Analyzer/python/
+Analyzer/plot/ZprimePlots
+Analyzer/plot/ggHbbPlots
 *.d
 *.so
 *.o

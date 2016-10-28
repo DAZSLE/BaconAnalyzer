@@ -8,13 +8,13 @@ eos="/store/cmst3/group/monojet/production/11/"
 exec="runZprime"
 if [[ ($sample = "All") || ($sample != "All" && $sample = "QCD") ]]; then
     ./sub.sh mc $eos QCD_HT100to200_13TeV                                                                    27500000  $dir $exec $option1 $option2
-    ./sub.sh mc $eos QCD_HT200to300_13TeV                                                                     1735000  $dir $exec $option1 $option2
-    ./sub.sh mc $eos QCD_HT300to500_13TeV                                                                      367000  $dir $exec $option1 $option2
-    ./sub.sh mc $eos QCD_HT500to700_13TeV                                                                       29370  $dir $exec $option1 $option2
-    ./sub.sh mc $eos QCD_HT700to1000_13TeV                                                                       6524  $dir $exec $option1 $option2
-    ./sub.sh mc $eos QCD_HT1000to1500_13TeV                                                                      1064  $dir $exec $option1 $option2
-    ./sub.sh mc $eos QCD_HT1500to2000_13TeV                                                                     121.5  $dir $exec $option1 $option2
-    ./sub.sh mc $eos QCD_HT2000toInf_13TeV                                                                      25.42  $dir $exec $option1 $option2
+    ./sub.sh mc $eos QCD_HT200to300_13TeV_ext                                                                 1735000  $dir $exec $option1 $option2
+    ./sub.sh mc $eos QCD_HT300to500_13TeV_ext                                                                  367000  $dir $exec $option1 $option2
+    ./sub.sh mc $eos QCD_HT500to700_13TeV_ext                                                                   29370  $dir $exec $option1 $option2
+    ./sub.sh mc $eos QCD_HT700to1000_13TeV_ext                                                                   6524  $dir $exec $option1 $option2
+    ./sub.sh mc $eos QCD_HT1000to1500_13TeV_ext                                                                  1064  $dir $exec $option1 $option2
+    ./sub.sh mc $eos QCD_HT1500to2000_13TeV_ext                                                                 121.5  $dir $exec $option1 $option2
+    ./sub.sh mc $eos QCD_HT2000toInf_13TeV_ext                                                                  25.42  $dir $exec $option1 $option2
 fi
 if [[ ($sample = "All") || ($sample != "All" && $sample = "TT") ]]; then
 #    ./sub.sh mc $eos TT_13TeV_powheg_pythia8_ext                                                               831.76  $dir $exec $option1 $option2; 
