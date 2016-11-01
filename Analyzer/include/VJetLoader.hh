@@ -40,7 +40,7 @@ public:
   void selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho);
   void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho = 0);
   void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR);
-  void fillVJetCHS(std::vector<TJet*> &iObjects);
+  void fillVJetCHS(std::vector<TJet*> &iObjects, int iId);
   TAddJet *getAddJet(TJet *iJet);
   TAddJet *getAddJetCHS(TJet *iJet);
   void addSubJetBTag(std::string iHeader,TTree *iTree,std::string iLabel,std::vector<std::string> &iLabels,int iN,std::vector<float> &iVals);
@@ -56,6 +56,7 @@ public:
   float fVMT,fdR_sj0dR,fdPhi_sj0dPhi, fdPhiJRF_sj0dPhiJRF;
 
   std::vector<TJet*> fLooseVJets, fLooseVJetsCHS;
+  std::vector<int> fLooseVJetsCHSid;
   std::vector<TLorentzVector> fGoodVSubJets, selectedVJets, fGoodVSubJetsCHS, selectedVJetsCHS;
 
   const double CSVL = 0.460; // CSVv2SubJet WP 
