@@ -283,7 +283,6 @@ void VJetLoader::selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::ve
     if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
     if(!passJetLooseSel(pVJet))                                            continue;
     addJet(pVJet,fLooseVJetsCHS);
-    fLooseVJetsCHSid.push_back(i0);
     lCount++;
 
     if(!passJetTightLepVetoSel(pVJet))                                     continue;
@@ -410,23 +409,22 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
 }
 void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR){
   TLorentzVector iJet1;
-  int iJet1id(0);
-  int nmatched(0);
+  int iJet1id(0), nmatched(0);
   float mindR=dR;
   for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
     if ((iJets1[i0].DeltaR(iJet2) < mindR)) {
-    nmatched++;
-    iJet1 = iJets1[i0];
-    iJet1id = i0;
-    mindR=iJets1[i0].DeltaR(iJet2);	
+      nmatched++;
+      iJet1 = iJets1[i0];
+      iJet1id = i0;
+      mindR= iJets1[i0].DeltaR(iJet2);	
     }
   }
-  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){ //nhan suggestion to increase from 20 to 35%
-    fillVJetCHS(fLooseVJetsCHS,fLooseVJetsCHSid[iJet1id]);
+  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){
+    fillVJetCHS(fLooseVJetsCHS[iJet1id]);
   }
 }
-void VJetLoader::fillVJetCHS(std::vector<TJet*> &iObjects, int iId){
-  TAddJet *pAddJet = getAddJetCHS(iObjects[iId]);
+void VJetLoader::fillVJetCHS(TJet *iJet){
+  TAddJet *pAddJet = getAddJetCHS(iJet);
   fdoublecsvCHS = pAddJet->doublecsv;
   fdoublesubCHS = pAddJet->Double_sub;
 }
