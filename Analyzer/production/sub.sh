@@ -18,7 +18,7 @@ option2=$8
 options1="Output.root --passSumEntries 5:Events  -a 2:"${ismc}" -a 3:none  -n 7000 -q 2nw4cores"
 
 if [ $ismc = "data" ]; then
-     options1="Output.root -a 5:1  -a 2:"${ismc}" -a 3:$PWD/../data/Cert_271036-276811_13TeV_PromptReco_Collisions16_JSON_NoL1T.txt -n 7000 -q 1nh"
+     options1="Output.root -a 5:1  -a 2:"${ismc}" -a 3:$PWD/../data/Cert_271036-282037_13TeV_PromptReco_Collisions16_JSON_NoL1T.txt -n 7000 -q 1nh"
 fi
 
 scandir=$dir$label
