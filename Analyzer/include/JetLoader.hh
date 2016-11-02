@@ -28,7 +28,7 @@ public:
 
   //Fillers
   void addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals);
-  void fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals);
+  void fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, TLorentzVector iVJet);
 
   const double CSVL = 0.460; // CSVv2 WP
   const double CSVM = 0.800;
