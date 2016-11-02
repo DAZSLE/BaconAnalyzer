@@ -56,3 +56,22 @@ if [[ ($sample = "All") || ($sample != "All" && $sample = "JetHT") ]];    then
     rm "$dir"/JetHTRun2016F.root; hadd "$dir"/JetHTRun2016F.root ../zprimebits/JetHTRun2016F*_data/*.root; 
 fi
 
+if [[ ($sample = "All") || ($sample != "All" && $sample = "Diboson") ]]; then
+  hadd "$dir"/WWTo4Q_13TeV_amcatnlo.root               ../zprimebits/WWTo4Q_13TeV_amcatnlo_mc/*.root;
+  #hadd "$dir"/WWTo4Q_13TeV_powheg                /*.root;
+  hadd "$dir"/ZZTo4Q_13TeV_amcatnlo.root               ../zprimebits/ZZTo4Q_13TeV_amcatnlo_mc/*.root;
+  hadd "$dir"/WZ_13TeV.root                           ../zprimebits/WZ_13TeV_mc/*.root;
+fi
+
+if [[ ($sample = "All") || ($sample != "All" && $sample = "Hbb") ]]; then
+  hadd "$dir"/GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8.root      ../zprimebits//GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia_mc/*.root ;
+  hadd "$dir"/GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext.root  ../zprimebits//GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext_mc/*.root;
+  hadd "$dir"/GluGluHToBB_M125_13TeV_powheg_herwigpp.root           ../zprimebits//GluGluHToBB_M125_13TeV_powheg_herwigpp_mc/*.root;
+  hadd "$dir"/GluGluHToBB_M125_13TeV_powheg_pythia8.root            ../zprimebits/GluGluHToBB_M125_13TeV_powheg_pythia8_mc/*.root;
+  hadd "$dir"/VBFHToBB_M125_13TeV_amcatnlo_pythia8.root             ../zprimebits/VBFHToBB_M125_13TeV_amcatnlo_pythia8_mc/*.root;
+  hadd "$dir"/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix.root    ../zprimebits/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_mc/*.root;
+  hadd "$dir"/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext.root ../zprimebits/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext_mc/*.root;
+  hadd "$dir"/ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8.root    ../zprimebits/ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_mc/*.root;
+fi
+
+

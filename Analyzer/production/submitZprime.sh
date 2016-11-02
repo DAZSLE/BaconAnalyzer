@@ -39,6 +39,25 @@ if [[ ($sample = "All") || ($sample != "All" && $sample = "JetHT") ]]; then
     ./sub.sh data $eos JetHTRun2016E_PromptReco_v2                                                                  1  $dir $exec $option1 $option2
     ./sub.sh data $eos JetHTRun2016F_PromptReco_v1                                                                  1  $dir $exec $option1 $option2
 fi
+if [[ ($sample = "All") || ($sample != "All" && $sample = "Hbb") ]]; then
+ ./sub.sh mc $eos GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8                   1  $dir $exec $option1 $option2
+ ./sub.sh mc $eos GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext               1  $dir $exec $option1 $option2
+ ./sub.sh mc $eos GluGluHToBB_M125_13TeV_powheg_herwigpp                        1  $dir $exec $option1 $option2
+ ./sub.sh mc $eos GluGluHToBB_M125_13TeV_powheg_pythia8                         1  $dir $exec $option1 $option2
+ ./sub.sh mc $eos VBFHToBB_M125_13TeV_amcatnlo_pythia8                          1  $dir $exec $option1 $option2
+ ./sub.sh mc $eos VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix                 1  $dir $exec $option1 $option2
+ ./sub.sh mc $eos VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext             1  $dir $exec $option1 $option2
+ ./sub.sh mc $eos ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8     1  $dir $exec $option1 $option2
+fi
+
+
+if [[ ($sample = "All") || ($sample != "All" && $sample = "Diboson") ]]; then
+  ./sub.sh mc $eos WWTo4Q_13TeV_amcatnlo                1  $dir $exec $option1 $option2
+  #./sub.sh mc $eos WWTo4Q_13TeV_powheg                 1  $dir $exec $option1 $option2
+  ./sub.sh mc $eos ZZTo4Q_13TeV_amcatnlo                1  $dir $exec $option1 $option2
+  ./sub.sh mc $eos WZ_13TeV                             1  $dir $exec $option1 $option2
+fi
+
 if [[ ($sample = "All") || ($sample != "All" && $sample = "VectorDiJet1Jet") ]]; then
     ./sub.sh mc $eos VectorDiJet1Jet_M50                                                                            1  $dir $exec $option1 $option2
     ./sub.sh mc $eos VectorDiJet1Jet_M75                                                                            1  $dir $exec $option1 $option2
