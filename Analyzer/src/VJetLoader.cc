@@ -104,6 +104,7 @@ void VJetLoader::resetZprime() {
   fvSize              = 999;
   fvMatching          = 999;
   fisHadronicV        = 0;
+  fRatioPt =0;
 }
 void VJetLoader::resetMonoX() {
   fVMT                = 0;
@@ -189,6 +190,7 @@ void VJetLoader::setupTreeZprime(TTree *iTree, std::string iJetLabel) {
   std::stringstream pSnC;   pSnC << iJetLabel << "0_nCharged";
   std::stringstream pSnN;   pSnN << iJetLabel << "0_nNeutrals";
   std::stringstream pSnP;   pSnP << iJetLabel << "0_nParticles";
+  std::stringstream pSratio; pSratio << iJetLabel << "0_ratioCA15_04";
 
   fTree = iTree;
   fTree->Branch(pSiV.str().c_str() ,&fisHadronicV         ,(pSiV.str()+"/I").c_str());
@@ -199,6 +201,7 @@ void VJetLoader::setupTreeZprime(TTree *iTree, std::string iJetLabel) {
   fTree->Branch(pSnC.str().c_str() ,&fnCharged            ,(pSnC.str()+"/I").c_str());
   fTree->Branch(pSnN.str().c_str() ,&fnNeutrals           ,(pSnN.str()+"/I").c_str());
   fTree->Branch(pSnP.str().c_str() ,&fnParticles          ,(pSnP.str()+"/I").c_str());
+  fTree->Branch(pSratio.str().c_str() ,&fRatioPt          ,(pSratio.str()+"/D").c_str());
 }
 void VJetLoader::setupTreeCHS(TTree *iTree, std::string iJetLabel) {
   resetCHS();
@@ -423,6 +426,25 @@ void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJe
     fillVJetCHS(fLooseVJetsCHS[iJet1id]);
   }
 }
+
+void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR){
+  TLorentzVector iJet1;
+  int nmatched(0);
+  float mindR=dR;
+  for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
+    if ((iJets1[i0].DeltaR(iJet2) < mindR)) {
+      nmatched++;
+      iJet1 = iJets1[i0];
+      mindR= iJets1[i0].DeltaR(iJet2);
+    }
+  }
+  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR)){
+    fRatioPt = iJet2.Pt()/iJet1.Pt();
+  }
+}
+
+
+
 void VJetLoader::fillVJetCHS(TJet *iJet){
   TAddJet *pAddJet = getAddJetCHS(iJet);
   fdoublecsvCHS = pAddJet->doublecsv;
