@@ -40,6 +40,7 @@ public:
   void selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho);
   void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho = 0);
   void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR);
+  void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR);
   void fillVJetCHS(TJet *iJet);
   TAddJet *getAddJet(TJet *iJet);
   TAddJet *getAddJetCHS(TJet *iJet);
@@ -48,7 +49,7 @@ public:
 
   double dPhi(TLorentzVector v1, TLorentzVector v2, TLorentzVector v3);
 
-  double ftopSize, ftopMatching, fvSize, fvMatching;
+  double ftopSize, ftopMatching, fvSize, fvMatching,fRatioPt;
   double fdoublecsvCHS, fdoublesubCHS;
   int fisHadronicTop, fisHadronicV;
   int fisTightVJet, fisTightVJetCHS;

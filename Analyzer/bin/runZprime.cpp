@@ -162,15 +162,6 @@ int main( int argc, char **argv ) {
     }
     fEvt      ->triggerEff(fElectron->looseElectrons, cleaningPhotons);
 
-    // AK8Puppi Jets
-    fVJet8    ->load(i0);
-    fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
-    fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
-    if(fVJet8->selectedVJets.size()>0){ 
-      fEvt->fselectBits =  fEvt->fselectBits | 2;
-      // Match AK8CHS leading jet
-      if(fVJet8->selectedVJetsCHS.size()>0)      fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[0],0.8);
-    }
 
     // CA15Puppi Jets
     fVJet15   ->load(i0);
@@ -181,6 +172,19 @@ int main( int argc, char **argv ) {
       if(fVJet15->selectedVJetsCHS.size()>0)      fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[0],1.5);
     }
 
+
+    // AK8Puppi Jets
+    
+    fVJet8    ->load(i0);
+    fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
+    fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
+    if(fVJet8->selectedVJets.size()>0){
+      fEvt->fselectBits =  fEvt->fselectBits | 2;
+      // Match AK8CHS leading jet
+      if(fVJet8->selectedVJetsCHS.size()>0)      fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[0],0.8);
+      if(fVJet8->selectedVJetsCHS.size()>0)      fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4);
+    }
+      
     // AK4Puppi Jets
     fJet4     ->load(i0); 
     fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets);
