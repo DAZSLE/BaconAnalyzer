@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WW_13TeV/WW_13TeV_0.root

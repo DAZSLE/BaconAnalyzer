@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToLNu_HT_2500ToInf_13TeV/WJetsToLNu_HT_2500ToInf_13TeV_0.root

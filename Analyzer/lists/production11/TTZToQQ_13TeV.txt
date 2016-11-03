@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TTZToQQ_13TeV/TTZToQQ_13TeV_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TTZToQQ_13TeV/TTZToQQ_13TeV_1.root

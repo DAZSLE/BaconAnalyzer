@@ -25,7 +25,7 @@ public:
   void setupTree  (TTree *iTree);
   void load (int iEvent);
   //Fillers
-  void fillEvent(unsigned int trigBit, float lWeight);
+  void fillEvent(unsigned int trigBit, float lWeight, unsigned int passJson);
   bool passSkim();
   TLorentzVector Met(int iOption);
   //SFs
@@ -73,6 +73,7 @@ public:
   unsigned int fRun;
   unsigned int fEvtV;
   unsigned int fLumi;
+  unsigned int fPassJson;
   TEventInfo   *fEvt;
 
   float fevtWeight;

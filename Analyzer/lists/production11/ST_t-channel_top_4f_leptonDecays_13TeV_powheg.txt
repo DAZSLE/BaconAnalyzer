@@ -1,0 +1,10 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_8.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ST_t-channel_top_4f_leptonDecays_13TeV_powheg/ST_t-channel_top_4f_leptonDecays_13TeV_powheg_9.root

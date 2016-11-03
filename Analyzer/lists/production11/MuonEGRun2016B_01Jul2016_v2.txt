@@ -1,0 +1,6 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016B_01Jul2016_v2/MuonEG/CRAB3/161011_134623/0000/Output_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016B_01Jul2016_v2/MuonEG/CRAB3/161011_134623/0000/Output_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016B_01Jul2016_v2/MuonEG/CRAB3/161011_134623/0000/Output_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016B_01Jul2016_v2/MuonEG/CRAB3/161011_134623/0000/Output_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016B_01Jul2016_v2/MuonEG/CRAB3/161011_134623/0000/Output_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016B_01Jul2016_v2/MuonEG/CRAB3/161011_134623/0000/Output_6.root

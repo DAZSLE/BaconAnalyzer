@@ -128,7 +128,8 @@ void EvtLoader::setupTree(TTree *iTree) {
   fTree->Branch("runNum"          ,&fRun            ,"fRun/i");
   fTree->Branch("lumiSec"         ,&fLumi           ,"fLumi/i");
   fTree->Branch("evtNum"          ,&fEvtV           ,"fEvtV/i");
-  fTree->Branch("metfilter"       ,&fMetFilters     ,"fMetFilters/I");
+  fTree->Branch("passJson"        ,&fPassJson       ,"fPassJson/i");
+  fTree->Branch("metfilter"       ,&fMetFilters     ,"fMetFilters/i");
   fTree->Branch("triggerBits"     ,&fITrigger       ,"fITrigger/i");
   fTree->Branch("selectBits"      ,&fselectBits     ,"fselectBits/i");
  
@@ -169,6 +170,7 @@ void EvtLoader::setupTree(TTree *iTree) {
 
   fRun   = 0;
   fLumi  = 0;
+  fPassJson = 0;
 }
 void EvtLoader::load(int iEvent) { 
   fVertices ->Clear();
@@ -177,11 +179,12 @@ void EvtLoader::load(int iEvent) {
   fRun   = fEvt->runNum;
   fLumi  = fEvt->lumiSec;
 }
-void EvtLoader::fillEvent(unsigned int trigBit,float lWeight) { 
+void EvtLoader::fillEvent(unsigned int trigBit,float lWeight, unsigned int passJson) { 
   reset();
   fRun          = fEvt->runNum;
   fLumi         = fEvt->lumiSec;
   fNPU          = fEvt->nPUmean;
+  fPassJson     = passJson;
   fNVtx         = nVtx();
   fITrigger     = trigBit;
   fselectBits   = 1;

@@ -1,0 +1,4 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016E_29Jul2016_v1/JetHTRun2016E_29Jul2016_v1_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016E_29Jul2016_v1/JetHTRun2016E_29Jul2016_v1_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016E_29Jul2016_v1/JetHTRun2016E_29Jul2016_v1_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016E_29Jul2016_v1/JetHTRun2016E_29Jul2016_v1_3.root

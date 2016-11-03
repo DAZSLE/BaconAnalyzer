@@ -1,0 +1,8 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZZTo4L_13TeV-amcatnlo/ZZTo4L_13TeV-amcatnlo_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZZTo4L_13TeV-amcatnlo/ZZTo4L_13TeV-amcatnlo_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZZTo4L_13TeV-amcatnlo/ZZTo4L_13TeV-amcatnlo_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZZTo4L_13TeV-amcatnlo/ZZTo4L_13TeV-amcatnlo_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZZTo4L_13TeV-amcatnlo/ZZTo4L_13TeV-amcatnlo_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZZTo4L_13TeV-amcatnlo/ZZTo4L_13TeV-amcatnlo_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZZTo4L_13TeV-amcatnlo/ZZTo4L_13TeV-amcatnlo_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZZTo4L_13TeV-amcatnlo/ZZTo4L_13TeV-amcatnlo_7.root

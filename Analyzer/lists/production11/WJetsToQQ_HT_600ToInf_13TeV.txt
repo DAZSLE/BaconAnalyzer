@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToQQ_HT_600ToInf_13TeV/WJetsToQQ_HT_600ToInf_13TeV_0.root

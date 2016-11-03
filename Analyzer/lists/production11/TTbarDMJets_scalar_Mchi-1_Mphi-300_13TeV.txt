@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TTbarDMJets_scalar_Mchi-1_Mphi-300_13TeV/TTbarDMJets_scalar_Mchi-1_Mphi-300_13TeV_0.root

@@ -3,3 +3,4 @@
 <use name="root"/>
 <flags CXXFLAGS="-g -Wall"/>
 <bin file="runZprime.cpp" name="runZprime"> </bin>
+<bin file="../src/NormalizeNtuple.cc" name="NormalizeNtuple"> </bin>

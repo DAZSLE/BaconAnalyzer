@@ -1,0 +1,9 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext/ZJetsToNuNu_HT_400To600_13TeV_madgraph_ext_8.root

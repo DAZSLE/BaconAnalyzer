@@ -1,0 +1,7 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToLNu_HT_800To1200_13TeV_ext/WJetsToLNu_HT_800To1200_13TeV_ext_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToLNu_HT_800To1200_13TeV_ext/WJetsToLNu_HT_800To1200_13TeV_ext_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToLNu_HT_800To1200_13TeV_ext/WJetsToLNu_HT_800To1200_13TeV_ext_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToLNu_HT_800To1200_13TeV_ext/WJetsToLNu_HT_800To1200_13TeV_ext_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToLNu_HT_800To1200_13TeV_ext/WJetsToLNu_HT_800To1200_13TeV_ext_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToLNu_HT_800To1200_13TeV_ext/WJetsToLNu_HT_800To1200_13TeV_ext_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WJetsToLNu_HT_800To1200_13TeV_ext/WJetsToLNu_HT_800To1200_13TeV_ext_6.root

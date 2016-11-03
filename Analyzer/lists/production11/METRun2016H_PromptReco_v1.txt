@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016H_PromptReco_v1/METRun2016H_PromptReco_v1_0.root

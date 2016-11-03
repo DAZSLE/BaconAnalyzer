@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Gamma_300_1_800_v2/VectorDiJet1Gamma_300_1_800_v2_0.root

@@ -1,0 +1,8 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016C_PromptReco_v2/MuonEGRun2016C_PromptReco_v2_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016C_PromptReco_v2/MuonEGRun2016C_PromptReco_v2_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016C_PromptReco_v2/MuonEGRun2016C_PromptReco_v2_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016C_PromptReco_v2/MuonEGRun2016C_PromptReco_v2_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016C_PromptReco_v2/MuonEGRun2016C_PromptReco_v2_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016C_PromptReco_v2/MuonEGRun2016C_PromptReco_v2_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016C_PromptReco_v2/MuonEGRun2016C_PromptReco_v2_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016C_PromptReco_v2/MuonEGRun2016C_PromptReco_v2_7.root

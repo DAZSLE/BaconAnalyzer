@@ -1,0 +1,9 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VectorDiJet1Jet_M100/VectorDiJet1Jet_M100_8.root

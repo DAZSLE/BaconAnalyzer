@@ -1,0 +1,11 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_10.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_8.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TT_13TeV_powheg_herwigpp/TT_13TeV_powheg_herwigpp_9.root

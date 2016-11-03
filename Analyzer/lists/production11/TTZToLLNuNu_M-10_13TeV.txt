@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/TTZToLLNuNu_M-10_13TeV/TTZToLLNuNu_M-10_13TeV_0.root

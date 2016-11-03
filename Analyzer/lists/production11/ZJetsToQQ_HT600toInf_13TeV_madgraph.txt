@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToQQ_HT600toInf_13TeV_madgraph/ZJetsToQQ_HT600toInf_13TeV_madgraph_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZJetsToQQ_HT600toInf_13TeV_madgraph/ZJetsToQQ_HT600toInf_13TeV_madgraph_1.root

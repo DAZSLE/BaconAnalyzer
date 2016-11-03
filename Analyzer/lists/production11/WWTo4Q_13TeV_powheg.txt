@@ -1,0 +1,5 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WWTo4Q_13TeV_powheg/WWTo4Q_13TeV-powheg_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WWTo4Q_13TeV_powheg/WWTo4Q_13TeV-powheg_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WWTo4Q_13TeV_powheg/WWTo4Q_13TeV-powheg_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WWTo4Q_13TeV_powheg/WWTo4Q_13TeV-powheg_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/WWTo4Q_13TeV_powheg/WWTo4Q_13TeV-powheg_4.root

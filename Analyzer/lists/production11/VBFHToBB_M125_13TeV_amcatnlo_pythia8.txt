@@ -1,0 +1,4 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VBFHToBB_M125_13TeV_amcatnlo_pythia8/VBFHToBB_M125_13TeV_amcatnlo_pythia8_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VBFHToBB_M125_13TeV_amcatnlo_pythia8/VBFHToBB_M125_13TeV_amcatnlo_pythia8_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VBFHToBB_M125_13TeV_amcatnlo_pythia8/VBFHToBB_M125_13TeV_amcatnlo_pythia8_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/VBFHToBB_M125_13TeV_amcatnlo_pythia8/VBFHToBB_M125_13TeV_amcatnlo_pythia8_3.root

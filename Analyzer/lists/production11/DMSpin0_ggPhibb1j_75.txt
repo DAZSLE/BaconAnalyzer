@@ -1,0 +1,10 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_8.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DMSpin0_ggPhibb1j_75/DMSpin0_ggPhibb1j_75_9.root

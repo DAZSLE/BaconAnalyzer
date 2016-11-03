@@ -38,7 +38,10 @@ VJetLoader      *fVJet8      = 0;
 VJetLoader      *fVJet15     = 0;
 RunLumiRangeMap *fRangeMap   = 0; 
 
-TH1F *fHist                  = 0; 
+TH1F *fHist                  = 0;
+
+
+const int NUM_PDF_WEIGHTS = 60;
 
 // Load tree and return infile
 TTree* load(std::string iName) { 
@@ -79,9 +82,16 @@ int main( int argc, char **argv ) {
   fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi","CA15CHS","AddCA15CHS");
   if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                     // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
 
-  TFile *lFile = new TFile("Output.root","RECREATE");
+  TFile *lFile = TFile::Open("Output.root","RECREATE");
   TTree *lOut  = new TTree("Events","Events");
 
+  //Setup histograms containing total number of processed events (for normalization)
+  TH1F *NEvents = new TH1F("NEvents", "NEvents", 1, 0.5, 1.5);
+  TH1F *SumWeights = new TH1F("SumWeights", "SumWeights", 1, 0.5, 1.5);
+  TH1F *SumScaleWeights = new TH1F("SumScaleWeights", "SumScaleWeights", 6, -0.5, 5.5);
+  TH1F *SumPdfWeights = new TH1F("SumPdfWeights", "SumPdfWeights", NUM_PDF_WEIGHTS, -0.5, NUM_PDF_WEIGHTS-0.5);
+  
+    
   // Setup Tree
   fEvt      ->setupTree      (lOut); 
   fVJet8    ->setupTree      (lOut,"AK8Puppijet"); 
@@ -105,13 +115,20 @@ int main( int argc, char **argv ) {
     // Check GenInfo
     fEvt->load(i0);
     float lWeight = 1;
+    unsigned int passJson = 0;
     if(lOption.compare("data")!=0){
       fGen->load(i0);
-      lWeight = (float(lXS)*1000.*fGen->fWeight)/weight;
+      //lWeight = (float(lXS)*1000.*fGen->fWeight)/weight;
+      lWeight = fGen->fWeight;
+      passJson = 1;
     }
     else{
-      if(!passEvent(fEvt->fRun,fEvt->fLumi)) continue;
+      if(passEvent(fEvt->fRun,fEvt->fLumi)) passJson = 1;
     }
+
+    
+    NEvents->Fill(1.0, NEvents->GetBinContent(1)+lWeight);
+    SumWeights->Fill(1.0, lWeight);
 
     // Primary vertex requirement
     if(!fEvt->PV()) continue;
@@ -125,7 +142,7 @@ int main( int argc, char **argv ) {
 	 ) trigbits = trigbits | 2; 
       // if(trigbits==1) continue;
     }
-    fEvt      ->fillEvent(trigbits,lWeight);
+    fEvt      ->fillEvent(trigbits,lWeight,passJson);
     
     // Objects
     std::vector<TLorentzVector> cleaningMuons, cleaningElectrons, cleaningPhotons; 
@@ -206,6 +223,10 @@ int main( int argc, char **argv ) {
   std::cout << neventstest << std::endl;
   std::cout << lTree->GetEntriesFast() << std::endl;
   lFile->cd();
-  lOut->Write();
+  lOut->Write();  
+  NEvents->Write();
+  SumWeights->Write();
+  SumScaleWeights->Write();
+  SumPdfWeights->Write();
   lFile->Close();
 }

@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleEGRun2016H_PromptReco_v1/DoubleEG/CRAB3/161027_144656/0000/Output_1.root
