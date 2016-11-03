@@ -116,7 +116,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
   fNBTagsTdR08     = lNBTagTdR08;
 
   fillJet(fN,fLooseJets,fVars);
-  fillOthers(fN,fLooseJets,fVars,iVJets[0]);
+  fillOthers(fN,fLooseJets,fVars,iVJets);
 }
 void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals) { 
   for(int i0 = 0; i0 < iN; i0++) { 
@@ -134,7 +134,7 @@ void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<do
     iTree->Branch(pSdP  .str().c_str() ,&iVals[lBase+4],(pSdP   .str()+"/D").c_str());
   }
 }
-void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, TLorentzVector iVJet){ 
+void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets){ 
   int lBase = 3.*fN;
   int lMin = iObjects.size();
   if(iN < lMin) lMin = iN;
@@ -143,8 +143,9 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     iVals[lBase+i0*6+0] = iObjects[i0]->mass;
     iVals[lBase+i0*6+1] = iObjects[i0]->csv;
     iVals[lBase+i0*6+2] = iObjects[i0]->qgid;
-    iVals[lBase+i0*6+3] = vPJet.DeltaR(iVJet);
-    iVals[lBase+i0*6+4] = vPJet.DeltaPhi(iVJet);
-
+    if(iVJets.size()>0) {
+      iVals[lBase+i0*6+3] = vPJet.DeltaR(iVJets[0]);
+      iVals[lBase+i0*6+4] = vPJet.DeltaPhi(iVJets[0]);
+    }
   }
 }
