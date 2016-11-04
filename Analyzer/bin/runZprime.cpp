@@ -127,7 +127,7 @@ int main( int argc, char **argv ) {
     }
 
     
-    NEvents->SetBinContent(1.0, NEvents->GetBinContent(1)+lWeight);
+    NEvents->SetBinContent(1, NEvents->GetBinContent(1)+lWeight);
     SumWeights->Fill(1.0, lWeight);
 
     // Primary vertex requirement
