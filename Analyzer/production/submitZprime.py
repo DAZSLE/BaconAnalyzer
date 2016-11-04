@@ -6,7 +6,7 @@ from optparse import OptionParser
 def exec_me(command, dryRun=False):
     print command
     if not dryRun:
-        os.sytem(command)
+        os.system(command)
         
 if __name__ == '__main__':
     
