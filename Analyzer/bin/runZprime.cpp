@@ -180,9 +180,10 @@ int main( int argc, char **argv ) {
     fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
     if(fVJet8->selectedVJets.size()>0){
       fEvt->fselectBits =  fEvt->fselectBits | 2;
-      // Match AK8CHS leading jet
+      // Match AK8CHS leading jet within dR = 0.8
       if(fVJet8->selectedVJetsCHS.size()>0)      fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[0],0.8);
-      if(fVJet8->selectedVJetsCHS.size()>0)      fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4);
+      // Match AK15 Puppi leading jet within dR = 0.4 (to get pT ratio)
+      if(fVJet15->selectedVJets.size()>0)      fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4);
     }
       
     // AK4Puppi Jets
@@ -219,6 +220,11 @@ int main( int argc, char **argv ) {
     }
     if(lName.find("TTJets")!=std::string::npos){
       fEvt->fevtWeight *= fGen->computeTTbarCorr();
+    }
+    if(lName.find("HToBB")!=std::string::npos){
+      fGen->findBoson(25,1);
+      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,25);
+      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,25);
     }
 
     lOut->Fill();
