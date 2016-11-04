@@ -30,6 +30,7 @@ default_args = []
 parser = OptionParser()
 parser = OptionParser(usage="usage: %prog analyzer outputfile [options] \nrun with --help to get list of options")
 parser.add_option("-d","--directory",default='',help="Pick up files from a particular directory. can also pass from /eos/. Will initiate split by files (note you must also pass which index the file goes to)")
+parser.add_option("-l","--list",default='',help="Pick up files from a particular list of files")
 parser.add_option("-o","--outdir",default='bacon',help="output for analyzer. This will always be the output for job scripts.")
 parser.add_option("-a","--args",dest="args",default=[],action="append",help="Pass executable args n:arg OR named arguments name:arg. Multiple args can be passed with <val1,val2...> or lists of integers with [min,max,stepsize]")
 parser.add_option("-v","--verbose",dest="verbose",default=False,action="store_true",help="Spit out more info")
@@ -205,6 +206,10 @@ if options.passSumEntries:
   numEntries = 0
   if options.directory : 
     files = getFilesJob(options.directory.split(":")[1],0,-1)
+    print files
+  elif options.list:
+    with open(options.list.split(":")[1], 'r') as mylist:
+        files = [(myfile.replace('\n',''),True) for myfile in mylist.readlines()]
     for fi in files: 
       tf = r.TFile.Open(fi[0])
       try :
@@ -225,13 +230,20 @@ if options.passSumEntries:
 	  continue
   else: numEntries = -1;
   analyzer_args[int(pos)]=['',['{:e}'.format(float(numEntries))]]
-else: 
-	files = getFilesJob(options.directory.split(":")[1],0,-1)
+else:
+  if options.directory :
+    files = getFilesJob(options.directory.split(":")[1],0,-1)
+  elif options.list:
+    with open(options.list.split(":")[1], 'r') as mylist:
+        files = [(myfile.replace('\n',''),True) for myfile in mylist.readlines()]
 
 exec_line = '%s'%analyzer
 
 if options.directory :
   filepos,options.directory = options.directory.split(':')
+  analyzer_args[int(filepos)]=['',"fileinput"]
+elif options.list:
+  filepos,options.list = options.list.split(':')
   analyzer_args[int(filepos)]=['',"fileinput"]
 
 
@@ -272,8 +284,13 @@ for job_i in range(njobs):
  #i.e it iterates over all combinations of arguments in the args list 
  iterationsobject = product(*listoflists)
  ################################
- if options.directory:          files = getFilesJob(options.directory,job_i,njobs)
- else: files = getArgsJob(iterationsobject,job_i,njobs)# use itertools to split up any arglists into jobs 
+ if options.directory:
+     files = getFilesJob(options.directory,job_i,njobs)
+ elif options.list:
+     with open(options.list, 'r') as mylist:
+         files = [(myfile.replace('\n',''),True) for myfile in mylist.readlines()]
+ else:
+     files = getArgsJob(iterationsobject,job_i,njobs)# use itertools to split up any arglists into jobs 
  #else: files=[]
  job_exec = ''
  
@@ -282,7 +299,10 @@ for job_i in range(njobs):
  for fil_i,fil in enumerate(files):
    #if options.directory : 
    if not fil[1]: continue
-   if options.directory: exec_line_i = exec_line.replace('fileinput'," "+fil[0]+" ")
+   if options.directory:
+       exec_line_i = exec_line.replace('fileinput'," "+fil[0]+" ")
+   elif options.list:
+       exec_line_i = exec_line.replace('fileinput'," "+fil[0]+" ")
    else: 
     exec_line_i = exec_line
     for i,m in enumerate(fil[0]):  # no defaults so guarantee (make the check) that all of the args are there)  
