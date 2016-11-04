@@ -413,9 +413,9 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
 void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR){
   TLorentzVector iJet1;
   int iJet1id(0), nmatched(0);
-  float mindR=dR;
+  float mindR = dR;
   for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
-    if ((iJets1[i0].DeltaR(iJet2) < mindR)) {
+    if ((iJets1[i0].DeltaR(iJet2) < mindR) && (fabs(iJets1[i0].Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))) {
       nmatched++;
       iJet1 = iJets1[i0];
       iJet1id = i0;
@@ -430,7 +430,7 @@ void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJe
 void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR){
   TLorentzVector iJet1;
   int nmatched(0);
-  float mindR=dR;
+  float mindR = dR;  
   for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
     if ((iJets1[i0].DeltaR(iJet2) < mindR)) {
       nmatched++;
