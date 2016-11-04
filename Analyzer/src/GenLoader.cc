@@ -25,12 +25,18 @@ GenLoader::~GenLoader() {
 void GenLoader::reset() { 
   fBosonPt  = -1;
   fBosonPhi = -999;
+  fBosonEta = -999;
+  fBosonMass = -1;
+  fBosonPdgId = -1;
 }
 void GenLoader::setupTree(TTree *iTree,float iXSIn) { 
   reset();
   fTree = iTree;
   fTree->Branch("genVPt"     ,&fBosonPt   ,"fBosonPt/F");
   fTree->Branch("genVPhi"    ,&fBosonPhi  ,"fBosonPhi/F");
+  fTree->Branch("genVMass"    ,&fBosonMass  ,"fBosonMass/F");
+  fTree->Branch("genVEta"    ,&fBosonEta  ,"fBosonEta/F");
+  fTree->Branch("genVPdfId"    ,&fBosonPdgId  ,"fBosonPdgId/I");
 }
 void GenLoader::load(int iEvent) { 
   reset();
@@ -277,7 +283,7 @@ int GenLoader::ismatchedSubJet(TLorentzVector subjet0){
 }
 void GenLoader::findBoson(int iId, int lOption){
   reset();
-  float pbosonPt(-1),pbosonPhi(-999);
+  float pbosonPt(-1),pbosonPhi(-999),pbosonMass(-1),pbosonEta(-999);
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
     TGenParticle *genp0 = (TGenParticle*)((*fGens)[i0]);
 
@@ -286,6 +292,8 @@ void GenLoader::findBoson(int iId, int lOption){
       if(fabs(genp0->pdgId)==iId && genp0->pt > pbosonPt){
 	pbosonPt = genp0->pt;
 	pbosonPhi = genp0->phi;
+	pbosonEta = genp0->eta;
+	pbosonMass = genp0->mass;
       }      
     }
     
@@ -298,6 +306,8 @@ void GenLoader::findBoson(int iId, int lOption){
 	  if(k0==iL0){
 	    pbosonPt = genp1->pt;
 	    pbosonPhi = genp1->phi;
+	    pbosonEta = genp1->eta;
+	    pbosonMass = genp1->mass;
 	    break;
 	  }
 	}
@@ -312,6 +322,8 @@ void GenLoader::findBoson(int iId, int lOption){
 	if(dau1 || dau2){
 	  pbosonPt = genp0->pt;
 	  pbosonPhi = genp0->phi;
+	  pbosonEta = genp0->eta;
+	  pbosonMass = genp0->mass;
 	}
       }
     }
@@ -348,4 +360,7 @@ void GenLoader::findBoson(int iId, int lOption){
   }
   fBosonPt = pbosonPt;
   fBosonPhi = pbosonPhi;
+  fBosonMass = pbosonMass;
+  fBosonEta = pbosonEta;
+  fBosonPdgId = iId;
 }

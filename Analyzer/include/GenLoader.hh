@@ -40,6 +40,10 @@ public:
   float fWeight;
   float fBosonPt;
   float fBosonPhi;
+  float fBosonMass;
+  float fBosonEta;
+  int fBosonPdgId;
+  
 protected: 
   TTree         *fTree;
 };
