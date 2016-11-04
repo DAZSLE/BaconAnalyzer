@@ -54,7 +54,7 @@ void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   pSbTdR08<< "n" << iJetLabel << "sTdR08";
 
   fTree->Branch(pSN.str().c_str()           ,&fNJets           ,(pSN.str()+"/I").c_str());  // jet multiplicity
-  fTree->Branch(pSfwd.str().c_str()         ,&fNFwd            ,(pSfwd.str()+"/F").c_str());
+  fTree->Branch(pSfwd.str().c_str()         ,&fNFwd            ,(pSfwd.str()+"/I").c_str());
   fTree->Branch(pSbL.str().c_str()          ,&fNBTagsL         ,(pSbL.str()+"/I").c_str()); // b tags
   fTree->Branch(pSbM.str().c_str()          ,&fNBTagsM         ,(pSbM.str()+"/I").c_str());
   fTree->Branch(pSbT.str().c_str()          ,&fNBTagsT         ,(pSbT.str()+"/I").c_str());
@@ -80,7 +80,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     if(passVeto(pJet->eta,pJet->phi,0.4,iMuons))                          continue;
     if(passVeto(pJet->eta,pJet->phi,0.4,iPhotons))                        continue;
     if(pJet->pt        <=  30)                                            continue;
-    if(fabs(pJet->eta) > 3.0) lNFwd++;
+    if(fabs(pJet->eta) > 2.5) lNFwd++;
     if(fabs(pJet->eta) >= 4.5)                                            continue;
     if(!passJetLooseSel(pJet))                                            continue;
     lCount++;
