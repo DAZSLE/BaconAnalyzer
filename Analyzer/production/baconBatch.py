@@ -4,8 +4,6 @@
 # Python driver for Bacon Analyzer executable
 # Original Author N.Wardle (CERN) 
 
-# TODO : Provide output support to EOS
-# For now assume output is small enough to store locally. 
 # ------------------------------------------------------------------------------------
 
 import ROOT as r
@@ -25,6 +23,7 @@ from BaconAna.Utils.makeFilelist import *
 # 'maxevents, input, isGen
 #default_args = ['10000000','nothing.root','1'] #,output.root -> could add to analyzer
 default_args = []
+EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
 
 # Options
 parser = OptionParser()
@@ -32,6 +31,7 @@ parser = OptionParser(usage="usage: %prog analyzer outputfile [options] \nrun wi
 parser.add_option("-d","--directory",default='',help="Pick up files from a particular directory. can also pass from /eos/. Will initiate split by files (note you must also pass which index the file goes to)")
 parser.add_option("-l","--list",default='',help="Pick up files from a particular list of files")
 parser.add_option("-o","--outdir",default='bacon',help="output for analyzer. This will always be the output for job scripts.")
+parser.add_option("-e","--eosoutdir",default='',help="eos output directory for analyzer files.")
 parser.add_option("-a","--args",dest="args",default=[],action="append",help="Pass executable args n:arg OR named arguments name:arg. Multiple args can be passed with <val1,val2...> or lists of integers with [min,max,stepsize]")
 parser.add_option("-v","--verbose",dest="verbose",default=False,action="store_true",help="Spit out more info")
 parser.add_option("","--passSumEntries",dest="passSumEntries",default="",help="x:treename Get Entries in TTree treename and pass to argument x")
@@ -51,37 +51,46 @@ cwd = os.getcwd()
 if len(args)<2 and not options.monitor: sys.exit('Error -- must specify ANALYZER and OUTPUTNAME' )
 njobs = options.njobs if options.njobs>0 else 1
 
-def write_job(exec_line, out, analyzer, i, n):
+def write_job(exec_line, out, analyzer, i, n, eosout = ''):
 
-	cwd = os.getcwd()
-	analyzer_short = analyzer.split("/")[-1]
-	exec_line = exec_line.replace(analyzer,analyzer_short)
-	sub_file = open('%s/sub_%s_job%d.sh'%(out,analyzer_short,i),'w')
-	sub_file.write('#!/bin/bash\n')
-	sub_file.write('# Job Number %d, running over %d files \n'%(i,n))
-	sub_file.write('touch %s.run\n'%os.path.abspath(sub_file.name))
-	sub_file.write('cd %s\n'%os.getcwd())
-	sub_file.write('eval `scramv1 runtime -sh`\n')
-	sub_file.write('cd -\n')
-	sub_file.write('mkdir -p scratch\n')
-	sub_file.write('cd scratch\n')
-	#sub_file.write('cp -p $CMSSW_BASE/bin/$SCRAM_ARCH/%s .\n'%analyzer)
-	#sub_file.write('cp -p %s .\n'%(os.path.abspath(analyzer)))
-	sub_file.write('mkdir -p %s\n'%(out))
+    cwd = os.getcwd()
+    analyzer_short = analyzer.split("/")[-1]
 
-	sub_file.write('if ( %s ) then\n'%exec_line)
-	#sub_file.write('\t hadd -f Output_job%d.root %s/*.root \n'%(i,(out)))
-	#sub_file.write('\t mv Output_job*.root %s\n'%os.path.abspath(out))
-	#sub_file.write('\t cmsMkdir %s/%s \n'%('/store/cmst3/user/pharris/output',options.outdir))
-	#sub_file.write('\t cmsStage Output_job%d.root %s/%s \n'%(i,'/store/cmst3/user/pharris/output',options.outdir))
-	sub_file.write('\t rm -rf ./bacon ./Output_job* \n')
-	sub_file.write('\t touch %s.done\n'%os.path.abspath(sub_file.name))
-	sub_file.write('else\n')
-	sub_file.write('\t touch %s.fail\n'%os.path.abspath(sub_file.name))
-	sub_file.write('fi\n')
-	sub_file.write('rm -f %s.run\n'%os.path.abspath(sub_file.name))
-	sub_file.close()
-	os.system('chmod +x %s'%os.path.abspath(sub_file.name))
+    exec_line = exec_line.replace(analyzer,analyzer_short)
+    sub_file = open('%s/sub_%s_job%d.sh'%(out,analyzer_short,i),'w')
+    sub_file.write('#!/bin/bash\n')
+    sub_file.write('# Job Number %d, running over %d files \n'%(i,n))
+    sub_file.write('pwd\n')
+    sub_file.write('touch %s.run\n'%os.path.abspath(sub_file.name))
+    sub_file.write('cd %s\n'%cwd)    
+    sub_file.write('pwd\n')
+    sub_file.write('eval `scramv1 runtime -sh`\n')
+    sub_file.write('cd -\n')    
+    sub_file.write('pwd\n')
+    sub_file.write("export TWD=${PWD}/%s_job%d\n"%(analyzer_short,i))
+    sub_file.write("mkdir -p $TWD\n")
+    sub_file.write("cd $TWD\n")
+    #sub_file.write('cp -p $CMSSW_BASE/bin/$SCRAM_ARCH/%s .\n'%analyzer)
+    #sub_file.write('cp -p %s .\n'%(os.path.abspath(analyzer)))
+    sub_file.write('mkdir -p %s\n'%(out))
+    if eosout:
+        sub_file.write('%s mkdir -p %s\n'%(EOS,eosout))
+
+    sub_file.write('if ( %s ) then\n'%exec_line)
+    #sub_file.write('\t hadd -f Output_job%d.root %s/*.root \n'%(i,(out)))
+    #sub_file.write('\t mv Output_job*.root %s\n'%os.path.abspath(out))
+    #sub_file.write('\t cmsMkdir %s/%s \n'%('/store/cmst3/user/pharris/output',options.outdir))
+    #sub_file.write('\t cmsStage Output_job%d.root %s/%s \n'%(i,'/store/cmst3/user/pharris/output',options.outdir))
+    sub_file.write('\t rm -rf ./bacon ./Output_job* \n')
+    sub_file.write('\t touch %s.done\n'%os.path.abspath(sub_file.name))
+    sub_file.write('else\n')
+    sub_file.write('\t touch %s.fail\n'%os.path.abspath(sub_file.name))
+    sub_file.write('fi\n')
+    sub_file.write('rm -f %s.run\n'%os.path.abspath(sub_file.name))
+    sub_file.write('cd ..\n')
+    sub_file.write('rm -rf $TWD\n')
+    sub_file.close()
+    os.system('chmod +x %s'%os.path.abspath(sub_file.name))
   
 def submit_jobs(lofjobs):
    for sub_file in lofjobs:
@@ -307,14 +316,17 @@ for job_i in range(njobs):
     exec_line_i = exec_line
     for i,m in enumerate(fil[0]):  # no defaults so guarantee (make the check) that all of the args are there)  
 		exec_line_i = exec_line_i.replace(" MULTARG_%d "%i," "+str(m)+" " ) #LIST  OVER iterated arguments and produce and replace MULTIARG_i with arguemnt at i in list ?
-   job_exec+=exec_line_i+'; mv %s %s/%s_job%d_file%d.root; '%(outfile,options.outdir,outfile,job_i,fil_i) 
+   if options.eosoutdir:
+    job_exec+=exec_line_i+'; %s cp %s %s/%s_job%d_file%d.root; '%(EOS,outfile,options.eosoutdir,outfile,job_i,fil_i)
+   else:
+    job_exec+=exec_line_i+'; mv %s %s/%s_job%d_file%d.root; '%(outfile,options.outdir,outfile,job_i,fil_i)
    nfiles_i += 1
  if options.verbose: print "VERB -- job exec line --> ",job_exec
 
  if options.dryRun : 
  	print 'job %d/%d -> '%(job_i+1,njobs), job_exec
  elif options.njobs > 0: 
-   write_job(job_exec, options.outdir, analyzer, job_i, nfiles_i)
+   write_job(job_exec, options.outdir, analyzer, job_i, nfiles_i, options.eosoutdir)
  else: 
  	print "Running: ", job_exec
  	os.system(job_exec) 
