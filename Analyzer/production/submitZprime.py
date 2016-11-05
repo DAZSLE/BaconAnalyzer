@@ -16,8 +16,9 @@ if __name__ == '__main__':
     parser.add_option('--dry-run',dest="dryRun",default=False,action='store_true',
                   help="Just print out commands to run")    
     parser.add_option("--monitor",default='',help="Monitor mode (sub/resub/check directory of jobs)")
-    parser.add_option('-s','--sample',dest="sample", default="All", choices=['All','Hbb','QCD','JetHT'],
-                  help="samples to produces")
+    parser.add_option('-s','--sample',dest="sample", default="All",
+                      choices=['All','Hbb','QCD','JetHT','DMSpin0','TT','DY','W','Diboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma'],
+                      help="samples to produces")
     
     (options,args) = parser.parse_args()
 
@@ -51,13 +52,13 @@ if __name__ == '__main__':
         }
     samplesDict['Hbb'] = {
         'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',  
-        #'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext': 'mc',        
-        #'GluGluHToBB_M125_13TeV_powheg_herwigpp': 'mc',
-        #'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
-        #'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc',
-        #'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
-        #'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
-        #'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc'
+        'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext': 'mc',        
+        'GluGluHToBB_M125_13TeV_powheg_herwigpp': 'mc',
+        'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
+        'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc',
+        'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
+        'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
+        'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc'
         }
     samplesDict['QCD'] = {
         'QCD_HT100to200_13TeV':'mc',
@@ -78,7 +79,7 @@ if __name__ == '__main__':
     samplesDict['W'] = {
         'WJetsToQQ_HT_600ToInf_13TeV': 'mc'
         }
-    samplesDict['Z'] = {
+    samplesDict['DY'] = {
         'DYJetsToQQ_HT180_13TeV': 'mc'
         }
     samplesDict['TT'] = {
@@ -127,6 +128,19 @@ if __name__ == '__main__':
         }
 
 
+    samplesDict['All'] = dict(samplesDict['JetHT'].items() +
+                              samplesDict['Hbb'].items() +
+                              samplesDict['QCD'].items() +
+                              samplesDict['SingleTop'].items() +
+                              samplesDict['W'].items() +
+                              samplesDict['DY'].items() +
+                              samplesDict['TT'].items() +
+                              samplesDict['Diboson'].items() +
+                              samplesDict['VectorDiJet1Jet'].items() +
+                              samplesDict['VectorDiJet1Gamma'].items() +
+                              samplesDict['DMSpin0'].items())
+                              
+                              
     samples = samplesDict[options.sample]
 
     exec_me('%s mkdir -p %s/%s'%(EOS,eosOutDir,analysisDir))  
