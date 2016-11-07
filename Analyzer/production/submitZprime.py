@@ -17,7 +17,7 @@ if __name__ == '__main__':
                   help="Just print out commands to run")    
     parser.add_option("--monitor",default='',help="Monitor mode (sub/resub/check directory of jobs)")
     parser.add_option('-s','--sample',dest="sample", default="All",
-                      choices=['All','Hbb','QCD','JetHT','DMSpin0','TT','DY','W','Diboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma'],
+                      choices=['All','Hbb','QCD','JetHT','DMSpin0','TT','DY','W','Diboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
     
     (options,args) = parser.parse_args()
@@ -128,7 +128,6 @@ if __name__ == '__main__':
         'DMSpin0_ggPhibb1j_500':'mc'
         }
 
-
     samplesDict['All'] = dict(samplesDict['JetHT'].items() +
                               samplesDict['Hbb'].items() +
                               samplesDict['QCD'].items() +
@@ -140,6 +139,19 @@ if __name__ == '__main__':
                               samplesDict['VectorDiJet1Jet'].items() +
                               samplesDict['VectorDiJet1Gamma'].items() +
                               samplesDict['DMSpin0'].items())
+    
+    samplesDict['MC'] = dict(samplesDict['Hbb'].items() +
+                             samplesDict['QCD'].items() +
+                             samplesDict['SingleTop'].items() +
+                             samplesDict['W'].items() +
+                             samplesDict['DY'].items() +
+                             samplesDict['TT'].items() +
+                             samplesDict['Diboson'].items() +
+                             samplesDict['VectorDiJet1Jet'].items() +
+                             samplesDict['VectorDiJet1Gamma'].items() +
+                             samplesDict['DMSpin0'].items())
+    
+    samplesDict['Data'] = dict(samplesDict['JetHT'].items())
                               
                               
     samples = samplesDict[options.sample]
