@@ -48,7 +48,8 @@ if __name__ == '__main__':
         'JetHTRun2016C_PromptReco_v2': 'data',
         'JetHTRun2016D_PromptReco_v2': 'data',
         'JetHTRun2016E_PromptReco_v2': 'data',
-        'JetHTRun2016F_PromptReco_v1': 'data'
+        'JetHTRun2016F_PromptReco_v1': 'data',
+        'JetHTRun2016G_PromptReco_v1': 'data'
         }
     samplesDict['Hbb'] = {
         'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',  
@@ -71,10 +72,10 @@ if __name__ == '__main__':
         'QCD_HT2000toInf_13TeV_ext':'mc'
         }
     samplesDict['SingleTop'] = {
-        'ST_t_channel_antitop_4f_inclusiveDecays_13TeV_powhegV2_madspin_pythia8_TuneCUETP8M1': 'mc',
-        'ST_t_channel_top_4f_inclusiveDecays_13TeV_powhegV2_madspin_pythia8_TuneCUETP8M1': 'mc',
-        'ST_tW_antitop_5f_inclusiveDecays_13TeV_powheg_pythia8_TuneCUETP8M1': 'mc',
-        'ST_tW_top_5f_inclusiveDecays_13TeV_powheg_pythia8_TuneCUETP8M1': 'mc'
+        'ST_t-channel_antitop_4f_inclusiveDecays_13TeV_powheg': 'mc',
+        'ST_t-channel_top_4f_inclusiveDecays_13TeV_powheg': 'mc',
+        'ST_tW_antitop_5f_inclusiveDecays_13TeV': 'mc',
+        'ST_tW_top_5f_inclusiveDecays_13TeV': 'mc'
         }
     samplesDict['W'] = {
         'WJetsToQQ_HT_600ToInf_13TeV': 'mc'
@@ -87,7 +88,7 @@ if __name__ == '__main__':
         }
     samplesDict['Diboson'] = {
         'WWTo4Q_13TeV_amcatnlo': 'mc',
-        #'WWTo4Q_13TeV_powheg': 'mc',
+        'WWTo4Q_13TeV_powheg': 'mc',
         'ZZTo4Q_13TeV_amcatnlo':'mc',
         'WZ_13TeV': 'mc'
         }

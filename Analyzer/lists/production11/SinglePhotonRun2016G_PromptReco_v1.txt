@@ -1,17 +1,6 @@
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_0.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_1.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_10.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_11.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_12.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_13.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_14.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_15.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_16.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_17.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_18.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_19.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_2.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_20.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_3.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_4.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016G_PromptReco_v1/SinglePhotonRun2016G_PromptReco_v1_5.root

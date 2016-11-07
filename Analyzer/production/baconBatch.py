@@ -97,7 +97,8 @@ def submit_jobs(lofjobs):
     os.system('rm -f %s.done'%os.path.abspath(sub_file))
     os.system('rm -f %s.fail'%os.path.abspath(sub_file))
     os.system('rm -f %s.log'%os.path.abspath(sub_file))
-    os.system('bsub -q %s -o %s.log %s'%(options.queue,os.path.abspath(sub_file),os.path.abspath(sub_file)))
+    #os.system('bsub -q %s -o %s.log %s'%(options.queue,os.path.abspath(sub_file),os.path.abspath(sub_file)))
+    os.system('bsub -q %s -o /dev/null %s'%(options.queue,os.path.abspath(sub_file)))
   
 if options.monitor: 
   if options.monitor not in ['sub','check','resub']: sys.exit('Error -- Unknown monitor mode %s'%options.monitor)
@@ -215,10 +216,10 @@ if options.passSumEntries:
   numEntries = 0
   if options.directory : 
     files = getFilesJob(options.directory.split(":")[1],0,-1)
-    print files
   elif options.list:
     with open(options.list.split(":")[1], 'r') as mylist:
         files = [(myfile.replace('\n',''),True) for myfile in mylist.readlines()]
+        print files
     for fi in files: 
       tf = r.TFile.Open(fi[0])
       try :
@@ -284,7 +285,6 @@ if not options.dryRun and njobs > 0:
 
 if len(files) < njobs : 
 	njobs = len(files)
-print njobs
 for job_i in range(njobs):
  ################################ WHY does this need to be recreate?
  # This must be the sorted set of keys from the dictionary to build the iterations
@@ -297,7 +297,9 @@ for job_i in range(njobs):
      files = getFilesJob(options.directory,job_i,njobs)
  elif options.list:
      with open(options.list, 'r') as mylist:
-         files = [(myfile.replace('\n',''),True) for myfile in mylist.readlines()]
+         allfiles = [(myfile.replace('\n',''),True) for myfile in mylist.readlines()]
+         print allfiles
+         files = [ allfiles[job_i] ]
  else:
      files = getArgsJob(iterationsobject,job_i,njobs)# use itertools to split up any arglists into jobs 
  #else: files=[]
