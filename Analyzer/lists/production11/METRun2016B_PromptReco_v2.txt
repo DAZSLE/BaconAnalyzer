@@ -56,6 +56,12 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_Promp
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_59.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_6.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_60.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_61.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_62.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_63.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_64.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_65.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_66.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_7.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_8.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/METRun2016B_PromptReco_v2/METRun2016B_PromptReco_v2_9.root

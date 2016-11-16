@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/ZprimeToA0hToA0chichihbb_2HDM_MZp_2000_MA0_300_13TeV_madgraph/ZprimeToA0hToA0chichihbb_2HDM_MZp_2000_MA0_300_13TeV_madgraph_0.root

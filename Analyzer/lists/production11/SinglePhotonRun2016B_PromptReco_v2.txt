@@ -49,6 +49,10 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun20
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_52.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_53.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_54.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_55.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_56.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_57.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_58.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_6.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_7.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/SinglePhotonRun2016B_PromptReco_v2/SinglePhotonRun2016B_PromptReco_v2_8.root

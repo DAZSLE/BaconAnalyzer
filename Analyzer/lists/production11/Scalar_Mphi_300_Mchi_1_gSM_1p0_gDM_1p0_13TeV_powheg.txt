@@ -1,0 +1,5 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Scalar_Mphi_300_Mchi_1_gSM_1p0_gDM_1p0_13TeV_powheg/DMS_NNPDF30_Scalar_Mphi-300_Mchi-1_gSM-1p0_gDM-1p0_13TeV-powheg/CRAB3/161114_190012/0000/Output_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Scalar_Mphi_300_Mchi_1_gSM_1p0_gDM_1p0_13TeV_powheg/DMS_NNPDF30_Scalar_Mphi-300_Mchi-1_gSM-1p0_gDM-1p0_13TeV-powheg/CRAB3/161114_190012/0000/Output_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Scalar_Mphi_300_Mchi_1_gSM_1p0_gDM_1p0_13TeV_powheg/DMS_NNPDF30_Scalar_Mphi-300_Mchi-1_gSM-1p0_gDM-1p0_13TeV-powheg/CRAB3/161114_190012/0000/Output_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Scalar_Mphi_300_Mchi_1_gSM_1p0_gDM_1p0_13TeV_powheg/DMS_NNPDF30_Scalar_Mphi-300_Mchi-1_gSM-1p0_gDM-1p0_13TeV-powheg/CRAB3/161114_190012/0000/Output_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Scalar_Mphi_300_Mchi_1_gSM_1p0_gDM_1p0_13TeV_powheg/DMS_NNPDF30_Scalar_Mphi-300_Mchi-1_gSM-1p0_gDM-1p0_13TeV-powheg/CRAB3/161114_190012/0000/Output_5.root
