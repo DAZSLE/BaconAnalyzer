@@ -36,6 +36,8 @@ public:
 
   int           fNJets;
 
+  int           fNVars;
+  int           fNOtherVars;
 protected: 
   TClonesArray *fJets;
   TBranch      *fJetBr;
@@ -54,6 +56,7 @@ protected:
   int           fNBTagsTdR08;
 
   int           fN;
+  
   std::vector<double>      fVars;
   FactorizedJetCorrector   *fJetCorr;
 };

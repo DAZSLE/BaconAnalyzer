@@ -15,6 +15,8 @@ JetLoader::JetLoader(TTree *iTree) {
   fJetBrCHS = iTree->GetBranch("AK4CHS");
 
   fN = 4;
+  fNVars = 3; // pt, eta, phi
+  fNOtherVars = 5; // Mass, b-tag, qgid, dR, dPhi 
 }
 JetLoader::~JetLoader() { 
   delete fJets;
@@ -64,8 +66,8 @@ void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fTree->Branch(pSbTdR08.str().c_str()      ,&fNBTagsTdR08     ,(pSbTdR08.str()+"/I").c_str());
 
   for(int i0 = 0; i0 < fN*(10)+4; i0++) {double pVar = 0; fVars.push_back(pVar);}           
-  setupNtuple(iJetLabel.c_str(),iTree,fN,fVars);                                            // from MonoXUtils.cc => fN =4 j*_pt,j*_eta,j*_phi for j1,j2,j3,j4 (3*4=12)
-  addOthers  (iJetLabel.c_str(),iTree,fN,fVars);                                            // Mass + b-tag +qgid for j1,j2,j3,j4 (3*4=12)
+  setupNtuple(iJetLabel.c_str(),iTree,fN,fVars);                                            // from MonoXUtils.cc => fN=4 j*_pt,j*_eta,j*_phi for j1,j2,j3,j4 (3*4=12)
+  addOthers  (iJetLabel.c_str(),iTree,fN,fVars);                                            // Mass, b-tag, qgid, dR, dPhi for j1,j2,j3,j4 (5*4=20)
 }
 void JetLoader::load(int iEvent) { 
   fJets   ->Clear();
@@ -120,7 +122,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
 }
 void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals) { 
   for(int i0 = 0; i0 < iN; i0++) { 
-    int lBase = iN*3.+i0*2.;
+    int lBase = iN*fNVars+i0*fNOtherVars;
     std::stringstream pSMass,pSCSV,pSQGID,pSdR,pSdP;
     pSMass  << iHeader << i0 << "_mass";
     pSCSV   << iHeader << i0 << "_csv";
@@ -135,17 +137,17 @@ void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<do
   }
 }
 void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets){ 
-  int lBase = 3.*fN;
+  int lBase = fNVars*fN;
   int lMin = iObjects.size();
   if(iN < lMin) lMin = iN;
   for(int i0 = 0; i0 < lMin; i0++) {
     TLorentzVector vPJet; vPJet.SetPtEtaPhiM(iObjects[i0]->pt, iObjects[i0]->eta, iObjects[i0]->phi, iObjects[i0]->mass); 
-    iVals[lBase+i0*6+0] = iObjects[i0]->mass;
-    iVals[lBase+i0*6+1] = iObjects[i0]->csv;
-    iVals[lBase+i0*6+2] = iObjects[i0]->qgid;
+    iVals[lBase+i0*fNOtherVars+0] = iObjects[i0]->mass;
+    iVals[lBase+i0*fNOtherVars+1] = iObjects[i0]->csv;
+    iVals[lBase+i0*fNOtherVars+2] = iObjects[i0]->qgid;
     if(iVJets.size()>0) {
-      iVals[lBase+i0*6+3] = vPJet.DeltaR(iVJets[0]);
-      iVals[lBase+i0*6+4] = vPJet.DeltaPhi(iVJets[0]);
+      iVals[lBase+i0*fNOtherVars+3] = vPJet.DeltaR(iVJets[0]);
+      iVals[lBase+i0*fNOtherVars+4] = vPJet.DeltaPhi(iVJets[0]);
     }
   }
 }
