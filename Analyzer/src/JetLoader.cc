@@ -82,8 +82,8 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     if(passVeto(pJet->eta,pJet->phi,0.4,iMuons))                          continue;
     if(passVeto(pJet->eta,pJet->phi,0.4,iPhotons))                        continue;
     if(pJet->pt        <=  30)                                            continue;
-    if(fabs(pJet->eta) > 2.5) lNFwd++;
-    if(fabs(pJet->eta) >= 4.5)                                            continue;
+    if(fabs(pJet->eta) > 2.5 && fabs(pJet->eta) < 4.5) lNFwd++;
+    if(fabs(pJet->eta) >= 2.5)                                            continue;
     if(!passJetLooseSel(pJet))                                            continue;
     lCount++;
     addJet(pJet,fLooseJets);
