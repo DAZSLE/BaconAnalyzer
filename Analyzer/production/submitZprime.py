@@ -17,7 +17,7 @@ if __name__ == '__main__':
                   help="Just print out commands to run")    
     parser.add_option("--monitor",default='',help="Monitor mode (sub/resub/check directory of jobs)")
     parser.add_option('-s','--sample',dest="sample", default="All",
-                      choices=['All','Hbb','QCD','JetHT','DMSpin0','TT','DY','W','Diboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
+                      choices=['All','Hbb','QCD','JetHT','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
     
     (options,args) = parser.parse_args()
@@ -37,7 +37,7 @@ if __name__ == '__main__':
         'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 1nh"%(json)
     }
         
-    analysisDir = "zprimebits"
+    analysisDir = "zprimebits-v11.051"
     executable = "runZprime"
     
     samplesDict = {}
@@ -59,7 +59,11 @@ if __name__ == '__main__':
         'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc',
         'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
         'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
-        'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc'
+        'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+        'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+        'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+        'ttHTobb_M125_13TeV_powheg_pythia8': 'mc',
+        'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc'
         }
     samplesDict['QCD'] = {
         'QCD_HT100to200_13TeV':'mc',
@@ -78,10 +82,12 @@ if __name__ == '__main__':
         'ST_tW_top_5f_inclusiveDecays_13TeV': 'mc'
         }
     samplesDict['W'] = {
+        'WJetsToQQ_HT180_13TeV': 'mc',
         'WJetsToQQ_HT_600ToInf_13TeV': 'mc'
         }
     samplesDict['DY'] = {
-        'DYJetsToQQ_HT180_13TeV': 'mc'
+        'DYJetsToQQ_HT180_13TeV': 'mc',
+        'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
         }
     samplesDict['TT'] = {
         'TTJets_13TeV':'mc',
@@ -91,6 +97,11 @@ if __name__ == '__main__':
         'WWTo4Q_13TeV_powheg': 'mc',
         'ZZTo4Q_13TeV_amcatnlo':'mc',
         'WZ_13TeV': 'mc'
+        }
+    samplesDict['Triboson'] = {
+        'TTWJetsToQQ_13TeV': 'mc',
+        'TTGJets_13TeV': 'mc',
+        'TTZToQQ_13TeV': 'mc',
         }
     samplesDict['VectorDiJet1Jet'] = {
         'VectorDiJet1Jet_M50':'mc',
@@ -127,18 +138,6 @@ if __name__ == '__main__':
         'DMSpin0_ggPhibb1j_400':'mc',
         'DMSpin0_ggPhibb1j_500':'mc'
         }
-
-    samplesDict['All'] = dict(samplesDict['JetHT'].items() +
-                              samplesDict['Hbb'].items() +
-                              samplesDict['QCD'].items() +
-                              samplesDict['SingleTop'].items() +
-                              samplesDict['W'].items() +
-                              samplesDict['DY'].items() +
-                              samplesDict['TT'].items() +
-                              samplesDict['Diboson'].items() +
-                              samplesDict['VectorDiJet1Jet'].items() +
-                              samplesDict['VectorDiJet1Gamma'].items() +
-                              samplesDict['DMSpin0'].items())
     
     samplesDict['MC'] = dict(samplesDict['Hbb'].items() +
                              samplesDict['QCD'].items() +
@@ -147,13 +146,15 @@ if __name__ == '__main__':
                              samplesDict['DY'].items() +
                              samplesDict['TT'].items() +
                              samplesDict['Diboson'].items() +
+                             samplesDict['Triboson'].items() +
                              samplesDict['VectorDiJet1Jet'].items() +
                              samplesDict['VectorDiJet1Gamma'].items() +
                              samplesDict['DMSpin0'].items())
     
     samplesDict['Data'] = dict(samplesDict['JetHT'].items())
                               
-                              
+    samplesDict['All'] = dict(samplesDict['MC'].items() + samplesDict['Data'].items())
+
     samples = samplesDict[options.sample]
 
     exec_me('%s mkdir -p %s/%s'%(EOS,eosOutDir,analysisDir))  
