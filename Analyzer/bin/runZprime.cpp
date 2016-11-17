@@ -78,8 +78,8 @@ int main( int argc, char **argv ) {
   fTau       = new TauLoader     (lTree);                                                   // fTaus and fTaurBr, fN = 1
   fPhoton    = new PhotonLoader  (lTree);                                                   // fPhotons and fPhotonBr, fN = 1
   fJet4      = new JetLoader     (lTree);                                                   // fJets, fJetBr => AK4PUPPI
-  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS");     // fVJets, fVJetBr => AK8PUPPI
-  fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi","CA15CHS","AddCA15CHS");
+  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS",2);     // fVJets, fVJetBr => AK8PUPPI
+  fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi","CA15CHS","AddCA15CHS",2);
   if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                     // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
 
   TFile *lFile = TFile::Open("Output.root","RECREATE");
