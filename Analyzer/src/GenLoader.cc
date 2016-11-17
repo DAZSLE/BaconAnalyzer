@@ -28,6 +28,9 @@ void GenLoader::reset() {
   fBosonEta = -999;
   fBosonMass = -1;
   fBosonPdgId = -1;
+  genEleFromW = -1;
+  genMuFromW = -1;
+  genTauFromW = -1;
 }
 void GenLoader::setupTree(TTree *iTree,float iXSIn) { 
   reset();
@@ -37,6 +40,9 @@ void GenLoader::setupTree(TTree *iTree,float iXSIn) {
   fTree->Branch("genVMass"    ,&fBosonMass  ,"fBosonMass/F");
   fTree->Branch("genVEta"    ,&fBosonEta  ,"fBosonEta/F");
   fTree->Branch("genVPdfId"    ,&fBosonPdgId  ,"fBosonPdgId/I");
+  fTree->Branch("genEleFromW"    ,&genEleFromW  ,"genEleFromW/I");
+  fTree->Branch("genMuFromW"    ,&genMuFromW  ,"genMuFromW/I");
+  fTree->Branch("genTauFromW"    ,&genTauFromW  ,"genTauFromW/I");
 }
 void GenLoader::load(int iEvent) { 
   reset();
@@ -77,24 +83,28 @@ bool GenLoader::isType(std::string boson,std::string mode)
   
   return false;
 }
-int GenLoader::isttbarType() {
+
+int GenLoader::isttbarType(int lepPdgId)
+{
   assert(fGens);
   int nlep=0;
   for(int i0=0; i0<fGens->GetEntriesFast(); i0++) {
     TGenParticle *pGen = (TGenParticle*)((*fGens)[i0]);
-    if(pGen->pdgId==11 || pGen->pdgId==13 || pGen->pdgId==15) {
+    if(abs(pGen->pdgId)==abs(lepPdgId)) {
       if(pGen->parent<0) continue;
       TGenParticle *lparent = (TGenParticle*)((*fGens)[pGen->parent]);
-      if(lparent->pdgId==-24) nlep++;
-    }
-    if(pGen->pdgId==-11 || pGen->pdgId==-13 || pGen->pdgId==-15) {
-      if(pGen->parent<0) continue;
-      TGenParticle *lparent = (TGenParticle*)((*fGens)[pGen->parent]);
-      if(lparent->pdgId==24) nlep++;
+      if(abs(lparent->pdgId)==24) nlep++;
     }
   }
   return nlep;
 }
+
+void GenLoader::saveTTbarType() {
+  genEleFromW = isttbarType(11);
+  genMuFromW = isttbarType(13);
+  genTauFromW = isttbarType(15);
+}
+
 float GenLoader::computeTTbarCorr() {
   //                                                                                                                                                                                                                            
   // compute ttbar MC pT correction                                                                                                                                                                                             

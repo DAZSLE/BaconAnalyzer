@@ -220,6 +220,7 @@ int main( int argc, char **argv ) {
     }
     if(lName.find("TTJets")!=std::string::npos){
       fEvt->fevtWeight *= fGen->computeTTbarCorr();
+      fGen->saveTTbarType();
     }
     if(lName.find("HToBB")!=std::string::npos){
       fGen->findBoson(25,1);

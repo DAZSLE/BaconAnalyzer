@@ -22,7 +22,8 @@ public:
   int ismatchedSubJet(TLorentzVector subjet0);
   //Helpers
   bool isType(std::string boson,std::string mode);
-  int isttbarType();
+  int isttbarType(int lepPdgId);
+  void saveTTbarType();
   TGenParticle *fBoson;
   float computeTTbarCorr();
   TGenParticle* findDaughter(int iparent, int dauId);
@@ -43,6 +44,9 @@ public:
   float fBosonMass;
   float fBosonEta;
   int fBosonPdgId;
+  int genEleFromW;
+  int genMuFromW;
+  int genTauFromW;
   
 protected: 
   TTree         *fTree;
