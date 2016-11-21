@@ -34,7 +34,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_Pro
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_PromptReco_v1_resub/JetHTRun2016G_PromptReco_v1_resub_128.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_PromptReco_v1_resub/JetHTRun2016G_PromptReco_v1_resub_129.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_PromptReco_v1_resub/JetHTRun2016G_PromptReco_v1_resub_13.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_PromptReco_v1_resub/JetHTRun2016G_PromptReco_v1_resub_130.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_PromptReco_v1_resub/JetHTRun2016G_PromptReco_v1_resub_14.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_PromptReco_v1_resub/JetHTRun2016G_PromptReco_v1_resub_15.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_PromptReco_v1_resub/JetHTRun2016G_PromptReco_v1_resub_16.root

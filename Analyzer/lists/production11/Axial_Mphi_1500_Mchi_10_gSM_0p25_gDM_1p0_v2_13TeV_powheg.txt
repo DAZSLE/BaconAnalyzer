@@ -1,3 +1,4 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Axial_Mphi_1500_Mchi_10_gSM_0p25_gDM_1p0_v2_13TeV_powheg/DMV_NNPDF30_Axial_Mphi-1500_Mchi-10_gSM-0p25_gDM-1p0_v2_13TeV-powheg/CRAB3/161114_162259/0000/Output_1.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Axial_Mphi_1500_Mchi_10_gSM_0p25_gDM_1p0_v2_13TeV_powheg/DMV_NNPDF30_Axial_Mphi-1500_Mchi-10_gSM-0p25_gDM-1p0_v2_13TeV-powheg/CRAB3/161114_162259/0000/Output_10.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Axial_Mphi_1500_Mchi_10_gSM_0p25_gDM_1p0_v2_13TeV_powheg/DMV_NNPDF30_Axial_Mphi-1500_Mchi-10_gSM-0p25_gDM-1p0_v2_13TeV-powheg/CRAB3/161114_162259/0000/Output_11.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/Axial_Mphi_1500_Mchi_10_gSM_0p25_gDM_1p0_v2_13TeV_powheg/DMV_NNPDF30_Axial_Mphi-1500_Mchi-10_gSM-0p25_gDM-1p0_v2_13TeV-powheg/CRAB3/161114_162259/0000/Output_12.root

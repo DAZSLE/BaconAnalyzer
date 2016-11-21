@@ -889,6 +889,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23S
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0000/Output_9.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0000/Output_90.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0000/Output_900.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0000/Output_901.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0000/Output_902.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0000/Output_903.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0000/Output_904.root
@@ -3577,6 +3578,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23S
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3579.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3580.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3581.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3582.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3583.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3584.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3585.root
@@ -3637,6 +3639,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23S
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3640.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3641.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3642.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3643.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3644.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3645.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0003/Output_3646.root
@@ -4274,6 +4277,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23S
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0004/Output_4278.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0004/Output_4279.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0004/Output_4280.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0004/Output_4281.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0004/Output_4282.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0004/Output_4283.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/161104_115959/0004/Output_4284.root

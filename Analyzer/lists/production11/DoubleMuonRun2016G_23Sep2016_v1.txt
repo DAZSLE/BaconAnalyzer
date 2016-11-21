@@ -1,0 +1,9 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/DoubleMuonRun2016G_23Sep2016_v1/DoubleMuonRun2016G_23Sep2016_v1_8.root

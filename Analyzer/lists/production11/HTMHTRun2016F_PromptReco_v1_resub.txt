@@ -1,1 +1,0 @@
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/HTMHTRun2016F_PromptReco_v1_resub/HTMHTRun2016F_PromptReco_v1_resub_0.root
