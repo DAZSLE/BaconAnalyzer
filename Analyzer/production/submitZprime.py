@@ -17,7 +17,7 @@ if __name__ == '__main__':
                   help="Just print out commands to run")    
     parser.add_option("--monitor",default='',help="Monitor mode (sub/resub/check directory of jobs)")
     parser.add_option('-s','--sample',dest="sample", default="All",
-                      choices=['All','Hbb','QCD','JetHT','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
+                      choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
     
     (options,args) = parser.parse_args()
@@ -50,6 +50,14 @@ if __name__ == '__main__':
         'JetHTRun2016E_PromptReco_v2': 'data',
         'JetHTRun2016F_PromptReco_v1': 'data',
         'JetHTRun2016G_PromptReco_v1': 'data'
+        }
+    samplesDict['SingleMuon'] = {
+        'SingleMuonRun2016B_PromptReco_v2': 'data',
+        'SingleMuonRun2016C_PromptReco_v2': 'data',
+        'SingleMuonRun2016D_PromptReco_v2': 'data',
+        'SingleMuonRun2016E_PromptReco_v2': 'data',
+        'SingleMuonRun2016F_PromptReco_v1': 'data',
+        'SingleMuonRun2016G_PromptReco_v1': 'data'
         }
     samplesDict['Hbb'] = {
         'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',  
@@ -151,7 +159,8 @@ if __name__ == '__main__':
                              samplesDict['VectorDiJet1Gamma'].items() +
                              samplesDict['DMSpin0'].items())
     
-    samplesDict['Data'] = dict(samplesDict['JetHT'].items())
+    samplesDict['Data'] = dict(samplesDict['JetHT'].items() +
+                               samplesDict['SingleMuon'].items())
                               
     samplesDict['All'] = dict(samplesDict['MC'].items() + samplesDict['Data'].items())
 
