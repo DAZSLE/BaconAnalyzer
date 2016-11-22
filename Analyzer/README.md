@@ -58,26 +58,12 @@ After modifications compile before running.
 
 Baconbits production
 -----------
-1) Define list of samples on production/submit$YOURANALYSIS.sh along with xsec
+Define samples on submitZprime.py
 
-2) Make output directory
+Run submitZprime.py for a given SAMPLE, as following:
 
-   `mkdir $YOURANALYSISbits` e.g. `mkdir zprimebits`
+python submitZprime.py -s SAMPLE --monitor sub (to submit)
 
-3) Make configuration files for the $OPTION samples (or All) specified in `production/submit$YOURANALYSIS.sh`
-```
-cd production/
-./submit$YOURANALYSIS.sh $OPTION
-```
+python submitZprime.py -s SAMPLE --monitor sub (to check status - also bjobs)
 
-4) After compiling, submit jobs to Batch as 
-```
-./submit$YOURANALYSIS.sh $OPTION --monitor sub
-```
-
-5) When production is done combine files using
-```
-./combine$YOURANALYSIS.sh $OPTION
-```
-
-Baconbits are stored in $YOURANALYSISbits/*.root
+python submitZprime.py -s SAMPLE --monitor resub (to resubmit)
