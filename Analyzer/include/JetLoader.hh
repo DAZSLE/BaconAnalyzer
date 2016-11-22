@@ -9,8 +9,6 @@
 #include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
 
-// Razor utils
-#include "RazorUtils.hh"
 
 using namespace baconhep;
 
