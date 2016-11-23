@@ -169,21 +169,35 @@ int main( int argc, char **argv ) {
     fVJet15   ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho);
     if(fVJet15->selectedVJets.size()>0){ 
       fEvt->fselectBits =  fEvt->fselectBits | 4;
-      if(fVJet15->selectedVJetsCHS.size()>0)      fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[0],1.5);
+      if(fVJet15->selectedVJetsCHS.size()>0) {
+	fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[0],1.5,0);
+	if(fVJet15->selectedVJetsCHS.size()>1) {
+	  fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[1],1.5,1);
+	}
+      }
     }
 
 
-    // AK8Puppi Jets
-    
+    // AK8Puppi Jets    
     fVJet8    ->load(i0);
     fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
     fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
     if(fVJet8->selectedVJets.size()>0){
       fEvt->fselectBits =  fEvt->fselectBits | 2;
       // Match AK8CHS leading jet within dR = 0.8
-      if(fVJet8->selectedVJetsCHS.size()>0)      fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[0],0.8);
+      if(fVJet8->selectedVJetsCHS.size()>0) {
+	fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[0],0.8,0);
+	if(fVJet8->selectedVJetsCHS.size()>1) {
+	  fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[1],0.8,1);
+	}
+      }
       // Match AK15 Puppi leading jet within dR = 0.4 (to get pT ratio)
-      if(fVJet15->selectedVJets.size()>0)      fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4);
+      if(fVJet15->selectedVJets.size()>0) {
+	fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4,0);
+	if(fVJet15->selectedVJets.size()>1) {
+	  fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[1],0.4,1);
+	}
+      }
     }
       
     // AK4Puppi Jets
