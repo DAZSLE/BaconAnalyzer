@@ -43,7 +43,7 @@ void JetLoader::reset() {
 void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) { 
   reset();
   fTree = iTree;
-  std::stringstream pSN,pSfwd,pSb,pSbL,pSbM,pSbT,pSNdR08,pSbLdR08,pSbMdR08,pSbTdR08;   
+  std::stringstream pSN,pSfwd,pSb,pSbL,pSbM,pSbT,pSNdR08,pSbLdR08,pSbMdR08,pSbTdR08,pSbLPt100dR08,pSbMPt100dR08,pSbTPt100dR08,pSbLPt150dR08,pSbMPt150dR08,pSbTPt150dR08;   
   pSN     << "n" << iJetLabel << "s";
   pSfwd   << "n" << iJetLabel << "sfwd";
   pSb     << "n" << iJetLabel << "sbtag";
@@ -54,6 +54,14 @@ void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   pSbLdR08<< "n" << iJetLabel << "sLdR08";
   pSbMdR08<< "n" << iJetLabel << "sMdR08";
   pSbTdR08<< "n" << iJetLabel << "sTdR08";
+  pSbLPt100dR08<< "n" << iJetLabel << "sLPt100dR08";
+  pSbMPt100dR08<< "n" << iJetLabel << "sMPt100dR08";
+  pSbTPt100dR08<< "n" << iJetLabel << "sTPt100dR08";
+  pSbLPt150dR08<< "n" << iJetLabel << "sLPt150dR08";
+  pSbMPt150dR08<< "n" << iJetLabel << "sMPt150dR08";
+  pSbTPt150dR08<< "n" << iJetLabel << "sTPt150dR08";
+
+
 
   fTree->Branch(pSN.str().c_str()           ,&fNJets           ,(pSN.str()+"/I").c_str());  // jet multiplicity
   fTree->Branch(pSfwd.str().c_str()         ,&fNFwd            ,(pSfwd.str()+"/I").c_str());
@@ -64,6 +72,13 @@ void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fTree->Branch(pSbLdR08.str().c_str()      ,&fNBTagsLdR08     ,(pSbLdR08.str()+"/I").c_str());
   fTree->Branch(pSbMdR08.str().c_str()      ,&fNBTagsMdR08     ,(pSbMdR08.str()+"/I").c_str());
   fTree->Branch(pSbTdR08.str().c_str()      ,&fNBTagsTdR08     ,(pSbTdR08.str()+"/I").c_str());
+  fTree->Branch(pSbLPt100dR08.str().c_str()      ,&fNBTagsLPt100dR08     ,(pSbLPt100dR08.str()+"/I").c_str());
+  fTree->Branch(pSbMPt100dR08.str().c_str()      ,&fNBTagsMPt100dR08     ,(pSbMPt100dR08.str()+"/I").c_str());
+  fTree->Branch(pSbTPt100dR08.str().c_str()      ,&fNBTagsTPt100dR08     ,(pSbTPt100dR08.str()+"/I").c_str());
+  fTree->Branch(pSbLPt150dR08.str().c_str()      ,&fNBTagsLPt150dR08     ,(pSbLPt150dR08.str()+"/I").c_str());
+  fTree->Branch(pSbMPt150dR08.str().c_str()      ,&fNBTagsMPt150dR08     ,(pSbMPt150dR08.str()+"/I").c_str());
+  fTree->Branch(pSbTPt150dR08.str().c_str()      ,&fNBTagsTPt150dR08     ,(pSbTPt150dR08.str()+"/I").c_str());
+
 
   for(int i0 = 0; i0 < fN*(10)+4; i0++) {double pVar = 0; fVars.push_back(pVar);}           
   setupNtuple(iJetLabel.c_str(),iTree,fN,fVars);                                            // from MonoXUtils.cc => fN=4 j*_pt,j*_eta,j*_phi for j1,j2,j3,j4 (3*4=12)
@@ -75,7 +90,7 @@ void JetLoader::load(int iEvent) {
 }
 void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, std::vector<TLorentzVector> &iVJets){
   reset(); 
-  int lCount = 0, lNFwd = 0, lNBTagL = 0,lNBTagM = 0,lNBTagT = 0, lCountdR08 = 0,lNBTagLdR08 = 0,lNBTagMdR08 = 0,lNBTagTdR08 = 0;
+  int lCount = 0, lNFwd = 0, lNBTagL = 0,lNBTagM = 0,lNBTagT = 0, lCountdR08 = 0,lNBTagLdR08 = 0,lNBTagMdR08 = 0,lNBTagTdR08 = 0, lNBTagMPt100dR08=0,lNBTagLPt100dR08=0, lNBTagTPt100dR08=0, lNBTagLPt150dR08=0, lNBTagMPt150dR08=0, lNBTagTPt150dR08=0;
   for  (int i0 = 0; i0 < fJets->GetEntriesFast(); i0++) { 
     TJet *pJet = (TJet*)((*fJets)[i0]);
     if(passVeto(pJet->eta,pJet->phi,0.4,iElectrons))                      continue;
@@ -92,18 +107,31 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     fGoodJets.push_back(pJet);
 
     // jet and b-tag multiplicity
-    if(iVJets.size()>0 && iVJets[0].Pt()>0 && vPJet.DeltaR(iVJets[0])>0.8) lCountdR08++;
+    if(iVJets.size()>0 && iVJets[0].Pt()>300 && vPJet.DeltaR(iVJets[0])>0.8) lCountdR08++;
     if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVL){
       lNBTagL++;
-      if(iVJets.size()>0) {if(pJet->pt>0 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagLdR08++;}
+      if(iVJets.size()>0) {
+		if(pJet->pt>50 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagLdR08++;
+		if(pJet->pt>100 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagLPt100dR08++;
+		if(pJet->pt>150 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagLPt150dR08++;
+		}
+
     }
     if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVM){ 
       lNBTagM++;
-      if(iVJets.size()>0) {if(pJet->pt>0 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagMdR08++;}
+      if(iVJets.size()>0) {
+		if(pJet->pt>50 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagMdR08++;
+		if(pJet->pt>100 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagMPt100dR08++;
+		if(pJet->pt>150 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagMPt150dR08++;
+		}
     }
     if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVT){
       lNBTagT++;
-      if(iVJets.size()>0) {if(pJet->pt>0 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagTdR08++;}
+      if(iVJets.size()>0) {
+			if(pJet->pt>50 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagTdR08++;
+			if(pJet->pt>100 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagTPt100dR08++;
+			if(pJet->pt>150 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagTPt150dR08++;	
+			}
     }
   }
   addVJet(fLooseJets,selectedJets);
@@ -116,6 +144,12 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
   fNBTagsLdR08     = lNBTagLdR08;
   fNBTagsMdR08     = lNBTagMdR08;
   fNBTagsTdR08     = lNBTagTdR08;
+  fNBTagsLPt100dR08     = lNBTagLPt100dR08;
+  fNBTagsMPt100dR08     = lNBTagMPt100dR08;
+  fNBTagsTPt100dR08     = lNBTagTPt100dR08;
+  fNBTagsLPt150dR08     = lNBTagLPt150dR08;
+  fNBTagsMPt150dR08     = lNBTagMPt150dR08;
+  fNBTagsTPt150dR08     = lNBTagTPt150dR08;
 
   fillJet(fN,fLooseJets,fVars);
   fillOthers(fN,fLooseJets,fVars,iVJets);

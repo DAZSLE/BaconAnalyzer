@@ -52,6 +52,12 @@ protected:
   int           fNBTagsLdR08;
   int           fNBTagsMdR08;
   int           fNBTagsTdR08;
+  int           fNBTagsLPt100dR08;
+  int           fNBTagsMPt100dR08;
+  int           fNBTagsTPt100dR08;
+  int           fNBTagsLPt150dR08;
+  int           fNBTagsMPt150dR08;
+  int           fNBTagsTPt150dR08;
 
   int           fN;
   
