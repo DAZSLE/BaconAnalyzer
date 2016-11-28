@@ -48,6 +48,9 @@ bool   passVeto               (double iEta,double iPhi,double idR,std::vector<TL
 void   setupNtuple            (std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals);
 void   setupNtuple            (std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals,int iHead,std::vector<std::string> &iLabels);
 void   setupNtuple            (std::string iHeader,TTree *iTree,int iN,std::vector<float> &iVals,std::vector<std::string> &iLabels);
+void   setupNtupleVector      (std::string iHeader,TTree *iTree,std::vector<double> &pt, std::vector<double> &eta, std::vector<double> &phi);
+void   setupNtupleVector      (std::string iHeader,TTree *iTree,std::vector< std::vector<double> > &iValVectors,std::vector<std::string> &iLabels);
+void   setupNtupleVector      (std::string iHeader,TTree *iTree,std::vector< std::vector<float> > &iValVectors,std::vector<std::string> &iLabels);
 
 template<class T> void addObject(T *iObject,std::vector<T*> &iObjects) {
   bool lFill = false;

@@ -22,12 +22,13 @@ using namespace baconhep;
 
 class VJetLoader { 
 public:
-  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1, std::string subjetbtagScaleFactorFilename ="/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_10/src/BaconAnalyzer/Analyzer/data/subjet_CSVv2_ichep.csv");
+  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1,std::string subjetbtagScaleFactorFilename ="/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_10/src/BaconAnalyzer/Analyzer/data/subjet_CSVv2_ichep.csv");
   ~VJetLoader();
   double correction(TJet &iJet,double iRho);
   void reset();
   void resetZprime();
   void resetCHS();
+  void resetDoubleB();
   void resetMonoX();
   void resetSubJetBTag();
   void setupTree(TTree *iTree,std::string iJetLabel);
@@ -37,20 +38,23 @@ public:
   void setupTreeSubJetBTag(TTree *iTree, std::string iJetLabel);
   void load(int iEvent);
   void selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho);
+  void selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho);  
   void selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho);
   void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho = 0);
-  void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR);
-  void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2,double dR);
-  void fillVJetCHS(TJet *iJet);
+  int getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
+  void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex);
+  void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
+  void fillVJetCHS(TJet *iJet, int jIndex);
   TAddJet *getAddJet(TJet *iJet);
   TAddJet *getAddJetCHS(TJet *iJet);
   void addSubJetBTag(std::string iHeader,TTree *iTree,std::string iLabel,std::vector<std::string> &iLabels,int iN,std::vector<float> &iVals);
   void fillSubJetBTag(const TClonesArray* iGens, std::vector<TLorentzVector> iObjects);
 
+  
   double dPhi(TLorentzVector v1, TLorentzVector v2, TLorentzVector v3);
-
+  
+  
   double ftopSize, ftopMatching, fvSize, fvMatching,fRatioPt;
-  double fdoublecsvCHS, fdoublesubCHS;
   int fisHadronicTop, fisHadronicV;
   int fisTightVJet, fisTightVJetCHS;
   int fpartonFlavor, fhadronFlavor, fnbHadrons, fncHadrons, fnCharged, fnNeutrals, fnParticles;
@@ -58,6 +62,9 @@ public:
 
   std::vector<TJet*> fLooseVJets, fLooseVJetsCHS;
   std::vector<TLorentzVector> fGoodVSubJets, selectedVJets, fGoodVSubJetsCHS, selectedVJetsCHS;
+  std::vector<double> fdoublecsvCHS, fdoublesubCHS, fptCHS, fetaCHS, fphiCHS;
+  std::vector<TJet*> fLooseVJetsByDoubleB, fLooseVJetsCHSByDoubleB;
+  std::vector<TLorentzVector> selectedVJetsByDoubleB, selectedVJetsCHSByDoubleB;
 
   const double CSVL = 0.460; // CSVv2SubJet WP 
   const double CSVM = 0.800;

@@ -320,7 +320,7 @@ bool passVeto(double iEta,double iPhi,double idR, std::vector<TLorentzVector> &i
   return pMatch;
 }
 //--------------------------------------------------------------------------------------------------
-void setupNtuple(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals) { 
+void setupNtuple(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals) {
   for(int i0 = 0; i0 < iN; i0++) { 
     int iBase = i0*3;
     std::stringstream pSPt,pSEta,pSPhi;  
@@ -354,6 +354,32 @@ void setupNtuple(std::string iHeader,TTree *iTree,int iN,std::vector<float> &iVa
     iTree->Branch(pVal .str().c_str(),&iVals[lBase],(pVal .str()+"/F").c_str());
     if(i0 % int(iLabels.size()) == 0 && i0 > 0) lCount++;
     lBase++;
+  }
+}
+//--------------------------------------------------------------------------------------------------
+void setupNtupleVector(std::string iHeader,TTree *iTree,std::vector<double> &pt, std::vector<double> &eta, std::vector<double> &phi) {
+  std::stringstream pSPt,pSEta,pSPhi;  
+  pSPt  << iHeader << "_pt";
+  pSEta << iHeader << "_eta";
+  pSPhi << iHeader  << "_phi";
+  iTree->Branch(pSPt .str().c_str(), &pt);
+  iTree->Branch(pSEta.str().c_str(), &eta);
+  iTree->Branch(pSPhi.str().c_str(), &phi);
+}
+//--------------------------------------------------------------------------------------------------
+void setupNtupleVector(std::string iHeader,TTree *iTree,std::vector< std::vector<double> > &iValVectors,std::vector<std::string> &iLabels) { 
+  for(int i0 = 0; i0 < int(iLabels.size()); i0++) { 
+    std::stringstream pVal;
+    pVal  << iHeader << "_" << iLabels[i0];
+    iTree->Branch(pVal .str().c_str(),&iValVectors[i0]);
+  }
+}
+//--------------------------------------------------------------------------------------------------
+void setupNtupleVector(std::string iHeader,TTree *iTree,std::vector< std::vector<float> > &iValVectors,std::vector<std::string> &iLabels) { 
+  for(int i0 = 0; i0 < int(iLabels.size()); i0++) { 
+    std::stringstream pVal;
+    pVal  << iHeader << "_" << iLabels[i0];
+    iTree->Branch(pVal .str().c_str(),&iValVectors[i0]);
   }
 }
 //--------------------------------------------------------------------------------------------------
