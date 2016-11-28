@@ -19,6 +19,7 @@ if __name__ == '__main__':
     parser.add_option('-s','--sample',dest="sample", default="All",
                       choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
+    parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v11.test", help = "tag, which is the same as folder") 
     
     (options,args) = parser.parse_args()
 
@@ -37,7 +38,8 @@ if __name__ == '__main__':
         'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 1nh"%(json)
     }
         
-    analysisDir = "zprimebits-v11.051"
+    #analysisDir = "zprimebits-v11.051"
+    analysisDir = options.tag
     executable = "runZprime"
     
     samplesDict = {}
@@ -60,18 +62,18 @@ if __name__ == '__main__':
         'SingleMuonRun2016G_PromptReco_v1': 'data'
         }
     samplesDict['Hbb'] = {
-        'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',  
-        'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext': 'mc',        
-        'GluGluHToBB_M125_13TeV_powheg_herwigpp': 'mc',
-        'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
-        'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc',
-        'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
-        'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
+        #'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',  
+        #'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext': 'mc',        
+        #'GluGluHToBB_M125_13TeV_powheg_herwigpp': 'mc',
+        #'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
+        #'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc',
+        #'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
+        #'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
         'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
-        'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-        'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-        'ttHTobb_M125_13TeV_powheg_pythia8': 'mc',
-        'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc'
+        #'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+        #'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+        #'ttHTobb_M125_13TeV_powheg_pythia8': 'mc',
+        #'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc'
         }
     samplesDict['QCD'] = {
         'QCD_HT100to200_13TeV':'mc',

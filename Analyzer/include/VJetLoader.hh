@@ -43,7 +43,7 @@ public:
   void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho = 0);
   int getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
   void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex);
-  void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex);
+  void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
   void fillVJetCHS(TJet *iJet, int jIndex);
   TAddJet *getAddJet(TJet *iJet);
   TAddJet *getAddJetCHS(TJet *iJet);

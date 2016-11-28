@@ -215,22 +215,24 @@ void VJetLoader::setupTreeZprime(TTree *iTree, std::string iJetLabel) {
 void VJetLoader::setupTreeCHS(TTree *iTree, std::string iJetLabel) {
   resetCHS();  
   fTree = iTree;
-  for(int i0 = 0; i0 < fN; i0++) {    
+  for(int i0 = 0; i0 < fN; i0++) {
     fdoublecsvCHS.push_back(-999);
     fdoublesubCHS.push_back(-999);
     fptCHS.push_back(-999);
     fetaCHS.push_back(-999);
     fphiCHS.push_back(-999);
+  }
+  for(int i0 = 0; i0 < fN; i0++) {
     std::stringstream pSdc;   pSdc << iJetLabel << i0 << "_doublecsv";
     std::stringstream pSds;   pSds << iJetLabel << i0 << "_doublesub";    
     std::stringstream pSpt;   pSpt << iJetLabel << i0 << "_pt";    
     std::stringstream pSeta;   pSeta << iJetLabel << i0 << "_eta";  
-    std::stringstream pSphi;   pSphi << iJetLabel << i0 << "_phi";    
-    fTree->Branch(pSdc.str().c_str() ,&fdoublecsvCHS[i0]        ,(pSdc.str()+"/D").c_str());
-    fTree->Branch(pSds.str().c_str() ,&fdoublesubCHS[i0]       ,(pSds.str()+"/D").c_str());
-    fTree->Branch(pSpt.str().c_str() ,&fptCHS[i0]       ,(pSpt.str()+"/D").c_str());
-    fTree->Branch(pSeta.str().c_str() ,&fetaCHS[i0]       ,(pSeta.str()+"/D").c_str());
-    fTree->Branch(pSphi.str().c_str() ,&fphiCHS[i0]       ,(pSphi.str()+"/D").c_str());
+    std::stringstream pSphi;   pSphi << iJetLabel << i0 << "_phi";
+    fTree->Branch(pSdc.str().c_str() ,&fdoublecsvCHS.at(i0)        ,(pSdc.str()+"/D").c_str());
+    fTree->Branch(pSds.str().c_str() ,&fdoublesubCHS.at(i0)       ,(pSds.str()+"/D").c_str());
+    fTree->Branch(pSpt.str().c_str() ,&fptCHS.at(i0)       ,(pSpt.str()+"/D").c_str());
+    fTree->Branch(pSeta.str().c_str() ,&fetaCHS.at(i0)       ,(pSeta.str()+"/D").c_str());
+    fTree->Branch(pSphi.str().c_str() ,&fphiCHS.at(i0)       ,(pSphi.str()+"/D").c_str());
   }
 }
 void VJetLoader::setupTreeMonoX(TTree *iTree, std::string iJetLabel) {
@@ -273,7 +275,7 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
   int lCount(0), lCountT(0);
   for  (int i0 = 0; i0 < fVJets->GetEntriesFast(); i0++) { 
     TJet *pVJet = (TJet*)((*fVJets)[i0]);
-    if(pVJet->pt        <=  150)                                           continue;
+    if(pVJet->pt        <=  350)                                           continue;
     if(fabs(pVJet->eta) >=  2.5)                                           continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
@@ -351,7 +353,7 @@ void VJetLoader::selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::ve
   int lCount(0), lCountT(0);
   for  (int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
     TJet *pVJet = (TJet*)((*fVJetsCHS)[i0]);
-    if(pVJet->pt        <=  150)                                           continue;
+    if(pVJet->pt        <=  300)                                           continue;
     if(fabs(pVJet->eta) >=  2.5)                                           continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
@@ -516,7 +518,7 @@ void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJe
   }
 }
 
-void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex){
+void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR){
   TLorentzVector iJet1;
   int nmatched(0);
   float mindR = dR;  
@@ -531,16 +533,16 @@ void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector i
     fRatioPt = iJet2.Pt()/iJet1.Pt();
   }
 }
-
-
-
 void VJetLoader::fillVJetCHS(TJet *iJet, int jIndex){
   TAddJet *pAddJet = getAddJetCHS(iJet);
-  fdoublecsvCHS[jIndex] = pAddJet->doublecsv;
-  fdoublesubCHS[jIndex] = pAddJet->Double_sub;
-  fptCHS[jIndex] = iJet->pt;
-  fetaCHS[jIndex] = iJet->eta;
-  fphiCHS[jIndex] = iJet->phi;
+  fdoublecsvCHS[jIndex] = double(pAddJet->doublecsv);
+  fdoublesubCHS[jIndex] = double(pAddJet->Double_sub);
+  fptCHS[jIndex] = double(iJet->pt);
+  fetaCHS[jIndex] = double(iJet->eta);
+  fphiCHS[jIndex] = double(iJet->phi);
+  std::cout << jIndex << std::endl;
+  std::cout << fdoublecsvCHS[jIndex] << std::endl;
+  std::cout << fptCHS[jIndex] << std::endl;
 }
 void VJetLoader::addSubJetBTag(std::string iHeader,TTree *iTree,std::string iLabel,std::vector<std::string> &iLabels,int iN,std::vector<float> &iVals) {
   int iBase=iN;

@@ -78,8 +78,8 @@ int main( int argc, char **argv ) {
   fTau       = new TauLoader     (lTree);                                                   // fTaus and fTaurBr, fN = 1
   fPhoton    = new PhotonLoader  (lTree);                                                   // fPhotons and fPhotonBr, fN = 1
   fJet4      = new JetLoader     (lTree);                                                   // fJets, fJetBr => AK4PUPPI, sorted by pT
-  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS",2);     // fVJets, fVJetBr => AK8PUPPI
-  fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi","CA15CHS","AddCA15CHS",2);
+  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS",3);     // fVJets, fVJetBr => AK8PUPPI
+  fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi","CA15CHS","AddCA15CHS",3);
   if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                     // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
 
   TFile *lFile = TFile::Open("Output.root","RECREATE");
@@ -109,8 +109,8 @@ int main( int argc, char **argv ) {
 
   // Loop over events i0 = iEvent
   int neventstest = 0;
-  for(int i0 = 0; i0 < int(lTree->GetEntriesFast()); i0++) {
-  //for(int i0 = 0; i0 < int(10); i0++){ // for testing
+  //for(int i0 = 0; i0 < int(lTree->GetEntriesFast()); i0++) {
+  for(int i0 = 0; i0 < int(1000); i0++){ // for testing
 
     // Check GenInfo
     fEvt->load(i0);
@@ -167,41 +167,26 @@ int main( int argc, char **argv ) {
     fVJet15   ->load(i0);
     fVJet15   ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho);
     fVJet15   ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho);
-    if(fVJet15->selectedVJets.size()>0){ 
-      fEvt->fselectBits =  fEvt->fselectBits | 4;
-      if(fVJet15->selectedVJetsCHS.size()>0) {
-	fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[0],1.5,0);
-	if(fVJet15->selectedVJetsCHS.size()>1) {
-	  fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[1],1.5,1);
-	}
-      }
+    if(fVJet15->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 4;
+    for (int i1=0; i1<int(fVJet15->selectedVJets.size()); i1++) {
+      // Match CA15 Puppi jet with CA15 CHS jet within dR = 1.5
+      fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[i1],1.5,i1);
     }
-
-
+      
     // AK8Puppi Jets    
     fVJet8    ->load(i0);
     fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
     fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
-    if(fVJet8->selectedVJets.size()>0){
-      fEvt->fselectBits =  fEvt->fselectBits | 2;
-      // Match AK8CHS leading jet within dR = 0.8
-      if(fVJet8->selectedVJetsCHS.size()>0) {
-	fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[0],0.8,0);
-	if(fVJet8->selectedVJetsCHS.size()>1) {
-	  fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[1],0.8,1);
-	}
-      }
-      // Match AK15 Puppi leading jet within dR = 0.4 (to get pT ratio)
-      if(fVJet15->selectedVJets.size()>0) {
-	fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4,0);
-	if(fVJet15->selectedVJets.size()>1) {
-	  fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[1],0.4,1);
-	}
-      }
+    if(fVJet8->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 2;
+    for (int i1=0; i1<int(fVJet8->selectedVJets.size()); i1++){
+      // Match AK8 Puppi jet with AK8 CHS jet within dR = 0.8
+      fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[i1],0.8,i1);
     }
-
-    // computing AK8Puppi Jets pT > 500, sorted by double b-tag
-    fVJet8    ->selectVJetsByDoubleBCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
+    // Match leading AK8 Puppi jet with CA15 Puppi jet within dR = 0.4 (to get pT ratio)
+    if(fVJet8->selectedVJets.size()>0) fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4);
+    
+    // computing AK8Puppi Jets pT > 500, sorted by double b-tag -> hold off for now
+    //fVJet8    ->selectVJetsByDoubleBCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
       
     // AK4Puppi Jets
     fJet4     ->load(i0); 
