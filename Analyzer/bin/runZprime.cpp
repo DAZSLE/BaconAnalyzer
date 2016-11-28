@@ -138,8 +138,11 @@ int main( int argc, char **argv ) {
     if(lOption.find("data")!=std::string::npos){
       if(fEvt ->passTrigger("HLT_AK8PFJet360_TrimMass30_v*") ||
 	 fEvt ->passTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*") ||
-	 fEvt ->passTrigger("HLT_PFHT800_v*")
-	 ) trigbits = trigbits | 2; 
+	 fEvt ->passTrigger("HLT_PFHT800_v*") || 
+	 fEvt ->passTrigger("HLT_PFHT900_v*") || 
+	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*") ||
+	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900_v*") )  trigbits = trigbits | 2; 
+      if( fEvt ->passTrigger("HLT_Mu45_eta2p1_v*")) trigbits = trigbits | 3; 
       // if(trigbits==1) continue;
     }
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
