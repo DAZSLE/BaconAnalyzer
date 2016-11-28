@@ -72,7 +72,7 @@ int main( int argc, char **argv ) {
   TTree *lTree = load(lName); 
   
   // Declare Readers 
-  fEvt       = new EvtLoader     (lTree,lName);                                             // fEvt, fEvtBr, fVertices, fVertexBr
+  fEvt       = new EvtLoader     (lTree,lName,"/afs/cern.ch/user/w/woodson/public/HLTFile_25ns");                                             // fEvt, fEvtBr, fVertices, fVertexBr
   fMuon      = new MuonLoader    (lTree);                                                   // fMuon and fMuonBr, fN = 2 - muonArr and muonBr
   fElectron  = new ElectronLoader(lTree);                                                   // fElectrons and fElectronBr, fN = 2
   fTau       = new TauLoader     (lTree);                                                   // fTaus and fTaurBr, fN = 1
@@ -109,8 +109,8 @@ int main( int argc, char **argv ) {
 
   // Loop over events i0 = iEvent
   int neventstest = 0;
-  //for(int i0 = 0; i0 < int(lTree->GetEntriesFast()); i0++) {
-  for(int i0 = 0; i0 < int(1000); i0++){ // for testing
+  for(int i0 = 0; i0 < int(lTree->GetEntriesFast()); i0++) {
+  //for(int i0 = 0; i0 < int(1000); i0++){ // for testing
 
     // Check GenInfo
     fEvt->load(i0);
@@ -141,7 +141,8 @@ int main( int argc, char **argv ) {
 	 fEvt ->passTrigger("HLT_PFHT800_v*") || 
 	 fEvt ->passTrigger("HLT_PFHT900_v*") || 
 	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*") ||
-	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900_v*") )  trigbits = trigbits | 2; 
+	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*")
+	 )  trigbits = trigbits | 2; 
       if( fEvt ->passTrigger("HLT_Mu45_eta2p1_v*")) trigbits = trigbits | 4; 
       // if(trigbits==1) continue;
     }

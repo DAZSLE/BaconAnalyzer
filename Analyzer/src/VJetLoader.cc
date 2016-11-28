@@ -540,9 +540,6 @@ void VJetLoader::fillVJetCHS(TJet *iJet, int jIndex){
   fptCHS[jIndex] = double(iJet->pt);
   fetaCHS[jIndex] = double(iJet->eta);
   fphiCHS[jIndex] = double(iJet->phi);
-  std::cout << jIndex << std::endl;
-  std::cout << fdoublecsvCHS[jIndex] << std::endl;
-  std::cout << fptCHS[jIndex] << std::endl;
 }
 void VJetLoader::addSubJetBTag(std::string iHeader,TTree *iTree,std::string iLabel,std::vector<std::string> &iLabels,int iN,std::vector<float> &iVals) {
   int iBase=iN;
