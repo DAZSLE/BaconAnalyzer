@@ -62,18 +62,18 @@ if __name__ == '__main__':
         'SingleMuonRun2016G_PromptReco_v1': 'data'
         }
     samplesDict['Hbb'] = {
-        #'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',  
-        #'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext': 'mc',        
-        #'GluGluHToBB_M125_13TeV_powheg_herwigpp': 'mc',
-        #'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
-        #'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc',
-        #'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
-        #'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
+        'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',  
+        'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_ext': 'mc',        
+        'GluGluHToBB_M125_13TeV_powheg_herwigpp': 'mc',
+        'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
+        'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc',
+        'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
+        'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
         'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
-        #'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-        #'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-        #'ttHTobb_M125_13TeV_powheg_pythia8': 'mc',
-        #'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc'
+        'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+        'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+        'ttHTobb_M125_13TeV_powheg_pythia8': 'mc',
+        'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc'
         }
     samplesDict['QCD'] = {
         'QCD_HT100to200_13TeV':'mc',
