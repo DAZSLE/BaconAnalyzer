@@ -142,7 +142,7 @@ int main( int argc, char **argv ) {
 	 fEvt ->passTrigger("HLT_PFHT900_v*") || 
 	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*") ||
 	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900_v*") )  trigbits = trigbits | 2; 
-      if( fEvt ->passTrigger("HLT_Mu45_eta2p1_v*")) trigbits = trigbits | 3; 
+      if( fEvt ->passTrigger("HLT_Mu45_eta2p1_v*")) trigbits = trigbits | 4; 
       // if(trigbits==1) continue;
     }
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
