@@ -107,7 +107,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     fGoodJets.push_back(pJet);
 
     // jet and b-tag multiplicity
-    if(iVJets.size()>0 && iVJets[0].Pt()>300 && vPJet.DeltaR(iVJets[0])>0.8) lCountdR08++;
+    if(iVJets.size()>0 && iVJets[0].Pt()>350 && vPJet.DeltaR(iVJets[0])>0.8) lCountdR08++;
     if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVL){
       lNBTagL++;
       if(iVJets.size()>0) {
