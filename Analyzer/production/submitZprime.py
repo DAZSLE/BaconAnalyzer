@@ -46,12 +46,13 @@ if __name__ == '__main__':
     
     
     samplesDict['JetHT'] = {
-        'JetHTRun2016B_PromptReco_v2': 'data',
+        'JetHTRun2016B_PromptReco_v2_resub': 'data',
         'JetHTRun2016C_PromptReco_v2': 'data',
         'JetHTRun2016D_PromptReco_v2': 'data',
         'JetHTRun2016E_PromptReco_v2': 'data',
         'JetHTRun2016F_PromptReco_v1': 'data',
-        'JetHTRun2016G_PromptReco_v1': 'data'
+        'JetHTRun2016G_PromptReco_v1': 'data',
+        'JetHTRun2016H_PromptReco_v2': 'data'
         }
     samplesDict['SingleMuon'] = {
         'SingleMuonRun2016B_PromptReco_v2': 'data',
@@ -59,7 +60,8 @@ if __name__ == '__main__':
         'SingleMuonRun2016D_PromptReco_v2': 'data',
         'SingleMuonRun2016E_PromptReco_v2': 'data',
         'SingleMuonRun2016F_PromptReco_v1': 'data',
-        'SingleMuonRun2016G_PromptReco_v1': 'data'
+        'SingleMuonRun2016G_PromptReco_v1': 'data',
+        'SingleMuonRun2016H_PromptReco_v2': 'data'
         }
     samplesDict['Hbb'] = {
         'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',  
