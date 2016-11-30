@@ -104,17 +104,8 @@ if options.monitor:
   if options.monitor not in ['sub','check','resub']: sys.exit('Error -- Unknown monitor mode %s'%options.monitor)
   dir = options.outdir
 
-  if options.monitor == 'sub' or options.monitor == 'resub': 
-    # pick up job scripts in output directory (ends in .sh)
-    lofjobs = []
-    for root,dirs,files in os.walk(dir):
-     for file in fnmatch.filter(files,'*.sh'):
-       if options.monitor == 'resub' and not os.path.isfile('%s/%s.fail'%(root,file)): continue
-       lofjobs.append('%s/%s'%(os.path.abspath(root),file))
-    print 'Submitting %d jobs from directory %s'%(len(lofjobs),dir)
-    submit_jobs(lofjobs) 
 
-  if options.monitor == 'check': 
+  if options.monitor == 'check' or options.monitor == 'resub': 
     failjobs = []
     runjobs  = []
     donejobs = []
@@ -137,7 +128,17 @@ if options.monitor:
     for job in donejobs : print '\t DONE %s'%job
     print "\n  %d/%d Running, %d/%d Done, %d/%d Failed (resub with --monitor resub)"\
     	%(len(runjobs),number_of_jobs,len(donejobs),number_of_jobs,len(failjobs),number_of_jobs)
-		
+        
+  if options.monitor == 'sub' or options.monitor == 'resub': 
+    # pick up job scripts in output directory (ends in .sh)
+    lofjobs = []
+    for root,dirs,files in os.walk(dir):
+     for file in fnmatch.filter(files,'*.sh'):
+       if options.monitor == 'resub' and '%s/%s'%(root,file) not in failjobs: continue
+       lofjobs.append('%s/%s'%(os.path.abspath(root),file))
+    print 'Submitting %d jobs from directory %s'%(len(lofjobs),dir)
+    submit_jobs(lofjobs)
+    
   sys.exit('Finished Monitor -- %s'%options.monitor)
 
 def parse_to_dict(l_list):
