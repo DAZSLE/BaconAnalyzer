@@ -122,9 +122,10 @@ if options.monitor:
     for root,dirs,files in os.walk(dir):
      for file in fnmatch.filter(files,'*.sh'):
        if os.path.isfile('%s/%s.fail'%(root,file)): failjobs.append('%s/%s'%(root,file))
-       if os.path.isfile('%s/%s.done'%(root,file)):
+       elif os.path.isfile('%s/%s.done'%(root,file)):
        		if not '%s.sh'%file in failjobs : donejobs.append('%s/%s'%(root,file))
-       if os.path.isfile('%s/%s.run'%(root,file)): runjobs.append('%s/%s'%(root,file))
+       elif os.path.isfile('%s/%s.run'%(root,file)): runjobs.append('%s/%s'%(root,file))
+       else: failjobs.append('%s/%s'%(root,file))
        number_of_jobs+=1
     print 'Status of jobs directory ', dir
     print '  Total of %d jobs'%number_of_jobs 
