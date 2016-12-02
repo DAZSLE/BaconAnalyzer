@@ -7,10 +7,10 @@ QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8			/eos/uscms/store/user/j
 QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8			/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/QCD_HT1000to1500_13TeV_ext.root
 QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8			/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/QCD_HT1500to2000_13TeV_ext.root
 QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8			/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/QCD_HT2000toInf_13TeV_ext.root
-ST_t-channel_antitop_4f_inclusiveDecays_13TeV_powheg					/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/ST_t-channel_antitop_4f_inclusiveDecays_13TeV_powheg.root
-ST_t-channel_top_4f_inclusiveDecays_13TeV_powheg						/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/ST_t-channel_top_4f_inclusiveDecays_13TeV_powheg.root
-ST_tW_antitop_5f_inclusiveDecays_13TeV								/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/ST_tW_antitop_5f_inclusiveDecays_13TeV.root
-ST_tW_top_5f_inclusiveDecays_13TeV									/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/ST_tW_top_5f_inclusiveDecays_13TeV.root
+ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1					/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/ST_t-channel_antitop_4f_inclusiveDecays_13TeV_powheg.root
+ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1						/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/ST_t-channel_top_4f_inclusiveDecays_13TeV_powheg.root
+ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1								/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/ST_tW_antitop_5f_inclusiveDecays_13TeV.root
+ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1 									/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/ST_tW_top_5f_inclusiveDecays_13TeV.root
 TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8  					/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/TTJets_13TeV.root
 WJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8		/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/WJetsToQQ_HT_600ToInf_13TeV.root
 WWTo4Q_4f_13TeV_amcatnloFXFX_madspin_pythia8						/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/WWTo4Q_13TeV_amcatnlo.root
