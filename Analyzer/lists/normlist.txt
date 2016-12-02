@@ -25,7 +25,7 @@ ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8							/eos/uscms/store/user/jduarte1/zp
 DMSpin0_ggPhibb1j_100											/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/DMSpin0_ggPhibb1j_100.root
 DMSpin0_ggPhibb1j_125											/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/DMSpin0_ggPhibb1j_125.root
 DMSpin0_ggPhibb1j_150											/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/DMSpin0_ggPhibb1j_150.root
-DMSpin0_ggPhibb1j_250.											/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/DMSpin0_ggPhibb1j_250.root
+DMSpin0_ggPhibb1j_250											/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/DMSpin0_ggPhibb1j_250.root
 DMSpin0_ggPhibb1j_300											/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/DMSpin0_ggPhibb1j_300.root
 DMSpin0_ggPhibb1j_400											/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/DMSpin0_ggPhibb1j_400.root
 DMSpin0_ggPhibb1j_500											/eos/uscms/store/user/jduarte1/zprimebits-v11.061/sklim-v0-Nov29/DMSpin0_ggPhibb1j_500.root
