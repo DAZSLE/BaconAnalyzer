@@ -22,7 +22,7 @@ using namespace baconhep;
 
 class VJetLoader { 
 public:
-  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1,std::string subjetbtagScaleFactorFilename ="/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_10/src/BaconAnalyzer/Analyzer/data/subjet_CSVv2_ichep.csv");
+  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1,std::string subjetbtagScaleFactorFilename ="/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/subjet_CSVv2_ichep.csv");
   ~VJetLoader();
   double correction(TJet &iJet,double iRho);
   void reset();
