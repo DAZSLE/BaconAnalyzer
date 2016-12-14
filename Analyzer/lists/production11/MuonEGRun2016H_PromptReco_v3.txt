@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/11/MuonEGRun2016H_PromptReco_v3/MuonEGRun2016H_PromptReco_v3_0.root
