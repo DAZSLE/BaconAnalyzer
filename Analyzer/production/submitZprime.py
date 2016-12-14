@@ -27,7 +27,9 @@ if __name__ == '__main__':
     if options.monitor is not '':
         monitorOption = '--monitor %s'%options.monitor
     
-    json = "$PWD/../data/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON_NoL1T.txt"
+    jsonPrompt = "$PWD/../data/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt"
+    jsonRereco = "$PWD/../data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"
+    
     xsec = 1
 
     eosOutDir = '/eos/cms/store/group/phys_exotica/dijet/dazsle'
@@ -35,7 +37,8 @@ if __name__ == '__main__':
     
     optionsDataMc = {
         'mc': "Output.root --passSumEntries 5:Events  -a 2:mc -a 3:none  -n 7000 -q 2nw4cores",
-        'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 1nh"%(json)
+        'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 1nh"%(jsonPrompt),        
+        'rereco': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 1nh"%(jsonRereco)
     }
         
     #analysisDir = "zprimebits-v11.051"
@@ -52,7 +55,13 @@ if __name__ == '__main__':
         'JetHTRun2016E_PromptReco_v2': 'data',
         'JetHTRun2016F_PromptReco_v1': 'data',
         'JetHTRun2016G_PromptReco_v1': 'data',
-        'JetHTRun2016H_PromptReco_v2': 'data'
+        'JetHTRun2016H_PromptReco_v2': 'data',
+        'JetHTRun2016B_23Sep2016_v1': 'rereco',
+        'JetHTRun2016C_23Sep2016_v1': 'rereco',
+        'JetHTRun2016D_23Sep2016_v1': 'rereco',
+        'JetHTRun2016E_23Sep2016_v1': 'rereco',
+        'JetHTRun2016F_23Sep2016_v1': 'rereco',
+        'JetHTRun2016G_23Sep2016_v1': 'rereco'
         }
     samplesDict['SingleMuon'] = {
         'SingleMuonRun2016B_PromptReco_v2': 'data',
@@ -71,11 +80,17 @@ if __name__ == '__main__':
         'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc',
         'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
         'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
-        'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+        'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',        
         'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
         'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
         'ttHTobb_M125_13TeV_powheg_pythia8': 'mc',
-        'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc'
+        'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc',
+        'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
+        'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_ext': 'mc',
+        'ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8_ext': 'mc',
+        'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp_ext': 'mc',
+        'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_ext': 'mc',
+        'ZH_HToBB_ZToNuNu_M125_13TeV_amcatnloFXFX_madspin_pythia8': 'mc'
         }
     samplesDict['QCD'] = {
         'QCD_HT100to200_13TeV':'mc',
