@@ -78,9 +78,8 @@ void VJetLoader::resetSubJetBTag() {
 }
 void VJetLoader::reset() { 
   fNLooseVJets        = 0;
-  fNTightVJets        = 0; 
-  fisTightVJet        = 0;
-
+  fNTightVJets        = 0;  
+  for(int i0 = 0; i0 < int(fisTightVJet.size()); i0++) fisTightVJet[i0] = -999;
   selectedVJets.clear();
   fLooseVJets.clear();
   fGoodVSubJets.clear();
@@ -92,8 +91,7 @@ void VJetLoader::reset() {
 void VJetLoader::resetCHS() {
   fNLooseVJetsCHS     = 0;
   fNTightVJetsCHS     = 0;
-  fisTightVJetCHS     = 0;
-
+  for(int i0 = 0; i0 < int(fisTightVJetCHS.size()); i0++) fisTightVJetCHS[i0] = -999;
   selectedVJetsCHS.clear();
   fLooseVJetsCHS.clear();
   fGoodVSubJetsCHS.clear();
@@ -180,14 +178,17 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fLabels.push_back("D2b2");
 
   std::stringstream pSNJ;   pSNJ << "n" << iJetLabel << "s";
-  std::stringstream pSTJ;   pSTJ << iJetLabel << "0_isTightVJet";
   fTree = iTree;
   for(int i0 = 0; i0 < fN*4.;                    i0++) {double pVar = 0; fVars.push_back(pVar);} // declare array of vars
   for(int i0 = 0; i0 < fN*(int(fLabels.size())); i0++) {double pVar = 0; fVars.push_back(pVar);} 
   setupNtuple(iJetLabel.c_str(),iTree,fN,fVars);                                                 // from MonoXUtils.cc => fN =1 *_pt,*_eta,*_phi for vjet0 (3*1=3)
   setupNtuple(iJetLabel.c_str(),iTree,fN,fVars,fN*3,fLabels);
-  fTree->Branch(pSNJ.str().c_str() ,&fNLooseVJets         ,(pSNJ.str()+"/I").c_str());
-  fTree->Branch(pSTJ.str().c_str() ,&fisTightVJet         ,(pSTJ.str()+"/I").c_str());
+  fTree->Branch(pSNJ.str().c_str() ,&fNLooseVJets         ,(pSNJ.str()+"/I").c_str());  
+  for(int i0 = 0; i0 < fN;                    i0++) fisTightVJet.push_back(-999);
+  for(int i0 = 0; i0 < fN;                    i0++) {
+    std::stringstream pSTJ;   pSTJ << iJetLabel << i0 << "_isTightVJet";
+    fTree->Branch(pSTJ.str().c_str() ,&fisTightVJet[i0]         ,(pSTJ.str()+"/I").c_str());
+  }
 }
 void VJetLoader::setupTreeZprime(TTree *iTree, std::string iJetLabel) {
   resetZprime();
@@ -221,6 +222,7 @@ void VJetLoader::setupTreeCHS(TTree *iTree, std::string iJetLabel) {
     fptCHS.push_back(-999);
     fetaCHS.push_back(-999);
     fphiCHS.push_back(-999);
+    fisTightVJetCHS.push_back(-999);
   }
   for(int i0 = 0; i0 < fN; i0++) {
     std::stringstream pSdc;   pSdc << iJetLabel << i0 << "_doublecsv";
@@ -228,6 +230,8 @@ void VJetLoader::setupTreeCHS(TTree *iTree, std::string iJetLabel) {
     std::stringstream pSpt;   pSpt << iJetLabel << i0 << "_pt";    
     std::stringstream pSeta;   pSeta << iJetLabel << i0 << "_eta";  
     std::stringstream pSphi;   pSphi << iJetLabel << i0 << "_phi";
+    std::stringstream pSTJ;   pSTJ << iJetLabel << i0 << "_isTightVJet";    
+    fTree->Branch(pSTJ.str().c_str() ,&fisTightVJetCHS[i0]         ,(pSTJ.str()+"/I").c_str());
     fTree->Branch(pSdc.str().c_str() ,&fdoublecsvCHS.at(i0)        ,(pSdc.str()+"/D").c_str());
     fTree->Branch(pSds.str().c_str() ,&fdoublesubCHS.at(i0)       ,(pSds.str()+"/D").c_str());
     fTree->Branch(pSpt.str().c_str() ,&fptCHS.at(i0)       ,(pSpt.str()+"/D").c_str());
@@ -289,8 +293,8 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
   }
   addVJet(fLooseVJets,selectedVJets);
 
-  if(selectedVJets.size() > 0){
-    if(passJetTightLepVetoSel(fLooseVJets[0])) fisTightVJet = 1;
+  for  (int i0 = 0; i0 < int(selectedVJets.size()); i0++) { 
+    if(passJetTightLepVetoSel(fLooseVJets[i0])) fisTightVJet[i0] = 1;
   }
   fNLooseVJets = lCount;
   fNTightVJets = lCountT;
@@ -367,8 +371,9 @@ void VJetLoader::selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::ve
   }
   addVJet(fLooseVJetsCHS,selectedVJetsCHS);
 
-  if(selectedVJetsCHS.size() > 0){
-    if(passJetTightLepVetoSel(fLooseVJetsCHS[0])) fisTightVJetCHS = 1;
+  
+  for  (int i0 = 0; i0 < int(selectedVJetsCHS.size()); i0++) { 
+    if(passJetTightLepVetoSel(fLooseVJetsCHS[i0])) fisTightVJetCHS[i0] = 1;
   }
   fNLooseVJetsCHS = lCount;
   fNTightVJetsCHS = lCountT;

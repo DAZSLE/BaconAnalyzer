@@ -56,7 +56,7 @@ public:
   
   double ftopSize, ftopMatching, fvSize, fvMatching,fRatioPt;
   int fisHadronicTop, fisHadronicV;
-  int fisTightVJet, fisTightVJetCHS;
+  std::vector<int> fisTightVJet, fisTightVJetCHS;
   int fpartonFlavor, fhadronFlavor, fnbHadrons, fncHadrons, fnCharged, fnNeutrals, fnParticles;
   float fVMT,fdR_sj0dR,fdPhi_sj0dPhi, fdPhiJRF_sj0dPhiJRF;
 

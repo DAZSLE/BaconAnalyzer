@@ -15,6 +15,7 @@ JetLoader::JetLoader(TTree *iTree) {
   fJetBrCHS = iTree->GetBranch("AK4CHS");
 
   fN = 4;
+  fNV = 3; // max number of V jets to consider for dR anti-matching
   fNVars = 3; // pt, eta, phi
   fNOtherVars = 5; // Mass, b-tag, qgid, dR, dPhi 
 }
@@ -25,60 +26,93 @@ JetLoader::~JetLoader() {
   delete fJetBrCHS;
 }
 void JetLoader::reset() { 
-  fNJets           = 0;
-  fNFwd            = 0;
-  fNBTagsL         = 0;
-  fNBTagsM         = 0;
-  fNBTagsT         = 0;
+  fNJetsPt30           = 0;
+  fNFwdPt30            = 0;
+  fNBTagsLPt30         = 0;
+  fNBTagsMPt30         = 0;
+  fNBTagsTPt30         = 0;
   fLooseJets.clear();
   fGoodJets.clear();
   selectedJets8.clear();
-  selectedJets15.clear();
+  selectedJets15.clear();  
+  for(int i0 = 0; i0 < int(fNJetsPt30dR08.size()); i0++) {
+    fNJetsPt30dR08[i0] = -999;
+    fNBTagsLPt50dR08[i0] = -999;
+    fNBTagsMPt50dR08[i0] = -999;
+    fNBTagsTPt50dR08[i0] = -999;
+    fNBTagsLPt100dR08[i0] = -999;
+    fNBTagsMPt100dR08[i0] = -999;
+    fNBTagsTPt100dR08[i0] = -999;
+    fNBTagsLPt150dR08[i0] = -999;
+    fNBTagsMPt150dR08[i0] = -999;
+    fNBTagsTPt150dR08[i0] = -999;
+  }  
   for(unsigned int i0 = 0; i0 < fVars.size(); i0++) fVars[i0] = 0;
-  fNJetsdR08       = 0;
-  fNBTagsLdR08     = 0;
-  fNBTagsMdR08     = 0;
-  fNBTagsTdR08     = 0;
 }
 void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) { 
   reset();
   fTree = iTree;
-  std::stringstream pSN,pSfwd,pSb,pSbL,pSbM,pSbT,pSNdR08,pSbLdR08,pSbMdR08,pSbTdR08,pSbLPt100dR08,pSbMPt100dR08,pSbTPt100dR08,pSbLPt150dR08,pSbMPt150dR08,pSbTPt150dR08;   
-  pSN     << "n" << iJetLabel << "s";
-  pSfwd   << "n" << iJetLabel << "sfwd";
-  pSb     << "n" << iJetLabel << "sbtag";
-  pSbL    << "n" << iJetLabel << "sbtagL";
-  pSbM    << "n" << iJetLabel << "sbtagM";
-  pSbT    << "n" << iJetLabel << "sbtagT";
-  pSNdR08 << "n" << iJetLabel << "sdR08";
-  pSbLdR08<< "n" << iJetLabel << "sLdR08";
-  pSbMdR08<< "n" << iJetLabel << "sMdR08";
-  pSbTdR08<< "n" << iJetLabel << "sTdR08";
-  pSbLPt100dR08<< "n" << iJetLabel << "sLPt100dR08";
-  pSbMPt100dR08<< "n" << iJetLabel << "sMPt100dR08";
-  pSbTPt100dR08<< "n" << iJetLabel << "sTPt100dR08";
-  pSbLPt150dR08<< "n" << iJetLabel << "sLPt150dR08";
-  pSbMPt150dR08<< "n" << iJetLabel << "sMPt150dR08";
-  pSbTPt150dR08<< "n" << iJetLabel << "sTPt150dR08";
+  std::stringstream pSNPt30,pSfwdPt30,pSbPt30,pSbLPt30,pSbMPt30,pSbTPt30;
+  pSNPt30     << "n" << iJetLabel << "sPt30";
+  pSfwdPt30   << "n" << iJetLabel << "sfwdPt30";
+  pSbPt30     << "n" << iJetLabel << "sbtagPt30";
+  pSbLPt30    << "n" << iJetLabel << "sbtagLPt30";
+  pSbMPt30    << "n" << iJetLabel << "sbtagMPt30";
+  pSbTPt30    << "n" << iJetLabel << "sbtagTPt30";
 
 
+  fTree->Branch(pSNPt30.str().c_str()           ,&fNJetsPt30           ,(pSNPt30.str()+"/I").c_str());  // jet multiplicity
+  fTree->Branch(pSfwdPt30.str().c_str()         ,&fNFwdPt30            ,(pSfwdPt30.str()+"/I").c_str());
+  fTree->Branch(pSbLPt30.str().c_str()          ,&fNBTagsLPt30         ,(pSbLPt30.str()+"/I").c_str()); // b tags
+  fTree->Branch(pSbMPt30.str().c_str()          ,&fNBTagsMPt30         ,(pSbMPt30.str()+"/I").c_str());
+  fTree->Branch(pSbTPt30.str().c_str()          ,&fNBTagsTPt30         ,(pSbTPt30.str()+"/I").c_str());
 
-  fTree->Branch(pSN.str().c_str()           ,&fNJets           ,(pSN.str()+"/I").c_str());  // jet multiplicity
-  fTree->Branch(pSfwd.str().c_str()         ,&fNFwd            ,(pSfwd.str()+"/I").c_str());
-  fTree->Branch(pSbL.str().c_str()          ,&fNBTagsL         ,(pSbL.str()+"/I").c_str()); // b tags
-  fTree->Branch(pSbM.str().c_str()          ,&fNBTagsM         ,(pSbM.str()+"/I").c_str());
-  fTree->Branch(pSbT.str().c_str()          ,&fNBTagsT         ,(pSbT.str()+"/I").c_str());
-  fTree->Branch(pSNdR08.str().c_str()       ,&fNJetsdR08       ,(pSNdR08.str()+"/I").c_str());
-  fTree->Branch(pSbLdR08.str().c_str()      ,&fNBTagsLdR08     ,(pSbLdR08.str()+"/I").c_str());
-  fTree->Branch(pSbMdR08.str().c_str()      ,&fNBTagsMdR08     ,(pSbMdR08.str()+"/I").c_str());
-  fTree->Branch(pSbTdR08.str().c_str()      ,&fNBTagsTdR08     ,(pSbTdR08.str()+"/I").c_str());
-  fTree->Branch(pSbLPt100dR08.str().c_str()      ,&fNBTagsLPt100dR08     ,(pSbLPt100dR08.str()+"/I").c_str());
-  fTree->Branch(pSbMPt100dR08.str().c_str()      ,&fNBTagsMPt100dR08     ,(pSbMPt100dR08.str()+"/I").c_str());
-  fTree->Branch(pSbTPt100dR08.str().c_str()      ,&fNBTagsTPt100dR08     ,(pSbTPt100dR08.str()+"/I").c_str());
-  fTree->Branch(pSbLPt150dR08.str().c_str()      ,&fNBTagsLPt150dR08     ,(pSbLPt150dR08.str()+"/I").c_str());
-  fTree->Branch(pSbMPt150dR08.str().c_str()      ,&fNBTagsMPt150dR08     ,(pSbMPt150dR08.str()+"/I").c_str());
-  fTree->Branch(pSbTPt150dR08.str().c_str()      ,&fNBTagsTPt150dR08     ,(pSbTPt150dR08.str()+"/I").c_str());
 
+  fNJetsPt30dR08.clear();
+  fNBTagsLPt50dR08.clear();
+  fNBTagsMPt50dR08.clear();
+  fNBTagsTPt50dR08.clear();
+  fNBTagsLPt100dR08.clear();
+  fNBTagsMPt100dR08.clear();
+  fNBTagsTPt100dR08.clear();
+  fNBTagsLPt150dR08.clear();
+  fNBTagsMPt150dR08.clear();
+  fNBTagsTPt150dR08.clear();
+  for(int i0 = 0; i0 < fNV; i0++) {
+    fNJetsPt30dR08.push_back(-999);
+    fNBTagsLPt50dR08.push_back(-999);
+    fNBTagsMPt50dR08.push_back(-999);
+    fNBTagsTPt50dR08.push_back(-999);
+    fNBTagsLPt100dR08.push_back(-999);
+    fNBTagsMPt100dR08.push_back(-999);
+    fNBTagsTPt100dR08.push_back(-999);
+    fNBTagsLPt150dR08.push_back(-999);
+    fNBTagsMPt150dR08.push_back(-999);
+    fNBTagsTPt150dR08.push_back(-999);
+  }  
+  for(int i0 = 0; i0 < fNV; i0++) {
+    std::stringstream pSNPt30dR08,pSbLPt50dR08,pSbMPt50dR08,pSbTPt50dR08,pSbLPt100dR08,pSbMPt100dR08,pSbTPt100dR08,pSbLPt150dR08,pSbMPt150dR08,pSbTPt150dR08; 
+    pSNPt30dR08 << "n" << iJetLabel << "sPt30dR08_" << i0;
+    pSbLPt50dR08<< "n" << iJetLabel << "sLPt50dR08_" << i0;
+    pSbMPt50dR08<< "n" << iJetLabel << "sMPt50dR08_" << i0;
+    pSbTPt50dR08<< "n" << iJetLabel << "sTPt50dR08_" << i0;
+    pSbLPt100dR08<< "n" << iJetLabel << "sLPt100dR08_" << i0;
+    pSbMPt100dR08<< "n" << iJetLabel << "sMPt100dR08_" << i0;
+    pSbTPt100dR08<< "n" << iJetLabel << "sTPt100dR08_ " << i0;
+    pSbLPt150dR08<< "n" << iJetLabel << "sLPt150dR08_" << i0;
+    pSbMPt150dR08<< "n" << iJetLabel << "sMPt150dR08_" << i0;
+    pSbTPt150dR08<< "n" << iJetLabel << "sTPt150dR08_" << i0;
+    fTree->Branch(pSNPt30dR08.str().c_str()       ,&fNJetsPt30dR08[i0]       ,(pSNPt30dR08.str()+"/I").c_str());
+    fTree->Branch(pSbLPt50dR08.str().c_str()      ,&fNBTagsLPt50dR08[i0]     ,(pSbLPt50dR08.str()+"/I").c_str());
+    fTree->Branch(pSbMPt50dR08.str().c_str()      ,&fNBTagsMPt50dR08[i0]     ,(pSbMPt50dR08.str()+"/I").c_str());
+    fTree->Branch(pSbTPt50dR08.str().c_str()      ,&fNBTagsTPt50dR08[i0]     ,(pSbTPt50dR08.str()+"/I").c_str());
+    fTree->Branch(pSbLPt100dR08.str().c_str()      ,&fNBTagsLPt100dR08[i0]     ,(pSbLPt100dR08.str()+"/I").c_str());
+    fTree->Branch(pSbMPt100dR08.str().c_str()      ,&fNBTagsMPt100dR08[i0]     ,(pSbMPt100dR08.str()+"/I").c_str());
+    fTree->Branch(pSbTPt100dR08.str().c_str()      ,&fNBTagsTPt100dR08[i0]     ,(pSbTPt100dR08.str()+"/I").c_str());
+    fTree->Branch(pSbLPt150dR08.str().c_str()      ,&fNBTagsLPt150dR08[i0]     ,(pSbLPt150dR08.str()+"/I").c_str());
+    fTree->Branch(pSbMPt150dR08.str().c_str()      ,&fNBTagsMPt150dR08[i0]     ,(pSbMPt150dR08.str()+"/I").c_str());
+    fTree->Branch(pSbTPt150dR08.str().c_str()      ,&fNBTagsTPt150dR08[i0]     ,(pSbTPt150dR08.str()+"/I").c_str());
+  }
 
   for(int i0 = 0; i0 < fN*(10)+4; i0++) {double pVar = 0; fVars.push_back(pVar);}           
   setupNtuple(iJetLabel.c_str(),iTree,fN,fVars);                                            // from MonoXUtils.cc => fN=4 j*_pt,j*_eta,j*_phi for j1,j2,j3,j4 (3*4=12)
@@ -90,66 +124,71 @@ void JetLoader::load(int iEvent) {
 }
 void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, std::vector<TLorentzVector> &iVJets){
   reset(); 
-  int lCount = 0, lNFwd = 0, lNBTagL = 0,lNBTagM = 0,lNBTagT = 0, lCountdR08 = 0,lNBTagLdR08 = 0,lNBTagMdR08 = 0,lNBTagTdR08 = 0, lNBTagMPt100dR08=0,lNBTagLPt100dR08=0, lNBTagTPt100dR08=0, lNBTagLPt150dR08=0, lNBTagMPt150dR08=0, lNBTagTPt150dR08=0;
+  int lCountPt30 = 0, lNFwdPt30 = 0, lNBTagLPt30 = 0,lNBTagMPt30 = 0, lNBTagTPt30 = 0;
+  
+  for (int i1 = 0; i1 < int(iVJets.size()); i1++) {
+    fNJetsPt30dR08[i1] = 0;
+    fNBTagsLPt50dR08[i1] = 0;
+    fNBTagsMPt50dR08[i1] = 0;
+    fNBTagsTPt50dR08[i1] = 0;
+    fNBTagsLPt100dR08[i1] = 0;
+    fNBTagsMPt100dR08[i1] = 0;
+    fNBTagsTPt100dR08[i1] = 0;
+    fNBTagsLPt150dR08[i1] = 0;
+    fNBTagsMPt150dR08[i1] = 0;
+    fNBTagsTPt150dR08[i1] = 0;
+  }
+    
   for  (int i0 = 0; i0 < fJets->GetEntriesFast(); i0++) { 
     TJet *pJet = (TJet*)((*fJets)[i0]);
     if(passVeto(pJet->eta,pJet->phi,0.4,iElectrons))                      continue;
     if(passVeto(pJet->eta,pJet->phi,0.4,iMuons))                          continue;
     if(passVeto(pJet->eta,pJet->phi,0.4,iPhotons))                        continue;
     if(pJet->pt        <=  30)                                            continue;
-    if(fabs(pJet->eta) > 2.5 && fabs(pJet->eta) < 4.5) lNFwd++;
+    if(fabs(pJet->eta) > 2.5 && fabs(pJet->eta) < 4.5) lNFwdPt30++;
     if(fabs(pJet->eta) >= 2.5)                                            continue;
     if(!passJetLooseSel(pJet))                                            continue;
-    lCount++;
+    lCountPt30++;
     addJet(pJet,fLooseJets);
 
     TLorentzVector vPJet; vPJet.SetPtEtaPhiM(pJet->pt, pJet->eta, pJet->phi, pJet->mass);
     fGoodJets.push_back(pJet);
-
-    // jet and b-tag multiplicity
-    if(iVJets.size()>0 && iVJets[0].Pt()>350 && vPJet.DeltaR(iVJets[0])>0.8) lCountdR08++;
+    
     if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVL){
-      lNBTagL++;
-      if(iVJets.size()>0) {
-		if(pJet->pt>50 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagLdR08++;
-		if(pJet->pt>100 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagLPt100dR08++;
-		if(pJet->pt>150 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagLPt150dR08++;
-		}
-
-    }
+      lNBTagLPt30++;
+    }    
     if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVM){ 
-      lNBTagM++;
-      if(iVJets.size()>0) {
-		if(pJet->pt>50 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagMdR08++;
-		if(pJet->pt>100 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagMPt100dR08++;
-		if(pJet->pt>150 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagMPt150dR08++;
-		}
+      lNBTagMPt30++;
     }
-    if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVT){
-      lNBTagT++;
-      if(iVJets.size()>0) {
-			if(pJet->pt>50 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagTdR08++;
-			if(pJet->pt>100 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagTPt100dR08++;
-			if(pJet->pt>150 && vPJet.DeltaR(iVJets[0])>0.8) lNBTagTPt150dR08++;	
-			}
+    if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVT){ 
+      lNBTagTPt30++;
+    }
+    
+    // jet and b-tag multiplicity
+    for (int i1 = 0; i1 < int(iVJets.size()); i1++) {
+      
+      if(iVJets[i1].Pt()>350 && vPJet.DeltaR(iVJets[i1])>0.8) {
+	fNJetsPt30dR08[i1]++;
+	if(pJet->pt>50 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt50dR08[i1]++;
+	if(pJet->pt>100 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt100dR08[i1]++;
+	if(pJet->pt>150 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt150dR08[i1]++;
+	
+	if(pJet->pt>50 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVM) fNBTagsMPt50dR08[i1]++;
+	if(pJet->pt>100 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVM) fNBTagsMPt100dR08[i1]++;
+	if(pJet->pt>150 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVM) fNBTagsMPt150dR08[i1]++;
+	
+	if(pJet->pt>50 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVT) fNBTagsTPt50dR08[i1]++;
+	if(pJet->pt>100 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVT) fNBTagsTPt100dR08[i1]++;
+	if(pJet->pt>150 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVT) fNBTagsTPt150dR08[i1]++;
+      }
     }
   }
   addVJet(fLooseJets,selectedJets);
-  fNJets           = lCount;
-  fNFwd            = lNFwd;
-  fNBTagsL         = lNBTagL;
-  fNBTagsM         = lNBTagM;
-  fNBTagsT         = lNBTagT;
-  fNJetsdR08       = lCountdR08;
-  fNBTagsLdR08     = lNBTagLdR08;
-  fNBTagsMdR08     = lNBTagMdR08;
-  fNBTagsTdR08     = lNBTagTdR08;
-  fNBTagsLPt100dR08     = lNBTagLPt100dR08;
-  fNBTagsMPt100dR08     = lNBTagMPt100dR08;
-  fNBTagsTPt100dR08     = lNBTagTPt100dR08;
-  fNBTagsLPt150dR08     = lNBTagLPt150dR08;
-  fNBTagsMPt150dR08     = lNBTagMPt150dR08;
-  fNBTagsTPt150dR08     = lNBTagTPt150dR08;
+  fNJetsPt30           = lCountPt30;
+  fNFwdPt30            = lNFwdPt30;
+  fNBTagsLPt30         = lNBTagLPt30;
+  fNBTagsMPt30         = lNBTagMPt30;
+  fNBTagsTPt30         = lNBTagTPt30;
 
   fillJet(fN,fLooseJets,fVars);
   fillOthers(fN,fLooseJets,fVars,iVJets);
