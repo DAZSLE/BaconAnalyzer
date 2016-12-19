@@ -33,7 +33,7 @@ std::string ParseCommandLine( int argc, char* argv[], std::string opt )
 double getNormalizationWeight(string filename, string datasetName, double intLumi) {
 
   //Get Number of Events in the Sample
-  TFile *file = new TFile(filename.c_str(),"READ");
+  TFile *file = TFile::Open(filename.c_str(),"READ");
   if (!file) {
     cout << "Could not open file " << filename << endl;
     return 0;
@@ -121,10 +121,11 @@ int main(int argc, char* argv[]) {
         double normalizationWeight = getNormalizationWeight(fileName, datasetName, intLumi);
 
         //create output file
-        TFile *outputFile = new TFile(Form("%s_%.0fpb_weighted.root", (fileName.substr(0, fileName.find_last_of("."))).c_str(), intLumi), "RECREATE");
+        TFile *outputFile = TFile::Open(Form("%s_%.0fpb_weighted.root", (fileName.substr(0, fileName.find_last_of("."))).c_str(), intLumi), "RECREATE");
 
         //loop over all TTrees in the file and add the weight branch to each of them
         TFile *inputFile = TFile::Open(fileName.c_str(), "READ");
+	if (!inputFile) continue;
         assert(inputFile);
         inputFile->cd();
         TIter nextkey(inputFile->GetListOfKeys());
