@@ -47,6 +47,9 @@ public:
   int genEleFromW;
   int genMuFromW;
   int genTauFromW;
+  float fTopPt;
+  float fAntitopPt;
+  float fTopPtWeight;
   
 protected: 
   TTree         *fTree;

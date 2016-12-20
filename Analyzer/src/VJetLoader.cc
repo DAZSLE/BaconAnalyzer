@@ -52,6 +52,12 @@ VJetLoader::VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::st
 
   fN = iN;
 
+  const std::string cmssw_base = getenv("CMSSW_BASE");
+  std::string cmssw_base_env = "${CMSSW_BASE}";
+  size_t start_pos = subjetbtagScaleFactorFilename.find(cmssw_base_env);
+  if(start_pos != std::string::npos) {
+    subjetbtagScaleFactorFilename.replace(start_pos, cmssw_base_env.length(), cmssw_base);
+  }
   fSubJetCalib = new BTagCalibration("csvv2",subjetbtagScaleFactorFilename);
   fSubJetreadersL.clear(); fSubJetreadersM.clear();
   fSubJetreaders.clear();

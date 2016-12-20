@@ -31,6 +31,9 @@ void GenLoader::reset() {
   genEleFromW = -1;
   genMuFromW = -1;
   genTauFromW = -1;
+  fTopPt = -1;
+  fAntitopPt = -1;
+  fTopPtWeight = -1;
 }
 void GenLoader::setupTree(TTree *iTree,float iXSIn) { 
   reset();
@@ -43,6 +46,9 @@ void GenLoader::setupTree(TTree *iTree,float iXSIn) {
   fTree->Branch("genEleFromW"    ,&genEleFromW  ,"genEleFromW/I");
   fTree->Branch("genMuFromW"    ,&genMuFromW  ,"genMuFromW/I");
   fTree->Branch("genTauFromW"    ,&genTauFromW  ,"genTauFromW/I");
+  fTree->Branch("topPt"     ,&fTopPt   ,"fTopPt/F");
+  fTree->Branch("antitopPt"     ,&fAntitopPt   ,"fAntitopPt/F");
+  fTree->Branch("topPtWeight"     ,&fTopPtWeight   ,"fTopPtWeight/F");
 }
 void GenLoader::load(int iEvent) { 
   reset();
@@ -106,6 +112,7 @@ void GenLoader::saveTTbarType() {
 }
 
 float GenLoader::computeTTbarCorr() {
+  
   //                                                                                                                                                                                                                            
   // compute ttbar MC pT correction                                                                                                                                                                                             
   // Note: are cap at pT(top) = 400 GeV and the factor of 1.001 the standard prescriptions,                                                                                                                                     
@@ -115,15 +122,30 @@ float GenLoader::computeTTbarCorr() {
   double pt1=0, pt2=0;
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
     TGenParticle *p = (TGenParticle*)((*fGens)[i0]);
-    if(p->pdgId ==  TOP_PDGID) { pt1 = TMath::Min((float)400.,p->pt); }
-    if(p->pdgId == -TOP_PDGID) { pt2 = TMath::Min((float)400.,p->pt); }
+    if(p->pdgId ==  TOP_PDGID) {
+      pt1 = TMath::Min((float)400.,p->pt);
+      fTopPt = pt1;
+    }
+    if(p->pdgId == -TOP_PDGID) {
+      pt2 = TMath::Min((float)400.,p->pt);
+      fAntitopPt = pt2;
+    }
   }
 
   // Reference: https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopPtReweighting#MC_SFs_Reweighting
-  double w1 = exp(0.156 - 0.00137*pt1);
-  double w2 = exp(0.156 - 0.00137*pt2);
+  // 8 TeV values:
+  //double w1 = exp(0.156 - 0.00137*pt1);
+  //double w2 = exp(0.156 - 0.00137*pt2);
+  // 13 TeV values:
+  double w1 = exp(0.0615 - 0.0005*pt1);
+  double w2 = exp(0.0615 - 0.0005*pt2);
 
-  return 1.001*sqrt(w1*w2);
+  fTopPtWeight = sqrt(w1*w2);
+
+  // 8 TeV:
+  //return 1.001*sqrt(w1*w2);
+  // 13 TeV:
+  return sqrt(w1*w2);
 }
 float GenLoader::lepmatched(int iId, std::vector<TLorentzVector> vec, double dR){
   if(vec.size() > 0){

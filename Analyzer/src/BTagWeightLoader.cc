@@ -6,7 +6,13 @@
 
 using namespace baconhep;
 
-BTagWeightLoader::BTagWeightLoader(TTree *iTree,std::string btagScaleFactorFilename) { 
+BTagWeightLoader::BTagWeightLoader(TTree *iTree,std::string btagScaleFactorFilename) {
+  const std::string cmssw_base = getenv("CMSSW_BASE");
+  std::string cmssw_base_env = "${CMSSW_BASE}";
+  size_t start_pos = btagScaleFactorFilename.find(cmssw_base_env);
+  if(start_pos != std::string::npos) {
+    btagScaleFactorFilename.replace(start_pos, cmssw_base_env.length(), cmssw_base);
+  }
   fJetCalib = new BTagCalibration("csvv2",btagScaleFactorFilename);
   freadersL.clear(); freadersM.clear(); freadersT.clear();
   freaders.clear();

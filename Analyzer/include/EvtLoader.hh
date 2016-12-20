@@ -18,8 +18,8 @@ using namespace baconhep;
 class EvtLoader { 
 public:
   EvtLoader(TTree *iTree,std::string iName,
-	    std::string iHLTFile="/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAna/DataFormats/data/HLTFile_25ns",
-	    std::string iPUWeight="/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/puWeight_13invfb.root");
+	    std::string iHLTFile="${CMSSW_BASE}/src/BaconAna/DataFormats/data/HLTFile_25ns",
+	    std::string iPUWeight="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/puWeight_13invfb.root");
   ~EvtLoader(); 
   void reset();
   void setupTree  (TTree *iTree);
@@ -44,7 +44,7 @@ public:
 		   std::string iHist1,
 		   std::string iHist2,
 		   std::string iNLO,
-                   std::string ikfactor="/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/kfactors.root");
+                   std::string ikfactor="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/kfactors.root");
   //MET and mT
   void         fillRecoil(std::vector<TLorentzVector> &iVecCorr,std::vector<TLorentzVector> iPhotons);
   void         fillmT(float iMet, float iMetPhi,float iFMet, float iFMetPhi, std::vector<TLorentzVector> &lCorr, float &fmT);

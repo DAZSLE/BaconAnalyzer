@@ -10,6 +10,11 @@ using namespace baconhep;
 
 EvtLoader::EvtLoader(TTree *iTree,std::string iName,std::string iHLTFile,std::string iPUWeight) { 
   const std::string cmssw_base = getenv("CMSSW_BASE");
+  std::string cmssw_base_env = "${CMSSW_BASE}";
+  size_t start_pos = iHLTFile.find(cmssw_base_env);
+  if(start_pos != std::string::npos) {
+    iHLTFile.replace(start_pos, cmssw_base_env.length(), cmssw_base);
+  }
 
   fEvt      = new TEventInfo();
   iTree->SetBranchAddress("Info",       &fEvt);
@@ -27,49 +32,49 @@ EvtLoader::EvtLoader(TTree *iTree,std::string iName,std::string iHLTFile,std::st
   fSample = (char*) (iName.c_str());
 
   // Lepton SFs
-  TFile *fMuSF = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/scaleFactor_muon_looseid_12p9.root");
+  TFile *fMuSF = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/scaleFactor_muon_looseid_12p9.root");
   fhMuLoose =  (TH2D*) fMuSF->Get("scaleFactor_muon_looseid_RooCMSShape");
   fhMuLoose->SetDirectory(0);
   fMuSF->Close();
-  TFile *fMuSFTight = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/scaleFactor_muon_tightid_12p9.root");
+  TFile *fMuSFTight = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/scaleFactor_muon_tightid_12p9.root");
   fhMuTight =  (TH2D*) fMuSFTight->Get("scaleFactor_muon_tightid_RooCMSShape");
   fhMuTight->SetDirectory(0);
   fMuSFTight->Close();
-  TFile *fMuSFTrack = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/scaleFactor_muon_track.root");
+  TFile *fMuSFTrack = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/scaleFactor_muon_track.root");
   fhMuTrack = (TH1D*) fMuSFTrack->Get("htrack2");
   fhMuTrack->SetDirectory(0);
   fMuSFTrack->Close();
-  TFile *fEleSF = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/scaleFactor_electron_vetoid_12p9.root");
+  TFile *fEleSF = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/scaleFactor_electron_vetoid_12p9.root");
   fhEleVeto =  (TH2D*) fEleSF->Get("scaleFactor_electron_vetoid_RooCMSShape");
   fhEleVeto->SetDirectory(0);
   fEleSF->Close();
-  TFile *fEleSFTight = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/scaleFactor_electron_tightid_12p9.root");
+  TFile *fEleSFTight = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/scaleFactor_electron_tightid_12p9.root");
   fhEleTight =  (TH2D*) fEleSFTight->Get("scaleFactor_electron_tightid_RooCMSShape");
   fhEleTight->SetDirectory(0);
   fEleSFTight->Close();
-  TFile *fEleSFTrack = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/scaleFactor_electron_track.root");
+  TFile *fEleSFTrack = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/scaleFactor_electron_track.root");
   fhEleTrack = (TH2D*) fEleSFTrack->Get("EGamma_SF2D");
   fhEleTrack->SetDirectory(0);
   fEleSFTrack->Close();
 
   // Trigger Eff
-  TFile *fEleTrigB = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/ele_trig_lowpt_rebinned.root");
+  TFile *fEleTrigB = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/ele_trig_lowpt_rebinned.root");
   hEleTrigB = (TH1D*) fEleTrigB->Get("h_num");
   hEleTrigB->SetDirectory(0);
   fEleTrigB->Close();
-  TFile *fEleTrigE = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/ele_trig_lowpt_rebinned.root");
+  TFile *fEleTrigE = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/ele_trig_lowpt_rebinned.root");
   hEleTrigE = (TH1D*) fEleTrigE->Get("h_num");
   hEleTrigE->SetDirectory(0);
   fEleTrigE->Close();
-  TFile *fEleTrigLow  = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/ele_trig_lowpt.root");
+  TFile *fEleTrigLow  = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/ele_trig_lowpt.root");
   hEleTrigLow = (TH2D*) fEleTrigLow->Get("hEffEtaPt");
   hEleTrigLow->SetDirectory(0);
   fEleTrigLow->Close();
-  TFile *fMetTrig  = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/met_trig.root");
+  TFile *fMetTrig  = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/met_trig.root");
   hMetTrig = (TH1D*) fMetTrig->Get("numer");
   hMetTrig->SetDirectory(0);
   fMetTrig->Close();
-  TFile *fPhoTrig  = TFile::Open("/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/pho_trig.root");
+  TFile *fPhoTrig  = TFile::Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/pho_trig.root");
   hPhoTrig = (TH1D*) fPhoTrig->Get("h_num");
   hPhoTrig->SetDirectory(0);
   fPhoTrig->Close();

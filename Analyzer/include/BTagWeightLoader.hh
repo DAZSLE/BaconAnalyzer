@@ -18,7 +18,7 @@ using namespace baconhep;
 
 class BTagWeightLoader { 
 public:
-  BTagWeightLoader(TTree *iTree,std::string btagScaleFactorFilename = "/afs/cern.ch/work/c/cmantill/public/Bacon/CMSSW_8_0_20/src/BaconAnalyzer/Analyzer/data/CSVv2_ichep.csv");
+  BTagWeightLoader(TTree *iTree,std::string btagScaleFactorFilename = "${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/CSVv2_ichep.csv");
   ~BTagWeightLoader();
   void reset();
   void setupTree(TTree *iTree, std::string iJetLabel);

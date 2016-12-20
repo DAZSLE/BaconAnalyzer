@@ -72,7 +72,7 @@ int main( int argc, char **argv ) {
   TTree *lTree = load(lName); 
   
   // Declare Readers 
-  fEvt       = new EvtLoader     (lTree,lName,"/afs/cern.ch/user/w/woodson/public/HLTFile_25ns");                                             // fEvt, fEvtBr, fVertices, fVertexBr
+  fEvt       = new EvtLoader     (lTree,lName);                                             // fEvt, fEvtBr, fVertices, fVertexBr
   fMuon      = new MuonLoader    (lTree);                                                   // fMuon and fMuonBr, fN = 2 - muonArr and muonBr
   fElectron  = new ElectronLoader(lTree);                                                   // fElectrons and fElectronBr, fN = 2
   fTau       = new TauLoader     (lTree);                                                   // fTaus and fTaurBr, fN = 1
@@ -225,7 +225,9 @@ int main( int argc, char **argv ) {
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,9900032);
     }
     if(lName.find("TTJets")!=std::string::npos){
-      fEvt->fevtWeight *= fGen->computeTTbarCorr();
+      float ttbarPtWeight = fGen->computeTTbarCorr();
+      fEvt->fevtWeight *= ttbarPtWeight;
+      fGen->fWeight *= ttbarPtWeight;
       fGen->saveTTbarType();
     }
     if(lName.find("HToBB")!=std::string::npos){
