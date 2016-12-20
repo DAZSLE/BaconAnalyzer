@@ -13,6 +13,7 @@ ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1								${SKLI
 ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1 									${SKLIMDIR}/ST_tW_top_5f_inclusiveDecays_13TeV.root
 TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8  					${SKLIMDIR}/TTJets_13TeV.root
 WJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8		${SKLIMDIR}/WJetsToQQ_HT_600ToInf_13TeV.root
+ZJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8            ${SKLIMDIR}/ZJetsToQQ_HT_600ToInf_13TeV.root
 WWTo4Q_4f_13TeV_amcatnloFXFX_madspin_pythia8						${SKLIMDIR}/WWTo4Q_13TeV_amcatnlo.root
 WZ_TuneCUETP8M1_13TeV-pythia8									${SKLIMDIR}/WZ_13TeV.root
 ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8							${SKLIMDIR}/ZZTo4Q_13TeV_amcatnlo.root
