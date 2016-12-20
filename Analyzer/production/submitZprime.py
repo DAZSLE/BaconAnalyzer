@@ -118,6 +118,7 @@ if __name__ == '__main__':
         }
     samplesDict['TT'] = {
         'TTJets_13TeV':'mc',
+        'TT_13TeV_powheg_pythia8_ext':'mc'
         }
     samplesDict['Diboson'] = {
         'WWTo4Q_13TeV_amcatnlo': 'mc',
