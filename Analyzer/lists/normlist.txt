@@ -1,4 +1,5 @@
 DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia8						${SKLIMDIR}/DYJetsToQQ_HT180_13TeV.root
+WJetsToQQ_HT180_13TeV-madgraphMLM-pythia8						${SKLIMDIR}/WJetsToQQ_HT180_13TeV.root
 QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8			${SKLIMDIR}/QCD_HT100to200_13TeV.root
 QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8			${SKLIMDIR}/QCD_HT200to300_13TeV_ext.root
 QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8			${SKLIMDIR}/QCD_HT300to500_13TeV_ext.root

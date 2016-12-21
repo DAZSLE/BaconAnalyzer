@@ -119,6 +119,7 @@ ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1              
 ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1                     35.6
 WJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8                       95.14
 ZJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8  			   5.67
+WJetsToQQ_HT180_13TeV-madgraphMLM-pythia8					   2788 # from DAS
 WW_TuneCUETP8M1_13TeV-pythia8                                                      63.21*1.878
 WWTo4Q_13TeV-powheg                                                                51.723
 WWToLNuQQ_13TeV-powheg                                                             49.997
