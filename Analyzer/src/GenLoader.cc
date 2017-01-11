@@ -114,20 +114,18 @@ void GenLoader::saveTTbarType() {
 float GenLoader::computeTTbarCorr() {
   
   //                                                                                                                                                                                                                            
-  // compute ttbar MC pT correction                                                                                                                                                                                             
-  // Note: are cap at pT(top) = 400 GeV and the factor of 1.001 the standard prescriptions,                                                                                                                                     
-  //       or just for B2G-14-004?                                                                                                                                                                                              
+  // compute ttbar MC pT correction                                                                                                                                                                                                                                                                                                                      
   //                                                                                                                                                                            
   const int TOP_PDGID = 6;
   double pt1=0, pt2=0;
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
     TGenParticle *p = (TGenParticle*)((*fGens)[i0]);
     if(p->pdgId ==  TOP_PDGID) {
-      pt1 = TMath::Min((float)400.,p->pt);
+      pt1 = p->pt;
       fTopPt = pt1;
     }
     if(p->pdgId == -TOP_PDGID) {
-      pt2 = TMath::Min((float)400.,p->pt);
+      pt2 = p->pt;
       fAntitopPt = pt2;
     }
   }
