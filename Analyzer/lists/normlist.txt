@@ -13,6 +13,7 @@ ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1	
 ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1								${SKLIMDIR}/ST_tW_antitop_5f_inclusiveDecays_13TeV.root
 ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1 									${SKLIMDIR}/ST_tW_top_5f_inclusiveDecays_13TeV.root
 TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8  					${SKLIMDIR}/TTJets_13TeV.root
+TT_TuneCUETP8M1_13TeV-powheg-pythia8 						${SKLIMDIR}/TT_13TeV_powheg_pythia8_ext.root
 WJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8		${SKLIMDIR}/WJetsToQQ_HT_600ToInf_13TeV.root
 ZJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8            ${SKLIMDIR}/ZJetsToQQ_HT_600ToInf_13TeV.root
 WWTo4Q_4f_13TeV_amcatnloFXFX_madspin_pythia8						${SKLIMDIR}/WWTo4Q_13TeV_amcatnlo.root
