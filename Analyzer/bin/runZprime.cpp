@@ -64,7 +64,7 @@ int main( int argc, char **argv ) {
   const std::string lOption      = argv[2];
   const std::string lJSON        = argv[3];
   const double      lXS          = atof(argv[4]);
-  const double      weight       = atof(argv[5]);
+  //const double      weight       = atof(argv[5]);
 
   fRangeMap = new RunLumiRangeMap();
   if(lJSON.size() > 0) fRangeMap->AddJSONFile(lJSON.c_str());
