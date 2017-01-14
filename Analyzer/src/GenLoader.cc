@@ -281,6 +281,44 @@ int GenLoader::isHadronicV(TGenParticle *genp,int j,int iId, TLorentzVector jet,
   }
   return 0;
 }
+
+
+int GenLoader::isHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector jet,double dR,double &vMatching, double &vSize, int dauId)
+{
+  TLorentzVector vV,vDau1,vDau2;
+  vMatching = -999.; vSize = -999.;
+  double tmpVMatching(0), tmpVSize(0);
+  if(abs(genp->pdgId)==iId){
+    vV.SetPtEtaPhiM(genp->pt, genp->eta, genp->phi, genp->mass);
+    int iV = findLastBoson(j,iId);
+
+    int iQ=0, jQ=0;
+    for (; iQ<fGens->GetEntriesFast(); ++iQ) {
+      TGenParticle *dau1 = (TGenParticle*)((*fGens)[iQ]);
+      if(dau1->parent==iV && abs(dau1->pdgId)==dauId) {
+        vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
+        tmpVMatching = TMath::Max(tmpVMatching,jet.DeltaR(vDau1));
+        tmpVSize     = TMath::Max(tmpVSize,vV.DeltaR(vDau1));
+        break;
+      }
+    }
+    for (jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
+      TGenParticle *dau2 = (TGenParticle*)((*fGens)[jQ]);
+      if(dau2->parent==iV && abs(dau2->pdgId)<=dauId) {  //22 or 21; 43 or 44 we don't check for 33, 11, 55
+        vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
+        tmpVMatching = TMath::Max(tmpVMatching,jet.DeltaR(vDau2));
+        tmpVSize     = TMath::Max(tmpVSize,vV.DeltaR(vDau2));
+        vMatching    = tmpVMatching;
+        vSize        = tmpVSize;
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
+
+
+
 int GenLoader::ismatchedJet(TLorentzVector jet0, double dR,double &matching, double &size, int iId){
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
     TGenParticle *genp0 = (TGenParticle*)((*fGens)[i0]);
@@ -289,6 +327,8 @@ int GenLoader::ismatchedJet(TLorentzVector jet0, double dR,double &matching, dou
       if(iId == 6 && isHadronicTop(genp0,i0,jet0,dR,matching,size)==1) return 1;
       if(iId == 24 || iId == 23 || iId == 10031 || iId == 25){
         if (isHadronicV(genp0,i0,iId,jet0,dR,matching,size)==1) return 1;
+	if (isHadronicVflav(genp0,i0,iId,jet0,dR,matching,size,2)==1) return 2; //W->ud, Z->dd, H->dd
+	if (isHadronicVflav(genp0,i0,iId,jet0,dR,matching,size,4)==1) return 3; //W->cs, Z->cc, H->cc
       }
     }
   }
