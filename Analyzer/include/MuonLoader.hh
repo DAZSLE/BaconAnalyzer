@@ -7,7 +7,7 @@
 #include "TBranch.h"
 #include "TClonesArray.h"
 #include "BaconAna/DataFormats/interface/TMuon.hh"
-#include "MonoXUtils.hh"
+#include "Utils.hh"
 
 using namespace baconhep;
 
@@ -19,10 +19,12 @@ public:
   void setupTree(TTree *iTree);
   void load(int iEvent);
   void selectMuons(std::vector<TLorentzVector> &iMuons, float met, float metPhi);
-  std::vector<TMuon*> fLooseMuons, fTightMuons;
-  std::vector<TLorentzVector> looseMuons, tightMuons;
+  std::vector<TMuon*> fLooseMuons, fMediumMuons, fTightMuons, fHighPtMuons;
+  std::vector<TLorentzVector> looseMuons, mediumMuons, tightMuons, highptMuons;
   int           fNMuonsLoose;
+  int           fNMuonsMedium;
   int           fNMuonsTight;
+  int           fNMuonsHighPt;
   int           fismu0Tight;
   int           fismu1Tight;
 

@@ -4,8 +4,6 @@
 #include <iostream>
 #include <sstream>
 
-#include "../include/LeptonTrigUtils.hh"
-
 using namespace baconhep;
 
 EvtLoader::EvtLoader(TTree *iTree,std::string iName,std::string iHLTFile,std::string iPUWeight) { 

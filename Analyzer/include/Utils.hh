@@ -1,47 +1,43 @@
-//================================================================================================
-//
-// Various functions for Mono-X analysis 
-//
-//________________________________________________________________________________________________
 #ifndef MONOXUTILS_HH
 #define MONOXUTILS_HH
 
-// bacon object headers
 #include "BaconAna/DataFormats/interface/TElectron.hh"
 #include "BaconAna/DataFormats/interface/TMuon.hh"
 #include "BaconAna/DataFormats/interface/TTau.hh"
 #include "BaconAna/DataFormats/interface/TJet.hh"
 #include "BaconAna/DataFormats/interface/TPhoton.hh"
 #include "BaconAna/DataFormats/interface/TGenParticle.hh"
-//Root
+
 #include "TLorentzVector.h"
 #include "TTree.h"
 #include "TMath.h"
 #include <TH1D.h>
 #include <TH2D.h>
-//STL
+
 #include <vector>
 #include <cassert>
 #include <iostream>
 
-//=== FUNCTION DECLARATIONS ======================================================================================
-
-//--------------------------------------------------------------------------------------------------
-bool   passJet04Sel           (const baconhep::TJet *jet);
 bool   passJetLooseSel        (const baconhep::TJet *jet);
+bool   passJetTightSel        (const baconhep::TJet *jet);
 bool   passJetTightLepVetoSel (const baconhep::TJet *jet);
-double eleEffArea             (const double eta);
-double phoEffArea             (const double eta, const int type);
-bool   passEleSel             (const baconhep::TElectron *electron, const double rho);
+bool   passEleVetoSel         (const baconhep::TElectron *electron, const double rho);
+bool   passEleLooseSel        (const baconhep::TElectron *electron, const double rho);
+bool   passEleMediumSel       (const baconhep::TElectron *electron, const double rho);
 bool   passEleTightSel        (const baconhep::TElectron *electron, const double rho);
-bool   passMuonLooseSel       (const baconhep::TMuon *muon);
-bool   passMuonTightSel       (const baconhep::TMuon *muon);
-bool   passTauSel             (const baconhep::TTau *tau);
-bool   passPhoSel             (const baconhep::TPhoton *photon, const double rho);
+bool   passEleHEEPSel         (const baconhep::TElectron *electron, const double rho, const double met);
 bool   passPhoLooseSel        (const baconhep::TPhoton *photon, const double rho);
 bool   passPhoMediumSel       (const baconhep::TPhoton *photon, const double rho);
-double eleIso                 (const baconhep::TElectron *electron, const double rho);
-double phoEffAreaHighPt       (const double eta, const int type);
+bool   passPhoTightSel        (const baconhep::TPhoton *photon, const double rho);
+double eleEffArea             (const double eta);
+double phoEffArea             (const double eta, const int type);
+bool   passMuonLooseSel       (const baconhep::TMuon *muon);
+bool   passMuonMediumSel      (const baconhep::TMuon *muon);
+bool   passMuonTightSel       (const baconhep::TMuon *muon);
+bool   passMuonSoftSel        (const baconhep::TMuon *muon);
+bool   passMuonHighPtSel      (const baconhep::TMuon *muon);
+bool   passTauSel             (const baconhep::TTau *tau);
+
 double getVal                 (TH1D*h,double val);
 double getVal2D               (TH2D*h,double val1, double val2);
 bool   passVeto               (double iEta,double iPhi,double idR,std::vector<TLorentzVector> &iVetoes);

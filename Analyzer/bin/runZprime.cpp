@@ -153,7 +153,7 @@ int main( int argc, char **argv ) {
     fMuon     ->load(i0);
     fMuon     ->selectMuons(cleaningMuons,fEvt->fMet,fEvt->fMetPhi);
     fElectron ->load(i0);
-    fElectron ->selectElectrons(fEvt->fRho,cleaningElectrons);
+    fElectron ->selectElectrons(fEvt->fRho,fEvt->fMet,cleaningElectrons);
     fTau      ->load(i0);
     fTau      ->selectTaus(cleaningElectrons, cleaningMuons);
     fPhoton   ->load(i0);

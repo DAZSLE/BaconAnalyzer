@@ -27,8 +27,10 @@ void ElectronLoader::reset() {
   fisele1Tight     = 0;
   fLooseElectrons.clear();
   fTightElectrons.clear();
+  fHEEPElectrons.clear();
   looseElectrons.clear();
   tightElectrons.clear();
+  HEEPElectrons.clear();
   for(unsigned int i0 = 0; i0 < fVars.size(); i0++) fVars[i0] = 0;
 }
 void ElectronLoader::setupTree(TTree *iTree) { 
@@ -36,16 +38,16 @@ void ElectronLoader::setupTree(TTree *iTree) {
   fTree = iTree;
   fTree->Branch("neleLoose"   ,&fNElectronsLoose ,"fNElectronsLoose/I");
   fTree->Branch("neleTight"   ,&fNElectronsTight ,"fNElectronsTight/I");
-  fTree->Branch("isele0Tight" ,&fisele0Tight     ,"fisele0Tight/I");
+  fTree->Branch("neleHEEP"    ,&fNElectronsHEEP  ,"fNElectronsHEEP/I");
   setupNtuple  ("veleLoose"   ,iTree,fN,fVars);        // 2 electrons ele*_pt,ele*_eta,ele*_phi (2*4=8)
 }
 void ElectronLoader::load(int iEvent) { 
   fElectrons  ->Clear();
   fElectronBr ->GetEntry(iEvent);
 }
-void ElectronLoader::selectElectrons(double iRho,std::vector<TLorentzVector> &iElectrons) {
+void ElectronLoader::selectElectrons(double iRho, double iMet, std::vector<TLorentzVector> &iElectrons) {
   reset();
-  int lCount = 0,lTCount=0; 
+  int lCount = 0,lTCount=0, lHEEPCount =0; 
 
   // Electrons selection
   for  (int i0 = 0; i0 < fElectrons->GetEntriesFast(); i0++) { 
@@ -53,7 +55,7 @@ void ElectronLoader::selectElectrons(double iRho,std::vector<TLorentzVector> &iE
     if(pElectron->pt        <=  10)                                            continue;
     if(fabs(pElectron->eta) >=  2.5)                                           continue;
     if(fabs(pElectron->eta) > 1.4442 && fabs(pElectron->eta) < 1.566)          continue;
-    if(!passEleSel(pElectron, iRho))                                           continue;
+    if(!passEleLooseSel(pElectron, iRho))                                      continue;
     lCount++;
     addElectron(pElectron,fLooseElectrons);
 
@@ -63,12 +65,20 @@ void ElectronLoader::selectElectrons(double iRho,std::vector<TLorentzVector> &iE
       lTCount++;
       addElectron(pElectron,fTightElectrons);
     }
+
+    if(passEleHEEPSel(pElectron, iRho, iMet) && pElectron->pt>40 && fabs(pElectron->eta)<2.5){
+      lHEEPCount++;
+      addElectron(pElectron,fHEEPElectrons);
+    }
+
   }
   addVElectron(fLooseElectrons,looseElectrons,0.000511);
   addVElectron(fTightElectrons,tightElectrons,0.000511);
+  addVElectron(fHEEPElectrons,HEEPElectrons,0.000511);
 
   fNElectronsLoose = lCount;
   fNElectronsTight = lTCount;
+  fNElectronsHEEP = lHEEPCount;
 
   if(fVars.size() > 0) fillElectron(fN,fLooseElectrons,fVars);
 
