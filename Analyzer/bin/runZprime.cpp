@@ -144,6 +144,7 @@ int main( int argc, char **argv ) {
 	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*")
 	 )  trigbits = trigbits | 2; 
       if( fEvt ->passTrigger("HLT_Mu45_eta2p1_v*")) trigbits = trigbits | 4; 
+      if( fEvt ->passTrigger("HLT_Ele45_WPLoose_v*")) trigbits = trigbits | 8; 
       // if(trigbits==1) continue;
     }
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
@@ -194,7 +195,7 @@ int main( int argc, char **argv ) {
       
     // AK4Puppi Jets
     fJet4     ->load(i0); 
-    fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets);
+    fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho);
 
     // Select at least one AK8 or one CA15 jet
     if(!(fEvt->fselectBits & 2) || !(fEvt->fselectBits & 4)) continue;
