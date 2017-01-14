@@ -26,7 +26,7 @@ EvtLoader::EvtLoader(TTree *iTree,std::string iName,std::string iHLTFile,std::st
   fVertexBr     = iTree->GetBranch("PV");
   
   TFile *lFile = TFile::Open(iPUWeight.c_str()); 
-  fPUWeightHist =  (TH1F*) lFile->Get("hPU");
+  fPUWeightHist =  (TH1F*) lFile->Get("puw");
   fPUWeightHist->SetDirectory(0);
   lFile->Close();
   fSample = (char*) (iName.c_str());
@@ -288,7 +288,7 @@ bool EvtLoader::passTrigger(std::string iTrigger) {
 // puWeight
 float EvtLoader::puWeight(float iNPU) { 
   float lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(iNPU)));
-  if(iNPU > 30) lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(30)));
+  if(iNPU > 75) lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(75)));
   if(iNPU <  1) lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(0)));
   return lNPVW;
 }
