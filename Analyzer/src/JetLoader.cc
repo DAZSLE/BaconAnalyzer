@@ -250,9 +250,10 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     double sf = getJerSF(iObjects[i0]->eta,0);
     double sfUp = getJerSF(iObjects[i0]->eta,1);
     double sfDown = getJerSF(iObjects[i0]->eta,-1);
-    double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*x1;
-    double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*x2;
-    double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*x3;
+    double sigma_MC = 0.07; // assume 7% for now
+    double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
+    double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
+    double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
 
     double unc = iObjects[i0]->unc;
     double jetCorrPt = iObjects[i0]->pt;
