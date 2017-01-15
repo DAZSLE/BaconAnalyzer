@@ -146,9 +146,9 @@ if __name__ == '__main__':
         #'TTWJetsToQQ_13TeV': 'mc',
         #'TTGJets_13TeV': 'mc',
         #'TTZToQQ_13TeV': 'mc',
-        'WWW_4F_13TeV_amcatnlo_pythia8',
-        'WWZ_13TeV_amcatnlo_pythia8',
-        'ZZZ_13TeV_amcatnlo_pythia8'
+        'WWW_4F_13TeV_amcatnlo_pythia8': 'mc', 
+        'WWZ_13TeV_amcatnlo_pythia8': 'mc', 
+        'ZZZ_13TeV_amcatnlo_pythia8': 'mc'
         }
     samplesDict['VectorDiJet1Jet'] = {
         'VectorDiJet1Jet_100_13TeV_madgraph': 'mc', 
