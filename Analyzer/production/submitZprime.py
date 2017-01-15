@@ -232,4 +232,4 @@ if __name__ == '__main__':
     exec_me('%s mkdir -p %s/%s'%(EOS,eosOutDir,analysisDir))  
     for label, isMc in samples.iteritems():
         exec_me('%s mkdir -p %s/%s/%s'%(EOS,eosOutDir,analysisDir,label))  
-        exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production11/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+        exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
