@@ -9,7 +9,7 @@
 #include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
-#include "CondFormats/JetMETObjects/interface/SimpleJetResolution.h"
+#include "SimpleJetResolution.h"
 
 
 using namespace baconhep;
@@ -37,7 +37,8 @@ public:
   std::vector<std::pair<int,int> > getJetCorrectionsIOV() { return JetCorrectionsIOV; }
   std::vector<SimpleJetResolution*> getJetResolutionCalculator() { return JetResolutionCalculator; }
   double getJecUnc( float pt, float eta, int run );
-  
+
+
   const double CSVL = 0.460; // CSVv2 WP
   const double CSVM = 0.800;
   const double CSVT = 0.935;
@@ -75,11 +76,12 @@ protected:
   std::vector<double>      fVars;
   FactorizedJetCorrector   *fJetCorr;
 
-  string cmsswPath;
+  std::string cmsswPath;
   
   // for jet energy corrections
-  void loadJECs();
-  void loadJECs_Rereco();
+  void loadCMSSWPath();
+  void loadJECs(bool isData);
+  void loadJECs_Rereco(bool isData);
   std::vector<std::vector<JetCorrectorParameters> > correctionParameters;
   std::vector<JetCorrectorParameters*> JetResolutionParameters;
   std::vector<FactorizedJetCorrector*> JetCorrector;

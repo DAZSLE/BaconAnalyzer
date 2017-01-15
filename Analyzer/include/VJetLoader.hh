@@ -13,7 +13,7 @@
 #include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
-#include "CondFormats/JetMETObjects/interface/SimpleJetResolution.h"
+#include "SimpleJetResolution.h"
 
 // B-tag scale factors
 #include "SJBTagUnc.hh"
