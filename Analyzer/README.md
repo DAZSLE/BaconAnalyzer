@@ -21,6 +21,7 @@ git cms-addpkg PhysicsTools/PatUtils
 git cms-addpkg RecoBTag/SecondaryVertex
 git cms-addpkg RecoBTau/JetTagComputer
 git cms-addpkg RecoMET/METPUSubtraction
+git cms-addpkg CondFormats/JetMETObjects
 git pull official-cmssw pull/16224/head
 git clone https://github.com/jmduarte/ShowerDeconstruction 
 git clone https://github.com/ksung25/BaconProd
@@ -60,10 +61,10 @@ Baconbits production
 -----------
 Define samples on submitZprime.py
 
-Run submitZprime.py for a given SAMPLE, as following:
+Run submitZprime.py for a given SAMPLE and tag as following:
 
-python submitZprime.py -s SAMPLE --monitor sub (to submit)
+python submitZprime.py -s SAMPLE -t TAG --monitor sub (to submit)
 
-python submitZprime.py -s SAMPLE --monitor sub (to check status - also bjobs)
+python submitZprime.py -s SAMPLE -t TAG --monitor check (to check status - also bjobs)
 
-python submitZprime.py -s SAMPLE --monitor resub (to resubmit)
+python submitZprime.py -s SAMPLE -t TAG --monitor resub (to resubmit)
