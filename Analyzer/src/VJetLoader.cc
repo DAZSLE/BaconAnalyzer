@@ -29,20 +29,6 @@ VJetLoader::VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::st
 
   const std::string cmssw_base = getenv("CMSSW_BASE");
   std::string cmssw_base_env = "${CMSSW_BASE}";
-  size_t start_pos = subjetbtagScaleFactorFilename.find(cmssw_base_env);
-  if(start_pos != std::string::npos) {
-    subjetbtagScaleFactorFilename.replace(start_pos, cmssw_base_env.length(), cmssw_base);
-  }
-  fSubJetCalib = new BTagCalibration("csvv2",subjetbtagScaleFactorFilename);
-  fSubJetreadersL.clear(); fSubJetreadersM.clear();
-  fSubJetreaders.clear();
-  for(auto imtype : measurementTypes) { // fSubJetreadersL 6, M6 
-    for(auto ivtype : variationTypes) {
-      fSubJetreadersL.push_back(new BTagCalibrationReader(fSubJetCalib, BTagEntry::OP_LOOSE,  imtype, ivtype)); // first lt(HF) then incl(LF) and first central(0,3) then up(1,4) and then down(2,5)
-      fSubJetreadersM.push_back(new BTagCalibrationReader(fSubJetCalib, BTagEntry::OP_MEDIUM, imtype, ivtype));
-    }
-  }
-  fSubJetreaders.push_back(fSubJetreadersL); fSubJetreaders.push_back(fSubJetreadersM);
 }
 VJetLoader::~VJetLoader() { 
   delete fVJets;
@@ -511,20 +497,6 @@ TAddJet *VJetLoader::getAddJetCHS(TJet *iJet) {
   return lJet;
 }
 
-double VJetLoader::dPhi(TLorentzVector v1, TLorentzVector v2, TLorentzVector v3){
-  TVector3 hVelocity = v3.BoostVector();
-  TLorentzRotation Boost(hVelocity);
-  TLorentzRotation tosubjetRest = Boost.Inverse();
-  TVector3 v1Dir = (tosubjetRest*v1).Vect();
-  TVector3 v2Dir = (tosubjetRest*v2).Vect();
-
-  float angle_mht = atan2((v1.Py()+v2.Py()),(v1.Px()+v2.Px())) + TMath::Pi();
-
-  Float_t b1 = TMath::Pi() - acos(cos(v1Dir.Phi()-angle_mht));
-  Float_t b2 = TMath::Pi() - acos(cos(v2Dir.Phi()-angle_mht));
-
-  return TMath::Min(b1,b2);
-}
 
 // Retrieve jet energy resolution scale factor as a function of eta
 double VJetLoader::getJerSF( float eta, int nsigma) {
