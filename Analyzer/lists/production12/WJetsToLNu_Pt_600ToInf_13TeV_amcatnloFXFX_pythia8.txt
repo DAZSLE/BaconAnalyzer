@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/WJetsToLNu_Pt_600ToInf_13TeV_amcatnloFXFX_pythia8/WJetsToLNu_Pt_600ToInf_13TeV_amcatnloFXFX_pythia8_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/WJetsToLNu_Pt_600ToInf_13TeV_amcatnloFXFX_pythia8/WJetsToLNu_Pt_600ToInf_13TeV_amcatnloFXFX_pythia8_1.root

@@ -8,6 +8,9 @@
 #include "Utils.hh"
 #include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
+#include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
+#include "SimpleJetResolution.h"
+#include "TRandom3.h"
 
 using namespace baconhep;
 
@@ -18,14 +21,24 @@ public:
   void reset();
   void setupTree(TTree *iTree, std::string iJetLabel);
   void load(int iEvent);
-  void selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, std::vector<TLorentzVector> &iVJets);
+  void selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, std::vector<TLorentzVector> &iVJets, double iRho);
   std::vector<TJet*> fLooseJets;
   std::vector<const TJet*> fGoodJets, selectedJets15, selectedJets8;
   std::vector<TLorentzVector> selectedJets;
 
   //Fillers
+  void fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho = 0);
   void addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals);
-  void fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets);
+  void fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets, double iRho);
+
+  
+  // JEC tools
+  std::vector<FactorizedJetCorrector*> getJetCorrector() { return JetCorrector; }
+  std::vector<std::pair<int,int> > getJetCorrectionsIOV() { return JetCorrectionsIOV; }
+  std::vector<SimpleJetResolution*> getJetResolutionCalculator() { return JetResolutionCalculator; }
+  double getJecUnc( float pt, float eta, int run );
+  double getJerSF( float eta, int nsigma);
+  TRandom3* r;
 
   const double CSVL = 0.460; // CSVv2 WP
   const double CSVM = 0.800;
@@ -63,5 +76,19 @@ protected:
   
   std::vector<double>      fVars;
   FactorizedJetCorrector   *fJetCorr;
+
+  std::string cmsswPath;
+  
+  // for jet energy corrections
+  void loadCMSSWPath();
+  void loadJECs(bool isData);
+  void loadJECs_Rereco(bool isData);
+  std::vector<std::vector<JetCorrectorParameters> > correctionParameters;
+  std::vector<JetCorrectorParameters*> JetResolutionParameters;
+  std::vector<FactorizedJetCorrector*> JetCorrector;
+  std::vector<JetCorrectionUncertainty*> jecUnc;
+  std::vector<SimpleJetResolution*> JetResolutionCalculator;
+  std::vector<std::pair<int,int> > JetCorrectionsIOV;
+
 };
 #endif
