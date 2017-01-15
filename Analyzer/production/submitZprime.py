@@ -128,7 +128,7 @@ if __name__ == '__main__':
         'WJetsToLNu_HT_2500ToInf_13TeV': 'mc',
         }
     samplesDict['DY'] = {
-        'DYJetsToLL_M_50_13TeV_ext': 'mc'
+        'DYJetsToLL_M_50_13TeV_ext': 'mc',
         'DYJetsToQQ_HT180_13TeV': 'mc',
         #'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
         }
