@@ -61,7 +61,7 @@ Baconbits production
 -----------
 Define samples on submitZprime.py
 
-Run submitZprime.py for a given SAMPLE and tag as following:
+Run submitZprime.py for a given SAMPLE and TAG as following:
 
 ```
 python submitZprime.py -s SAMPLE -t TAG --monitor sub # (to submit)
