@@ -63,8 +63,8 @@ Define samples on submitZprime.py
 
 Run submitZprime.py for a given SAMPLE and tag as following:
 
-python submitZprime.py -s SAMPLE -t TAG --monitor sub (to submit)
-
-python submitZprime.py -s SAMPLE -t TAG --monitor check (to check status - also bjobs)
-
-python submitZprime.py -s SAMPLE -t TAG --monitor resub (to resubmit)
+```
+python submitZprime.py -s SAMPLE -t TAG --monitor sub # (to submit)
+python submitZprime.py -s SAMPLE -t TAG --monitor check # (to check status - also bjobs)
+python submitZprime.py -s SAMPLE -t TAG --monitor resub # (to resubmit)
+```
