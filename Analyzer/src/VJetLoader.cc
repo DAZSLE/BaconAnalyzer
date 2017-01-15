@@ -182,6 +182,10 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fLabels.push_back("M2b2");
   fLabels.push_back("D2b1");
   fLabels.push_back("D2b2");
+  fLabels.push_back("pt_JESUp");
+  fLabels.push_back("pt_JESDown");
+  fLabels.push_back("pt_JERUp");
+  fLabels.push_back("pt_JERDown");
 
   std::stringstream pSNJ;   pSNJ << "n" << iJetLabel << "s";
   fTree = iTree;
@@ -442,6 +446,20 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     iVals[lBase+i0*lNLabel+48] = pAddJet->e3_v1_b2/(pAddJet->e2_b2);
     iVals[lBase+i0*lNLabel+49] = pAddJet->e3_b1/(pAddJet->e2_b1*pAddJet->e2_b1*pAddJet->e2_b1);
     iVals[lBase+i0*lNLabel+50] = pAddJet->e3_b2/(pAddJet->e2_b2*pAddJet->e2_b2*pAddJet->e2_b2);
+    //JEC    
+    double jetEnergySmearFactor = 1.0;
+    double jetEnergySmearFactorUp = 1.0;
+    double jetEnergySmearFactorDown = 1.0;
+    double unc = iObjects[i0]->unc;
+    double jetCorrPt = iObjects[i0]->pt;
+    double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
+    double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
+    double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
+    double jetPtJERDown = jetCorrPt*jetEnergySmearFactorDown;
+    iVals[lBase+i0*lNLabel+51] = jetPtJESUp;
+    iVals[lBase+i0*lNLabel+52] = jetPtJESDown;
+    iVals[lBase+i0*lNLabel+53] = jetPtJERUp;
+    iVals[lBase+i0*lNLabel+54] = jetPtJERDown;
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
     fhadronFlavor   = iObjects[0]->hadronFlavor;

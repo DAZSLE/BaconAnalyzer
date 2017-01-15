@@ -480,3 +480,25 @@ double JetLoader::getJecUnc( float pt, float eta , int run) {
   jecUnc[foundIndex]->setJetEta(eta);
   return jecUnc[foundIndex]->getUncertainty(true);
 }
+
+
+
+
+// Retrieve jet energy resolution scale factor as a function of eta
+double JetLoader::getJerSF( float eta, int nsigma) {
+  double sf[3] = {1.0, 1.0, 1.0};
+  if (fabs(eta) < 0.5) {
+    sf = {1.109 1.101 1.117};
+  }
+
+  if (nsigma == 0) {
+    return sf[0];
+  }
+  else if (nsigma == -1) {
+    return sf[1];
+  }
+  else if (nsigma == 1) {
+    return sf[2];
+  }
+}
+
