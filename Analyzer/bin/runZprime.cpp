@@ -157,7 +157,7 @@ int main( int argc, char **argv ) {
     fMuon     ->load(i0);
     fMuon     ->selectMuons(cleaningMuons,fEvt->fMet,fEvt->fMetPhi);
     fElectron ->load(i0);
-    fElectron ->selectElectrons(fEvt->fRho,cleaningElectrons);
+    fElectron ->selectElectrons(fEvt->fRho,fEvt->fMet,cleaningElectrons);
     fTau      ->load(i0);
     fTau      ->selectTaus(cleaningElectrons, cleaningMuons);
     fPhoton   ->load(i0);
@@ -233,6 +233,8 @@ int main( int argc, char **argv ) {
       fEvt->fevtWeight *= ttbarPtWeight;
       fGen->fWeight *= ttbarPtWeight;
       fGen->saveTTbarType();
+      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,6);
+      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,6);
     }
     if(lName.find("HToBB")!=std::string::npos || lName.find("HTobb")!=std::string::npos){
       fGen->findBoson(25,1);

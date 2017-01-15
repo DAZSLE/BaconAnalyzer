@@ -6,7 +6,7 @@
 #include "TBranch.h"
 #include "TClonesArray.h"
 #include "BaconAna/DataFormats/interface/TElectron.hh"
-#include "MonoXUtils.hh"
+#include "Utils.hh"
 
 using namespace baconhep;
 
@@ -17,11 +17,12 @@ public:
   void reset();
   void setupTree(TTree *iTree);
   void load(int iEvent);
-  void selectElectrons(double iRho,std::vector<TLorentzVector> &iElectrons);
-  std::vector<TElectron*> fLooseElectrons, fTightElectrons;
-  std::vector<TLorentzVector> looseElectrons, tightElectrons;
+  void selectElectrons(double iRho,double iMet, std::vector<TLorentzVector> &iElectrons);
+  std::vector<TElectron*> fLooseElectrons, fTightElectrons, fHEEPElectrons;
+  std::vector<TLorentzVector> looseElectrons, tightElectrons, HEEPElectrons;
   int           fNElectronsLoose;
   int           fNElectronsTight;
+  int           fNElectronsHEEP;
   int           fisele0Tight;
   int           fisele1Tight;
 
