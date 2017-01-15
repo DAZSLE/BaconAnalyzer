@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v3/TauRun2016H_PromptReco_v3_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v3/TauRun2016H_PromptReco_v3_1.root

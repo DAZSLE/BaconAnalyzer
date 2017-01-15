@@ -1,0 +1,5 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/METRun2016F_23Sep2016_v1/METRun2016F_23Sep2016_v1_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/METRun2016F_23Sep2016_v1/METRun2016F_23Sep2016_v1_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/METRun2016F_23Sep2016_v1/METRun2016F_23Sep2016_v1_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/METRun2016F_23Sep2016_v1/METRun2016F_23Sep2016_v1_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/METRun2016F_23Sep2016_v1/METRun2016F_23Sep2016_v1_4.root

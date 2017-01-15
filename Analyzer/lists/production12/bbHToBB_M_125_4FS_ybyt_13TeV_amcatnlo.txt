@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo/bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo/bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo_1.root

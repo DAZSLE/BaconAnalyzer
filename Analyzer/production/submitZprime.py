@@ -56,12 +56,12 @@ if __name__ == '__main__':
         'JetHTRun2016F_PromptReco_v1': 'data',
         'JetHTRun2016G_PromptReco_v1': 'data',
         'JetHTRun2016H_PromptReco_v2': 'data',
-        'JetHTRun2016B_23Sep2016_v1': 'rereco',
-        'JetHTRun2016C_23Sep2016_v1': 'rereco',
-        'JetHTRun2016D_23Sep2016_v1': 'rereco',
-        'JetHTRun2016E_23Sep2016_v1': 'rereco',
-        'JetHTRun2016F_23Sep2016_v1': 'rereco',
-        'JetHTRun2016G_23Sep2016_v1': 'rereco'
+        #'JetHTRun2016B_23Sep2016_v1': 'rereco',
+        #'JetHTRun2016C_23Sep2016_v1': 'rereco',
+        #'JetHTRun2016D_23Sep2016_v1': 'rereco',
+        #'JetHTRun2016E_23Sep2016_v1': 'rereco',
+        #'JetHTRun2016F_23Sep2016_v1': 'rereco',
+        #'JetHTRun2016G_23Sep2016_v1': 'rereco'
         }
     samplesDict['SingleMuon'] = {
         'SingleMuonRun2016B_PromptReco_v2': 'data',
@@ -92,15 +92,23 @@ if __name__ == '__main__':
         'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_ext': 'mc',
         'ZH_HToBB_ZToNuNu_M125_13TeV_amcatnloFXFX_madspin_pythia8': 'mc'
         }
-    samplesDict['QCD'] = {
-        'QCD_HT100to200_13TeV':'mc',
+    samplesDict['QCD'] = {       
+        'QCD_HT1000to1500_13TeV': 'mc',
+        'QCD_HT1000to1500_13TeV_ext': 'mc',
+        'QCD_HT100to200_13TeV': 'mc', 
+        'QCD_HT1500to2000_13TeV': 'mc',
+        'QCD_HT1500to2000_13TeV_ext': 'mc',
+        'QCD_HT2000toInf_13TeV': 'mc',
+        'QCD_HT2000toInf_13TeV_ext': 'mc',
+        'QCD_HT200to300_13TeV': 'mc',
         'QCD_HT200to300_13TeV_ext': 'mc',
+        'QCD_HT300to500_13TeV': 'mc',
         'QCD_HT300to500_13TeV_ext': 'mc',
+        'QCD_HT500to700_13TeV': 'mc',
         'QCD_HT500to700_13TeV_ext': 'mc',
-        'QCD_HT700to1000_13TeV_ext':'mc',
-        'QCD_HT1000to1500_13TeV_ext':'mc',
-        'QCD_HT1500to2000_13TeV_ext':'mc',
-        'QCD_HT2000toInf_13TeV_ext':'mc'
+        'QCD_HT50to100_13TeV': 'mc',
+        'QCD_HT700to1000_13TeV': 'mc',
+        'QCD_HT700to1000_13TeV_ext': 'mc'
         }
     samplesDict['SingleTop'] = {
         'ST_t-channel_antitop_4f_inclusiveDecays_13TeV_powheg': 'mc',
@@ -109,27 +117,35 @@ if __name__ == '__main__':
         'ST_tW_top_5f_inclusiveDecays_13TeV': 'mc'
         }
     samplesDict['W'] = {
-        'WJetsToQQ_HT180_13TeV': 'mc',
-        'WJetsToQQ_HT_600ToInf_13TeV': 'mc'
+        #'WJetsToQQ_HT180_13TeV': 'mc',
+        #'WJetsToQQ_HT_600ToInf_13TeV': 'mc',
+        'WJetsToLNu_HT_100To200_13TeV': 'mc',
+        'WJetsToLNu_HT_200To400_13TeV': 'mc',
+        'WJetsToLNu_HT_400To600_13TeV': 'mc',
+        'WJetsToLNu_HT_600To800_13TeV': 'mc',
+        'WJetsToLNu_HT_800To1200_13TeV': 'mc',
+        'WJetsToLNu_HT_1200To2500_13TeV': 'mc',
+        'WJetsToLNu_HT_2500ToInf_13TeV': 'mc',
         }
     samplesDict['DY'] = {
+        'DYJetsToLL_M_50_13TeV_ext': 'mc'
         'DYJetsToQQ_HT180_13TeV': 'mc',
-        'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
+        #'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
         }
     samplesDict['TT'] = {
-        'TTJets_13TeV':'mc',
-        'TT_13TeV_powheg_pythia8_ext':'mc'
+        #'TTJets_13TeV':'mc',
+        'TT_powheg':'mc'
         }
     samplesDict['Diboson'] = {
-        'WWTo4Q_13TeV_amcatnlo': 'mc',
-        'WWTo4Q_13TeV_powheg': 'mc',
-        'ZZTo4Q_13TeV_amcatnlo':'mc',
-        'WZ_13TeV': 'mc'
+        #'WWTo4Q_13TeV_amcatnlo': 'mc',
+        #'WWTo4Q_13TeV_powheg': 'mc',
+        #'ZZTo4Q_13TeV_amcatnlo':'mc',
+        #'WZ_13TeV': 'mc'
         }
     samplesDict['Triboson'] = {
-        'TTWJetsToQQ_13TeV': 'mc',
-        'TTGJets_13TeV': 'mc',
-        'TTZToQQ_13TeV': 'mc',
+        #'TTWJetsToQQ_13TeV': 'mc',
+        #'TTGJets_13TeV': 'mc',
+        #'TTZToQQ_13TeV': 'mc',
         }
     samplesDict['VectorDiJet1Jet'] = {
         'VectorDiJet1Jet_M50':'mc',

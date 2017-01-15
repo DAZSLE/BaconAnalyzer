@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_500_PseudoScalar_13TeV_madgraph/Spin0_ggPhi12j_g1_500_PseudoScalar_13TeV-madgraph/CRAB3/170110_212412/0000/Output_21.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_500_PseudoScalar_13TeV_madgraph/Spin0_ggPhi12j_g1_500_PseudoScalar_13TeV-madgraph/CRAB3/170110_212412/0000/Output_7.root

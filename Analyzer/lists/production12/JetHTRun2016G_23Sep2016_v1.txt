@@ -1,0 +1,17 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_153.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_270.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_274.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_399.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_422.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_425.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_446.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_494.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_510.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_514.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_566.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_650.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_682.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_69.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_716.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_741.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/JetHTRun2016G_23Sep2016_v1/JetHT/CRAB3/170106_201056/0000/Output_747.root
