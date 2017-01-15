@@ -10,6 +10,10 @@
 #include "BaconAna/DataFormats/interface/TJet.hh"
 #include "BaconAna/DataFormats/interface/TAddJet.hh"
 #include "MonoXUtils.hh"
+#include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
+#include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
+#include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
+#include "SimpleJetResolution.h"
 
 // B-tag scale factors
 #include "SJBTagUnc.hh"
@@ -17,6 +21,8 @@
 #include "CondFormats/BTauObjects/interface/BTagCalibration.h"
 //#include "CondFormats/BTauObjects/interface/BTagCalibrationReader.h"
 #include "BTagCalibrationStandalone.h"
+
+#include "TRandom3.h"
 
 using namespace baconhep;
 
@@ -68,6 +74,8 @@ public:
 
   const double CSVL = 0.460; // CSVv2SubJet WP 
   const double CSVM = 0.800;
+  double getJerSF( float eta, int nsigma);
+  TRandom3* r;
 
 protected: 
   TClonesArray *fVJets;

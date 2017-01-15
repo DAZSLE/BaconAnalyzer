@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_1.root

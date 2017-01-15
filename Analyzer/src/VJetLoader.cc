@@ -51,6 +51,7 @@ VJetLoader::VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::st
   fVAddJetBrCHS  = iTree->GetBranch(iAddJetCHS.c_str());
 
   fN = iN;
+  r = new TRandom3(1988);
 
   const std::string cmssw_base = getenv("CMSSW_BASE");
   std::string cmssw_base_env = "${CMSSW_BASE}";
@@ -182,6 +183,11 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fLabels.push_back("M2b2");
   fLabels.push_back("D2b1");
   fLabels.push_back("D2b2");
+  fLabels.push_back("pt_cen");
+  fLabels.push_back("pt_JESUp");
+  fLabels.push_back("pt_JESDown");
+  fLabels.push_back("pt_JERUp");
+  fLabels.push_back("pt_JERDown");
 
   std::stringstream pSNJ;   pSNJ << "n" << iJetLabel << "s";
   fTree = iTree;
@@ -442,6 +448,43 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     iVals[lBase+i0*lNLabel+48] = pAddJet->e3_v1_b2/(pAddJet->e2_b2);
     iVals[lBase+i0*lNLabel+49] = pAddJet->e3_b1/(pAddJet->e2_b1*pAddJet->e2_b1*pAddJet->e2_b1);
     iVals[lBase+i0*lNLabel+50] = pAddJet->e3_b2/(pAddJet->e2_b2*pAddJet->e2_b2*pAddJet->e2_b2);
+    //JEC    
+    double x1 = r->Gaus();
+    double x2 = r->Gaus();
+    double x3 = r->Gaus();
+    double sf = getJerSF(iObjects[i0]->eta,0);
+    double sfUp = getJerSF(iObjects[i0]->eta,1);
+    double sfDown = getJerSF(iObjects[i0]->eta,-1);
+    double sigma_MC = 0.05; // assume 5% for now
+    double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
+    double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
+    double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
+
+    double unc = iObjects[i0]->unc;
+    double jetCorrPt = iObjects[i0]->pt;
+    double jetCorrPtSmear = (iObjects[i0]->pt)*jetEnergySmearFactor;
+    double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
+    double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
+    double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
+    double jetPtJERDown = jetCorrPt*jetEnergySmearFactorDown;
+    std::cout << "VJet" << std::endl;
+    std::cout << "i0 =" << i0 << std::endl;
+    std::cout << "x1 = " << x1 << std::endl;
+    std::cout << "x2 = " << x2 << std::endl;
+    std::cout << "x3 = " << x2 << std::endl;
+    std::cout << "unc = " << unc << std::endl;
+    std::cout << "sf = " << sf << std::endl;
+    std::cout << "pt = " << jetCorrPt << std::endl;
+    std::cout << "ptcen = " << jetCorrPtSmear << std::endl;
+    std::cout << "jesup = " << jetPtJESUp << std::endl;
+    std::cout << "jesdown = " << jetPtJESDown << std::endl;
+    std::cout << "jerup = " << jetPtJERUp << std::endl;
+    std::cout << "jerdown = " << jetPtJERDown << std::endl;
+    iVals[lBase+i0*lNLabel+51] = jetCorrPtSmear;
+    iVals[lBase+i0*lNLabel+52] = jetPtJESUp;
+    iVals[lBase+i0*lNLabel+53] = jetPtJESDown;
+    iVals[lBase+i0*lNLabel+54] = jetPtJERUp;
+    iVals[lBase+i0*lNLabel+55] = jetPtJERDown;
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
     fhadronFlavor   = iObjects[0]->hadronFlavor;
@@ -641,4 +684,87 @@ double VJetLoader::dPhi(TLorentzVector v1, TLorentzVector v2, TLorentzVector v3)
   Float_t b2 = TMath::Pi() - acos(cos(v2Dir.Phi()-angle_mht));
 
   return TMath::Min(b1,b2);
+}
+
+// Retrieve jet energy resolution scale factor as a function of eta
+double VJetLoader::getJerSF( float eta, int nsigma) {
+  double sf[3] = {1.0, 1.0, 1.0};
+  if (fabs(eta) < 0.5) {
+    sf[0] = 1.109; 
+    sf[1] = 1.101; 
+    sf[2] = 1.117;
+  }
+  else if (fabs(eta) >= 0.5 && fabs(eta) < 0.8) {
+    sf[0] = 1.138;
+    sf[1] = 1.125;
+    sf[2] = 1.151;
+  }
+  else if (fabs(eta) >= 0.8 && fabs(eta) < 1.1) {
+    sf[0] = 1.114;
+    sf[1] = 1.101; 
+    sf[2] = 1.127;
+  }
+  else if (fabs(eta) >= 1.1 && fabs(eta) < 1.3) {
+    sf[0] = 1.123;
+    sf[1] = 1.099;
+    sf[2] = 1.147;
+  }
+  else if (fabs(eta) >= 1.3 && fabs(eta) < 1.7) {
+    sf[0] = 1.084;
+    sf[1] = 1.073;
+    sf[2] = 1.095;
+  }
+  else if (fabs(eta) >= 1.7 && fabs(eta) < 1.9) {
+    sf[0] = 1.082;
+    sf[1] = 1.047;
+    sf[2] = 1.117;
+  }
+  else if (fabs(eta) >= 1.9 && fabs(eta) < 2.1) {
+    sf[0] = 1.140;
+    sf[1] = 1.093;
+    sf[2] = 1.187;
+  }
+  else if (fabs(eta) >= 2.1 && fabs(eta) < 2.3) {
+    sf[0] = 1.067;
+    sf[1] = 1.014;
+    sf[2] = 1.120;
+  }
+  else if (fabs(eta) >= 2.3 && fabs(eta) < 2.5) {
+    sf[0] = 1.177;
+    sf[1] = 1.136;
+    sf[2] = 1.218;
+  }
+  else if (fabs(eta) >= 2.5 && fabs(eta) < 2.8) {
+    sf[0] = 1.364;
+    sf[1] = 1.325;
+    sf[2] = 1.403;
+  }
+  else if (fabs(eta) >= 2.8 && fabs(eta) < 3.0) {
+    sf[0] = 1.857;
+    sf[1] = 1.786;
+    sf[2] = 1.928;
+  }
+  else if (fabs(eta) >= 3.0 && fabs(eta) < 3.2) {
+    sf[0] = 1.328;
+    sf[1] = 1.306;
+    sf[2] = 1.350;
+  }
+  else if (fabs(eta) >= 3.2 && fabs(eta) < 4.7) {
+    sf[0] = 1.160;
+    sf[1] = 1.131;
+    sf[2] = 1.189;
+  }
+
+  if (nsigma == 0) {
+    return sf[0];
+  }
+  else if (nsigma == -1) {
+    return sf[1];
+  }
+  else if (nsigma == 1) {
+    return sf[2];
+  }
+  // if nsigma ! = 0, -1, 1
+  std::cout << "Warning: nsigma = " << nsigma << " is not -1, 0, 1" << std::endl;
+  return 1;
 }

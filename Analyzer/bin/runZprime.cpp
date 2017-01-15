@@ -141,9 +141,13 @@ int main( int argc, char **argv ) {
 	 fEvt ->passTrigger("HLT_PFHT800_v*") || 
 	 fEvt ->passTrigger("HLT_PFHT900_v*") || 
 	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*") ||
-	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*")
-	 )  trigbits = trigbits | 2; 
-      if( fEvt ->passTrigger("HLT_Mu45_eta2p1_v*")) trigbits = trigbits | 4; 
+	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*") ||
+	 fEvt ->passTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*") ||
+	 fEvt ->passTrigger("HLT_PFJet450_v*")
+	 )  trigbits = trigbits | 2;  // hadronic signal region
+      if( fEvt ->passTrigger("HLT_Mu45_eta2p1_v*") ||
+	  fEvt ->passTrigger("HLT_Mu50_v*")) trigbits = trigbits | 4; // single muon control region
+      if( fEvt ->passTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*")) trigbits = trigbits | 8; // single electron control region 
       // if(trigbits==1) continue;
     }
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
@@ -194,7 +198,7 @@ int main( int argc, char **argv ) {
       
     // AK4Puppi Jets
     fJet4     ->load(i0); 
-    fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets);
+    fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho);
 
     // Select at least one AK8 or one CA15 jet
     if(!(fEvt->fselectBits & 2) || !(fEvt->fselectBits & 4)) continue;
