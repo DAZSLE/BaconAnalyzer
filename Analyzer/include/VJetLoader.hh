@@ -22,6 +22,8 @@
 //#include "CondFormats/BTauObjects/interface/BTagCalibrationReader.h"
 #include "BTagCalibrationStandalone.h"
 
+#include "TRandom3.h"
+
 using namespace baconhep;
 
 class VJetLoader { 
@@ -72,6 +74,8 @@ public:
 
   const double CSVL = 0.460; // CSVv2SubJet WP 
   const double CSVM = 0.800;
+  double getJerSF( float eta, int nsigma);
+  TRandom3* r;
 
 protected: 
   TClonesArray *fVJets;

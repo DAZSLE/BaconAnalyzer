@@ -17,7 +17,8 @@ JetLoader::JetLoader(TTree *iTree) {
   fN = 4;
   fNV = 3; // max number of V jets to consider for dR anti-matching
   fNVars = 3; // pt, eta, phi
-  fNOtherVars = 9; // Mass, b-tag, qgid, dR, dPhi, pt_JESUp, pt_JESDown, pt_JERUp, pt_JERDown
+  fNOtherVars = 10; // Mass, b-tag, qgid, dR, dPhi, pt_cen, pt_JESUp, pt_JESDown, pt_JERUp, pt_JERDown
+  r = new TRandom3(1988);
 }
 JetLoader::~JetLoader() { 
   delete fJets;
@@ -205,12 +206,13 @@ void JetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<doub
 void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals) { 
   for(int i0 = 0; i0 < iN; i0++) { 
     int lBase = iN*fNVars+i0*fNOtherVars;
-    std::stringstream pSMass,pSCSV,pSQGID,pSdR,pSdP,pSjesUp,pSjesDown,pSjerUp,pSjerDown;
+    std::stringstream pSMass,pSCSV,pSQGID,pSdR,pSdP,pScen,pSjesUp,pSjesDown,pSjerUp,pSjerDown;
     pSMass  << iHeader << i0 << "_mass";
     pSCSV   << iHeader << i0 << "_csv";
     pSQGID  << iHeader << i0 << "_qgid";
     pSdR    << iHeader << i0 << "_dR08";
     pSdP    << iHeader << i0 << "_dPhi08";
+    pScen << iHeader << i0 << "_pt_cen";
     pSjesUp << iHeader << i0 << "_pt_JESUp";
     pSjesDown << iHeader << i0 << "_pt_JESDown";
     pSjerUp << iHeader << i0 << "_pt_JERUp";
@@ -221,10 +223,11 @@ void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<do
     iTree->Branch(pSQGID.str().c_str() ,&iVals[lBase+2],(pSQGID .str()+"/D").c_str());
     iTree->Branch(pSdR  .str().c_str() ,&iVals[lBase+3],(pSdR   .str()+"/D").c_str());
     iTree->Branch(pSdP  .str().c_str() ,&iVals[lBase+4],(pSdP   .str()+"/D").c_str());
-    iTree->Branch(pSjesUp  .str().c_str() ,&iVals[lBase+5],(pSjesUp   .str()+"/D").c_str());
-    iTree->Branch(pSjesDown.str().c_str() ,&iVals[lBase+6],(pSjesDown .str()+"/D").c_str());
-    iTree->Branch(pSjerUp  .str().c_str() ,&iVals[lBase+7],(pSjerUp   .str()+"/D").c_str());
-    iTree->Branch(pSjerDown.str().c_str() ,&iVals[lBase+8],(pSjerDown .str()+"/D").c_str());
+    iTree->Branch(pScen  .str().c_str() ,&iVals[lBase+5],(pScen   .str()+"/D").c_str());
+    iTree->Branch(pSjesUp  .str().c_str() ,&iVals[lBase+6],(pSjesUp   .str()+"/D").c_str());
+    iTree->Branch(pSjesDown.str().c_str() ,&iVals[lBase+7],(pSjesDown .str()+"/D").c_str());
+    iTree->Branch(pSjerUp  .str().c_str() ,&iVals[lBase+8],(pSjerUp   .str()+"/D").c_str());
+    iTree->Branch(pSjerDown.str().c_str() ,&iVals[lBase+9],(pSjerDown .str()+"/D").c_str());
   }
 }
 void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets, double iRho){ 
@@ -241,12 +244,19 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
       iVals[lBase+i0*fNOtherVars+4] = vPJet.DeltaPhi(iVJets[0]);
     }
     
-    double jetEnergySmearFactor = 1.0;
-    double jetEnergySmearFactorUp = 1.0;
-    double jetEnergySmearFactorDown = 1.0;
+    double x1 = r->Gaus();
+    double x2 = r->Gaus();
+    double x3 = r->Gaus();
+    double sf = getJerSF(iObjects[i0]->eta,0);
+    double sfUp = getJerSF(iObjects[i0]->eta,1);
+    double sfDown = getJerSF(iObjects[i0]->eta,-1);
+    double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*x1;
+    double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*x2;
+    double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*x3;
 
     double unc = iObjects[i0]->unc;
     double jetCorrPt = iObjects[i0]->pt;
+    double jetCorrPtSmear = (iObjects[i0]->pt)*jetEnergySmearFactor;
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
     double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
@@ -259,10 +269,11 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     //					   JetCorrectorIOV,JetCorrector);
     //double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default
     
-    iVals[lBase+i0*fNOtherVars+5] = jetPtJESUp;
-    iVals[lBase+i0*fNOtherVars+6] = jetPtJESDown;
-    iVals[lBase+i0*fNOtherVars+6] = jetPtJERUp;    
-    iVals[lBase+i0*fNOtherVars+6] = jetPtJERDown;
+    iVals[lBase+i0*fNOtherVars+5] = jetCorrPtSmear;
+    iVals[lBase+i0*fNOtherVars+6] = jetPtJESUp;
+    iVals[lBase+i0*fNOtherVars+7] = jetPtJESDown;
+    iVals[lBase+i0*fNOtherVars+8] = jetPtJERUp;    
+    iVals[lBase+i0*fNOtherVars+9] = jetPtJERDown;
       
   }
 }
@@ -482,13 +493,73 @@ double JetLoader::getJecUnc( float pt, float eta , int run) {
 }
 
 
-
-
 // Retrieve jet energy resolution scale factor as a function of eta
 double JetLoader::getJerSF( float eta, int nsigma) {
   double sf[3] = {1.0, 1.0, 1.0};
   if (fabs(eta) < 0.5) {
-    sf = {1.109 1.101 1.117};
+    sf[0] = 1.109; 
+    sf[1] = 1.101; 
+    sf[2] = 1.117;
+  }
+  else if (fabs(eta) >= 0.5 && fabs(eta) < 0.8) {
+    sf[0] = 1.138;
+    sf[1] = 1.125;
+    sf[2] = 1.151;
+  }
+  else if (fabs(eta) >= 0.8 && fabs(eta) < 1.1) {
+    sf[0] = 1.114;
+    sf[1] = 1.101; 
+    sf[2] = 1.127;
+  }
+  else if (fabs(eta) >= 1.1 && fabs(eta) < 1.3) {
+    sf[0] = 1.123;
+    sf[1] = 1.099;
+    sf[2] = 1.147;
+  }
+  else if (fabs(eta) >= 1.3 && fabs(eta) < 1.7) {
+    sf[0] = 1.084;
+    sf[1] = 1.073;
+    sf[2] = 1.095;
+  }
+  else if (fabs(eta) >= 1.7 && fabs(eta) < 1.9) {
+    sf[0] = 1.082;
+    sf[1] = 1.047;
+    sf[2] = 1.117;
+  }
+  else if (fabs(eta) >= 1.9 && fabs(eta) < 2.1) {
+    sf[0] = 1.140;
+    sf[1] = 1.093;
+    sf[2] = 1.187;
+  }
+  else if (fabs(eta) >= 2.1 && fabs(eta) < 2.3) {
+    sf[0] = 1.067;
+    sf[1] = 1.014;
+    sf[2] = 1.120;
+  }
+  else if (fabs(eta) >= 2.3 && fabs(eta) < 2.5) {
+    sf[0] = 1.177;
+    sf[1] = 1.136;
+    sf[2] = 1.218;
+  }
+  else if (fabs(eta) >= 2.5 && fabs(eta) < 2.8) {
+    sf[0] = 1.364;
+    sf[1] = 1.325;
+    sf[2] = 1.403;
+  }
+  else if (fabs(eta) >= 2.8 && fabs(eta) < 3.0) {
+    sf[0] = 1.857;
+    sf[1] = 1.786;
+    sf[2] = 1.928;
+  }
+  else if (fabs(eta) >= 3.0 && fabs(eta) < 3.2) {
+    sf[0] = 1.328;
+    sf[1] = 1.306;
+    sf[2] = 1.350;
+  }
+  else if (fabs(eta) >= 3.2 && fabs(eta) < 4.7) {
+    sf[0] = 1.160;
+    sf[1] = 1.131;
+    sf[2] = 1.189;
   }
 
   if (nsigma == 0) {
@@ -500,5 +571,8 @@ double JetLoader::getJerSF( float eta, int nsigma) {
   else if (nsigma == 1) {
     return sf[2];
   }
+  // if nsigma ! = 0, -1, 1
+  std::cout << "Warning: nsigma = " << nsigma << " is not -1, 0, 1" << std::endl;
+  return 1;
 }
 

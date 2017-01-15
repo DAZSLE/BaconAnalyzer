@@ -10,7 +10,7 @@
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
 #include "SimpleJetResolution.h"
-
+#include "TRandom3.h"
 
 using namespace baconhep;
 
@@ -37,7 +37,8 @@ public:
   std::vector<std::pair<int,int> > getJetCorrectionsIOV() { return JetCorrectionsIOV; }
   std::vector<SimpleJetResolution*> getJetResolutionCalculator() { return JetResolutionCalculator; }
   double getJecUnc( float pt, float eta, int run );
-
+  double getJerSF( float eta, int nsigma);
+  TRandom3* r;
 
   const double CSVL = 0.460; // CSVv2 WP
   const double CSVM = 0.800;
