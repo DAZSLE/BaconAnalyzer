@@ -386,7 +386,8 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
     double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
     double jetPtJERDown = jetCorrPt*jetEnergySmearFactorDown;
-    std::cout << "VJet" << std::endl;
+    /*
+      std::cout << "VJet" << std::endl;
     std::cout << "i0 =" << i0 << std::endl;
     std::cout << "x1 = " << x1 << std::endl;
     std::cout << "x2 = " << x2 << std::endl;
@@ -399,6 +400,7 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     std::cout << "jesdown = " << jetPtJESDown << std::endl;
     std::cout << "jerup = " << jetPtJERUp << std::endl;
     std::cout << "jerdown = " << jetPtJERDown << std::endl;
+    */
     iVals[lBase+i0*lNLabel+51] = jetCorrPtSmear;
     iVals[lBase+i0*lNLabel+52] = jetPtJESUp;
     iVals[lBase+i0*lNLabel+53] = jetPtJESDown;
