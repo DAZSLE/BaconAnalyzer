@@ -111,10 +111,10 @@ if __name__ == '__main__':
         'QCD_HT700to1000_13TeV_ext': 'mc'
         }
     samplesDict['SingleTop'] = {
-        #'ST_t-channel_antitop_4f_inclusiveDecays_13TeV_powheg': 'mc',
-        #'ST_t-channel_top_4f_inclusiveDecays_13TeV_powheg': 'mc',
-        #'ST_tW_antitop_5f_inclusiveDecays_13TeV': 'mc',
-        #'ST_tW_top_5f_inclusiveDecays_13TeV': 'mc'
+        'ST_t_channel_antitop_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin': 'mc',
+        'ST_t_channel_top_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin': 'mc',
+        'ST_tW_antitop_5f_inclusiveDecays_13TeV_powheg_pythia8_TuneCUETP8M2T4': 'mc',
+        'ST_tW_top_5f_inclusiveDecays_13TeV_powheg_pythia8_TuneCUETP8M2T4': 'mc'
         }
     samplesDict['W'] = {
         'WJetsToQQ_HT180_13TeV': 'mc',
@@ -146,8 +146,8 @@ if __name__ == '__main__':
         #'TTWJetsToQQ_13TeV': 'mc',
         #'TTGJets_13TeV': 'mc',
         #'TTZToQQ_13TeV': 'mc',
-        'WWW_4F_13TeV_amcatnlo_pythia8': 'mc', 
-        'WWZ_13TeV_amcatnlo_pythia8': 'mc', 
+        'WWW_4F_13TeV_amcatnlo_pythia8': 'mc',
+        'WWZ_13TeV_amcatnlo_pythia8': 'mc',
         'ZZZ_13TeV_amcatnlo_pythia8': 'mc'
         }
     samplesDict['VectorDiJet1Jet'] = {
