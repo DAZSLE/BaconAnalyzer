@@ -1042,3 +1042,8 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_1
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_ext/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170110_093705/0001/Output_1075.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_ext/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170110_093705/0001/Output_1076.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_ext/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170110_093705/0001/Output_1077.root
+1045,1048d1044
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_ext/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170110_093705/0001/Output_1078.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_ext/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170110_093705/0001/Output_1079.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_ext/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170110_093705/0001/Output_1080.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_ext/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170110_093705/0001/Output_1081.root
