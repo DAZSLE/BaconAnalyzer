@@ -26,17 +26,22 @@ void MuonLoader::reset() {
   fismu0Tight  = 0; 
   fismu1Tight  = 0;
   fLooseMuons.clear();
+  fMediumMuons.clear();
   fTightMuons.clear();
+  fHighPtMuons.clear();
   looseMuons.clear();
+  mediumMuons.clear();
   tightMuons.clear();
+  highptMuons.clear();
   for(unsigned int i0 = 0; i0 < fVars.size(); i0++) fVars[i0] = 0;
 }
 void MuonLoader::setupTree(TTree *iTree) { 
   reset();
   fTree = iTree;
   fTree->Branch("nmuLoose"  ,&fNMuonsLoose ,"fNMuonsLoose/I"); 
+  fTree->Branch("nmuMedium" ,&fNMuonsMedium,"fNMuonsMedium/I");
   fTree->Branch("nmuTight"  ,&fNMuonsTight ,"fNMuonsTight/I");
-  fTree->Branch("ismu0Tight",&fismu0Tight  ,"fismu0Tight/I");
+  fTree->Branch("nmuHighPt" ,&fNMuonsHighPt,"fNMuonsHighPt/I");
   setupNtuple("vmuoLoose"   ,iTree,fN,fVars);       // add leading 2 muons: pt,eta,phi,mass (2*4=8)
 }
 void MuonLoader::load(int iEvent) { 
@@ -45,7 +50,7 @@ void MuonLoader::load(int iEvent) {
 }
 void MuonLoader::selectMuons(std::vector<TLorentzVector> &iMuons, float met, float metPhi) {
   reset(); 
-  int lCount = 0,lTCount =0; 
+  int lCount = 0,lMCount = 0, lHPCount =0,lTCount =0; 
   fvMetNoMu.SetMagPhi(met,metPhi);
 
   // Muon selection
@@ -55,6 +60,9 @@ void MuonLoader::selectMuons(std::vector<TLorentzVector> &iMuons, float met, flo
     if(fabs(pMuon->eta) >=  2.4)                     continue;
     if(!passMuonLooseSel(pMuon))                     continue;
     lCount++;
+
+    if(!passMuonMediumSel(pMuon))                   lMCount++;
+    if(!passMuonHighPtSel(pMuon))                   lHPCount++;
 
     TVector2 vMu; vMu.SetMagPhi(pMuon->pt, pMuon->phi);
     fvMetNoMu = fvMetNoMu + vMu;
@@ -69,10 +77,14 @@ void MuonLoader::selectMuons(std::vector<TLorentzVector> &iMuons, float met, flo
 
   }
   addVMuon(fLooseMuons,looseMuons,MUON_MASS);
+  addVMuon(fMediumMuons,mediumMuons,MUON_MASS);
   addVMuon(fLooseMuons,tightMuons,MUON_MASS);
+  addVMuon(fHighPtMuons,highptMuons,MUON_MASS);
 
-  fNMuonsLoose = lCount; 
+  fNMuonsLoose = lCount;
+  fNMuonsMedium = lMCount; 
   fNMuonsTight = lTCount;
+  fNMuonsHighPt = lHPCount;
 
   // Cleaning iMuons
   if(fTightMuons.size()>1){

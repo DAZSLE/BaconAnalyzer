@@ -1,7 +1,7 @@
 #include "BaconAna/DataFormats/interface/TEventInfo.hh"
 #include "BaconAna/DataFormats/interface/TVertex.hh"
 #include "BaconAna/Utils/interface/TTrigger.hh"
-#include "MonoXUtils.hh"
+#include "Utils.hh"
 
 #include "TH1F.h"
 #include "TH2D.h"
@@ -19,7 +19,7 @@ class EvtLoader {
 public:
   EvtLoader(TTree *iTree,std::string iName,
 	    std::string iHLTFile="${CMSSW_BASE}/src/BaconAna/DataFormats/data/HLTFile_25ns",
-	    std::string iPUWeight="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/puWeight_13invfb.root");
+	    std::string iPUWeight="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/puWeight_23Sept.root");
   ~EvtLoader(); 
   void reset();
   void setupTree  (TTree *iTree);

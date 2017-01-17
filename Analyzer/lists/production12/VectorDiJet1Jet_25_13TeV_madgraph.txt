@@ -7,3 +7,13 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_2
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_7.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_8.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_9.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV_madgraph_0.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_1.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_2.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_3.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_4.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_5.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_6.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_7.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_8.root
+> root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_25_13TeV_madgraph/VectorDiJet1Jet_25_13TeV-madgraph/CRAB3/170110_205547/0000/Output_9.root

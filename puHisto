@@ -1,0 +1,56 @@
+   /*Data
+   JSON=Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt
+   PUJSON=pileup_latest.txt
+
+  The latest and greatest effective minimum bias cross section, to my knowledge it is 69.2 ± 4.6%  
+  MINBIAS=69200
+  MINBIASP=72383.2
+  MINBIASM=66016.8
+
+  pileupCalc.py -i ${JSON} --inputLumiJSON $PUJSON  --calcMode true --minBiasXsec $MINBIAS --maxPileupBin 50 --numPileupBins 50  outputData.root
+  pileupCalc.py -i ${JSON} --inputLumiJSON $PUJSON  --calcMode true --minBiasXsec $MINBIASP --maxPileupBin 50 --numPileupBins 50  outputDataP.root
+  pileupCalc.py -i ${JSON} --inputLumiJSON $PUJSON  --calcMode true --minBiasXsec $MINBIASM --maxPileupBin 50 --numPileupBins 50  outputDataM.root
+
+  MC
+  python script is:
+  from SimGeneral.MixingModule import mix_2016_25ns_Moriond17MC_PoissonOOTPU_cfi as pu
+
+  import ROOT
+  n=len(pu.mix.input.nbPileupEvents.probValue )
+  x=pu.mix.input.nbPileupEvents.probValue
+
+  f= ROOT.TFile("mcpu.root","recreate")
+  pu = ROOT.TH1F("pileup","pileip",n,0,n)
+
+   for i in xrange(0,n) :
+   print i
+   pu.SetBinContent(i+1,x[i]) 
+
+
+  pu.Write()
+  f.Write()
+*/
+  
+   
+   {
+   TFile* fileMC = new TFile("mcpu.root");
+   TH1D* pileUpMC = (TH1D*)fileMC->Get("pileup");
+
+   TFile* fileData = new TFile("outputData.root");
+   TH1D* pileUpData = (TH1D*)fileData->Get("pileup");
+
+   pileUpData->Sumw2();
+   pileUpMC->Sumw2();
+
+   pileUpMC->Scale(1./pileUpMC->Integral());
+   pileUpData->Scale(1./pileUpData->Integral());
+
+
+   TH1D* puw = new TH1D("puw","puw”,75,0,75);
+   puw->Divide(hpileUpData,hpileUpMC);
+
+   TFile* filePuw = new TFile("puWeights_23Sept.root","recreate");
+   puw->Write();
+   filePuw->Close();
+   
+   }
