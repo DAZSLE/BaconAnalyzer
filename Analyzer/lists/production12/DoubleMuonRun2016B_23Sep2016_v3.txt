@@ -202,13 +202,10 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_97.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_98.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_99.root
-123d122
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_215.root
-125,127d123
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_217.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_218.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_219.root
-129,138d124
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_220.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_221.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_222.root
@@ -219,7 +216,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_227.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_228.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_229.root
-140,149d125
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_230.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_231.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_232.root
@@ -230,7 +226,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_237.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_238.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_239.root
-151,159d126
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_240.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_241.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_242.root
@@ -240,7 +235,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_247.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_248.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_249.root
-161,170d127
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_250.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_251.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_252.root
@@ -251,7 +245,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_257.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_258.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_259.root
-172,180d128
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_260.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_261.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_262.root
@@ -261,7 +254,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_266.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_268.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_269.root
-182,185d129
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_270.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_271.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016B_23Sep2016_v3/DoubleMuon/CRAB3/170110_131146/0000/Output_273.root

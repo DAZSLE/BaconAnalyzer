@@ -1138,7 +1138,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016D_23Sep2016_v1/DoubleMuon/CRAB3/170110_131419/0001/Output_1158.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016D_23Sep2016_v1/DoubleMuon/CRAB3/170110_131419/0001/Output_1159.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016D_23Sep2016_v1/DoubleMuon/CRAB3/170110_131419/0001/Output_1160.root
-1141,1198d1140
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016D_23Sep2016_v1/DoubleMuon/CRAB3/170110_131419/0001/Output_1161.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016D_23Sep2016_v1/DoubleMuon/CRAB3/170110_131419/0001/Output_1162.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DoubleMuonRun2016D_23Sep2016_v1/DoubleMuon/CRAB3/170110_131419/0001/Output_1163.root

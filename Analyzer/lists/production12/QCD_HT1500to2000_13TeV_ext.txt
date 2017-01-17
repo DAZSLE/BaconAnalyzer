@@ -769,7 +769,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113531/0000/Output_97.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113531/0000/Output_98.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113531/0000/Output_99.root
-1,16c1,771
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_13TeV_ext_0.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_13TeV_ext_1.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_13TeV_ext_10.root
@@ -786,7 +785,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_13TeV_ext_7.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_13TeV_ext_8.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_13TeV_ext_9.root
----
 > root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113531/0000/Output_1.root
 > root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113531/0000/Output_10.root
 > root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT1500to2000_13TeV_ext/QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113531/0000/Output_100.root
