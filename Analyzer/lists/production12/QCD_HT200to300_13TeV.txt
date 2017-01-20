@@ -80,6 +80,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_171.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_172.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_173.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_174.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_175.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_176.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_177.root
@@ -154,6 +155,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_249.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_25.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_250.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_251.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_252.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_253.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_254.root
@@ -271,10 +273,12 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_371.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_372.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_373.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_374.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_375.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_376.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_377.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_378.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_379.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_38.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_380.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_381.root
@@ -282,6 +286,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_384.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_385.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_386.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_388.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_389.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_39.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_391.root
@@ -289,6 +294,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_393.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_394.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_395.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_396.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_398.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_399.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_4.root
@@ -297,7 +303,9 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_401.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_402.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_403.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_404.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_405.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_406.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_407.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_408.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_41.root
@@ -315,6 +323,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_422.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_423.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_424.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_425.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_426.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_427.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_428.root
@@ -369,6 +378,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_474.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_475.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_476.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_477.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_478.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_479.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_48.root
@@ -692,6 +702,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_779.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_78.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_780.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_783.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_784.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_79.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_8.root
@@ -890,5 +901,3 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0001/Output_1888.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0001/Output_1889.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0001/Output_1890.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_388.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/QCD_HT200to300_13TeV/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/CRAB3/170108_113632/0000/Output_783.root
