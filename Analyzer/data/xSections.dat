@@ -121,7 +121,7 @@ WJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8                    
 ZJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8  			   5.67
 WJetsToQQ_HT180_13TeV-madgraphMLM-pythia8					   2788 # from DAS
 WW_TuneCUETP8M1_13TeV-pythia8                                                      63.21*1.878
-WWTo4Q_13TeV-powheg                                                                51.723
+WWTo4Q_13TeV_powheg                                                                51.723
 WWToLNuQQ_13TeV-powheg                                                             49.997
 WWTo2L2Nu_13TeV-powheg                                                             12.178
 WWTo4Q_4f_13TeV_amcatnloFXFX_madspin_pythia8					   51.723
@@ -278,13 +278,22 @@ VectorDiJet1Jet_M400				1
 VectorDiJet1Jet_M500				1
 VectorDiJet1Jet_M50				1
 VectorDiJet1Jet_M75				1
-DMSpin0_ggPhibb1j_100				1
-DMSpin0_ggPhibb1j_125				1
-DMSpin0_ggPhibb1j_150				1				
-DMSpin0_ggPhibb1j_250				1
-DMSpin0_ggPhibb1j_300				1
-DMSpin0_ggPhibb1j_400				1
-DMSpin0_ggPhibb1j_500				1				
-DMSpin0_ggPhibb1j_50				1
-DMSpin0_ggPhibb1j_75				1
-
+DMSpin0_ggPhibb1j_1000				1
+DMSpin0_ggPhibb1j_100       			1
+DMSpin0_ggPhibb1j_125_Pseudo			1	
+DMSpin0_ggPhibb1j_125       			1
+DMSpin0_ggPhibb1j_150_Pseudo			1
+DMSpin0_ggPhibb1j_150       			1
+DMSpin0_ggPhibb1j_200_Pseudo			1	
+DMSpin0_ggPhibb1j_200       			1
+DMSpin0_ggPhibb1j_250_Pseudo			1
+DMSpin0_ggPhibb1j_250       			1
+DMSpin0_ggPhibb1j_25_Pseudo 			1
+DMSpin0_ggPhibb1j_300_Pseudo			1
+DMSpin0_ggPhibb1j_300       			1
+DMSpin0_ggPhibb1j_350_Pseudo			1
+DMSpin0_ggPhibb1j_350       			1	
+DMSpin0_ggPhibb1j_500_Pseudo			1
+DMSpin0_ggPhibb1j_50_Pseudo 			1
+DMSpin0_ggPhibb1j_75_Pseudo 			1
+DMSpin0_ggPhibb1j_75        			1
