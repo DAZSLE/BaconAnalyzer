@@ -23,8 +23,10 @@ ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8							${SKLIMDIR}/ZZTo4Q_13TeV_amcatnl
 GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8						${SKLIMDIR}/GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_all.root
 GluGluHToBB_M125_13TeV_powheg_herwigpp							${SKLIMDIR}/GluGluHToBB_M125_13TeV_powheg_herwigpp.root
 GluGluHToBB_M125_13TeV_powheg_pythia8								${SKLIMDIR}/GluGluHToBB_M125_13TeV_powheg_pythia8_0.root
+GluGluHToBB_M125_13TeV_powheg_pythia8                                                           ${SKLIMDIR}/GluGluHToBB_M125_13TeV_powheg_pythia8_0_ptw.root
 VBFHToBB_M125_13TeV_amcatnlo_pythia8								${SKLIMDIR}/VBFHToBB_M125_13TeV_amcatnlo_pythia8_0.root
 VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix						${SKLIMDIR}/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_0.root
+VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix                                           ${SKLIMDIR}/VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_0_ptw.root
 ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8							${SKLIMDIR}/ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_0.root
 DMSpin0_ggPhibb1j_100          ${SKLIMDIR}/Spin0_ggPhi12j_g1_100_Scalar_13TeV_madgraph_0.root
 DMSpin0_ggPhibb1j_125_Pseudo          ${SKLIMDIR}/Spin0_ggPhi12j_g1_125_PseudoScalar_13TeV_madgraph_0.root
