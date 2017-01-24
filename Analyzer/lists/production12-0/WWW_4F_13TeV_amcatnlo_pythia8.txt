@@ -1,1 +1,0 @@
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/WWW_4F_13TeV_amcatnlo_pythia8/WWW_4F_13TeV_amcatnlo_pythia8_0.root

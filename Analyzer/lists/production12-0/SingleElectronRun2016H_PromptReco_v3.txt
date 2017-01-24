@@ -1,1 +1,0 @@
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/SingleElectronRun2016H_PromptReco_v3/SingleElectronRun2016H_PromptReco_v3_0.root

@@ -51,8 +51,16 @@ double getNormalizationWeight(string filename, string datasetName, double intLum
   cout << "Original events in the sample: " << NEvents << endl;
 
   //Get CrossSection
-  SimpleTable xstab("data/xSections.dat");
-  double CrossSection = xstab.Get(datasetName.c_str());  
+  char* cmsswPathChar = getenv("CMSSW_BASE");
+  std::string cmsswPath = "";
+  if (cmsswPathChar == NULL) {
+    std::cout << "Warning in JetLoader::loadCMSSWPath : CMSSW_BASE not detected." << std::endl;
+    cmsswPath = "";
+  }
+  cmsswPath = std::string(cmsswPathChar);
+  std::string xsecPath = cmsswPath + "/src/BaconAnalyzer/Analyzer/data/xSections.dat";
+  SimpleTable xstab(xsecPath.c_str());
+  double CrossSection = xstab.Get(datasetName.c_str());
   double Weight = CrossSection * intLumi / NEvents;
   // weight for data is always 1 (-1 to make a trick for fakes)
   //if(CrossSection < 0) Weight = -1.0;
