@@ -114,7 +114,7 @@ def main(options,args):
         with open('hadd_command_%s.sh'%(basename),'w') as f:
             f.write(haddCommand)
 
-            exec_me('bsub -q 8nh -o $PWD/hadd_command_%s.log source $PWD/hadd_command_%s.sh'%(basename.replace('.root','_%i.root'%i),basename.replace('.root','_%i.root'%i)),options.dryRun)
+            exec_me('bsub -q 8nh -o $PWD/hadd_command_%s.log source $PWD/hadd_command_%s.sh'%(basename,basename),options.dryRun)
 
         with open('bad_files_%s.txt'%basename,'w') as f:
             for badFile in badFiles:

@@ -35,7 +35,6 @@ samplesDict['Hbb'] = {
     'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc', 
     'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc', 
     'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc', 
-    'VBFHToBB_M_130_13TeV_powheg_pythia8': 'mc', 
     'WminusH_HToBB_WToLNu_M125_13TeV_powheg_pythia8': 'mc', 
     'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc', 
     'WplusH_HToBB_WToLNu_M125_13TeV_powheg_pythia8': 'mc', 
