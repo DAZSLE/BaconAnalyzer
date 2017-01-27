@@ -250,6 +250,10 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     double sf = getJerSF(iObjects[i0]->eta,0);
     double sfUp = getJerSF(iObjects[i0]->eta,1);
     double sfDown = getJerSF(iObjects[i0]->eta,-1);
+    
+    std::string jecPathname = cmsswPath + "/src/BaconAnalyzer/Analyzer/data/JEC/";
+    JME::JetResolution resolution = JME::JetResolution(Form("%s/Spring16_25nsV6_MC/Spring16_25nsV6_MC_PtResolution_AK4PFPuppi.txt",jecPathname.c_str()));
+    JME::JetResolutionScaleFactor resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Spring16_25nsV6_MC/Spring16_25nsV6_MC_PtResolution_AK4PFPuppi.txt",jecPathname.c_str()));
     double sigma_MC = 0.07; // assume 7% for now
     double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
     double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;

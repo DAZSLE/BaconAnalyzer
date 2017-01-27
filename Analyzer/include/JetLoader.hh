@@ -10,6 +10,7 @@
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
 #include "SimpleJetResolution.h"
+#include "JetMETCorrections/Modules/interface/JetResolution.h"
 #include "TRandom3.h"
 
 using namespace baconhep;
