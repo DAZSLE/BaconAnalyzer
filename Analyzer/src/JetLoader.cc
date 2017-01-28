@@ -247,14 +247,25 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     double x1 = r->Gaus();
     double x2 = r->Gaus();
     double x3 = r->Gaus();
-    double sf = getJerSF(iObjects[i0]->eta,0);
-    double sfUp = getJerSF(iObjects[i0]->eta,1);
-    double sfDown = getJerSF(iObjects[i0]->eta,-1);
-    
+    //double sf = getJerSF(iObjects[i0]->eta,0);
+    //double sfUp = getJerSF(iObjects[i0]->eta,1);
+    //double sfDown = getJerSF(iObjects[i0]->eta,-1);
+    loadCMSSWPath();
     std::string jecPathname = cmsswPath + "/src/BaconAnalyzer/Analyzer/data/JEC/";
     JME::JetResolution resolution = JME::JetResolution(Form("%s/Spring16_25nsV6_MC/Spring16_25nsV6_MC_PtResolution_AK4PFPuppi.txt",jecPathname.c_str()));
-    JME::JetResolutionScaleFactor resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Spring16_25nsV6_MC/Spring16_25nsV6_MC_PtResolution_AK4PFPuppi.txt",jecPathname.c_str()));
-    double sigma_MC = 0.07; // assume 7% for now
+    JME::JetResolutionScaleFactor resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Spring16_25nsV6_MC/Spring16_25nsV6_MC_SF_AK4PFPuppi.txt",jecPathname.c_str()));
+    
+    std::cout << "pt = " << iObjects[i0]->pt << ", eta = " << iObjects[i0]->eta << ", rho = " << iRho << std::endl; 
+    JME::JetParameters parameters = {{JME::Binning::JetPt, iObjects[i0]->pt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, iRho}};
+    float sigma_MC = resolution.getResolution(parameters);
+    float sf = resolution_sf.getScaleFactor(parameters);
+    float sfUp = resolution_sf.getScaleFactor(parameters, Variation::UP);
+    float sfDown = resolution_sf.getScaleFactor(parameters, Variation::DOWN);
+
+    std::cout << "sf = " << sf << ", " <<  sfUp << ", " << sfDown << std::endl;
+    std::cout << "sigma_MC = " << sigma_MC << std::endl;
+    
+    //double sigma_MC = 0.07; // assume 7% for now
     double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
     double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
     double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
@@ -286,6 +297,7 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
 void JetLoader::loadJECs(bool isData) {
     std::cout << "JetLoader: loading jet energy correction constants" << std::endl;
     // initialize
+    loadCMSSWPath();
     std::string jecPathname = cmsswPath + "/src/BaconAnalyzer/Analyzer/data/JEC/";
     correctionParameters = std::vector<std::vector<JetCorrectorParameters> >();
     JetResolutionParameters = std::vector<JetCorrectorParameters*>();
@@ -342,6 +354,7 @@ void JetLoader::loadJECs(bool isData) {
 }
 void JetLoader::loadJECs_Rereco(bool isData) {
     // initialize
+    loadCMSSWPath();
     std::string jecPathname = cmsswPath + "/src/BaconAnalyzer/Analyzer/data/JEC/";
     correctionParameters = std::vector<std::vector<JetCorrectorParameters> >();
     JetResolutionParameters = std::vector<JetCorrectorParameters*>();
