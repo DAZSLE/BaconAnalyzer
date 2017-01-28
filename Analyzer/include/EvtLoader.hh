@@ -19,7 +19,7 @@ class EvtLoader {
 public:
   EvtLoader(TTree *iTree,std::string iName,
 	    std::string iHLTFile="${CMSSW_BASE}/src/BaconAna/DataFormats/data/HLTFile_25ns",
-	    std::string iPUWeight="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/puWeight_23Sept.root");
+	    std::string iPUWeight="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/puWeights_Jan11.root");
   ~EvtLoader(); 
   void reset();
   void setupTree  (TTree *iTree);
