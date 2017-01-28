@@ -191,7 +191,7 @@ void EvtLoader::fillEvent(unsigned int trigBit,float lWeight, unsigned int passJ
   fNVtx         = nVtx();
   fITrigger     = trigBit;
   fselectBits   = 1;
-  fPUWeight     = puWeight(float(fNVtx)); 
+  fPUWeight     = puWeight(float(fNPU)); 
   fScale        = lWeight;
   fevtWeight    = 1;
   fMetFilters   = fEvt->metFilterFailBits;
@@ -286,7 +286,7 @@ bool EvtLoader::passTrigger(std::string iTrigger) {
 // puWeight
 float EvtLoader::puWeight(float iNPU) { 
   float lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(iNPU)));
-  if(iNPU > 75) lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(75)));
+  if(iNPU > 50) lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(50)));
   if(iNPU <  1) lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(0)));
   return lNPVW;
 }
