@@ -28,7 +28,7 @@ using namespace baconhep;
 
 class VJetLoader { 
 public:
-  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1);
+  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1, bool iData=false);
   ~VJetLoader();
   double correction(TJet &iJet,double iRho);
   void reset();
@@ -39,10 +39,10 @@ public:
   void setupTreeZprime(TTree *iTree,std::string iJetLabel);
   void setupTreeCHS(TTree *iTree,std::string iJetLabel);
   void load(int iEvent);
-  void selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho);
-  void selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho);  
-  void selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho);
-  void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho = 0);
+  void selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);
+  void selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);  
+  void selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);
+  void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum);
   int getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
   void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex);
   void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
@@ -69,7 +69,18 @@ public:
   std::vector<FactorizedJetCorrector*> getJetCorrector() { return JetCorrector; }
   std::vector<std::pair<int,int> > getJetCorrectionsIOV() { return JetCorrectionsIOV; }
   double getJecUnc( float pt, float eta, int run );
-  double getJerSF( float eta, int nsigma);
+  double JetEnergyCorrectionFactor( double jetRawPt, double jetEta, double jetPhi, double jetE,
+				    double rho, double jetArea,
+				    int run,
+				    std::vector<std::pair<int,int> > JetCorrectionsIOV,
+				    std::vector<FactorizedJetCorrector*> jetcorrector,  
+				    int jetCorrectionLevel = -1,
+				    bool printDebug = false);
+  double JetEnergyCorrectionFactor( double jetRawPt, double jetEta, double jetPhi, double jetE,
+				    double rho, double jetArea,					  
+				    FactorizedJetCorrector* jetcorrector,  
+				    int jetCorrectionLevel = -1,
+				    bool printDebug = false);
   TRandom3* r;
 
 protected: 
@@ -96,6 +107,7 @@ protected:
   std::string cmsswPath;
   
   // for jet energy corrections
+  bool isData;
   void loadCMSSWPath();
   void loadJECs(bool isData);
   void loadJECs_Rereco(bool isData);

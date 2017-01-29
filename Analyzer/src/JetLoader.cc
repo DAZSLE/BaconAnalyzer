@@ -5,7 +5,7 @@
 
 using namespace baconhep;
 
-JetLoader::JetLoader(TTree *iTree) { 
+JetLoader::JetLoader(TTree *iTree, bool iData) { 
   fJets  = new TClonesArray("baconhep::TJet");
   iTree->SetBranchAddress("AK4Puppi",       &fJets);
   fJetBr = iTree->GetBranch("AK4Puppi");
@@ -18,6 +18,7 @@ JetLoader::JetLoader(TTree *iTree) {
   fNV = 3; // max number of V jets to consider for dR anti-matching
   fNVars = 3; // pt, eta, phi
   fNOtherVars = 10; // Mass, b-tag, qgid, dR, dPhi, pt_cen, pt_JESUp, pt_JESDown, pt_JERUp, pt_JERDown
+  isData = iData;
   r = new TRandom3(1988);
 }
 JetLoader::~JetLoader() { 
@@ -125,6 +126,7 @@ void JetLoader::load(int iEvent) {
 }
 void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, std::vector<TLorentzVector> &iVJets, double iRho, unsigned int runNum){
   reset(); 
+  loadJECs(isData);    
   int lCountPt30 = 0, lNFwdPt30 = 0, lNBTagLPt30 = 0,lNBTagMPt30 = 0, lNBTagTPt30 = 0;
   
   for (int i1 = 0; i1 < int(iVJets.size()); i1++) {
@@ -140,8 +142,6 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     fNBTagsTPt150dR08[i1] = 0;
   }
   
-  loadJECs();
-    
   for  (int i0 = 0; i0 < fJets->GetEntriesFast(); i0++) { 
     TJet *pJet = (TJet*)((*fJets)[i0]);
     if(passVeto(pJet->eta,pJet->phi,0.4,iElectrons))                      continue;
@@ -153,7 +153,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     vPJet.SetPtEtaPhiM(pJet->ptRaw, pJet->eta, pJet->phi, (pJet->mass)/JEC_old);
     double jetE = vPJet.E();
     double JEC = JetEnergyCorrectionFactor(pJet->ptRaw, pJet->eta, pJet->phi, jetE, 
-    					   iRho, iObjects[i0]->area, 
+    					   iRho, pJet->area, 
     					   runNum,
    					   JetCorrectionsIOV,JetCorrector);
 		      
@@ -202,7 +202,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
   fNBTagsTPt30         = lNBTagTPt30;
 
   fillJetCorr(fN,fLooseJets,fVars,iRho,runNum);
-  fillOthers(fN,fLooseJets,fVars,iVJets,iRho);
+  fillOthers(fN,fLooseJets,fVars,iVJets,iRho, runNum);
 }
 void JetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum){ 
   int lMin = iObjects.size();
@@ -214,12 +214,14 @@ void JetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<doub
   for(int i0 = 0; i0 < lMin; i0++) {
     
     double JEC_old = (iObjects[i0]->pt)/(iObjects[i0]->ptRaw);
-    vPJet.SetPtEtaPhiM(iObjects[i0]->ptRaw iObjects[i0]->eta, iObjects[i0]->phi, (iObjects[i0]->mass)/JEC_old);
+    TLorentzVector vPJet;
+    vPJet.SetPtEtaPhiM(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, (iObjects[i0]->mass)/JEC_old);
     double jetE = vPJet.E();
     double JEC = JetEnergyCorrectionFactor(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, jetE, 
     					   iRho, iObjects[i0]->area, 
     					   runNum,
    					   JetCorrectionsIOV,JetCorrector);
+    double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
     double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default  
     iVals[i0*3+0] = iObjects[i0]->pt;
     iVals[i0*3+1] = iObjects[i0]->eta;
@@ -253,18 +255,19 @@ void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<do
     iTree->Branch(pSjerDown.str().c_str() ,&iVals[lBase+9],(pSjerDown .str()+"/D").c_str());
   }
 }
-void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets, double iRho){ 
+void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets, double iRho, unsigned int runNum){ 
   int lBase = fNVars*fN;
   int lMin = iObjects.size();
   if(iN < lMin) lMin = iN;
   for(int i0 = 0; i0 < lMin; i0++) {
-    TLorentzVector vPJet; vPJet.SetPtEtaPhiM(iObjects[i0]->pt, iObjects[i0]->eta, iObjects[i0]->phi, iObjects[i0]->mass); 
+    TLorentzVector vPJet_old;
+    vPJet_old.SetPtEtaPhiM(iObjects[i0]->pt, iObjects[i0]->eta, iObjects[i0]->phi, iObjects[i0]->mass); 
     iVals[lBase+i0*fNOtherVars+0] = iObjects[i0]->mass;
     iVals[lBase+i0*fNOtherVars+1] = iObjects[i0]->csv;
     iVals[lBase+i0*fNOtherVars+2] = iObjects[i0]->qgid;
     if(iVJets.size()>0) {
-      iVals[lBase+i0*fNOtherVars+3] = vPJet.DeltaR(iVJets[0]);
-      iVals[lBase+i0*fNOtherVars+4] = vPJet.DeltaPhi(iVJets[0]);
+      iVals[lBase+i0*fNOtherVars+3] = vPJet_old.DeltaR(iVJets[0]);
+      iVals[lBase+i0*fNOtherVars+4] = vPJet_old.DeltaPhi(iVJets[0]);
     }
     
     double x1 = r->Gaus();
@@ -284,9 +287,21 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
     double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
     double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
+    
+    double JEC_old = (iObjects[i0]->pt)/(iObjects[i0]->ptRaw);
+    TLorentzVector vPJet;
+    vPJet.SetPtEtaPhiM(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, (iObjects[i0]->mass)/JEC_old);
+    double jetE = vPJet.E();
 
-    double unc = iObjects[i0]->unc;
-    double jetCorrPt = iObjects[i0]->pt;
+    double JEC = JetEnergyCorrectionFactor(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, jetE, 
+    					   iRho, iObjects[i0]->area, 
+    					   runNum,
+   					   JetCorrectionsIOV,JetCorrector);
+    double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
+    
+    double unc_old = iObjects[i0]->unc;
+    double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default  
+    
     double jetCorrPtSmear = (iObjects[i0]->pt)*jetEnergySmearFactor;
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
@@ -493,4 +508,96 @@ double JetLoader::getJecUnc( float pt, float eta , int run) {
   return jecUnc[foundIndex]->getUncertainty(true);
 }
 
+
+//Jet Energy Corrections
+double JetLoader::JetEnergyCorrectionFactor( double jetRawPt, double jetEta, double jetPhi, double jetE,
+						 double rho, double jetArea,
+						 int run,
+						 std::vector<std::pair<int,int> > JetCorrectionsIOV,
+						 std::vector<FactorizedJetCorrector*> jetcorrector,
+						 int jetCorrectionLevel,
+						 bool printDebug) {
+
+  int foundIndex = -1;
+  for (uint i=0; i<JetCorrectionsIOV.size(); i++) {
+    if (run >= JetCorrectionsIOV[i].first && run <= JetCorrectionsIOV[i].second) {
+      foundIndex = i;
+    }
+  }
+  if (foundIndex == -1) {
+    std::cout << "Warning: run = " << run << " was not found in any valid IOV range. use default index = 0 for Jet energy corrections. \n";
+    foundIndex = 0;
+  }
+
+  if (!jetcorrector[foundIndex]) {
+    std::cout << "WWARNING: Jet corrector pointer is null. Returning JEC = 0. \n";
+    return 0;
+  }
+
+  jetcorrector[foundIndex]->setJetEta(jetEta);
+  jetcorrector[foundIndex]->setJetPt(jetRawPt);
+  jetcorrector[foundIndex]->setJetPhi(jetPhi);
+  jetcorrector[foundIndex]->setJetE(jetE);
+  jetcorrector[foundIndex]->setRho(rho);
+  jetcorrector[foundIndex]->setJetA(jetArea);
+
+  std::vector<float> corrections;
+  corrections = jetcorrector[foundIndex]->getSubCorrections();
+
+  if (printDebug) std::cout << "Computing Jet Energy Corrections for jet with raw momentum: " << jetRawPt << " " << jetEta << " " << jetPhi << "\n";
+
+  double cumulativeCorrection = 1.0;
+  for (UInt_t j=0; j<corrections.size(); ++j) {
+
+    //only correct up to the required level. if -1, then do all correction levels
+    if (jetCorrectionLevel >= 0 && int(j) > jetCorrectionLevel) continue;
+
+    double currentCorrection = corrections.at(j)/cumulativeCorrection;
+    cumulativeCorrection = corrections.at(j);
+    if (printDebug) std::cout << "Correction Level " << j << " : current correction = " << currentCorrection << " , cumulative correction = " << cumulativeCorrection << "\n";
+  }
+  if (printDebug) std::cout << "Final Cumulative Correction: " << cumulativeCorrection << "\n";
+  
+  return cumulativeCorrection;
+
+}
+
+//Jet Energy Corrections
+double JetLoader::JetEnergyCorrectionFactor( double jetRawPt, double jetEta, double jetPhi, double jetE,
+						 double rho, double jetArea,
+						 FactorizedJetCorrector *jetcorrector,
+						 int jetCorrectionLevel,
+						 bool printDebug) {
+  if (!jetcorrector) {
+    std::cout << "WWARNING: Jet corrector pointer is null. Returning JEC = 0. \n";
+    return 0;
+  }
+
+  jetcorrector->setJetEta(jetEta);
+  jetcorrector->setJetPt(jetRawPt);
+  jetcorrector->setJetPhi(jetPhi);
+  jetcorrector->setJetE(jetE);
+  jetcorrector->setRho(rho);
+  jetcorrector->setJetA(jetArea);
+
+  std::vector<float> corrections;
+  corrections = jetcorrector->getSubCorrections();
+
+  if (printDebug) std::cout << "Computing Jet Energy Corrections for jet with raw momentum: " << jetRawPt << " " << jetEta << " " << jetPhi << "\n";
+
+  double cumulativeCorrection = 1.0;
+  for (UInt_t j=0; j<corrections.size(); ++j) {
+
+    //only correct up to the required level. if -1, then do all correction levels
+    if (jetCorrectionLevel >= 0 && int(j) > jetCorrectionLevel) continue;
+
+    double currentCorrection = corrections.at(j)/cumulativeCorrection;
+    cumulativeCorrection = corrections.at(j);
+    if (printDebug) std::cout << "Correction Level " << j << " : current correction = " << currentCorrection << " , cumulative correction = " << cumulativeCorrection << "\n";
+  }
+  if (printDebug) std::cout << "Final Cumulative Correction: " << cumulativeCorrection << "\n";
+  
+  return cumulativeCorrection;
+
+}
 

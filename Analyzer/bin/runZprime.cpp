@@ -69,17 +69,20 @@ int main( int argc, char **argv ) {
   fRangeMap = new RunLumiRangeMap();
   if(lJSON.size() > 0) fRangeMap->AddJSONFile(lJSON.c_str());
 
+  bool isData;
+  if(lOption.compare("data")!=0) isData = false;
+  else isData = true;
+				   
   TTree *lTree = load(lName); 
-  
   // Declare Readers 
   fEvt       = new EvtLoader     (lTree,lName);                                             // fEvt, fEvtBr, fVertices, fVertexBr
   fMuon      = new MuonLoader    (lTree);                                                   // fMuon and fMuonBr, fN = 2 - muonArr and muonBr
   fElectron  = new ElectronLoader(lTree);                                                   // fElectrons and fElectronBr, fN = 2
   fTau       = new TauLoader     (lTree);                                                   // fTaus and fTaurBr, fN = 1
   fPhoton    = new PhotonLoader  (lTree);                                                   // fPhotons and fPhotonBr, fN = 1
-  fJet4      = new JetLoader     (lTree);                                                   // fJets, fJetBr => AK4PUPPI, sorted by pT
-  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS",3);     // fVJets, fVJetBr => AK8PUPPI
-  fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi","CA15CHS","AddCA15CHS",3);
+  fJet4      = new JetLoader     (lTree, isData);                                                   // fJets, fJetBr => AK4PUPPI, sorted by pT
+  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS",3, isData);     // fVJets, fVJetBr => AK8PUPPI
+  fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi","CA15CHS","AddCA15CHS",3, isData);
   if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                     // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
 
   TFile *lFile = TFile::Open("Output.root","RECREATE");
@@ -173,8 +176,8 @@ int main( int argc, char **argv ) {
 
     // CA15Puppi Jets
     fVJet15   ->load(i0);
-    fVJet15   ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho);
-    fVJet15   ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho);
+    fVJet15   ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho,fEvt->fRun);
+    fVJet15   ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho,fEvt->fRun);
     if(fVJet15->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 4;
     for (int i1=0; i1<int(fVJet15->selectedVJets.size()); i1++) {
       // Match CA15 Puppi jet with CA15 CHS jet within dR = 1.5
@@ -183,8 +186,8 @@ int main( int argc, char **argv ) {
       
     // AK8Puppi Jets    
     fVJet8    ->load(i0);
-    fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
-    fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
+    fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho,fEvt->fRun);
+    fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho,fEvt->fRun);
     if(fVJet8->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 2;
     for (int i1=0; i1<int(fVJet8->selectedVJets.size()); i1++){
       // Match AK8 Puppi jet with AK8 CHS jet within dR = 0.8
