@@ -198,7 +198,7 @@ int main( int argc, char **argv ) {
       
     // AK4Puppi Jets
     fJet4     ->load(i0); 
-    fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho);
+    fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho,fEvt->fRun);
 
     // Select at least one AK8 or one CA15 jet
     if(!(fEvt->fselectBits & 2) || !(fEvt->fselectBits & 4)) continue;

@@ -13,7 +13,7 @@
 #include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
-#include "SimpleJetResolution.h"
+#include "JetMETCorrections/Modules/interface/JetResolution.h"
 
 // B-tag scale factors
 #include "SJBTagUnc.hh"
@@ -47,6 +47,7 @@ public:
   void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex);
   void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
   void fillVJetCHS(TJet *iJet, int jIndex);
+  void fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum);
   TAddJet *getAddJet(TJet *iJet);
   TAddJet *getAddJetCHS(TJet *iJet);
 
@@ -64,6 +65,10 @@ public:
 
   const double CSVL = 0.460; // CSVv2SubJet WP 
   const double CSVM = 0.800;
+  // JEC tools
+  std::vector<FactorizedJetCorrector*> getJetCorrector() { return JetCorrector; }
+  std::vector<std::pair<int,int> > getJetCorrectionsIOV() { return JetCorrectionsIOV; }
+  double getJecUnc( float pt, float eta, int run );
   double getJerSF( float eta, int nsigma);
   TRandom3* r;
 
@@ -87,5 +92,19 @@ protected:
   std::vector<std::string> fTrigString;
 
   int           fN;
+  
+  std::string cmsswPath;
+  
+  // for jet energy corrections
+  void loadCMSSWPath();
+  void loadJECs(bool isData);
+  void loadJECs_Rereco(bool isData);
+  std::vector<std::vector<JetCorrectorParameters> > correctionParameters;
+  std::vector<FactorizedJetCorrector*> JetCorrector;
+  std::vector<JetCorrectionUncertainty*> jecUnc;
+  std::vector<std::pair<int,int> > JetCorrectionsIOV;
+  JME::JetResolution resolution;
+  JME::JetResolutionScaleFactor resolution_sf;
+  
 };
 #endif
