@@ -116,5 +116,10 @@ protected:
   std::vector<std::pair<int,int> > JetCorrectionsIOV;
   JME::JetResolution resolution;
   JME::JetResolutionScaleFactor resolution_sf;
+  // Gaussian random numbers (one for each jet)
+  std::vector<double> x1List;
+  std::vector<double> x2List;
+  std::vector<double> x3List;
+  
 };
 #endif

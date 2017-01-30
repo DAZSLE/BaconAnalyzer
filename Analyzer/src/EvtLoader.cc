@@ -96,6 +96,7 @@ void EvtLoader::reset() {
   fPUWeight     = 0; 
   fScale        = 1;
   fevtWeight    = 1;
+  fRho          = 0;
 
   fsf_lep       = 1;
   fsf_lepTrack  = 1;
@@ -145,6 +146,7 @@ void EvtLoader::setupTree(TTree *iTree) {
 
   fTree->Branch("npu"             ,&fNPU            ,"fNPU/i");
   fTree->Branch("npv"             ,&fNVtx           ,"fNVtx/i");
+  fTree->Branch("rho"             ,&fRho            ,"fRho/F");
   fTree->Branch("puWeight"        ,&fPUWeight       ,"fPUWeight/F");
   fTree->Branch("scale1fb"        ,&fScale          ,"fScale/F");  
   fTree->Branch("evtWeight"       ,&fevtWeight      ,"fevtWeight/F");
@@ -187,6 +189,7 @@ void EvtLoader::fillEvent(unsigned int trigBit,float lWeight, unsigned int passJ
   fRun          = fEvt->runNum;
   fLumi         = fEvt->lumiSec;
   fNPU          = fEvt->nPUmean;
+  fRho          = fEvt->rhoJet;
   fPassJson     = passJson;
   fNVtx         = nVtx();
   fITrigger     = trigBit;
