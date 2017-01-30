@@ -1,3 +1,4 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_1.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_10.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_100.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_101.root
@@ -108,6 +109,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_197.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_198.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_199.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_2.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_20.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_200.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_201.root
@@ -218,6 +220,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_297.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_298.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_299.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_3.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_30.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_300.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_301.root
@@ -328,6 +331,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_397.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_398.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_399.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_4.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_40.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_400.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_401.root
@@ -438,6 +442,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_497.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_498.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_499.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_5.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_50.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_500.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0000/Output_501.root
@@ -3357,6 +3362,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0003/Output_3362.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0003/Output_3363.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0003/Output_3364.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0003/Output_3365.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0003/Output_3366.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0003/Output_3367.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016B_23Sep2016_v3/Tau/CRAB3/170109_104547/0003/Output_3368.root

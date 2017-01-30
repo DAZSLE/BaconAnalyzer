@@ -1,0 +1,4 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTGJets/TTGJets_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTGJets/TTGJets_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTGJets/TTGJets_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTGJets/TTGJets_3.root

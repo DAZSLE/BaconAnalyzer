@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTbarDMJets_DiLept_SMM_Mchi-300_Mphi-750/TTbarDMJets_DiLept_SMM_Mchi-300_Mphi-750_0.root

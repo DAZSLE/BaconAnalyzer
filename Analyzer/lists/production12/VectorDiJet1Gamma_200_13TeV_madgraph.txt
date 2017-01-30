@@ -1,3 +1,4 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_1.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_10.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_11.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_12.root
@@ -8,6 +9,11 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_17.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_18.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_19.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_20.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_5.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_6.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_7.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Gamma_200_13TeV_madgraph/VectorDiJet1Gamma_200_13TeV-madgraph/CRAB3/170110_204230/0000/Output_8.root

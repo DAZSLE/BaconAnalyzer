@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTWJetsToLNu_ext1/TTWJetsToLNu_ext1_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTWJetsToLNu_ext1/TTWJetsToLNu_ext1_1.root

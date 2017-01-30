@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTbarDMJets_DiLept_pseudoscalar_Mchi-50_Mphi-95/TTbarDMJets_DiLept_pseudoscalar_Mchi-50_Mphi-95_0.root

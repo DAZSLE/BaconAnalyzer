@@ -4,6 +4,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_12.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_13.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_14.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_15.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_16.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_17.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_18.root
@@ -12,6 +13,7 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_20.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_21.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_4.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_5.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_6.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_1000_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_1000_Scalar_13TeV-madgraph/CRAB3/170110_210503/0000/Output_7.root
