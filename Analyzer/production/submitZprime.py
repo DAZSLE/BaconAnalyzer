@@ -40,18 +40,19 @@ samplesDict['Hbb'] = {
     'WplusH_HToBB_WToLNu_M125_13TeV_powheg_pythia8': 'mc', 
     'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc', 
     'ZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8': 'mc', 
-    'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc', 
+    'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_ext': 'mc', 
     'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc', 
     'bbHToBB_M_125_4FS_yb2_13TeV_amcatnlo': 'mc', 
     'bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo': 'mc', 
     'ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8': 'mc', 
     'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc', 
+    'ttHTobb_M125_13TeV_powheg_pythia8': 'mc', 
     'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc', 
     }
 samplesDict['QCD'] = {       
     'QCD_HT1000to1500_13TeV': 'mc',
     'QCD_HT1000to1500_13TeV_ext': 'mc',
-    'QCD_HT100to200_13TeV': 'mc', 
+    'QCD_HT100to200_13TeV': 'mc',
     'QCD_HT1500to2000_13TeV': 'mc',
     'QCD_HT1500to2000_13TeV_ext': 'mc',
     'QCD_HT2000toInf_13TeV': 'mc',
@@ -64,9 +65,11 @@ samplesDict['QCD'] = {
     'QCD_HT500to700_13TeV_ext': 'mc',
     'QCD_HT50to100_13TeV': 'mc',
     'QCD_HT700to1000_13TeV': 'mc',
-    'QCD_HT700to1000_13TeV_ext': 'mc'
+    'QCD_HT700to1000_13TeV_ext': 'mc',
     }
 samplesDict['SingleTop'] = {
+    'ST_s_channel_4f_leptonDecays_13TeV_amcatnlo_pythia8_TuneCUETP8M1': 'mc',
+    #'ST_t_channel_antitop_4f_inclusiveDecays_13TeV_powhegV2_madspin_pythia8_TuneCUETP8M1': 'mc',
     'ST_t_channel_antitop_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin': 'mc',
     'ST_t_channel_top_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin': 'mc',
     'ST_tW_antitop_5f_inclusiveDecays_13TeV_powheg_pythia8_TuneCUETP8M2T4': 'mc',
@@ -74,7 +77,8 @@ samplesDict['SingleTop'] = {
     }
 samplesDict['W'] = {
     'WJetsToQQ_HT180_13TeV': 'mc',
-    #'WJetsToQQ_HT_600ToInf_13TeV': 'mc',
+    'WJetsToQQ_HT_600ToInf_13TeV': 'mc',
+    'WJetsToLNu_HT_70To100_13TeV': 'mc',
     'WJetsToLNu_HT_100To200_13TeV': 'mc',
     'WJetsToLNu_HT_200To400_13TeV': 'mc',
     'WJetsToLNu_HT_400To600_13TeV': 'mc',
@@ -101,10 +105,12 @@ samplesDict['Diboson'] = {
 samplesDict['Triboson'] = {
     #'TTWJetsToQQ_13TeV': 'mc',
     #'TTGJets_13TeV': 'mc',
+    #'TTGJets_13TeV_ext1': 'mc',
     #'TTZToQQ_13TeV': 'mc',
-    'WWW_4F_13TeV_amcatnlo_pythia8': 'mc',
-    'WWZ_13TeV_amcatnlo_pythia8': 'mc',
-    'ZZZ_13TeV_amcatnlo_pythia8': 'mc'
+    #'TTToSemilepton_powheg': 'mc',
+    #'WWW_4F_13TeV_amcatnlo_pythia8': 'mc',
+    #'WWZ_13TeV_amcatnlo_pythia8': 'mc',
+    #'ZZZ_13TeV_amcatnlo_pythia8': 'mc'
     }
 samplesDict['VectorDiJet1Jet'] = {
     'VectorDiJet1Jet_100_13TeV_madgraph': 'mc', 
