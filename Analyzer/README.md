@@ -22,6 +22,7 @@ git cms-addpkg RecoBTag/SecondaryVertex
 git cms-addpkg RecoBTau/JetTagComputer
 git cms-addpkg RecoMET/METPUSubtraction
 git cms-addpkg CondFormats/JetMETObjects
+git cms-addpkg JetMETCorrections/Modules
 git pull official-cmssw pull/16224/head
 git clone https://github.com/jmduarte/ShowerDeconstruction 
 git clone https://github.com/ksung25/BaconProd
