@@ -25,7 +25,8 @@ VJetLoader::VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::st
 
   fN = iN;
 
-  isData = iData;
+  isData = iData;  
+  loadJECs(isData);  
 
   r = new TRandom3(1988);
 
@@ -209,7 +210,6 @@ void VJetLoader::load(int iEvent) {
 }
 void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
   reset();  
-  loadJECs(isData);  
   int lCount(0), lCountT(0);
   for  (int i0 = 0; i0 < fVJets->GetEntriesFast(); i0++) { 
     TJet *pVJet = (TJet*)((*fVJets)[i0]);
@@ -442,8 +442,15 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
     
     double unc_old = iObjects[i0]->unc;
-    double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default  
-    double jetCorrPtSmear = (iObjects[i0]->pt)*jetEnergySmearFactor;
+    double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default
+    
+    std::cout << "runNum = " << runNum << std::endl;
+    std::cout << "AK8 unc_old = " << JEC_old << std::endl;
+    std::cout << "AK8 unc = " << JEC << std::endl;
+    std::cout << "AK8 JEC_old = " << JEC_old << std::endl;
+    std::cout << "AK8 JEC = " << JEC << std::endl;
+    
+    double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
     double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
@@ -564,7 +571,7 @@ TAddJet *VJetLoader::getAddJetCHS(TJet *iJet) {
 
 //2016 Prompt Reco
 void VJetLoader::loadJECs(bool isData) {
-    std::cout << "JetLoader: loading jet energy correction constants" << std::endl;
+    std::cout << "VJetLoader: loading jet energy correction constants" << std::endl;
     // initialize
     loadCMSSWPath();
     std::string jecPathname = cmsswPath + "/src/BaconAnalyzer/Analyzer/data/JEC/";
@@ -574,7 +581,7 @@ void VJetLoader::loadJECs(bool isData) {
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
     
     resolution = JME::JetResolution(Form("%s/Spring16_25nsV6_MC/Spring16_25nsV6_MC_PtResolution_AK8PFPuppi.txt",jecPathname.c_str()));
-    resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Spring16_25nsV6_MC/Spring16_23Sep2016_V2_MC_SF_AK8PFPuppi.txt",jecPathname.c_str()));
+    resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Spring16_25nsV6_MC/Spring16_25nsV6_MC_SF_AK8PFPuppi.txt",jecPathname.c_str()));
     
     if (isData) {      
       std::vector<JetCorrectorParameters> correctionParametersTemp = std::vector<JetCorrectorParameters> ();
@@ -616,6 +623,7 @@ void VJetLoader::loadJECs(bool isData) {
 
 }
 void VJetLoader::loadJECs_Rereco(bool isData) {
+    std::cout << "VJetLoader: loading Rereco jet energy correction constants" << std::endl;
     // initialize
     loadCMSSWPath();
     std::string jecPathname = cmsswPath + "/src/BaconAnalyzer/Analyzer/data/JEC/";

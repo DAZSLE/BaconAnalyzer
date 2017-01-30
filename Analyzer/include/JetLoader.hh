@@ -55,6 +55,18 @@ public:
   const double CSVT = 0.935;
 
   int           fNJetsPt30;
+  int           fNJetsPt30jesUp;
+  int           fNJetsPt30jesDown;
+  int           fNJetsPt30jerUp;
+  int           fNJetsPt30jerDown;
+  double        MetXCorrjesUp;
+  double        MetYCorrjesUp;
+  double        MetXCorrjesDown;
+  double        MetYCorrjesDown;
+  double        MetXCorrjerUp;
+  double        MetYCorrjerUp;
+  double        MetXCorrjerDown;
+  double        MetYCorrjerDown;
 
   int           fNVars;
   int           fNOtherVars; 
@@ -71,6 +83,10 @@ protected:
   int           fNBTagsTPt30;
 
   std::vector<int>           fNJetsPt30dR08;
+  std::vector<int>           fNJetsPt30dR08jesUp;
+  std::vector<int>           fNJetsPt30dR08jesDown;
+  std::vector<int>           fNJetsPt30dR08jerDown;
+  std::vector<int>           fNJetsPt30dR08jerUp;
   std::vector<int>           fNBTagsLPt50dR08;
   std::vector<int>           fNBTagsMPt50dR08;
   std::vector<int>           fNBTagsTPt50dR08;
