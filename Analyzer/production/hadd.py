@@ -75,6 +75,17 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8': 'ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8',
             'bbHToBB_M_125_4FS_yb2_13TeV_amcatnlo': 'bbHToBB_M_125_4FS_yb2_13TeV_amcatnlo',
             'bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo': 'bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo',
+            'VectorDiJet1Jet_100_13TeV_madgraph':'VectorDiJet1Jet_M100',
+            'VectorDiJet1Jet_125_13TeV_madgraph':'VectorDiJet1Jet_M125',
+            'VectorDiJet1Jet_150_13TeV_madgraph':'VectorDiJet1Jet_M150',
+            'VectorDiJet1Jet_200_13TeV_madgraph':'VectorDiJet1Jet_M200',
+            'VectorDiJet1Jet_25_13TeV_madgraph':'VectorDiJet1Jet_M25',
+            'VectorDiJet1Jet_300_13TeV_madgraph':'VectorDiJet1Jet_M300',
+            'VectorDiJet1Jet_400_13TeV_madgraph':'VectorDiJet1Jet_M400',
+            'VectorDiJet1Jet_500_13TeV_madgraph':'VectorDiJet1Jet_M500',
+            'VectorDiJet1Jet_50_13TeV_madgraph':'VectorDiJet1Jet_M50',
+            'VectorDiJet1Jet_600_13TeV_madgraph':'VectorDiJet1Jet_M600',
+            'VectorDiJet1Jet_800_13TeV_madgraph':'VectorDiJet1Jet_M800',
             }
     
 def main(options,args):
