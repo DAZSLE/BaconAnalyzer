@@ -6,18 +6,20 @@ from optparse import OptionParser
 EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
 samplesDict = {}
 samplesDict['JetHT'] = {
-    'JetHTRun2016B_23Sep2016_v1': 'rereco', 
-    'JetHTRun2016B_23Sep2016_v2': 'rereco', 
-    'JetHTRun2016B_23Sep2016_v3': 'rereco', 
-    'JetHTRun2016C_23Sep2016_v1': 'rereco', 
-    'JetHTRun2016D_23Sep2016_v1': 'rereco', 
-    'JetHTRun2016E_23Sep2016_v1': 'rereco', 
-    'JetHTRun2016F_23Sep2016_v1': 'rereco', 
-    'JetHTRun2016G_23Sep2016_v1': 'rereco', 
-    'JetHTRun2016H_PromptReco_v1': 'data', 
-    'JetHTRun2016H_PromptReco_v2': 'data', 
-    'JetHTRun2016H_PromptReco_v3': 'data',
-    }
+    'JetHTRun2016B_23Sep2016_v1': 'rereco',
+    'JetHTRun2016B_23Sep2016_v1_v2': 'rereco',
+    'JetHTRun2016B_23Sep2016_v3': 'rereco',
+    'JetHTRun2016C_23Sep2016_v1': 'rereco',
+    'JetHTRun2016C_23Sep2016_v1_v2': 'rereco',
+    'JetHTRun2016D_23Sep2016_v1': 'rereco',
+    'JetHTRun2016E_23Sep2016_v1': 'rereco',
+    'JetHTRun2016F_23Sep2016_v1': 'rereco',
+    'JetHTRun2016G_23Sep2016_v1': 'rereco',
+    'JetHTRun2016G_23Sep2016_v1_v2': 'rereco',
+    'JetHTRun2016H_PromptReco_v1': 'data',
+    'JetHTRun2016H_PromptReco_v2': 'data',
+    'JetHTRun2016H_PromptReco_v3': 'data'
+}
 samplesDict['SingleMuon'] = {
     'SingleMuonRun2016B_23Sep2016_v1': 'rereco', 
     'SingleMuonRun2016B_23Sep2016_v3': 'rereco', 
@@ -226,8 +228,8 @@ if __name__ == '__main__':
     
     optionsDataMc = {
         'mc': "Output.root --passSumEntries 5:Events  -a 2:mc -a 3:none  -n 7000 -q 2nw4cores",
-        'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 1nh"%(jsonPrompt),        
-        'rereco': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 1nh"%(jsonRereco)
+        'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 8nh"%(jsonPrompt),        
+        'rereco': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 8nh"%(jsonRereco)
     }
         
     #analysisDir = "zprimebits-v11.051"
