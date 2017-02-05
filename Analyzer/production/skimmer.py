@@ -115,7 +115,7 @@ def sklimAdd(fn,odir,mass=0):
 
         tree.GetEntry(i)
 
-        if (tree.AK8Puppijet0_pt > 500 or tree.AK8Puppijet0_pt_JESUp > 500 or tree.AK8Puppijet0_pt_JERUp > 500 or tree.AK8Puppijet0_pt_JESDown > 500 or tree.AK8Puppijet0_pt_JERDown > 500  ):
+        if (tree.AK8Puppijet0_pt > 450 or tree.AK8Puppijet0_pt_JESUp > 450 or tree.AK8Puppijet0_pt_JERUp > 450 or tree.AK8Puppijet0_pt_JESDown > 450 or tree.AK8Puppijet0_pt_JERDown > 450  ):
 	    #if 'GluGluHToBB_M125_13TeV_powheg' in fn:  newscale1fb[0] =  h_ggh_num.GetBinContent( h_ggh_num.FindBin(tree.genVPt) )/h_ggh_den.GetBinContent( h_ggh_den.FindBin(tree.genVPt) )
 	    if 'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix' in fn : newscale1fb[0] =  h_vbf_num.GetBinContent( h_vbf_num.FindBin(tree.genVPt) )/h_vbf_den.GetBinContent( h_vbf_den.FindBin(tree.genVPt) )
             if 'VectorDiJet' in fn and mass > 0: newscale1fb[0] = tree.scale1fb*h_rw.GetBinContent( h_rw.FindBin(tree.genVPt) )
