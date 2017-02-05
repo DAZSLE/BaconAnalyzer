@@ -137,6 +137,16 @@ def main(options,args):
     exec_me('%s mkdir -p /%s/norm'%(EOS,OutDir),options.dryRun)
     for label, isMc in samples.iteritems():
         basename = label + '.root'
+        haddOn = True
+        sklimOn = True
+        normOn = True
+        if os.isfile(OutDir+'/hadd/'+basename):
+            haddOn = False
+        if os.isfile(OutDir+'/sklim/'+basename):
+            sklimOn = False
+        if os.isfile(OutDir+'/norm/'+basename.replace('.root','_1000pb_weighted.root')):
+            normOn = False
+        
         filesToConvert, badFiles = getFilesRecursively(DataDir,label+'/',None,None)
         print "files To Convert = ",filesToConvert
         print "bad files = ", badFiles
@@ -150,15 +160,18 @@ def main(options,args):
             haddCommand += 'cd -\n'
             haddCommand += 'pwd\n'
             haddCommand += 'mkdir -p $PWD/hadd\n'
-            haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])).replace('eos','root://eoscms.cern.ch//eos'))
-        haddCommand += 'hadd -f $PWD/hadd/%s $PWD/hadd/%s\n'%(basename,basename.replace('.root','_*.root'))
-        haddCommand += 'rm $PWD/hadd/%s\n'%(basename.replace('.root','_*.root'))     
-        haddCommand += '%s cp $PWD/hadd/%s /%s/hadd/%s\n'%(EOS,basename,OutDir,basename)        
-        haddCommand += 'mkdir -p $PWD/sklim\n'
-        haddCommand += 'export PYTHONPATH=${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/:${PYTHONPATH}\n'
-        haddCommand += 'python ${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
-        haddCommand += '%s cp $PWD/sklim/%s /%s/sklim/%s\n'%(EOS,basename,OutDir,basename)        
-        if isMc=='mc':
+            if haddOn:
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])).replace('eos','root://eoscms.cern.ch//eos'))
+        if haddOn:
+            haddCommand += 'hadd -f $PWD/hadd/%s $PWD/hadd/%s\n'%(basename,basename.replace('.root','_*.root'))
+            haddCommand += 'rm $PWD/hadd/%s\n'%(basename.replace('.root','_*.root'))     
+            haddCommand += '%s cp $PWD/hadd/%s /%s/hadd/%s\n'%(EOS,basename,OutDir,basename)
+        if sklimOn:
+            haddCommand += 'mkdir -p $PWD/sklim\n'
+            haddCommand += 'export PYTHONPATH=${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/:${PYTHONPATH}\n'
+            haddCommand += 'python ${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
+            haddCommand += '%s cp $PWD/sklim/%s /%s/sklim/%s\n'%(EOS,basename,OutDir,basename)        
+        if isMc=='mc' and normOn:
             haddCommand += 'echo "%s\t${PWD}/sklim/%s" > normlist.txt\n'%(normDict[basename.replace('.root','')],basename)
             haddCommand += 'NormalizeNtuple normlist.txt\n'
             haddCommand += '%s cp $PWD/sklim/%s /%s/norm/%s\n'%(EOS,basename.replace('.root','_1000pb_weighted.root'),OutDir,basename.replace('.root','_1000pb_weighted.root'))
@@ -166,12 +179,13 @@ def main(options,args):
         haddCommand += 'rm -r $PWD/sklim\n'
             
             
-        with open('hadd_command_%s.sh'%(basename),'w') as f:
+        with open('hadd_jobs/hadd_command_%s.sh'%(basename),'w') as f:
             f.write(haddCommand)
 
-            exec_me('bsub -q 8nh -o $PWD/hadd_command_%s.log source $PWD/hadd_command_%s.sh'%(basename,basename),options.dryRun)
+            if haddOn or sklimOn or (isMc=='mc' and normOn):
+                exec_me('bsub -q 8nh -o $PWD/hadd_jobs/hadd_command_%s.log source $PWD/hadd_jobs/hadd_command_%s.sh'%(basename,basename),options.dryRun)
 
-        with open('bad_files_%s.txt'%basename,'w') as f:
+        with open('hadd_jobs/bad_files_%s.txt'%basename,'w') as f:
             for badFile in badFiles:
                 f.write(badFile+'\n')
 
