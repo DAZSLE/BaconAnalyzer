@@ -132,6 +132,7 @@ def main(options,args):
     
     EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
     postfix = ''
+    exec_me('mkdir -p $PWD/hadd_jobs/',options.dryRun)
     exec_me('%s mkdir -p /%s/hadd'%(EOS,OutDir),options.dryRun)
     exec_me('%s mkdir -p /%s/sklim'%(EOS,OutDir),options.dryRun)
     exec_me('%s mkdir -p /%s/norm'%(EOS,OutDir),options.dryRun)
@@ -140,26 +141,29 @@ def main(options,args):
         haddOn = True
         sklimOn = True
         normOn = True
-        if os.isfile(OutDir+'/hadd/'+basename):
+        if os.path.isfile(OutDir+'/hadd/'+basename):
             haddOn = False
-        if os.isfile(OutDir+'/sklim/'+basename):
+        if os.path.isfile(OutDir+'/sklim/'+basename):
             sklimOn = False
-        if os.isfile(OutDir+'/norm/'+basename.replace('.root','_1000pb_weighted.root')):
+        if os.path.isfile(OutDir+'/norm/'+basename.replace('.root','_1000pb_weighted.root')):
             normOn = False
         
-        filesToConvert, badFiles = getFilesRecursively(DataDir,label+'/',None,None)
+        filesToConvert = []
+        badFiles = []
+        if haddOn:
+            filesToConvert, badFiles = getFilesRecursively(DataDir,label+'/',None,None)
         print "files To Convert = ",filesToConvert
         print "bad files = ", badFiles
         cwd = os.getcwd()
+        haddCommand = '#!/bin/bash\n'
+        haddCommand += 'pwd\n'
+        haddCommand += 'cd %s\n'%cwd
+        haddCommand += 'pwd\n'
+        haddCommand += 'eval `scramv1 runtime -sh`\n'
+        haddCommand += 'cd -\n'
+        haddCommand += 'pwd\n'
+        haddCommand += 'mkdir -p $PWD/hadd\n'        
         for i in range(0,len(filesToConvert)/500+1):         
-            haddCommand = '#!/bin/bash\n'
-            haddCommand += 'pwd\n'
-            haddCommand += 'cd %s\n'%cwd   
-            haddCommand += 'pwd\n'
-            haddCommand += 'eval `scramv1 runtime -sh`\n'
-            haddCommand += 'cd -\n'
-            haddCommand += 'pwd\n'
-            haddCommand += 'mkdir -p $PWD/hadd\n'
             if haddOn:
                 haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])).replace('eos','root://eoscms.cern.ch//eos'))
         if haddOn:
