@@ -119,7 +119,8 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'VectorDiJet1Jet_50_13TeV_madgraph':'VectorDiJet1Jet_M50',
             'VectorDiJet1Jet_600_13TeV_madgraph':'VectorDiJet1Jet_M600',
             'VectorDiJet1Jet_800_13TeV_madgraph':'VectorDiJet1Jet_M800',
-            'DYJetsToLL_M_50_13TeV_ext': 'DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8'
+            'DYJetsToLL_M_50_13TeV_ext': 'DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8': 'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8'
             }
     
 def main(options,args):
