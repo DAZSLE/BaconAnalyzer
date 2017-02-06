@@ -173,9 +173,13 @@ def main(options,args):
         if sklimOn:
             haddCommand += 'mkdir -p $PWD/sklim\n'
             haddCommand += 'export PYTHONPATH=${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/:${PYTHONPATH}\n'
+            if not haddOn:
+                haddCommand += '%s cp /%s/hadd/%s $PWD/hadd/%s\n'%(EOS,OutDir,basename,basename)                
             haddCommand += 'python ${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
             haddCommand += '%s cp $PWD/sklim/%s /%s/sklim/%s\n'%(EOS,basename,OutDir,basename)        
-        if isMc=='mc' and normOn:
+        if isMc=='mc' and normOn:            
+            if not sklimOn:
+                haddCommand += '%s cp /%s/sklim/%s $PWD/sklim/%s\n'%(EOS,OutDir,basename,basename)                
             haddCommand += 'echo "%s\t${PWD}/sklim/%s" > normlist.txt\n'%(normDict[basename.replace('.root','')],basename)
             haddCommand += 'NormalizeNtuple normlist.txt\n'
             haddCommand += '%s cp $PWD/sklim/%s /%s/norm/%s\n'%(EOS,basename.replace('.root','_1000pb_weighted.root'),OutDir,basename.replace('.root','_1000pb_weighted.root'))
