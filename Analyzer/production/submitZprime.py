@@ -33,6 +33,7 @@ samplesDict['SingleMuon'] = {
 samplesDict['Hbb'] = {
     'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc', 
     'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc', 
+    'GluGluHToBB_M125_13TeV_powheg_pythia8_ext': 'mc',
     'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc', 
     'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc', 
     'WminusH_HToBB_WToLNu_M125_13TeV_powheg_pythia8': 'mc', 
@@ -97,10 +98,12 @@ samplesDict['TT'] = {
     'TT_powheg':'mc'
     }
 samplesDict['Diboson'] = {
-    #'WWTo4Q_13TeV_amcatnlo': 'mc',
+    'WWTo4Q_13TeV_amcatnlo': 'mc',
     'WWTo4Q_13TeV_powheg': 'mc',
     'WZ_13TeV_pythia8':'mc',
     'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8':'mc'
+    'WW_13TeV_pythia8':'mc',
+    'ZZ_13TeV_pythia8':'mc' 
     }
 samplesDict['Triboson'] = {
     #'TTWJetsToQQ_13TeV': 'mc',
@@ -125,19 +128,19 @@ samplesDict['VectorDiJet1Jet'] = {
     'VectorDiJet1Jet_800_13TeV_madgraph': 'mc', 
     }
 samplesDict['VectorDiJet1Gamma'] = {
-    'VectorDiJet1Gamma_1000_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_100_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_10_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_125_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_200_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_25_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_300_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_400_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_500_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_50_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_600_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_75_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Gamma_800_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_1000_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_100_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_10_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_125_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_200_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_25_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_300_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_400_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_500_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_50_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_600_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_75_13TeV_madgraph': 'mc', 
+    #'VectorDiJet1Gamma_800_13TeV_madgraph': 'mc', 
     }
 samplesDict['DMSpin0'] = {
     'Spin0_ggPhi12j_g1_1000_PseudoScalar_13TeV_madgraph': 'mc', 
@@ -179,9 +182,9 @@ samplesDict['MC'] = dict(samplesDict['Hbb'].items() +
                          samplesDict['DY'].items() +
                          samplesDict['TT'].items() +
                          samplesDict['Diboson'].items() +
-                         samplesDict['Triboson'].items() +
+                        # samplesDict['Triboson'].items() +
                          samplesDict['VectorDiJet1Jet'].items() +
-                         samplesDict['VectorDiJet1Gamma'].items() +
+                       #  samplesDict['VectorDiJet1Gamma'].items() +
                          samplesDict['DMSpin0'].items())
 
 samplesDict['Data'] = dict(samplesDict['JetHT'].items() +
