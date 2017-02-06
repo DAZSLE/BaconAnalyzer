@@ -103,7 +103,7 @@ samplesDict['Diboson'] = {
     'WWTo4Q_13TeV_amcatnlo': 'mc',
     'WWTo4Q_13TeV_powheg': 'mc',
     'WZ_13TeV_pythia8':'mc',
-    'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8':'mc'
+    'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8':'mc',
     'WW_13TeV_pythia8':'mc',
     'ZZ_13TeV_pythia8':'mc' 
     }
