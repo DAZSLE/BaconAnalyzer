@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/ZJetsToNuNu_HT-400To600/ZJetsToNuNu_HT-400To600_0.root

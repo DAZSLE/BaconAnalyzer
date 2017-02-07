@@ -266,7 +266,7 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
     TLorentzVector thisJetJERUp;  thisJetJERUp.SetPtEtaPhiE(jetPtJERUp,  pVJet->eta, pVJet->phi, jetEJERUp);
     TLorentzVector thisJetJERDown; thisJetJERDown.SetPtEtaPhiE(jetPtJERDown,  pVJet->eta, pVJet->phi, jetEJERDown);
     
-    if(jetCorrPtSmear   <=  350)                                           continue;
+    if(jetCorrPtSmear   <=  200)                                           continue;
     if(fabs(pVJet->eta) >=  2.5)                                           continue;
     if(!passJetLooseSel(pVJet))                                            continue;
     addJet(pVJet,fLooseVJets);
@@ -372,7 +372,7 @@ void VJetLoader::selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::ve
   int lCount(0), lCountT(0);
   for  (int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
     TJet *pVJet = (TJet*)((*fVJetsCHS)[i0]);
-    if(pVJet->pt        <=  300)                                           continue;
+    if(pVJet->pt        <=  150)                                           continue;
     if(fabs(pVJet->eta) >=  2.5)                                           continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
