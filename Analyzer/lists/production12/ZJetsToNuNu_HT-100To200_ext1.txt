@@ -4,3 +4,5 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/ZJetsToNuNu_HT-10
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/ZJetsToNuNu_HT-100To200_ext1/ZJetsToNuNu_HT-100To200_ext1_3.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/ZJetsToNuNu_HT-100To200_ext1/ZJetsToNuNu_HT-100To200_ext1_4.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/ZJetsToNuNu_HT-100To200_ext1/ZJetsToNuNu_HT-100To200_ext1_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/ZJetsToNuNu_HT-100To200_ext1/ZJetsToNuNu_HT-100To200_ext1_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/ZJetsToNuNu_HT-100To200_ext1/ZJetsToNuNu_HT-100To200_ext1_7.root

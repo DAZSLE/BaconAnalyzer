@@ -295,7 +295,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     
     vPJet.SetPtEtaPhiE(jetCorrPtSmear, pJet->eta, pJet->phi, jetCorrESmear);
     for (int i1 = 0; i1 < int(iVJets.size()); i1++) {      
-      if(iVJets[i1].Pt()>350 && vPJet.DeltaR(iVJets[i1])>0.8) {
+      if(iVJets[i1].Pt()>200 && vPJet.DeltaR(iVJets[i1])>0.8) {
 	if (jetCorrPtSmear  > 30) fNJetsPt30dR08[i1]++;
 	if (jetPtJESUp  > 30) fNJetsPt30dR08jesUp[i1]++;
 	if (jetPtJESDown  > 30) fNJetsPt30dR08jesDown[i1]++;
@@ -328,7 +328,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     // jet and b-tag multiplicity
     for (int i1 = 0; i1 < int(iVJets.size()); i1++) {
       
-      if(iVJets[i1].Pt()>350 && vPJet.DeltaR(iVJets[i1])>0.8) {
+      if(iVJets[i1].Pt()>200 && vPJet.DeltaR(iVJets[i1])>0.8) {
 	if(pJet->pt>50 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt50dR08[i1]++;
 	if(pJet->pt>100 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt100dR08[i1]++;
 	if(pJet->pt>150 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt150dR08[i1]++;

@@ -211,7 +211,7 @@ if __name__ == '__main__':
                   help="Just print out commands to run")    
     parser.add_option("--monitor",default='',help="Monitor mode (sub/resub/check directory of jobs)")
     parser.add_option('-s','--sample',dest="sample", default="All",
-                      choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
+                      #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
     parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v11.test", help = "tag, which is the same as folder") 
     
@@ -230,9 +230,9 @@ if __name__ == '__main__':
 
     
     optionsDataMc = {
-        'mc': "Output.root --passSumEntries 5:Events  -a 2:mc -a 3:none  -n 7000 -q 2nw4cores",
-        'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 8nh"%(jsonPrompt),        
-        'rereco': "Output.root -a 5:1  -a 2:data -a 3:%s -n 7000 -q 8nh"%(jsonRereco)
+        'mc': "Output.root --passSumEntries 5:Events  -a 2:mc -a 3:none  -n 8000 -q 2nw4cores",
+        'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 8000 -q 1nd"%(jsonPrompt),        
+        'rereco': "Output.root -a 5:1  -a 2:data -a 3:%s -n 8000 -q 1nd"%(jsonRereco)
     }
         
     #analysisDir = "zprimebits-v11.051"

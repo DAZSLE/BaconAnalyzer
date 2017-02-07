@@ -37,7 +37,6 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_Promp
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v2/TauRun2016H_PromptReco_v2_130.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v2/TauRun2016H_PromptReco_v2_131.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v2/TauRun2016H_PromptReco_v2_132.root
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v2/TauRun2016H_PromptReco_v2_133.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v2/TauRun2016H_PromptReco_v2_134.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v2/TauRun2016H_PromptReco_v2_135.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TauRun2016H_PromptReco_v2/TauRun2016H_PromptReco_v2_136.root
