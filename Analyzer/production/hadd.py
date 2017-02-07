@@ -125,6 +125,71 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'WW_13TeV_pythia8': 'WW_TuneCUETP8M1_13TeV-pythia8',
             'ZZ_13TeV_pythia8': 'ZZ_TuneCUETP8M1_13TeV-pythia8'
             }
+
+def justHadd(options,args):    
+    DataDir = options.idir
+    OutDir = options.idir
+    
+    samples = samplesDict[options.sample]
+    
+    EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
+    postfix = ''
+    exec_me('mkdir -p $PWD/hadd_jobs/',options.dryRun)
+    exec_me('%s mkdir -p /%s/hadd'%(EOS,OutDir),options.dryRun)
+    for label, isMc in samples.iteritems():
+        basename = label + '.root'
+        
+        filesToConvert = []
+        badFiles = []
+        filesToConvert, badFiles = getFilesRecursively(DataDir,label+'/',None,None)
+        print "files To Convert = ",filesToConvert
+        print "bad files = ", badFiles
+        cwd = os.getcwd()
+
+        haddAll = False
+        haddOutExistsList = []
+        haddOutList = []
+        for i in range(0,len(filesToConvert)/500+1):
+            if not os.path.isfile(OutDir+'/hadd/'+basename.replace('.root','_%i.root')):
+                haddOutExistsList.append(False)
+                haddOutList.append(OutDir+'/hadd/'+basename.replace('.root','_%i.root'))
+                haddCommand = '#!/bin/bash\n'
+                haddCommand += 'pwd\n'
+                haddCommand += 'cd %s\n'%cwd
+                haddCommand += 'pwd\n'
+                haddCommand += 'eval `scramv1 runtime -sh`\n'
+                haddCommand += 'cd -\n'
+                haddCommand += 'pwd\n'
+                haddCommand += 'mkdir -p $PWD/hadd\n'        
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])).replace('eos','root://eoscms.cern.ch//eos'))
+                haddCommand += '%s cp $PWD/hadd/%s /%s/hadd/%s\n'%(EOS,basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))
+                haddCommand += 'rm -r $PWD/hadd\n'
+                with open('hadd_jobs/hadd_command_%s.sh'%(basename.replace('.root','_%i.root'%i)),'w') as f:
+                    f.write(haddCommand)
+                exec_me('bsub -q 8nh -o $PWD/hadd_jobs/hadd_command_%s.log source $PWD/hadd_jobs/hadd_command_%s.sh'%(basename.replace('.root','_%i.root'%i),basename.replace('.root','_%i.root'%i)),options.dryRun)
+            else:
+                haddOutExistsList.append(True)
+                haddOutList.append(OutDir+'/hadd/'+basename.replace('.root','_%i.root'))
+                
+        haddAll = all(haddOutExistsList)
+        
+        if haddAll:
+            haddCommand = '#!/bin/bash\n'
+            haddCommand += 'pwd\n'
+            haddCommand += 'cd %s\n'%cwd
+            haddCommand += 'pwd\n'
+            haddCommand += 'eval `scramv1 runtime -sh`\n'
+            haddCommand += 'cd -\n'
+            haddCommand += 'pwd\n'
+            haddCommand += 'mkdir -p $PWD/hadd\n'        
+            haddCommand += 'hadd -f hadd/%s %s\n'%(basename,(' '.join(haddOutList)).replace('eos','root://eoscms.cern.ch//eos'))
+            haddCommand += '%s cp $PWD/hadd/%s /%s/hadd/%s\n'%(EOS,basename,OutDir,basename)
+            haddCommand += 'rm -r $PWD/hadd\n'
+            with open('hadd_jobs/hadd_command_%s.sh'%(basename.replace('.root','_%i.root'%i)),'w') as f:
+                f.write(haddCommand)
+            exec_me('bsub -q 8nh -o $PWD/hadd_jobs/hadd_command_%s.log source $PWD/hadd_jobs/hadd_command_%s.sh'%(basename,basename),options.dryRun)
+            
+
     
 def main(options,args):
 
@@ -261,6 +326,13 @@ if __name__ == '__main__':
                       help="samples to produces")
     parser.add_option('--dry-run',dest="dryRun",default=False,action='store_true',
                   help="Just print out commands to run")
+    parser.add_option('--just-hadd',dest="justHadd",default=False,action='store_true',
+                  help="Just run hadd (two-step)")
     (options, args) = parser.parse_args()
 
-    main(options,args)
+    
+    if options.justHadd:
+        justHadd(options,args)
+    else:
+        main(options,args)
+    
