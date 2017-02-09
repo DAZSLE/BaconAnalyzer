@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/WZToLNu2Q_13TeV_powheg_pythia8/WZToLNu2Q_13TeV_powheg_pythia8_0.root
