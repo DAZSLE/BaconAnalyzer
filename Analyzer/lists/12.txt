@@ -161,7 +161,7 @@ TTWJetsToLNu_ext2
 TTWJetsToQQ
 TTZToLLNuNu_M-10
 TTZToQQ
-TT_powheg_backup
+TT_powheg
 TTbarDMJets_DiLept_SMM_Mchi-100_Mphi-1000
 TTbarDMJets_DiLept_SMM_Mchi-100_Mphi-300
 TTbarDMJets_DiLept_SMM_Mchi-100_Mphi-500
