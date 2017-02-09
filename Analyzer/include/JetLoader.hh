@@ -87,7 +87,6 @@ protected:
   std::vector<int>           fNJetsPt30dR08jesDown;
   std::vector<int>           fNJetsPt30dR08jerDown;
   std::vector<int>           fNJetsPt30dR08jerUp;
-  std::vector<int>           fNJetsPt30dR08jerDown;
   std::vector<int>           fNBTagsLPt50dR08;
   std::vector<int>           fNBTagsMPt50dR08;
   std::vector<int>           fNBTagsTPt50dR08;
