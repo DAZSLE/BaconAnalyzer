@@ -299,8 +299,8 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
 	if (jetCorrPtSmear  > 30) fNJetsPt30dR08[i1]++;
 	if (jetPtJESUp  > 30) fNJetsPt30dR08jesUp[i1]++;
 	if (jetPtJESDown  > 30) fNJetsPt30dR08jesDown[i1]++;
-	if (jetPtJESUp  > 30) fNJetsPt30dR08jesUp[i1]++;
-	if (jetPtJESDown  > 30) fNJetsPt30dR08jesDown[i1]++;
+	if (jetPtJERUp  > 30) fNJetsPt30dR08jerUp[i1]++;
+	if (jetPtJERDown  > 30) fNJetsPt30dR08jerDown[i1]++;
       }
     }
 	

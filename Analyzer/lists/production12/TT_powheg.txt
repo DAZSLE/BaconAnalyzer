@@ -1,1 +1,0 @@
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TT_powheg/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/CRAB3/170113_123354/0002/Output_2558.root

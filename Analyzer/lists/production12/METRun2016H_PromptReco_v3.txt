@@ -1,2 +1,3 @@
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/METRun2016H_PromptReco_v3/MET/CRAB3/170118_111012/0000/Output_184.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/METRun2016H_PromptReco_v3/MET/CRAB3/170118_111012/0000/Output_230.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/METRun2016H_PromptReco_v3/MET/CRAB3/170118_111012/0000/Output_241.root

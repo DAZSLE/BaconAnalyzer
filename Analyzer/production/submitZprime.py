@@ -38,6 +38,7 @@ samplesDict['Hbb'] = {
     'GluGluHToBB_M125_13TeV_powheg_pythia8_ext': 'mc',
     'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc', 
     'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc', 
+    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext':'mc',
     'WminusH_HToBB_WToLNu_M125_13TeV_powheg_pythia8': 'mc', 
     'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc', 
     'WplusH_HToBB_WToLNu_M125_13TeV_powheg_pythia8': 'mc', 
@@ -49,6 +50,7 @@ samplesDict['Hbb'] = {
     'bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo': 'mc', 
     'ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8': 'mc', 
     'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc', 
+    'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8':'mc',
     'ttHTobb_M125_13TeV_powheg_pythia8': 'mc', 
     'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc', 
     }
@@ -177,17 +179,17 @@ samplesDict['DMSpin0'] = {
     'Spin0_ggPhi12j_g1_800_Scalar_13TeV_madgraph': 'mc', 
     }
 
-samplesDict['MC'] = dict(samplesDict['Hbb'].items() +
+samplesDict['MC'] = dict(#samplesDict['Hbb'].items() +
                          samplesDict['QCD'].items() +
                          samplesDict['SingleTop'].items() +
                          samplesDict['W'].items() +
                          samplesDict['DY'].items() +
                          samplesDict['TT'].items() +
-                         samplesDict['Diboson'].items() +
+                         samplesDict['Diboson'].items() )
                         # samplesDict['Triboson'].items() +
-                         samplesDict['VectorDiJet1Jet'].items() +
+                         #samplesDict['VectorDiJet1Jet'].items() +
                        #  samplesDict['VectorDiJet1Gamma'].items() +
-                         samplesDict['DMSpin0'].items())
+                         #samplesDict['DMSpin0'].items())
 
 samplesDict['Data'] = dict(samplesDict['JetHT'].items() +
                            samplesDict['SingleMuon'].items())
