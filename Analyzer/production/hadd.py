@@ -106,6 +106,7 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'ttHTobb_M125_13TeV_powheg_pythia8': 'ttHTobb_M125_13TeV_powheg_pythia8',
             'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8',
             'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8',
+            'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8',
             'ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8': 'ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8',
             'bbHToBB_M_125_4FS_yb2_13TeV_amcatnlo': 'bbHToBB_M_125_4FS_yb2_13TeV_amcatnlo',
             'bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo': 'bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo',
@@ -210,6 +211,9 @@ def main(options,args):
     exec_me('%s mkdir -p /%s/norm'%(EOS,OutDir),options.dryRun)
     for label, isMc in samples.iteritems():
         basename = label + '.root'
+        if options.job>-1:
+            basename = label + '_%i.root'%options.job
+            
         haddOn = True
         sklimOn = True
         normOn = True
@@ -324,6 +328,7 @@ if __name__ == '__main__':
     parser.add_option('--train', action='store_true', dest='train', default=False, help='train')
     parser.add_option("--lumi", dest="lumi", default = 30,type='float',help="luminosity", metavar="lumi")
     parser.add_option('-i','--idir', dest='idir', default = 'data/',help='directory with bacon bits', metavar='idir')
+    parser.add_option('-j','--job', dest='job', default =-1,type='int',help='just do part of it', metavar='idir')
     #parser.add_option('-o','--odir', dest='odir', default = 'skim/',help='directory to write hadded bits', metavar='odir')
     parser.add_option('-s','--sample',dest="sample", default="All",type='string',
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
