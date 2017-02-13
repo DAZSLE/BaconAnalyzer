@@ -2,6 +2,12 @@ DY1JetsToLL_M_50_13TeV
 DY2JetsToLL_M_50_13TeV
 DY3JetsToLL_M_50_13TeV
 DY4JetsToLL_M_50_13TeV
+DYJetsToLL_M-50_HT-100to200
+DYJetsToLL_M-50_HT-1200to2500
+DYJetsToLL_M-50_HT-2500toInf
+DYJetsToLL_M-50_HT-400to600
+DYJetsToLL_M-50_HT-600to800
+DYJetsToLL_M-50_HT-800to1200
 DYJetsToLL_M_50_13TeV_ext
 DYJetsToLL_Pt_100To250_13TeV_amcatnloFXFX_pythia8
 DYJetsToLL_Pt_250To400_13TeV_amcatnloFXFX_pythia8
@@ -162,6 +168,7 @@ TTWJetsToQQ
 TTZToLLNuNu_M-10
 TTZToQQ
 TT_powheg
+TT_powheg_backup
 TTbarDMJets_DiLept_SMM_Mchi-100_Mphi-1000
 TTbarDMJets_DiLept_SMM_Mchi-100_Mphi-300
 TTbarDMJets_DiLept_SMM_Mchi-100_Mphi-500
@@ -260,6 +267,7 @@ W4JetsToLNu_13TeV
 WJetsToLNu_13TeV
 WJetsToLNu_HT_100To200_13TeV
 WJetsToLNu_HT_100To200_13TeV_ext1
+WJetsToLNu_HT_100To200_13TeV_ext2
 WJetsToLNu_HT_1200To2500_13TeV
 WJetsToLNu_HT_1200To2500_13TeV_ext1
 WJetsToLNu_HT_200To400_13TeV
@@ -290,6 +298,7 @@ WWW_4F_13TeV_amcatnlo_pythia8
 WWZ_13TeV_amcatnlo_pythia8
 WW_13TeV_pythia8
 WZTo1L1Nu2Q_13TeV_amcatnloFXFX_madspin_pythia8
+WZTo1L3Nu_amcatnlo
 WZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8
 WZToLNu2Q_13TeV_powheg_pythia8
 WZ_13TeV_pythia8
