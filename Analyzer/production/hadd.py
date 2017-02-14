@@ -40,18 +40,26 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'WJetsToLNu_HT_70To100_13TeV_ext': 'WJetsToLNu_HT-70To100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_100To200_13TeV': 'WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_100To200_13TeV_ext': 'WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'WJetsToLNu_HT_200To400_13TeV': 'WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'WJetsToLNu_HT_200To400_13TeV_ext': 'WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'WJetsToLNu_HT_400To600_13TeV': 'WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'WJetsToLNu_HT_400To600_13TeV_ext': 'WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_100To200_13TeV_ext1': 'WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_100To200_13TeV_ext2': 'WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_200To400_13TeV': 'WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_200To400_13TeV_ext': 'WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_200To400_13TeV_ext1': 'WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_200To400_13TeV_ext2': 'WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_400To600_13TeV': 'WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_400To600_13TeV_ext': 'WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_600To800_13TeV': 'WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_600To800_13TeV_ext': 'WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_600To800_13TeV_ext1': 'WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_800To1200_13TeV': 'WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_800To1200_13TeV_ext': 'WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_800To1200_13TeV_ext1': 'WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_1200To2500_13TeV': 'WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_1200To2500_13TeV_ext': 'WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'WJetsToLNu_HT_1200To2500_13TeV_ext1': 'WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_2500ToInf_13TeV': 'WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'WJetsToLNu_HT_2500ToInf_13TeV_ext': 'WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',            
+            'WJetsToLNu_HT_2500ToInf_13TeV_ext': 'WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',       
+            'WJetsToLNu_HT_2500ToInf_13TeV_ext1': 'WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',           
             'ZJetsToQQ_HT_600ToInf_13TeV': 'ZJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WWTo4Q_13TeV_amcatnlo': 'WWTo4Q_4f_13TeV_amcatnloFXFX_madspin_pythia8',
             'WWTo4Q_13TeV_powheg': 'WWTo4Q_13TeV_powheg',
@@ -210,6 +218,9 @@ def main(options,args):
     exec_me('%s mkdir -p /%s/norm'%(EOS,OutDir),options.dryRun)
     for label, isMc in samples.iteritems():
         basename = label + '.root'
+        if options.job>-1:
+            basename = label + '_%i.root'%options.job
+            
         haddOn = True
         sklimOn = True
         normOn = True
@@ -324,6 +335,7 @@ if __name__ == '__main__':
     parser.add_option('--train', action='store_true', dest='train', default=False, help='train')
     parser.add_option("--lumi", dest="lumi", default = 30,type='float',help="luminosity", metavar="lumi")
     parser.add_option('-i','--idir', dest='idir', default = 'data/',help='directory with bacon bits', metavar='idir')
+    parser.add_option('-j','--job', dest='job', default =-1,type='int',help='just do part of it', metavar='idir')
     #parser.add_option('-o','--odir', dest='odir', default = 'skim/',help='directory to write hadded bits', metavar='odir')
     parser.add_option('-s','--sample',dest="sample", default="All",type='string',
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
