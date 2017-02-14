@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-100to200/DYJetsToLL_M-50_HT-100to200_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-100to200/DYJetsToLL_M-50_HT-100to200_1.root

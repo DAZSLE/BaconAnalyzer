@@ -23,6 +23,7 @@
 #include "TROOT.h"
 #include "TFile.h"
 #include "TTree.h"
+#include <TError.h>
 #include <string>
 #include <iostream>
 
@@ -112,9 +113,10 @@ int main( int argc, char **argv ) {
 
   // Loop over events i0 = iEvent
   int neventstest = 0;
+  std::cout << lTree->GetEntriesFast() << " total events" << std::endl;
   for(int i0 = 0; i0 < int(lTree->GetEntriesFast()); i0++) {
-  //for(int i0 = 0; i0 < int(1000); i0++){ // for testing
-
+    //for(int i0 = 0; i0 < int(100000); i0++){ // for testing
+    if (i0%1000 == 0) std::cout << i0 << " events processed " << std::endl;
     // Check GenInfo
     fEvt->load(i0);
     float lWeight = 1;
@@ -165,6 +167,7 @@ int main( int argc, char **argv ) {
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
     
     // Objects
+    gErrorIgnoreLevel=kError;
     std::vector<TLorentzVector> cleaningMuons, cleaningElectrons, cleaningPhotons; 
     fMuon     ->load(i0);
     fMuon     ->selectMuons(cleaningMuons,fEvt->fMet,fEvt->fMetPhi);
