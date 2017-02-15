@@ -277,6 +277,7 @@ ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8			8.839E-01*5.824E-01*0.201030
 ZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp			8.839E-01*5.824E-01*0.201030
 ZH_HToBB_ZToNuNu_M125_13TeV_amcatnloFXFX_madspin_pythia8			8.839E-01*5.824E-01*0.201030
 VectorDiJet1Jet_M100					1
+VectorDiJet1Jet_M1000					1
 VectorDiJet1Jet_M125				1
 VectorDiJet1Jet_M150				1
 VectorDiJet1Jet_M200				1
