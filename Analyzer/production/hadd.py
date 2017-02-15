@@ -14,20 +14,28 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'QCD_HT50to100_13TeV': 'QCD_HT50to100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT100to200_13TeV': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT100to200_13TeV_ext': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT100to200_13TeV_all': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT200to300_13TeV': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT200to300_13TeV_ext': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT200to300_13TeV_all': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT300to500_13TeV': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT300to500_13TeV_ext': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT300to500_13TeV_all': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT500to700_13TeV': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT500to700_13TeV_ext': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT500to700_13TeV_all': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT700to1000_13TeV': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT700to1000_13TeV_ext': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT700to1000_13TeV_all': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT1000to1500_13TeV': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT1000to1500_13TeV_ext': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT1000to1500_13TeV_all': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT1500to2000_13TeV': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT1500to2000_13TeV_ext': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT2000toInf_13TeV_ext': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT1500to2000_13TeV_all': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT2000toInf_13TeV': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT2000toInf_13TeV_ext': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT2000toInf_13TeV_all': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'ST_s_channel_4f_leptonDecays_13TeV_amcatnlo_pythia8_TuneCUETP8M1': 'ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1',
             'ST_t_channel_antitop_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin': 'ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1',
             'ST_t_channel_top_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin': 'ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1',
@@ -235,6 +243,17 @@ def main(options,args):
             sklimOn = False
         if os.path.isfile(OutDir+'/norm/'+basename.replace('.root','_1000pb_weighted.root')):
             normOn = False
+
+        if options.justNorm:            
+            haddOn = False
+            sklimOn = False
+            normOn = True
+        elif options.justSklim:  
+            haddOn = False
+            sklimOn = True
+            normOn = False
+            
+            
         
         filesToConvert = []
         badFiles = []
@@ -349,6 +368,10 @@ if __name__ == '__main__':
                   help="Just print out commands to run")
     parser.add_option('--just-hadd',dest="justHadd",default=False,action='store_true',
                   help="Just run hadd (two-step)")
+    parser.add_option('--just-sklim',dest="justSklim",default=False,action='store_true',
+                  help="Just run sklim step")
+    parser.add_option('--just-norm',dest="justNorm",default=False,action='store_true',
+                  help="Just run norm step")
     (options, args) = parser.parse_args()
 
     
