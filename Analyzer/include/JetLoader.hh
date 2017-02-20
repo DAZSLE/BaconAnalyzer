@@ -50,9 +50,9 @@ public:
 				    bool printDebug = false);
   TRandom3* r;
 
-  const double CSVL = 0.460; // CSVv2 WP
-  const double CSVM = 0.800;
-  const double CSVT = 0.935;
+  const double CSVL = 0.5426; // CSVv2 WP
+  const double CSVM = 0.8484;
+  const double CSVT = 0.9535;
 
   int           fNJetsPt30;
   int           fNJetsPt30jesUp;
