@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTbarDMJets_pseudoscalar_Mchi-1_Mphi-300/TTbarDMJets_pseudoscalar_Mchi-1_Mphi-300_0.root

@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTbarDMJets_scalar_Mchi-50_Mphi-200/TTbarDMJets_scalar_Mchi-50_Mphi-200_0.root

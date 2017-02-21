@@ -1,0 +1,7 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-10to50_amcatnlo/DYJetsToLL_M-10to50_amcatnlo_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-10to50_amcatnlo/DYJetsToLL_M-10to50_amcatnlo_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-10to50_amcatnlo/DYJetsToLL_M-10to50_amcatnlo_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-10to50_amcatnlo/DYJetsToLL_M-10to50_amcatnlo_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-10to50_amcatnlo/DYJetsToLL_M-10to50_amcatnlo_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-10to50_amcatnlo/DYJetsToLL_M-10to50_amcatnlo_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-10to50_amcatnlo/DYJetsToLL_M-10to50_amcatnlo_6.root

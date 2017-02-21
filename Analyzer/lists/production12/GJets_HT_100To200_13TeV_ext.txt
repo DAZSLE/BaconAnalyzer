@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/GJets_HT_100To200_13TeV_ext/GJets_HT-100To200_ext_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/GJets_HT_100To200_13TeV_ext/GJets_HT-100To200_ext_1.root

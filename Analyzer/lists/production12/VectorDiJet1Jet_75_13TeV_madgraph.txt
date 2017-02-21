@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/VectorDiJet1Jet_75_13TeV_madgraph/VectorDiJet1Jet_75_13TeV_madgraph_0.root
