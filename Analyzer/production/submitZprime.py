@@ -6,31 +6,25 @@ from optparse import OptionParser
 EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
 samplesDict = {}
 samplesDict['JetHT'] = {
-    'JetHTRun2016B_23Sep2016_v1': 'rereco',
-    'JetHTRun2016B_23Sep2016_v1_v2': 'rereco',
-    'JetHTRun2016B_23Sep2016_v3': 'rereco',
-    'JetHTRun2016C_23Sep2016_v1': 'rereco',
-    'JetHTRun2016C_23Sep2016_v1_v2': 'rereco',
-    'JetHTRun2016D_23Sep2016_v1': 'rereco',
-    'JetHTRun2016E_23Sep2016_v1': 'rereco',
-    'JetHTRun2016F_23Sep2016_v1': 'rereco',
-    'JetHTRun2016G_23Sep2016_v1': 'rereco',
-    'JetHTRun2016G_23Sep2016_v1_v2': 'rereco',
-    'JetHTRun2016H_PromptReco_v1': 'data',
-    'JetHTRun2016H_PromptReco_v2': 'data',
-    'JetHTRun2016H_PromptReco_v3': 'data'
+    'JetHTRun2016B_03Feb2017_ver1_v1': 'rereco',
+    'JetHTRun2016B_03Feb2017_ver2_v2': 'rereco',
+    'JetHTRun2016C_03Feb2017_v1': 'rereco',
+    'JetHTRun2016D_03Feb2017_v1': 'rereco',
+    'JetHTRun2016E_03Feb2017_v1': 'rereco',
+    'JetHTRun2016F_03Feb2017_v1': 'rereco',
+    'JetHTRun2016H_03Feb2017_ver2_v1': 'data',
+    'JetHTRun2016H_03Feb2017_ver3_v1': 'data'
 }
 samplesDict['SingleMuon'] = {
-    'SingleMuonRun2016B_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016B_23Sep2016_v3': 'rereco', 
-    'SingleMuonRun2016C_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016D_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016E_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016F_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016G_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016H_PromptReco_v1': 'data', 
-    'SingleMuonRun2016H_PromptReco_v2': 'data', 
-    'SingleMuonRun2016H_PromptReco_v3': 'data', 
+    'SingleMuonRun2016B_03Feb2017_ver1_v1'
+    'SingleMuonRun2016B_03Feb2017_ver2_v2': 'rereco',
+    'SingleMuonRun2016C_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016D_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016E_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016F_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016G_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016H_03Feb2017_ver2_v1': 'data',
+    'SingleMuonRun2016H_03Feb2017_ver3_v1': 'data'
     }
 samplesDict['Hbb'] = {
     'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc', 
@@ -262,5 +256,8 @@ if __name__ == '__main__':
 
     exec_me('%s mkdir -p %s/%s'%(EOS,eosOutDir,analysisDir))  
     for label, isMc in samples.iteritems():
-        exec_me('%s mkdir -p %s/%s/%s'%(EOS,eosOutDir,analysisDir,label))  
-        exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+        exec_me('%s mkdir -p %s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
+        if isMc in ['data','rereco']:
+            exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12a/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+        else:            
+            exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
