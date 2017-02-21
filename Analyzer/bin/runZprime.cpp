@@ -115,7 +115,7 @@ int main( int argc, char **argv ) {
   int neventstest = 0;
   std::cout << lTree->GetEntriesFast() << " total events" << std::endl;
   for(int i0 = 0; i0 < int(lTree->GetEntriesFast()); i0++) {
-    //for(int i0 = 0; i0 < int(100000); i0++){ // for testing
+  //for(int i0 = 0; i0 < int(100000); i0++){ // for testing
     if (i0%1000 == 0) std::cout << i0 << " events processed " << std::endl;
     // Check GenInfo
     fEvt->load(i0);
@@ -248,8 +248,12 @@ int main( int argc, char **argv ) {
       fEvt->fevtWeight *= ttbarPtWeight;
       fGen->fWeight *= ttbarPtWeight;
       fGen->saveTTbarType();
-      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,6);
-      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,6);
+      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,624);
+      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,624);
+    }    
+    if(lName.find("ST_")!=std::string::npos){
+      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,624);
+      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,624);
     }
     if(lName.find("HToBB")!=std::string::npos || lName.find("HTobb")!=std::string::npos){
       fGen->findBoson(25,1);
