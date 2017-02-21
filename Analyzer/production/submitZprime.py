@@ -16,7 +16,7 @@ samplesDict['JetHT'] = {
     'JetHTRun2016H_03Feb2017_ver3_v1': 'data'
 }
 samplesDict['SingleMuon'] = {
-    'SingleMuonRun2016B_03Feb2017_ver1_v1'
+    'SingleMuonRun2016B_03Feb2017_ver1_v1': 'rereco',
     'SingleMuonRun2016B_03Feb2017_ver2_v2': 'rereco',
     'SingleMuonRun2016C_03Feb2017_v1': 'rereco',
     'SingleMuonRun2016D_03Feb2017_v1': 'rereco',
