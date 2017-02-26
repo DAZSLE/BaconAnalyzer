@@ -11,18 +11,20 @@ from submitZprime import samplesDict
 
 import ROOT
 
-PT_CUT = 450.
+PT_CUT = 200.
 
 def main(options,args):
 
     DataDir = options.idir
     OutDir = options.odir
 
-    samples = samplesDict[options.sample]
-    tags = []
-    for sample in samples:
-        tags.append([sample, 0])
-
+    try:
+        samples = samplesDict[options.sample]
+        tags = []
+        for sample in samples:
+            tags.append([sample, 0])
+    except KeyError:
+        tags = [[options.sample,0]]
 
     # make a tmp dir
     #####

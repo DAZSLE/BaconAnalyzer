@@ -23,6 +23,7 @@
 #include "TROOT.h"
 #include "TFile.h"
 #include "TTree.h"
+#include <TError.h>
 #include <string>
 #include <iostream>
 
@@ -112,9 +113,10 @@ int main( int argc, char **argv ) {
 
   // Loop over events i0 = iEvent
   int neventstest = 0;
+  std::cout << lTree->GetEntriesFast() << " total events" << std::endl;
   for(int i0 = 0; i0 < int(lTree->GetEntriesFast()); i0++) {
-  //for(int i0 = 0; i0 < int(1000); i0++){ // for testing
-
+  //for(int i0 = 0; i0 < int(100000); i0++){ // for testing
+    if (i0%1000 == 0) std::cout << i0 << " events processed " << std::endl;
     // Check GenInfo
     fEvt->load(i0);
     float lWeight = 1;
@@ -143,28 +145,23 @@ int main( int argc, char **argv ) {
 	 fEvt ->passTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*") ||
 	 fEvt ->passTrigger("HLT_PFHT800_v*") || 
 	 fEvt ->passTrigger("HLT_PFHT900_v*") || 
-	 fEvt ->passTrigger("HLT_ECALHT800_v*") ||
-	 fEvt ->passTrigger("HLT_DiPFJetAve500_v*")
-	 // not in bacon prod yet:
-	 //fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*") ||
-	 //fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*") ||
-	 //fEvt ->passTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*") || 
-	 //fEvt ->passTrigger("HLT_PFJet450_v*")
+	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*") ||
+	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*") ||
+	 fEvt ->passTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*") || 
+	 fEvt ->passTrigger("HLT_PFJet450_v*")
 	 )  trigbits = trigbits | 2;  // hadronic signal region
-      if( fEvt ->passTrigger("HLT_Mu45_eta2p1_v*") ||
-	  fEvt ->passTrigger("HLT_Mu50_v*")
-	  // not in bacon prod yet:
-	  //fEvt ->passTrigger("HLT_TkMu50_v*")
+      if( fEvt ->passTrigger("HLT_Mu50_v*") ||
+	  fEvt ->passTrigger("HLT_TkMu50_v*")
 	  ) trigbits = trigbits | 4; // single muon control region
-      if( fEvt ->passTrigger("HLT_Ele45_WPLoose_v*")
-	 // not in bacon prod yet:
-	 //fEvt ->passTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*")
+      if( fEvt ->passTrigger("HLT_Ele45_WPLoose_v*") ||
+	  fEvt ->passTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*")
 	  ) trigbits = trigbits | 8; // single electron control region 
       // if(trigbits==1) continue;
     }
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
     
     // Objects
+    gErrorIgnoreLevel=kError;
     std::vector<TLorentzVector> cleaningMuons, cleaningElectrons, cleaningPhotons; 
     fMuon     ->load(i0);
     fMuon     ->selectMuons(cleaningMuons,fEvt->fMet,fEvt->fMetPhi);
@@ -245,8 +242,12 @@ int main( int argc, char **argv ) {
       fEvt->fevtWeight *= ttbarPtWeight;
       fGen->fWeight *= ttbarPtWeight;
       fGen->saveTTbarType();
-      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,6);
-      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,6);
+      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,624);
+      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,624);
+    }    
+    if(lName.find("ST_")!=std::string::npos){
+      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,624);
+      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,624);
     }
     if(lName.find("HToBB")!=std::string::npos || lName.find("HTobb")!=std::string::npos){
       fGen->findBoson(25,1);

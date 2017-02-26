@@ -1,0 +1,9 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M-50_HT-600to800/DYJetsToLL_M-50_HT-600to800_8.root

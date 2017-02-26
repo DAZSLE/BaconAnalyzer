@@ -1,0 +1,5 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTZToLLNuNu_M-10_ext2/TTZToLLNuNu_M-10_ext2_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTZToLLNuNu_M-10_ext2/TTZToLLNuNu_M-10_ext2_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTZToLLNuNu_M-10_ext2/TTZToLLNuNu_M-10_ext2_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTZToLLNuNu_M-10_ext2/TTZToLLNuNu_M-10_ext2_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTZToLLNuNu_M-10_ext2/TTZToLLNuNu_M-10_ext2_4.root

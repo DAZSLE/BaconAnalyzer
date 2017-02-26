@@ -29,6 +29,7 @@ public:
   TGenParticle* findDaughter(int iparent, int dauId);
   int findDaughterId(int iparent, int dauId);
   int findLastBoson(int iparent,int iId);
+  int isHadronicWInTop(TGenParticle *genp,int j,TLorentzVector jet,double dR,double &topMatching, double &topSize);
   int isHadronicTop(TGenParticle *genp,int j,TLorentzVector jet,double dR,double &topMatching, double &topSize);
   int isHadronicV(TGenParticle *genp,int j,int iId,TLorentzVector jet,double dR,double &vMatching, double &vSize);
   int isHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector jet,double dR,double &vMatching, double &vSize, int dauId);

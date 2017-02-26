@@ -1,1 +1,1 @@
-root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTbarDMJets_scalar_Mchi-1_Mphi-100/BA49B0F2-26AE-E611-A814-20CF3027A607_bacon.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/TTbarDMJets_scalar_Mchi-1_Mphi-100/TTbarDMJets_scalar_Mchi-1_Mphi-100_0.root

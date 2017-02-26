@@ -63,8 +63,8 @@ public:
   std::vector<TLorentzVector> selectedVJetsByDoubleB, selectedVJetsCHSByDoubleB;
 
 
-  const double CSVL = 0.460; // CSVv2SubJet WP 
-  const double CSVM = 0.800;
+  const double CSVL = 0.5426; // CSVv2SubJet WP 
+  const double CSVM = 0.8484;
   // JEC tools
   std::vector<FactorizedJetCorrector*> getJetCorrector() { return JetCorrector; }
   std::vector<std::pair<int,int> > getJetCorrectionsIOV() { return JetCorrectionsIOV; }

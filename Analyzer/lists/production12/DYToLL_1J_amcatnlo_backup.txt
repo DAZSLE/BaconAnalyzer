@@ -1,0 +1,17 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_10.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_11.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_12.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_13.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_14.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_15.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_16.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_8.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYToLL_1J_amcatnlo_backup/DYToLL_1J_amcatnlo_backup_9.root

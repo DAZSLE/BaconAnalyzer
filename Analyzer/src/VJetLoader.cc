@@ -74,8 +74,8 @@ void VJetLoader::resetDoubleB() {
   selectedVJetsCHSByDoubleB.clear();
 }
 void VJetLoader::resetZprime() {
-  fvSize              = 999;
-  fvMatching          = 999;
+  fvSize              = -999;
+  fvMatching          = -999;
   fisHadronicV        = 0;
   fRatioPt =0;
 }

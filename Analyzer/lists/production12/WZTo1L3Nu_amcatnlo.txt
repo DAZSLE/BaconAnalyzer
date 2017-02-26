@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/WZTo1L3Nu_amcatnlo/WZTo1L3Nu_amcatnlo_0.root

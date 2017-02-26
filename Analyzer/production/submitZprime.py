@@ -6,31 +6,25 @@ from optparse import OptionParser
 EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
 samplesDict = {}
 samplesDict['JetHT'] = {
-    'JetHTRun2016B_23Sep2016_v1': 'rereco',
-    'JetHTRun2016B_23Sep2016_v1_v2': 'rereco',
-    'JetHTRun2016B_23Sep2016_v3': 'rereco',
-    'JetHTRun2016C_23Sep2016_v1': 'rereco',
-    'JetHTRun2016C_23Sep2016_v1_v2': 'rereco',
-    'JetHTRun2016D_23Sep2016_v1': 'rereco',
-    'JetHTRun2016E_23Sep2016_v1': 'rereco',
-    'JetHTRun2016F_23Sep2016_v1': 'rereco',
-    'JetHTRun2016G_23Sep2016_v1': 'rereco',
-    'JetHTRun2016G_23Sep2016_v1_v2': 'rereco',
-    'JetHTRun2016H_PromptReco_v1': 'data',
-    'JetHTRun2016H_PromptReco_v2': 'data',
-    'JetHTRun2016H_PromptReco_v3': 'data'
+    'JetHTRun2016B_03Feb2017_ver1_v1': 'rereco',
+    'JetHTRun2016B_03Feb2017_ver2_v2': 'rereco',
+    'JetHTRun2016C_03Feb2017_v1': 'rereco',
+    'JetHTRun2016D_03Feb2017_v1': 'rereco',
+    'JetHTRun2016E_03Feb2017_v1': 'rereco',
+    'JetHTRun2016F_03Feb2017_v1': 'rereco',
+    'JetHTRun2016H_03Feb2017_ver2_v1': 'data',
+    'JetHTRun2016H_03Feb2017_ver3_v1': 'data'
 }
 samplesDict['SingleMuon'] = {
-    'SingleMuonRun2016B_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016B_23Sep2016_v3': 'rereco', 
-    'SingleMuonRun2016C_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016D_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016E_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016F_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016G_23Sep2016_v1': 'rereco', 
-    'SingleMuonRun2016H_PromptReco_v1': 'data', 
-    'SingleMuonRun2016H_PromptReco_v2': 'data', 
-    'SingleMuonRun2016H_PromptReco_v3': 'data', 
+    'SingleMuonRun2016B_03Feb2017_ver1_v1': 'rereco',
+    'SingleMuonRun2016B_03Feb2017_ver2_v2': 'rereco',
+    'SingleMuonRun2016C_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016D_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016E_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016F_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016G_03Feb2017_v1': 'rereco',
+    'SingleMuonRun2016H_03Feb2017_ver2_v1': 'data',
+    'SingleMuonRun2016H_03Feb2017_ver3_v1': 'data'
     }
 samplesDict['Hbb'] = {
     'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc', 
@@ -38,7 +32,7 @@ samplesDict['Hbb'] = {
     'GluGluHToBB_M125_13TeV_powheg_pythia8_ext': 'mc',
     'VBFHToBB_M125_13TeV_amcatnlo_pythia8': 'mc', 
     'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc', 
-    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext':'mc',
+    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext': 'mc',
     'WminusH_HToBB_WToLNu_M125_13TeV_powheg_pythia8': 'mc', 
     'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc', 
     'WplusH_HToBB_WToLNu_M125_13TeV_powheg_pythia8': 'mc', 
@@ -52,25 +46,32 @@ samplesDict['Hbb'] = {
     'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc', 
     'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8':'mc',
     'ttHTobb_M125_13TeV_powheg_pythia8': 'mc', 
-    'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc', 
+    'ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV_powheg_pythia8': 'mc'
     }
 samplesDict['QCD'] = {       
     'QCD_HT1000to1500_13TeV': 'mc',
     'QCD_HT1000to1500_13TeV_ext': 'mc',
+    'QCD_HT1000to1500_13TeV_all': 'mc',
     'QCD_HT100to200_13TeV': 'mc',
     'QCD_HT1500to2000_13TeV': 'mc',
     'QCD_HT1500to2000_13TeV_ext': 'mc',
+    'QCD_HT1500to2000_13TeV_all': 'mc',
     'QCD_HT2000toInf_13TeV': 'mc',
     'QCD_HT2000toInf_13TeV_ext': 'mc',
+    'QCD_HT2000toInf_13TeV_all': 'mc',
     'QCD_HT200to300_13TeV': 'mc',
     'QCD_HT200to300_13TeV_ext': 'mc',
+    'QCD_HT200to300_13TeV_all': 'mc',
     'QCD_HT300to500_13TeV': 'mc',
     'QCD_HT300to500_13TeV_ext': 'mc',
+    'QCD_HT300to500_13TeV_all': 'mc',
     'QCD_HT500to700_13TeV': 'mc',
     'QCD_HT500to700_13TeV_ext': 'mc',
+    'QCD_HT500to700_13TeV_all': 'mc',
     'QCD_HT50to100_13TeV': 'mc',
     'QCD_HT700to1000_13TeV': 'mc',
     'QCD_HT700to1000_13TeV_ext': 'mc',
+    'QCD_HT700to1000_13TeV_all': 'mc',
     }
 samplesDict['SingleTop'] = {
     'ST_s_channel_4f_leptonDecays_13TeV_amcatnlo_pythia8_TuneCUETP8M1': 'mc',
@@ -85,12 +86,21 @@ samplesDict['W'] = {
     'WJetsToQQ_HT_600ToInf_13TeV': 'mc',
     'WJetsToLNu_HT_70To100_13TeV': 'mc',
     'WJetsToLNu_HT_100To200_13TeV': 'mc',
+    'WJetsToLNu_HT_100To200_13TeV_ext1': 'mc',
+    'WJetsToLNu_HT_100To200_13TeV_ext2': 'mc',
     'WJetsToLNu_HT_200To400_13TeV': 'mc',
+    'WJetsToLNu_HT_200To400_13TeV_ext1': 'mc',
+    'WJetsToLNu_HT_200To400_13TeV_ext2': 'mc',
     'WJetsToLNu_HT_400To600_13TeV': 'mc',
+    'WJetsToLNu_HT_400To600_13TeV_ext1': 'mc',
     'WJetsToLNu_HT_600To800_13TeV': 'mc',
+    'WJetsToLNu_HT_600To800_13TeV_ext1': 'mc',
     'WJetsToLNu_HT_800To1200_13TeV': 'mc',
+    'WJetsToLNu_HT_800To1200_13TeV_ext1': 'mc',
     'WJetsToLNu_HT_1200To2500_13TeV': 'mc',
+    'WJetsToLNu_HT_1200To2500_13TeV_ext1': 'mc',
     'WJetsToLNu_HT_2500ToInf_13TeV': 'mc',
+    'WJetsToLNu_HT_2500ToInf_13TeV_ext1': 'mc',
     }
 samplesDict['DY'] = {
     'DYJetsToLL_M_50_13TeV_ext': 'mc',
@@ -130,6 +140,9 @@ samplesDict['VectorDiJet1Jet'] = {
     'VectorDiJet1Jet_50_13TeV_madgraph': 'mc', 
     'VectorDiJet1Jet_600_13TeV_madgraph': 'mc', 
     'VectorDiJet1Jet_800_13TeV_madgraph': 'mc', 
+    'VectorDiJet1Jet_1000_13TeV_madgraph': 'mc',
+    'VectorDiJet1Jet_125_13TeV_madgraph': 'mc',
+    'VectorDiJet1Jet_75_13TeV_madgraph': 'mc'
     }
 samplesDict['VectorDiJet1Gamma'] = {
     #'VectorDiJet1Gamma_1000_13TeV_madgraph': 'mc', 
@@ -179,28 +192,26 @@ samplesDict['DMSpin0'] = {
     'Spin0_ggPhi12j_g1_800_Scalar_13TeV_madgraph': 'mc', 
     }
 
-samplesDict['MC'] = dict(#samplesDict['Hbb'].items() +
+samplesDict['MC'] = dict(samplesDict['Hbb'].items() +
                          samplesDict['QCD'].items() +
                          samplesDict['SingleTop'].items() +
                          samplesDict['W'].items() +
                          samplesDict['DY'].items() +
                          samplesDict['TT'].items() +
-                         samplesDict['Diboson'].items() )
-                        # samplesDict['Triboson'].items() +
-                         #samplesDict['VectorDiJet1Jet'].items() +
-                       #  samplesDict['VectorDiJet1Gamma'].items() +
-                         #samplesDict['DMSpin0'].items())
+                         samplesDict['Diboson'].items() +
+                        #samplesDict['Triboson'].items() +
+                         samplesDict['VectorDiJet1Jet'].items() +
+                       # samplesDict['VectorDiJet1Gamma'].items() +
+                         samplesDict['DMSpin0'].items())
 
 samplesDict['Data'] = dict(samplesDict['JetHT'].items() +
                            samplesDict['SingleMuon'].items())
 
 samplesDict['All'] = dict(samplesDict['MC'].items() + samplesDict['Data'].items())
 
-
 for label, isMc in samplesDict['All'].iteritems():
     samplesDict[label] = {label: isMc}
-
-    
+        
 def exec_me(command, dryRun=False):
     print command
     if not dryRun:
@@ -245,5 +256,8 @@ if __name__ == '__main__':
 
     exec_me('%s mkdir -p %s/%s'%(EOS,eosOutDir,analysisDir))  
     for label, isMc in samples.iteritems():
-        exec_me('%s mkdir -p %s/%s/%s'%(EOS,eosOutDir,analysisDir,label))  
-        exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+        exec_me('%s mkdir -p %s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
+        if isMc in ['data','rereco']:
+            exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12a/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+        else:            
+            exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
