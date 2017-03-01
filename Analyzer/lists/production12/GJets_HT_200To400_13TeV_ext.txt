@@ -1,0 +1,6 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/GJets_HT_200To400_13TeV_ext/GJets_HT-200To400_ext_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/GJets_HT_200To400_13TeV_ext/GJets_HT-200To400_ext_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/GJets_HT_200To400_13TeV_ext/GJets_HT-200To400_ext_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/GJets_HT_200To400_13TeV_ext/GJets_HT-200To400_ext_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/GJets_HT_200To400_13TeV_ext/GJets_HT-200To400_ext_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/GJets_HT_200To400_13TeV_ext/GJets_HT-200To400_ext_5.root

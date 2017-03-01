@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/BulkGravToWW_narrow_M_2000_13TeV_madgraph_herwigpp/BulkGravToWW_narrow_M_2000_13TeV_madgraph_herwigpp_0.root

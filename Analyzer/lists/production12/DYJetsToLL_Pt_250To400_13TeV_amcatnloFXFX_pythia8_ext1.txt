@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_Pt_250To400_13TeV_amcatnloFXFX_pythia8_ext1/DYJetsToLL_Pt-250To400_ext1_0.root
