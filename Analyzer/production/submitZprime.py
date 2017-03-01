@@ -26,6 +26,21 @@ samplesDict['SingleMuon'] = {
     'SingleMuonRun2016H_03Feb2017_ver2_v1': 'data',
     'SingleMuonRun2016H_03Feb2017_ver3_v1': 'data'
     }
+samplesDict['BulkGrav'] = {
+   'BulkGravToWW_narrow_M_1000_13TeV_madgraph.txt': 'mc', 
+   'BulkGravToWW_narrow_M_1000_13TeV_madgraph_herwigpp.txt': 'mc', 
+   'BulkGravToWW_narrow_M_2000_13TeV_madgraph.txt': 'mc', 
+   'BulkGravToWW_narrow_M_2000_13TeV_madgraph_herwigpp.txt': 'mc', 
+   'BulkGravToWW_narrow_M_3000_13TeV_madgraph.txt': 'mc', 
+   'BulkGravToWW_narrow_M_3000_13TeV_madgraph_herwigpp.txt': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_1000_13TeV_madgraph.txt': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_1000_13TeV_madgraph_herwig_ext.txt': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_2000_13TeV_madgraph.txt': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_2000_13TeV_madgraph_herwig_ext.txt': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph.txt': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph_herwig.txt': 'mc'
+
+}
 samplesDict['Hbb'] = {
     'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc', 
     'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc', 
@@ -226,7 +241,7 @@ if __name__ == '__main__':
     parser.add_option('-s','--sample',dest="sample", default="All",
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
-    parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v11.test", help = "tag, which is the same as folder") 
+    parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v12.04", help = "tag, which is the same as folder") 
     
     (options,args) = parser.parse_args()
 
