@@ -12,6 +12,7 @@ samplesDict['JetHT'] = {
     'JetHTRun2016D_03Feb2017_v1': 'rereco',
     'JetHTRun2016E_03Feb2017_v1': 'rereco',
     'JetHTRun2016F_03Feb2017_v1': 'rereco',
+    #'JetHTRun2016G_03Feb2017_v1': 'rereco',
     'JetHTRun2016H_03Feb2017_ver2_v1': 'data',
     'JetHTRun2016H_03Feb2017_ver3_v1': 'data'
 }
@@ -120,7 +121,7 @@ samplesDict['W'] = {
 samplesDict['DY'] = {
     'DYJetsToLL_M_50_13TeV_ext': 'mc',
     'DYJetsToQQ_HT180_13TeV': 'mc',
-    #'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
+    'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
     }
 samplesDict['TT'] = {
     #'TTJets_13TeV':'mc',

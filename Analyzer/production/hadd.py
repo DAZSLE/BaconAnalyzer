@@ -68,7 +68,7 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'WJetsToLNu_HT_2500ToInf_13TeV': 'WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_2500ToInf_13TeV_ext': 'WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',       
             'WJetsToLNu_HT_2500ToInf_13TeV_ext1': 'WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',           
-            'ZJetsToQQ_HT_600ToInf_13TeV': 'ZJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'ZJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WWTo4Q_13TeV_amcatnlo': 'WWTo4Q_4f_13TeV_amcatnloFXFX_madspin_pythia8',
             'WWTo4Q_13TeV_powheg': 'WWTo4Q_13TeV_powheg',
             'WZ_13TeV_pythia8': 'WZ_TuneCUETP8M1_13TeV-pythia8',
