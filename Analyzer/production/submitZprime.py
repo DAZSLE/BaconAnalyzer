@@ -27,18 +27,22 @@ samplesDict['SingleMuon'] = {
     'SingleMuonRun2016H_03Feb2017_ver3_v1': 'data'
     }
 samplesDict['BulkGrav'] = {
-   'BulkGravToWW_narrow_M_1000_13TeV_madgraph.txt': 'mc', 
-   'BulkGravToWW_narrow_M_1000_13TeV_madgraph_herwigpp.txt': 'mc', 
-   'BulkGravToWW_narrow_M_2000_13TeV_madgraph.txt': 'mc', 
-   'BulkGravToWW_narrow_M_2000_13TeV_madgraph_herwigpp.txt': 'mc', 
-   'BulkGravToWW_narrow_M_3000_13TeV_madgraph.txt': 'mc', 
-   'BulkGravToWW_narrow_M_3000_13TeV_madgraph_herwigpp.txt': 'mc', 
-   'BulkGravTohhTohbbhbb_narrow_M_1000_13TeV_madgraph.txt': 'mc', 
-   'BulkGravTohhTohbbhbb_narrow_M_1000_13TeV_madgraph_herwig_ext.txt': 'mc', 
-   'BulkGravTohhTohbbhbb_narrow_M_2000_13TeV_madgraph.txt': 'mc', 
-   'BulkGravTohhTohbbhbb_narrow_M_2000_13TeV_madgraph_herwig_ext.txt': 'mc', 
-   'BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph.txt': 'mc', 
-   'BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph_herwig.txt': 'mc'
+   'BulkGravToWW_narrow_M_4000_13TeV_madgraph': 'mc',
+   'BulkGravToWW_narrow_M_4000_13TeV_madgraph_herwigpp': 'mc', 
+   'BulkGravToWW_narrow_M_600_13TeV_madgraph': 'mc',
+   'BulkGravToWW_narrow_M_600_13TeV_madgraph_herwigpp': 'mc',	
+   'BulkGravToWW_narrow_M_1000_13TeV_madgraph': 'mc', 
+   'BulkGravToWW_narrow_M_1000_13TeV_madgraph_herwigpp': 'mc', 
+   'BulkGravToWW_narrow_M_2000_13TeV_madgraph': 'mc', 
+   'BulkGravToWW_narrow_M_2000_13TeV_madgraph_herwigpp': 'mc', 
+   'BulkGravToWW_narrow_M_3000_13TeV_madgraph': 'mc', 
+   'BulkGravToWW_narrow_M_3000_13TeV_madgraph_herwigpp': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_1000_13TeV_madgraph': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_1000_13TeV_madgraph_herwig_ext': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_2000_13TeV_madgraph': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_2000_13TeV_madgraph_herwig_ext': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph_herwig': 'mc'
 
 }
 samplesDict['Hbb'] = {
@@ -98,29 +102,11 @@ samplesDict['SingleTop'] = {
     }
 samplesDict['W'] = {
     'WJetsToQQ_HT180_13TeV': 'mc',
-    'WJetsToQQ_HT_600ToInf_13TeV': 'mc',
-    'WJetsToLNu_HT_70To100_13TeV': 'mc',
-    'WJetsToLNu_HT_100To200_13TeV': 'mc',
-    'WJetsToLNu_HT_100To200_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_100To200_13TeV_ext2': 'mc',
-    'WJetsToLNu_HT_200To400_13TeV': 'mc',
-    'WJetsToLNu_HT_200To400_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_200To400_13TeV_ext2': 'mc',
-    'WJetsToLNu_HT_400To600_13TeV': 'mc',
-    'WJetsToLNu_HT_400To600_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_600To800_13TeV': 'mc',
-    'WJetsToLNu_HT_600To800_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_800To1200_13TeV': 'mc',
-    'WJetsToLNu_HT_800To1200_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_1200To2500_13TeV': 'mc',
-    'WJetsToLNu_HT_1200To2500_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_2500ToInf_13TeV': 'mc',
-    'WJetsToLNu_HT_2500ToInf_13TeV_ext1': 'mc',
+    'WJetsToQQ_HT_600ToInf_13TeV': 'mc'
     }
 samplesDict['DY'] = {
-    'DYJetsToLL_M_50_13TeV_ext': 'mc',
     'DYJetsToQQ_HT180_13TeV': 'mc',
-    #'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
+    'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
     }
 samplesDict['TT'] = {
     #'TTJets_13TeV':'mc',
