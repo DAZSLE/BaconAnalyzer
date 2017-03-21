@@ -361,20 +361,23 @@ int GenLoader::isHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector 
 
 int GenLoader::ismatchedJet(TLorentzVector jet0, double dR,double &matching, double &size, int iId){
   //std::cout << "new event" << std::endl;
+  int result=0;
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
     TGenParticle *genp0 = (TGenParticle*)((*fGens)[i0]);
     TLorentzVector mcMom; mcMom.SetPtEtaPhiM(genp0->pt,genp0->eta,genp0->phi,genp0->mass);
     if (mcMom.DeltaR(jet0) < dR) {
-      if(iId == 624 && isHadronicWInTop(genp0,i0,jet0,dR,matching,size)==1) return 1;
-      if(iId == 6 && isHadronicTop(genp0,i0,jet0,dR,matching,size)==1) return 1;
+      if(iId == 624 && isHadronicWInTop(genp0,i0,jet0,dR,matching,size)==1) result= 1;
+      if(iId == 6 && isHadronicTop(genp0,i0,jet0,dR,matching,size)==1) result= 1;
       if(iId == 24 || iId == 23 || iId == 10031 || iId == 25){
-        if (isHadronicV(genp0,i0,iId,jet0,dR,matching,size)==1) return 1;
-	if (isHadronicVflav(genp0,i0,iId,jet0,dR,matching,size,2)==1) return 2; //W->ud, Z->dd, H->dd
-	if (isHadronicVflav(genp0,i0,iId,jet0,dR,matching,size,4)==1) return 3; //W->cs, Z->cc, H->cc
+        if (isHadronicV(genp0,i0,iId,jet0,dR,matching,size)==1) result= 1;
+	if (isHadronicVflav(genp0,i0,iId,jet0,dR,matching,size,2)==1) result= 2; //W->ud, Z->dd, H->dd
+	if (isHadronicVflav(genp0,i0,iId,jet0,dR,matching,size,4)==1) result= 3; //W->cs, Z->cc, H->cc
+        if (isHadronicVflav(genp0,i0,iId,jet0,dR,matching,size,5) ==1) result= 4;//Z->bb; H->bb
       }
     }
   }
-  return 0;
+  std::cout<< result << " isMatched "<<iId << std::endl;
+  return result;
 }
 int GenLoader::ismatchedSubJet(TLorentzVector subjet0){
   int lOption =0;
