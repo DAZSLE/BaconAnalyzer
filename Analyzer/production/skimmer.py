@@ -13,10 +13,13 @@ import ROOT
 
 PT_CUT = 200.
 
+
+
 def main(options,args):
 
     DataDir = options.idir
     OutDir = options.odir
+
 
     try:
         samples = samplesDict[options.sample]
@@ -72,7 +75,7 @@ def sklimAdd(fn,odir,mass=0):
     otree.SetBranchStatus("*Puppijet0_e2*",0)
     otree.SetBranchStatus("*Puppijet0_e3*",0)
     otree.SetBranchStatus("*Puppijet0_e4*",0)
-    otree.SetBranchStatus("CA15Puppi*",0)	
+    #otree.SetBranchStatus("CA15Puppi*",0)	
     #otree.SetBranchStatus("bst8_PUPPIjet0_pt",1)
 
     nent = tree.GetEntries()
@@ -112,13 +115,15 @@ def sklimAdd(fn,odir,mass=0):
     for i in range(nent):
 
         if( nent/100 > 0 and i % (1 * nent/100) == 0):
-            sys.stdout.write("\r[" + "="*int(20*i/nent) + " " + str(round(100.*i/nent,0)) + "% done")
+            sys.stdout.write("\r[" + "="*int(20*i/nent) + " " + str(round(100.*i/nent,0)) + "% done here")
             sys.stdout.flush()
 
         tree.GetEntry(i)
 
         if (tree.AK8Puppijet0_pt > PT_CUT or tree.AK8Puppijet0_pt_JESUp > PT_CUT or tree.AK8Puppijet0_pt_JERUp > PT_CUT or tree.AK8Puppijet0_pt_JESDown > PT_CUT or tree.AK8Puppijet0_pt_JERDown > PT_CUT  ):
-	    #if 'GluGluHToBB_M125_13TeV_powheg' in fn:  newscale1fb[0] =  h_ggh_num.GetBinContent( h_ggh_num.FindBin(tree.genVPt) )/h_ggh_den.GetBinContent( h_ggh_den.FindBin(tree.genVPt) )
+	    if 'GluGluHToBB_M125_13TeV_powheg' in fn:  
+		
+		newscale1fb[0] =  tree.scale1fb*NLOcorr(tree.genVPt )
             if 'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix' in fn and tree.genVPt<1000. : newscale1fb[0] =  tree.scale1fb*h_vbf_num.GetBinContent( h_vbf_num.FindBin(tree.genVPt) )/h_vbf_den.GetBinContent( h_vbf_den.FindBin(tree.genVPt) )
 	    if 'VectorDiJet' in fn and mass > 0:
                 ptToWeightFrom = tree.genVPt
@@ -156,6 +161,19 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
                 if theadditionalstring == None or theadditionalstring in file:
                     cfiles.append(os.path.join(root, file))
     return cfiles
+
+def NLOcorr(Hpt=200.):
+        NLO_= ROOT.TF1("NLO_", "pol2", 200, 1200)
+	NLO_.SetParameter(0, 2.70299e+00)
+	NLO_.SetParameter(1, -2.18233e-03)
+	NLO_.SetParameter(2,5.22287e-07 )
+
+        Weight = 1.
+	if (Hpt>200) :
+        	Weight = NLO_.Eval(Hpt)
+	print Weight
+        return Weight
+ 	
 
 if __name__ == '__main__':
 
