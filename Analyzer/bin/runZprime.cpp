@@ -66,6 +66,8 @@ int main( int argc, char **argv ) {
   const std::string lJSON        = argv[3];
   const double      lXS          = atof(argv[4]);
   //const double      weight       = atof(argv[5]);
+  const int      iSplit          = atoi(argv[6]);
+  const int      maxSplit        = atoi(argv[7]);
 
   fRangeMap = new RunLumiRangeMap();
   if(lJSON.size() > 0) fRangeMap->AddJSONFile(lJSON.c_str());
@@ -113,9 +115,19 @@ int main( int argc, char **argv ) {
 
   // Loop over events i0 = iEvent
   int neventstest = 0;
-  std::cout << lTree->GetEntriesFast() << " total events" << std::endl;
-  for(int i0 = 0; i0 < int(lTree->GetEntriesFast()); i0++) {
-  //for(int i0 = 0; i0 < int(100000); i0++){ // for testing
+  int neventsTotal = int(lTree->GetEntriesFast());
+  int minEventsPerJob = neventsTotal / maxSplit;
+  int leftoverEvents = neventsTotal % maxSplit;
+  int minEvent = iSplit * minEventsPerJob;
+  int maxEvent = (iSplit+1) * minEventsPerJob;
+  if (iSplit + 1 == maxSplit) maxEvent = neventsTotal;
+  std::cout << neventsTotal << " total events" << std::endl;
+  std::cout << iSplit << " iSplit " << std::endl;
+  std::cout << maxSplit << " maxSplit " << std::endl;
+  std::cout << minEvent << " min event" << std::endl;
+  std::cout << maxEvent << " max event" << std::endl;  
+  for(int i0 = minEvent; i0 < maxEvent; i0++) {
+    //for(int i0 = 0; i0 < int(10000); i0++){ // for testing
     if (i0%1000 == 0) std::cout << i0 << " events processed " << std::endl;
     // Check GenInfo
     fEvt->load(i0);
@@ -161,7 +173,7 @@ int main( int argc, char **argv ) {
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
     
     // Objects
-    gErrorIgnoreLevel=kError;
+    //gErrorIgnoreLevel=kError;
     std::vector<TLorentzVector> cleaningMuons, cleaningElectrons, cleaningPhotons; 
     fMuon     ->load(i0);
     fMuon     ->selectMuons(cleaningMuons,fEvt->fMet,fEvt->fMetPhi);
