@@ -12,7 +12,7 @@ samplesDict['JetHT'] = {
     'JetHTRun2016D_03Feb2017_v1': 'rereco',
     'JetHTRun2016E_03Feb2017_v1': 'rereco',
     'JetHTRun2016F_03Feb2017_v1': 'rereco',
-    #'JetHTRun2016G_03Feb2017_v1': 'rereco',
+    'JetHTRun2016G_03Feb2017_v1': 'rereco',
     'JetHTRun2016H_03Feb2017_ver2_v1': 'data',
     'JetHTRun2016H_03Feb2017_ver3_v1': 'data'
 }
