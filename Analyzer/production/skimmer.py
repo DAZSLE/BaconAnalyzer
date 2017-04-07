@@ -11,7 +11,7 @@ from submitZprime import samplesDict
 
 import ROOT
 
-PT_CUT = 200.
+PT_CUT = 400.
 
 def main(options,args):
 
@@ -72,8 +72,7 @@ def sklimAdd(fn,odir,mass=0):
     otree.SetBranchStatus("*Puppijet0_e2*",0)
     otree.SetBranchStatus("*Puppijet0_e3*",0)
     otree.SetBranchStatus("*Puppijet0_e4*",0)
-    otree.SetBranchStatus("CA15Puppi*",0)	
-    #otree.SetBranchStatus("bst8_PUPPIjet0_pt",1)
+
 
     nent = tree.GetEntries()
     print nent
