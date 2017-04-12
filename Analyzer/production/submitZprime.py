@@ -12,7 +12,7 @@ samplesDict['JetHT'] = {
     'JetHTRun2016D_03Feb2017_v1': 'rereco',
     'JetHTRun2016E_03Feb2017_v1': 'rereco',
     'JetHTRun2016F_03Feb2017_v1': 'rereco',
-    #'JetHTRun2016G_03Feb2017_v1': 'rereco',
+    'JetHTRun2016G_03Feb2017_v1': 'rereco',
     'JetHTRun2016H_03Feb2017_ver2_v1': 'data',
     'JetHTRun2016H_03Feb2017_ver3_v1': 'data'
 }
@@ -248,6 +248,7 @@ if __name__ == '__main__':
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
     parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v12.04", help = "tag, which is the same as folder") 
+    parser.add_option("--njobs-per-file",dest="njobs_per_file",type='int',default=1,help="Split into n jobs per file, will automatically produce submission scripts")
     
     (options,args) = parser.parse_args()
 
@@ -264,9 +265,9 @@ if __name__ == '__main__':
 
     
     optionsDataMc = {
-        'mc': "Output.root --passSumEntries 5:Events  -a 2:mc -a 3:none  -n 8000 -q 2nw4cores",
-        'data': "Output.root -a 5:1  -a 2:data -a 3:%s -n 8000 -q 1nd"%(jsonPrompt),        
-        'rereco': "Output.root -a 5:1  -a 2:data -a 3:%s -n 8000 -q 1nd"%(jsonRereco)
+        'mc': "Output.root --passSumEntries 5:Events -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
+        'data': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt,options.njobs_per_file),        
+        'rereco': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonRereco,options.njobs_per_file)
     }
         
     #analysisDir = "zprimebits-v11.051"
