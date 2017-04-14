@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/SinglePhotonRun2016H_03Feb2017_ver3_v1_v3/SinglePhotonRun2016H_03Feb2017_ver3_v1_v3_0.root

@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/TauRun2016H_03Feb2017_ver3_v1/TauRun2016H_03Feb2017_ver3_v1_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/TauRun2016H_03Feb2017_ver3_v1/TauRun2016H_03Feb2017_ver3_v1_1.root
