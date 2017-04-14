@@ -173,7 +173,7 @@ int main( int argc, char **argv ) {
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
     
     // Objects
-    //gErrorIgnoreLevel=kError;
+    gErrorIgnoreLevel=kError;
     std::vector<TLorentzVector> cleaningMuons, cleaningElectrons, cleaningPhotons; 
     fMuon     ->load(i0);
     fMuon     ->selectMuons(cleaningMuons,fEvt->fMet,fEvt->fMetPhi);
@@ -255,7 +255,9 @@ int main( int argc, char **argv ) {
       fGen->fWeight *= ttbarPtWeight;
       fGen->saveTTbarType();
       if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,624);
+      //std::cout << "AK8 vMatching" << fVJet8->fvMatching << std::endl;
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,624);
+      //std::cout << "CA15 vMatching" << fVJet15->fvMatching << std::endl;
     }    
     if(lName.find("ST_")!=std::string::npos){
       if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,624);

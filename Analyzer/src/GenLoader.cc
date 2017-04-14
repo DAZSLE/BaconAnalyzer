@@ -366,8 +366,15 @@ int GenLoader::ismatchedJet(TLorentzVector jet0, double dR,double &matching, dou
     TGenParticle *genp0 = (TGenParticle*)((*fGens)[i0]);
     TLorentzVector mcMom; mcMom.SetPtEtaPhiM(genp0->pt,genp0->eta,genp0->phi,genp0->mass);
     if (mcMom.DeltaR(jet0) < dR) {
-      if(iId == 624 && isHadronicWInTop(genp0,i0,jet0,dR,matching,size)==1) result= 1;
-      if(iId == 6 && isHadronicTop(genp0,i0,jet0,dR,matching,size)==1) result= 1;
+      if(iId == 624 && isHadronicWInTop(genp0,i0,jet0,dR,matching,size)==1) {
+	result= 1;	
+	//std::cout<< result << " isMatched "<<iId << std::endl;
+	//std::cout<< " matching "<< matching << std::endl;
+	//std::cout<< " size "<< size << std::endl;
+	break;
+      }
+      if(iId == 6 && isHadronicTop(genp0,i0,jet0,dR,matching,size)==1)
+	result= 1;
       if(iId == 24 || iId == 23 || iId == 10031 || iId == 25){
         if (isHadronicV(genp0,i0,iId,jet0,dR,matching,size)==1) result= 1;
 	if (isHadronicVflav(genp0,i0,iId,jet0,dR,matching,size,2)==1) result= 2; //W->ud, Z->dd, H->dd
@@ -376,7 +383,9 @@ int GenLoader::ismatchedJet(TLorentzVector jet0, double dR,double &matching, dou
       }
     }
   }
-  std::cout<< result << " isMatched "<<iId << std::endl;
+  //std::cout<< result << " isMatched "<<iId << std::endl;
+  //std::cout<< " matching "<< matching << std::endl;
+  //std::cout<< " size "<< size << std::endl;
   return result;
 }
 int GenLoader::ismatchedSubJet(TLorentzVector subjet0){
