@@ -70,5 +70,10 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_71.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_72.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_73.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_74.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_75.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_76.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_77.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_78.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_8.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12a/JetHTRun2016D_03Feb2017_v1_v3/JetHTRun2016D_03Feb2017_v1_v3_9.root
