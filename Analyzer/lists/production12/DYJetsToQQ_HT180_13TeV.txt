@@ -13,6 +13,8 @@ root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_13TeV/DYJetsToQQ_HT180_13TeV_2.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_13TeV/DYJetsToQQ_HT180_13TeV_20.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_13TeV/DYJetsToQQ_HT180_13TeV_21.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_13TeV/DYJetsToQQ_HT180_13TeV_22.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_13TeV/DYJetsToQQ_HT180_13TeV_23.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_13TeV/DYJetsToQQ_HT180_13TeV_3.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_13TeV/DYJetsToQQ_HT180_13TeV_4.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToQQ_HT180_13TeV/DYJetsToQQ_HT180_13TeV_5.root

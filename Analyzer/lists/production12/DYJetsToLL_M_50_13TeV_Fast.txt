@@ -1,0 +1,16 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_10.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_11.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_12.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_13.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_14.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_15.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_8.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToLL_M_50_13TeV_Fast/DYJetsToLL_M_50_13TeV_Fast_9.root

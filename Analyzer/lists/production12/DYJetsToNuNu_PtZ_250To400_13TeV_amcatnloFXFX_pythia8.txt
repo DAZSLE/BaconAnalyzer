@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/DYJetsToNuNu_PtZ_250To400_13TeV_amcatnloFXFX_pythia8/DYJetsToNuNu_PtZ-250To400_0.root

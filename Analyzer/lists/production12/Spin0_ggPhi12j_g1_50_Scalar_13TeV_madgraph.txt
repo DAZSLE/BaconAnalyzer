@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhi12j_g1_50_Scalar_13TeV_madgraph/Spin0_ggPhi12j_g1_50_Scalar_13TeV_madgraph_0.root

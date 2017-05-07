@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/WGJets_MonoPhoton_PtG_130_13TeV_madgraph/WGJets_MonoPhoton_PtG_130_13TeV_madgraph_0.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/WGJets_MonoPhoton_PtG_130_13TeV_madgraph/WGJets_MonoPhoton_PtG_130_13TeV_madgraph_1.root

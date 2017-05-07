@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/12/Spin0_ggPhibb1j_g1_300_PseudoScalar/Spin0_ggPhibb1j_g1_300_PseudoScalar_0.root
