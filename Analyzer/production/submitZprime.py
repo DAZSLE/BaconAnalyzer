@@ -6,15 +6,15 @@ from optparse import OptionParser
 EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
 samplesDict = {}
 samplesDict['JetHT'] = {
-    'JetHTRun2016B_03Feb2017_ver1_v1': 'rereco',
-    'JetHTRun2016B_03Feb2017_ver2_v2': 'rereco',
-    'JetHTRun2016C_03Feb2017_v1': 'rereco',
-    'JetHTRun2016D_03Feb2017_v1': 'rereco',
-    'JetHTRun2016E_03Feb2017_v1': 'rereco',
-    'JetHTRun2016F_03Feb2017_v1': 'rereco',
-    'JetHTRun2016G_03Feb2017_v1': 'rereco',
-    'JetHTRun2016H_03Feb2017_ver2_v1': 'data',
-    'JetHTRun2016H_03Feb2017_ver3_v1': 'data'
+    'JetHTRun2016B_03Feb2017_ver1_v1_v3': 'rereco',
+    'JetHTRun2016B_03Feb2017_ver2_v2_v3': 'rereco',
+    'JetHTRun2016C_03Feb2017_v1_v3': 'rereco',
+    'JetHTRun2016D_03Feb2017_v1_v3': 'rereco',
+    'JetHTRun2016E_03Feb2017_v1_v3': 'rereco',
+    'JetHTRun2016F_03Feb2017_v1_v3': 'rereco',
+    'JetHTRun2016G_03Feb2017_v1_v3': 'rereco',
+    'JetHTRun2016H_03Feb2017_ver2_v1_v3': 'data',
+    'JetHTRun2016H_03Feb2017_ver3_v1_v3': 'data'
 }
 samplesDict['SingleMuon'] = {
     'SingleMuonRun2016B_03Feb2017_ver1_v1': 'rereco',
