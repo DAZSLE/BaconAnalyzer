@@ -10,18 +10,18 @@ using namespace baconhep;
 VJetLoader::VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS,std::string iAddJetCHS,int iN, bool iData) { 
   fVJets         = new TClonesArray("baconhep::TJet");
   fVAddJets      = new TClonesArray("baconhep::TAddJet");
-  fVJetsCHS      = new TClonesArray("baconhep::TJet");
-  fVAddJetsCHS   = new TClonesArray("baconhep::TAddJet");
+//  fVJetsCHS      = new TClonesArray("baconhep::TJet");
+//  fVAddJetsCHS   = new TClonesArray("baconhep::TAddJet");
 
   iTree->SetBranchAddress(iJet.c_str(),       &fVJets);
   iTree->SetBranchAddress(iAddJet.c_str(),    &fVAddJets);
-  iTree->SetBranchAddress(iJetCHS.c_str(),    &fVJetsCHS);
-  iTree->SetBranchAddress(iAddJetCHS.c_str(), &fVAddJetsCHS);
+//  iTree->SetBranchAddress(iJetCHS.c_str(),    &fVJetsCHS);
+//  iTree->SetBranchAddress(iAddJetCHS.c_str(), &fVAddJetsCHS);
 
   fVJetBr        = iTree->GetBranch(iJet.c_str());
   fVAddJetBr     = iTree->GetBranch(iAddJet.c_str());
-  fVJetBrCHS     = iTree->GetBranch(iJetCHS.c_str());
-  fVAddJetBrCHS  = iTree->GetBranch(iAddJetCHS.c_str());
+//  fVJetBrCHS     = iTree->GetBranch(iJetCHS.c_str());
+//  fVAddJetBrCHS  = iTree->GetBranch(iAddJetCHS.c_str());
 
   fN = iN;
 
@@ -38,10 +38,11 @@ VJetLoader::~VJetLoader() {
   delete fVJetBr;
   delete fVAddJets;
   delete fVAddJetBr;
-  delete fVJetsCHS;
+ /* delete fVJetsCHS;
   delete fVJetBrCHS;
   delete fVAddJetsCHS;
   delete fVAddJetBrCHS;
+  */
 }
 void VJetLoader::reset() { 
   fNLooseVJets        = 0;
@@ -70,8 +71,8 @@ void VJetLoader::resetCHS() {
 void VJetLoader::resetDoubleB() {
   fLooseVJetsByDoubleB.clear();
   selectedVJetsByDoubleB.clear();
-  fLooseVJetsCHSByDoubleB.clear();
-  selectedVJetsCHSByDoubleB.clear();
+  //fLooseVJetsCHSByDoubleB.clear();
+  //selectedVJetsCHSByDoubleB.clear();
 }
 void VJetLoader::resetZprime() {
   fvSize              = -999;
@@ -206,10 +207,11 @@ void VJetLoader::load(int iEvent) {
   fVJetBr      ->GetEntry(iEvent);
   fVAddJets    ->Clear();
   fVAddJetBr   ->GetEntry(iEvent);
-  fVJetsCHS    ->Clear();
+  /*fVJetsCHS    ->Clear();
   fVJetBrCHS   ->GetEntry(iEvent);
   fVAddJetsCHS ->Clear();
   fVAddJetBrCHS->GetEntry(iEvent);
+  */
 }
 void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
   reset();  

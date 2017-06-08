@@ -102,10 +102,10 @@ int main( int argc, char **argv ) {
   fEvt      ->setupTree      (lOut); 
   fVJet8    ->setupTree      (lOut,"AK8Puppijet"); 
   fVJet8    ->setupTreeZprime(lOut,"AK8Puppijet");
-  fVJet8    ->setupTreeCHS   (lOut,"AK8CHSjet");
+  //fVJet8    ->setupTreeCHS   (lOut,"AK8CHSjet");
   fVJet15   ->setupTree      (lOut,"CA15Puppijet");
   fVJet15   ->setupTreeZprime(lOut,"CA15Puppijet");
-  fVJet15   ->setupTreeCHS   (lOut,"CA15CHSjet");
+  //fVJet15   ->setupTreeCHS   (lOut,"CA15CHSjet");
   fJet4     ->setupTree      (lOut,"AK4Puppijet");
   fMuon     ->setupTree      (lOut); 
   fElectron ->setupTree      (lOut); 
@@ -193,7 +193,7 @@ int main( int argc, char **argv ) {
 
 
     // CA15Puppi Jets
-    fVJet15   ->load(i0);
+    /*fVJet15   ->load(i0);
     fVJet15   ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho,fEvt->fRun);
     fVJet15   ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho,fEvt->fRun);
     if(fVJet15->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 4;
@@ -201,29 +201,31 @@ int main( int argc, char **argv ) {
       // Match CA15 Puppi jet with CA15 CHS jet within dR = 1.5
       fVJet15 ->matchJet(fVJet15->selectedVJetsCHS,fVJet15->selectedVJets[i1],1.5,i1);
     }
-      
+    */ 
     // AK8Puppi Jets    
     fVJet8    ->load(i0);
     fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho,fEvt->fRun);
-    fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho,fEvt->fRun);
+    std::cout<<fVJet8->selectedVJets.size()<<std::endl;	
+    //fVJet8    ->selectVJetsCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho,fEvt->fRun);
     if(fVJet8->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 2;
-    for (int i1=0; i1<int(fVJet8->selectedVJets.size()); i1++){
+
+   /* for (int i1=0; i1<int(fVJet8->selectedVJets.size()); i1++){
       // Match AK8 Puppi jet with AK8 CHS jet within dR = 0.8
       fVJet8 ->matchJet(fVJet8->selectedVJetsCHS,fVJet8->selectedVJets[i1],0.8,i1);
     }
     // Match leading AK8 Puppi jet with CA15 Puppi jet within dR = 0.4 (to get pT ratio)
     if(fVJet8->selectedVJets.size()>0) fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4);
-    
+   */ 
     // computing AK8Puppi Jets pT > 500, sorted by double b-tag -> hold off for now
     //fVJet8    ->selectVJetsByDoubleBCHS(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho);
       
     // AK4Puppi Jets
-    fJet4     ->load(i0); 
-    fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho,fEvt->fRun);
+    //fJet4     ->load(i0); 
+    //fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho,fEvt->fRun);
 
     // Select at least one AK8 or one CA15 jet
-    if(!(fEvt->fselectBits & 2) || !(fEvt->fselectBits & 4)) continue;
-    if((fVJet8->selectedVJets[0].Pt() < 200) || (fVJet15->selectedVJets[0].Pt() < 200)) continue;
+    if(!(fEvt->fselectBits & 2)) continue; // || !(fEvt->fselectBits & 4)) continue;
+    if((fVJet8->selectedVJets[0].Pt() < 200)) continue; // || (fVJet15->selectedVJets[0].Pt() < 200)) continue;
 
     // TTbar, EWK and kFactor correction
     if(lName.find("ZJets")!=std::string::npos || lName.find("DYJets")!=std::string::npos){
