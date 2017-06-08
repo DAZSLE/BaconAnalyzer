@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/RSGravitonToQuarkQuark_kMpl01_M_9000_13TeV_pythia8/RSGravitonToQuarkQuark_kMpl01_M_9000_TuneCUETP8M1_13TeV_pythia8/CRAB3/170608_015150/0000/Output_1.root

@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-3000_13TeV-madgraph/CRAB3/170608_014418/0000/Output_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-3000_13TeV-madgraph/CRAB3/170608_014418/0000/Output_3.root
