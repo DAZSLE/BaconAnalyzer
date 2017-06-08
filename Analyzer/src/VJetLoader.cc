@@ -78,7 +78,7 @@ void VJetLoader::resetZprime() {
   fvSize              = -999;
   fvMatching          = -999;
   fisHadronicV        = 0;
-  fRatioPt =0;
+  //fRatioPt =0;
 }
 void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel) { 
   reset();
@@ -206,7 +206,8 @@ void VJetLoader::setupTreeZprime(TTree *iTree, std::string iJetLabel) {
   std::stringstream pSnC;   pSnC << iJetLabel << "0_nCharged";
   std::stringstream pSnN;   pSnN << iJetLabel << "0_nNeutrals";
   std::stringstream pSnP;   pSnP << iJetLabel << "0_nParticles";
-  std::stringstream pSratio; pSratio << iJetLabel << "0_ratioCA15_04";
+  std::stringstream pSvF;   pSvF << iJetLabel << "0_vertexFlavor"; 
+  std::stringstream pSvFI;   pSvFI << iJetLabel << "0_vertexFlavorInfo";
 
   fTree = iTree;
   fTree->Branch(pSiV.str().c_str() ,&fisHadronicV         ,(pSiV.str()+"/I").c_str());
@@ -217,7 +218,8 @@ void VJetLoader::setupTreeZprime(TTree *iTree, std::string iJetLabel) {
   fTree->Branch(pSnC.str().c_str() ,&fnCharged            ,(pSnC.str()+"/I").c_str());
   fTree->Branch(pSnN.str().c_str() ,&fnNeutrals           ,(pSnN.str()+"/I").c_str());
   fTree->Branch(pSnP.str().c_str() ,&fnParticles          ,(pSnP.str()+"/I").c_str());
-  fTree->Branch(pSratio.str().c_str() ,&fRatioPt          ,(pSratio.str()+"/D").c_str());
+  fTree->Branch(pSvF.str().c_str() ,&fnVtxFlavor          ,(pSvF.str()+"/I").c_str());
+  fTree->Branch(pSvFI.str().c_str() ,&fnVtxFlavInfo, (pSvFI.str()+"/I").c_str());
 }
 void VJetLoader::setupTreeCHS(TTree *iTree, std::string iJetLabel) {
   resetCHS();  
@@ -582,13 +584,6 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     iVals[lBase+i0*lNLabel+72] = pAddJet->tau_flightDistance2dSig_1;
     iVals[lBase+i0*lNLabel+73] = pAddJet->SubJet_csv;
     iVals[lBase+i0*lNLabel+74] = pAddJet->z_ratio;
-    iVals[lBase+i0*lNLabel+68] = pAddJet->flavour;
-    iVals[lBase+i0*lNLabel+69] = pAddJet->nbHadrons;
-    iVals[lBase+i0*lNLabel+70] = pAddJet->nSV;
-    iVals[lBase+i0*lNLabel+71] = pAddJet->jetNTracks;
-    iVals[lBase+i0*lNLabel+72] = pAddJet->tau_flightDistance2dSig_1;
-    iVals[lBase+i0*lNLabel+73] = pAddJet->SubJet_csv;
-    iVals[lBase+i0*lNLabel+74] = pAddJet->z_ratio;
     iVals[lBase+i0*lNLabel+75] = pAddJet->trackSipdSig_3;
     iVals[lBase+i0*lNLabel+76] = pAddJet->trackSipdSig_2;
     iVals[lBase+i0*lNLabel+77] = pAddJet->trackSipdSig_1;
@@ -619,6 +614,8 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     fnCharged       = iObjects[0]->nCharged;
     fnNeutrals      = iObjects[0]->nNeutrals;
     fnParticles     = iObjects[0]->nParticles;
+    fnVtxFlavor     = iObjects[0]->vtxFlavor;
+    fnVtxFlavInfo   = iObjects[0]->vtxFlavInfo;
 
   }
 }
@@ -656,7 +653,7 @@ void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJe
   }
 }
 
-void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR){
+/*void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR){
   TLorentzVector iJet1;
   int nmatched(0);
   float mindR = dR;  
@@ -671,6 +668,7 @@ void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector i
     fRatioPt = iJet2.Pt()/iJet1.Pt();
   }
 }
+*/
 void VJetLoader::fillVJetCHS(TJet *iJet, int jIndex){
   TAddJet *pAddJet = getAddJetCHS(iJet);
   fdoublecsvCHS[jIndex] = double(pAddJet->doublecsv);

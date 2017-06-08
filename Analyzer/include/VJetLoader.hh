@@ -51,10 +51,10 @@ public:
   TAddJet *getAddJet(TJet *iJet);
   TAddJet *getAddJetCHS(TJet *iJet);
 
-  double fvSize, fvMatching,fRatioPt;
+  double fvSize, fvMatching;
   int fisHadronicV;
   std::vector<int> fisTightVJet, fisTightVJetCHS;
-  int fpartonFlavor, fhadronFlavor, fnbHadrons, fncHadrons, fnCharged, fnNeutrals, fnParticles;
+  int fpartonFlavor, fhadronFlavor, fnbHadrons, fncHadrons, fnCharged, fnNeutrals, fnParticles, fnVtxFlavor,fnVtxFlavInfo;
 
   std::vector<TJet*> fLooseVJets, fLooseVJetsCHS;
   std::vector<TLorentzVector> selectedVJets, selectedVJetsCHS;
