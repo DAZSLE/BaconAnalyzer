@@ -443,15 +443,23 @@ bool passTauSel(const baconhep::TTau *tau)
 //--------------------------------------------------------------------------------------------------
 bool passVeto(double iEta,double iPhi,double idR, std::vector<TLorentzVector> &iVetoes) { 
   bool pMatch = false;
+  double idR2 = idR * idR;
   for(unsigned int i1 = 0; i1 < iVetoes.size(); i1++) { 
     double pDEta = iEta - iVetoes[i1].Eta();
     double pDPhi = iPhi - iVetoes[i1].Phi();
     if(fabs(pDPhi) > 2.*TMath::Pi()-fabs(pDPhi)) pDPhi =  2.*TMath::Pi()-fabs(pDPhi);
-    if(sqrt(pDPhi*pDPhi+pDEta*pDEta) > idR) continue;
+    if(pDPhi*pDPhi+pDEta*pDEta > idR2) continue;
     if(iVetoes[i1].Pt() < 0) continue;
     pMatch = true;
   }
   return pMatch;
+}
+//--------------------------------------------------------------------------------------------------
+double deltaR2(double iEta, double iPhi, double jEta, double jPhi) { 
+  double pDEta = iEta - jEta;
+  double pDPhi = iPhi - jPhi;
+  if(fabs(pDPhi) > 2.*TMath::Pi()-fabs(pDPhi)) pDPhi =  2.*TMath::Pi()-fabs(pDPhi);
+  return pDPhi*pDPhi + pDEta*pDEta;
 }
 //--------------------------------------------------------------------------------------------------
 void setupNtuple(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals) {

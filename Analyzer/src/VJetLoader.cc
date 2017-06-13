@@ -10,16 +10,19 @@ using namespace baconhep;
 VJetLoader::VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS,std::string iAddJetCHS,int iN, bool iData) { 
   fVJets         = new TClonesArray("baconhep::TJet");
   fVAddJets      = new TClonesArray("baconhep::TAddJet");
+  fGens         = new TClonesArray("baconhep::TGenParticle");
 //  fVJetsCHS      = new TClonesArray("baconhep::TJet");
 //  fVAddJetsCHS   = new TClonesArray("baconhep::TAddJet");
 
   iTree->SetBranchAddress(iJet.c_str(),       &fVJets);
   iTree->SetBranchAddress(iAddJet.c_str(),    &fVAddJets);
+  iTree->SetBranchAddress("GenParticle", &fGens);
 //  iTree->SetBranchAddress(iJetCHS.c_str(),    &fVJetsCHS);
 //  iTree->SetBranchAddress(iAddJetCHS.c_str(), &fVAddJetsCHS);
 
   fVJetBr        = iTree->GetBranch(iJet.c_str());
   fVAddJetBr     = iTree->GetBranch(iAddJet.c_str());
+  fGenBr         = iTree->GetBranch("GenParticle");
 //  fVJetBrCHS     = iTree->GetBranch(iJetCHS.c_str());
 //  fVAddJetBrCHS  = iTree->GetBranch(iAddJetCHS.c_str());
 
@@ -38,6 +41,8 @@ VJetLoader::~VJetLoader() {
   delete fVJetBr;
   delete fVAddJets;
   delete fVAddJetBr;
+  delete fGens;
+  delete fGenBr;
  /* delete fVJetsCHS;
   delete fVJetBrCHS;
   delete fVAddJetsCHS;
@@ -129,7 +134,8 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fLabels.push_back("D2sdb1");
   fLabels.push_back("D2sdb2");
   fLabels.push_back("N2b1");
-  fLabels.push_back("N2b2");
+  fLabels.push_back
+      ("N2b2");
   fLabels.push_back("M2b1");
   fLabels.push_back("M2b2");
   fLabels.push_back("D2b1");
@@ -181,6 +187,7 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fLabels.push_back("tau_flightDistance2dSig_0");
   fLabels.push_back("tau_vertexMass_1");
   fLabels.push_back("tau_vertexEnergyRatio_1");
+  fLabels.push_back("nProngs");
 
 
   std::stringstream pSNJ;   pSNJ << "n" << iJetLabel << "s";
@@ -257,6 +264,8 @@ void VJetLoader::load(int iEvent) {
   fVAddJetsCHS ->Clear();
   fVAddJetBrCHS->GetEntry(iEvent);
   */
+  fGens        ->Clear();
+  fGenBr       ->GetEntry(iEvent);
 }
 void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
   reset();  
@@ -272,9 +281,9 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
     vPJet.SetPtEtaPhiM(pVJet->ptRaw, pVJet->eta, pVJet->phi, (pVJet->mass)/JEC_old);
     double jetE = vPJet.E();
     double JEC = JetEnergyCorrectionFactor(pVJet->ptRaw, pVJet->eta, pVJet->phi, jetE, 
-    					   iRho, pVJet->area, 
-    					   runNum,
-   					   JetCorrectionsIOV,JetCorrector);
+                 iRho, pVJet->area, 
+                 runNum,
+                JetCorrectionsIOV,JetCorrector);
     double jetCorrPt = JEC*(pVJet->ptRaw);
     double jetCorrE = JEC*(vPJet.E());
     JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, pVJet->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
@@ -333,7 +342,7 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
   fNTightVJets = lCountT;
 
   fillJetCorr( fN,fLooseVJets,fVars,iRho,runNum);
-  fillVJet(fN,fLooseVJets,fVars,iRho,runNum);
+  fillVJet(fN,fLooseVJets,fVars,dR,iRho,runNum);
 }
 void VJetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum){ 
   int lMin = iObjects.size();
@@ -346,9 +355,9 @@ void VJetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<dou
     vPJet.SetPtEtaPhiM(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, (iObjects[i0]->mass)/JEC_old);
     double jetE = vPJet.E();
     double JEC = JetEnergyCorrectionFactor(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, jetE, 
-    					   iRho, iObjects[i0]->area, 
-    					   runNum,
-   					   JetCorrectionsIOV,JetCorrector);    
+                 iRho, iObjects[i0]->area, 
+                 runNum,
+                JetCorrectionsIOV,JetCorrector);    
     double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
     double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default    
     double x1 = x1List[i0];
@@ -365,6 +374,10 @@ void VJetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<dou
     iVals[i0*3+2] = iObjects[i0]->phi;
   }
 }
+
+void VJetLoader::countVJetProngs(double dR) {
+}
+
 void VJetLoader::selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
   // first do Puppi jets (pT > 500 GeV)
   resetDoubleB(); 
@@ -440,7 +453,7 @@ void VJetLoader::selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::ve
   fNLooseVJetsCHS = lCount;
   fNTightVJetsCHS = lCountT;
 }
-void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum){ 
+void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double dR, double iRho, unsigned int runNum){ 
   int lBase = 3.*fN;
   int lMin = iObjects.size();
   int lNLabel = int(fLabels.size());
@@ -458,9 +471,9 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     double jetE = vPJet.E();
     
     double JEC = JetEnergyCorrectionFactor(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, jetE, 
-    					   iRho, iObjects[i0]->area, 
-    					   runNum,
-   					   JetCorrectionsIOV,JetCorrector);
+                 iRho, iObjects[i0]->area, 
+                 runNum,
+                JetCorrectionsIOV,JetCorrector);
     double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
     
     double unc_old = iObjects[i0]->unc;
@@ -608,6 +621,26 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     iVals[lBase+i0*lNLabel+96] = pAddJet->tau_vertexMass_1;
     iVals[lBase+i0*lNLabel+97] = pAddJet->tau_vertexEnergyRatio_1;
 
+    unsigned nG = fGens->GetEntriesFast();
+    unsigned nP = 0;
+    double dR2 = dR * dR;
+    for (unsigned iG = 0; iG != nG; ++iG) {
+      TGenParticle *part = (TGenParticle*)((*fGens)[iG]);
+      unsigned apdgid = abs(part->pdgId);
+      if (apdgid > 5 &&
+          apdgid != 21 &&
+          apdgid != 15 &&
+          apdgid != 11 &&
+          apdgid != 13) 
+        continue;
+      if (part->pt < 30)
+        continue;
+      if (deltaR2(iObjects[i0]->eta, iObjects[i0]->phi, part->eta, part->phi) > dR2)
+        continue;
+      ++nP;
+    }  
+    iVals[lBase+i0*lNLabel+98] = nP;
+
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
     fhadronFlavor   = iObjects[0]->hadronFlavor;
@@ -628,7 +661,7 @@ int VJetLoader::getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLoren
       nmatched++;
       iJet1 = iJets1[i0];
       iJet1id = i0;
-      mindR= iJets1[i0].DeltaR(iJet2);	
+      mindR= iJets1[i0].DeltaR(iJet2);  
     }
   }
   if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){    
@@ -645,7 +678,7 @@ void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJe
       nmatched++;
       iJet1 = iJets1[i0];
       iJet1id = i0;
-      mindR= iJets1[i0].DeltaR(iJet2);	
+      mindR= iJets1[i0].DeltaR(iJet2);  
     }
   }
   if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){
@@ -901,12 +934,12 @@ double VJetLoader::getJecUnc( float pt, float eta , int run) {
 
 //Jet Energy Corrections
 double VJetLoader::JetEnergyCorrectionFactor( double jetRawPt, double jetEta, double jetPhi, double jetE,
-						 double rho, double jetArea,
-						 int run,
-						 std::vector<std::pair<int,int> > JetCorrectionsIOV,
-						 std::vector<FactorizedJetCorrector*> jetcorrector,
-						 int jetCorrectionLevel,
-						 bool printDebug) {
+             double rho, double jetArea,
+             int run,
+             std::vector<std::pair<int,int> > JetCorrectionsIOV,
+             std::vector<FactorizedJetCorrector*> jetcorrector,
+             int jetCorrectionLevel,
+             bool printDebug) {
 
   int foundIndex = -1;
   for (uint i=0; i<JetCorrectionsIOV.size(); i++) {
@@ -954,10 +987,10 @@ double VJetLoader::JetEnergyCorrectionFactor( double jetRawPt, double jetEta, do
 
 //Jet Energy Corrections
 double VJetLoader::JetEnergyCorrectionFactor( double jetRawPt, double jetEta, double jetPhi, double jetE,
-						 double rho, double jetArea,
-						 FactorizedJetCorrector *jetcorrector,
-						 int jetCorrectionLevel,
-						 bool printDebug) {
+             double rho, double jetArea,
+             FactorizedJetCorrector *jetcorrector,
+             int jetCorrectionLevel,
+             bool printDebug) {
   if (!jetcorrector) {
     std::cout << "WWARNING: Jet corrector pointer is null. Returning JEC = 0. \n";
     return 0;

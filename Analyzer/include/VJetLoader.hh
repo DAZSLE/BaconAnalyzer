@@ -42,7 +42,8 @@ public:
   void selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);
   void selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);  
   void selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);
-  void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum);
+  void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals,double dR, double iRho, unsigned int runNum);
+  void countVJetProngs(double dR);
   int getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
   void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex);
   void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
@@ -92,11 +93,14 @@ protected:
   TBranch      *fVJetBrCHS;
   TClonesArray *fVAddJetsCHS;
   TBranch      *fVAddJetBrCHS;
+  TClonesArray *fGens;
+  TBranch      *fGenBr;
 
   TTree        *fTree;
 
   int           fNLooseVJets, fNLooseVJetsCHS;
   int           fNTightVJets, fNTightVJetsCHS;
+  int           fNProngs;
 
   std::vector<double> fVars, fVarsZprime;
   std::vector<std::string> fLabels, fLabelsZprime;
