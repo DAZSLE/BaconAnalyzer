@@ -4,6 +4,7 @@
 
 #include <string>
 #include <sstream>
+#include <unordered_set>
 
 using namespace baconhep;
 
@@ -624,6 +625,8 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     unsigned nG = fGens->GetEntriesFast();
     unsigned nP = 0;
     double dR2 = dR * dR;
+    double threshold = 0.2 * iObjects[i0]->pt;
+    std::unordered_set<TGenParticle*> partons; // avoid double-counting
     for (unsigned iG = 0; iG != nG; ++iG) {
       TGenParticle *part = (TGenParticle*)((*fGens)[iG]);
       unsigned apdgid = abs(part->pdgId);
@@ -633,10 +636,24 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
           apdgid != 11 &&
           apdgid != 13) 
         continue;
-      if (part->pt < 30)
+
+      TGenParticle *parent = part;
+      bool foundParent = false;
+      while (parent->parent > 0) {
+        parent = (TGenParticle*)((*fGens)[parent->parent]);
+        if (partons.find(parent) != partons.end()) {
+          foundParent = true;
+          break;
+        }
+      }
+      if (foundParent)
+        continue;
+
+      if (part->pt < threshold)
         continue;
       if (deltaR2(iObjects[i0]->eta, iObjects[i0]->phi, part->eta, part->phi) > dR2)
         continue;
+      partons.insert(part);
       ++nP;
     }  
     iVals[lBase+i0*lNLabel+98] = nP;
