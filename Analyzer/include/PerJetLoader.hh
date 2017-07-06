@@ -99,7 +99,7 @@ protected:
   int           fNProngs;
 
   std::map<std::string,float> fSingletons; 
-	std::map<std::string,float*> fCPFArrs, fNPFArrs, fSVArrs;
+	std::map<std::string,float*> fCPFArrs, fIPFArrs, fSVArrs;
   std::vector<std::string> fTrigString;
 
   int           fN;
