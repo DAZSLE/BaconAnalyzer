@@ -6,7 +6,9 @@
 #include <sstream>
 #include <unordered_set>
 
-#define NARR 50
+#define NCPF 50
+#define NNPF 50
+#define NSV 5
 
 using namespace baconhep;
 
@@ -14,20 +16,14 @@ PerJetLoader::PerJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std
   fVJets         = new TClonesArray("baconhep::TJet");
   fVAddJets      = new TClonesArray("baconhep::TAddJet");
   fGens         = new TClonesArray("baconhep::TGenParticle");
-//  fVJetsCHS      = new TClonesArray("baconhep::TJet");
-//  fVAddJetsCHS   = new TClonesArray("baconhep::TAddJet");
 
   iTree->SetBranchAddress(iJet.c_str(),       &fVJets);
   iTree->SetBranchAddress(iAddJet.c_str(),    &fVAddJets);
   iTree->SetBranchAddress("GenParticle", &fGens);
-//  iTree->SetBranchAddress(iJetCHS.c_str(),    &fVJetsCHS);
-//  iTree->SetBranchAddress(iAddJetCHS.c_str(), &fVAddJetsCHS);
 
   fVJetBr        = iTree->GetBranch(iJet.c_str());
   fVAddJetBr     = iTree->GetBranch(iAddJet.c_str());
   fGenBr         = iTree->GetBranch("GenParticle");
-//  fVJetBrCHS     = iTree->GetBranch(iJetCHS.c_str());
-//  fVAddJetBrCHS  = iTree->GetBranch(iAddJetCHS.c_str());
 
   fN = iN;
 
@@ -39,6 +35,7 @@ PerJetLoader::PerJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std
   const std::string cmssw_base = getenv("CMSSW_BASE");
   std::string cmssw_base_env = "${CMSSW_BASE}";
 }
+
 PerJetLoader::~PerJetLoader() { 
   delete fVJets;
   delete fVJetBr;
@@ -46,12 +43,14 @@ PerJetLoader::~PerJetLoader() {
   delete fVAddJetBr;
   delete fGens;
   delete fGenBr;
- /* delete fVJetsCHS;
-  delete fVJetBrCHS;
-  delete fVAddJetsCHS;
-  delete fVAddJetBrCHS;
-  */
+  for (auto &iter : fCPFArrs) 
+    delete iter.second;
+  for (auto &iter : fNPFArrs) 
+    delete iter.second;
+  for (auto &iter : fSVArrs) 
+    delete iter.second;
 }
+
 void PerJetLoader::reset() { 
   fNLooseVJets        = 0;
   fNTightVJets        = 0;  
@@ -61,39 +60,41 @@ void PerJetLoader::reset() {
   x1List.clear();
   x2List.clear();
   x3List.clear();    
-  for(unsigned int i0 = 0; i0 < fVars.size(); i0++) fVars[i0] = 0;
+  for (auto &iter : fSingletons) {
+    fSingletons[iter.first] = 0;
+  }
+  for (auto &iter : fCPFArrs) {
+    for (unsigned i = 0; i != NCPF; ++i) 
+      fCPFArrs[iter.first][i] = 0;
+  }
+  for (auto &iter : fNPFArrs) {
+    for (unsigned i = 0; i != NNPF; ++i) 
+      fNPFArrs[iter.first][i] = 0;
+  }
+  for (auto &iter : fSVArrs) {
+    for (unsigned i = 0; i != NSV; ++i) 
+      fSVArrs[iter.first][i] = 0;
+  }
   resetZprime();  
 }
-void PerJetLoader::resetCHS() {
-  fNLooseVJetsCHS     = 0;
-  fNTightVJetsCHS     = 0;
-  for(int i0 = 0; i0 < int(fisTightVJetCHS.size()); i0++) fisTightVJetCHS[i0] = -999;
-  selectedVJetsCHS.clear();
-  fLooseVJetsCHS.clear();
-  fdoublecsvCHS.clear();
-  fdoublesubCHS.clear();
-  fptCHS.clear();
-  fetaCHS.clear();
-  fphiCHS.clear();
-}
-void PerJetLoader::resetDoubleB() {
-  fLooseVJetsByDoubleB.clear();
-  selectedVJetsByDoubleB.clear();
-  //fLooseVJetsCHSByDoubleB.clear();
-  //selectedVJetsCHSByDoubleB.clear();
-}
+
 void PerJetLoader::resetZprime() {
   fvSize              = -999;
   fvMatching          = -999;
   fisHadronicV        = 0;
-  //fRatioPt =0;
 }
+
 void PerJetLoader::setupTree(TTree *iTree, std::string iJetLabel) { 
   reset();
 
   fSingletons.clear();
-  fArrays.clear();
+  fCPFArrs.clear();
+  fNPFArrs.clear();
+  fSVArrs.clear();
 
+  fSingletons["pt"] = 0;
+  fSingletons["eta"] = 0;
+  fSingletons["phi"] = 0;
   fSingletons["mass"] = 0;
   fSingletons["csv"] = 0;
   fSingletons["CHF"] = 0;
@@ -194,21 +195,35 @@ void PerJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fSingletons["tau_vertexEnergyRatio_1"] = 0;
   fSingletons["nProngs"] = 0;
 
-  fArrays["cpfPt"] = new float[NARR]; // example - add more
+  fCPFArrs["cpfPt"] = new float[NCPF]; // example - add more
 
   fTree = iTree;
 
   for (auto &iter : fSingletons) {
     std::stringstream bname;
     bname << iJetLabel << "_" << iter.first;
-    fTree->Branch(bname.str().c_str(), &(iter.second), (bname+"/f").c_str());
+    fTree->Branch(bname.str().c_str(), &(iter.second), (bname.str()+"/f").c_str());
   }
-  for (auto &iter : fArrays) {
+  for (auto &iter : fCPFArrs) {
     std::stringstream bname;
     bname << iJetLabel << "_" << iter.first;
     std::stringstream bname2;
-    bname2 << bname << "[" << NARR << "]/f";
-    fTree->Branch(bname.str().c_str(), &(iter.second), (bname+"/f").c_str());
+    bname2 << bname.str() << "[" << NCPF << "]/f";
+    fTree->Branch(bname.str().c_str(), &(iter.second), bname2.str().c_str());
+  }
+  for (auto &iter : fNPFArrs) {
+    std::stringstream bname;
+    bname << iJetLabel << "_" << iter.first;
+    std::stringstream bname2;
+    bname2 << bname.str() << "[" << NNPF << "]/f";
+    fTree->Branch(bname.str().c_str(), &(iter.second), bname2.str().c_str());
+  }
+  for (auto &iter : fSVArrs) {
+    std::stringstream bname;
+    bname << iJetLabel << "_" << iter.first;
+    std::stringstream bname2;
+    bname2 << bname.str() << "[" << NSV << "]/f";
+    fTree->Branch(bname.str().c_str(), &(iter.second), bname2.str().c_str());
   }
 
 }
@@ -248,7 +263,13 @@ void PerJetLoader::load(int iEvent) {
   fGenBr       ->GetEntry(iEvent);
 }
 
-void PerJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
+void PerJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, 
+                               std::vector<TLorentzVector> &iMuons, 
+                               std::vector<TLorentzVector> &iPhotons, 
+                               double dR, 
+                               double iRho, 
+                               unsigned int runNum)
+{
   reset();  
   int lCount(0), lCountT(0);
   for  (int i0 = 0; i0 < fVJets->GetEntriesFast(); i0++) { 
@@ -322,15 +343,25 @@ void PerJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vec
   fNLooseVJets = lCount;
   fNTightVJets = lCountT;
 
-  fillJetCorr( fN,fLooseVJets,fVars,iRho,runNum,fillEach);
-  fillVJet(fN,fLooseVJets,fVars,dR,iRho,runNum,fillEach);
+  fillVJet(fN,fLooseVJets,dR,iRho,runNum);
 }
 
-void PerJetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum, bool fillEach){ 
+
+void PerJetLoader::fillVJet(int iN,
+                            std::vector<TJet*> &iObjects,
+                            double dR, 
+                            double iRho, 
+                            unsigned int runNum)
+{ 
+  int lBase = 3.*fN;
   int lMin = iObjects.size();
   if(iN < lMin) lMin = iN;
-  
-  for(int i0 = 0; i0 < lMin; i0++) {
+  for(int i0 = 0; i0 < lMin; i0++) { 
+    
+    //JEC    
+    double x1 = x1List[i0];
+    double x2 = x2List[i0];
+    double x3 = x3List[i0];
     
     double JEC_old = (iObjects[i0]->pt)/(iObjects[i0]->ptRaw);
     TLorentzVector vPJet;
@@ -342,269 +373,128 @@ void PerJetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<d
                 JetCorrectionsIOV,JetCorrector);    
     double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
     double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default    
-    double x1 = x1List[i0];
-    double jetEnergySmearFactor = 1.0;    
     JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
     float sigma_MC = resolution.getResolution(parameters);
     float sf = resolution_sf.getScaleFactor(parameters);    
-    if (!isData) {      
-      jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-    }    
-    double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
-    unsigned fillIdx = fillEach ? 0 : i0;
-    iVals[fillIdx*3+0] = jetCorrPtSmear;
-    iVals[fillIdx*3+1] = iObjects[i0]->eta;
-    iVals[fillIdx*3+2] = iObjects[i0]->phi;
-  }
-}
-
-void PerJetLoader::countVJetProngs(double dR) {
-}
-
-void PerJetLoader::selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
-  // first do Puppi jets (pT > 500 GeV)
-  resetDoubleB(); 
-  for  (int i0 = 0; i0 < fVJets->GetEntriesFast(); i0++) { 
-    TJet *pVJet = (TJet*)((*fVJets)[i0]);
-    if(pVJet->pt        <=  500)                                           continue;
-    if(fabs(pVJet->eta) >=  2.5)                                           continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-    if(!passJetLooseSel(pVJet))                                            continue;
-    addJet(pVJet,fLooseVJetsByDoubleB);
-    if(!passJetTightLepVetoSel(pVJet))                                     continue;
-  }
-  addVJet(fLooseVJetsByDoubleB,selectedVJetsByDoubleB);
-
-  // now do CHS jets (pT > 400 GeV)
-  for  (int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
-    TJet *pVJet = (TJet*)((*fVJetsCHS)[i0]);
-    if(pVJet->pt        <=  400)                                           continue;
-    if(fabs(pVJet->eta) >=  2.5)                                           continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-    if(!passJetLooseSel(pVJet))                                            continue;
-    addJet(pVJet,fLooseVJetsCHSByDoubleB);
-    if(!passJetTightLepVetoSel(pVJet))                                     continue;
-  }
-  addVJet(fLooseVJetsCHSByDoubleB,selectedVJetsCHSByDoubleB);
-  
-  std::vector<int> indexCHS;
-  std::vector<double> doubleBCHS;
-  for (int i0 = 0; i0 < int(selectedVJetsByDoubleB.size()); i0++) {    
-    int iCHSJet = -999;
-    double dbCHSJet = -999;
-    iCHSJet = getMatchedCHSJetIndex(selectedVJetsCHSByDoubleB,selectedVJetsByDoubleB[i0],0.8);
-    if (iCHSJet > -999) {
-      //selectedVJetsCHS[iCHSJet];      
-      TAddJet *pAddJetCHS = getAddJetCHS(fLooseVJetsCHSByDoubleB[iCHSJet]);  
-      dbCHSJet = pAddJetCHS->doublecsv;      
-    }
-    std::cout << "index CHS    = " << iCHSJet << std::endl;
-    std::cout << "double-b CHS = " << dbCHSJet << std::endl;
-    indexCHS.push_back(iCHSJet);
-    doubleBCHS.push_back(dbCHSJet);
-  }
-
-  
-}
-void PerJetLoader::selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
-  resetCHS();
-  int lCount(0), lCountT(0);
-  for  (int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
-    TJet *pVJet = (TJet*)((*fVJetsCHS)[i0]);
-    if(pVJet->pt        <=  150)                                           continue;
-    if(fabs(pVJet->eta) >=  2.5)                                           continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-    if(!passJetLooseSel(pVJet))                                            continue;
-    addJet(pVJet,fLooseVJetsCHS);
-    lCount++;
-
-    if(!passJetTightLepVetoSel(pVJet))                                     continue;
-    lCountT++;
-  }
-  addVJet(fLooseVJetsCHS,selectedVJetsCHS);
-
-  
-  for  (int i0 = 0; i0 < int(selectedVJetsCHS.size()); i0++) { 
-    if(passJetTightLepVetoSel(fLooseVJetsCHS[i0])) fisTightVJetCHS[i0] = 1;
-  }
-  fNLooseVJetsCHS = lCount;
-  fNTightVJetsCHS = lCountT;
-}
-void PerJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double dR, double iRho, unsigned int runNum, bool fillEach){ 
-  int lBase = 3.*fN;
-  int lMin = iObjects.size();
-  int lNLabel = int(fLabels.size());
-  if(iN < lMin) lMin = iN;
-  for(int i0 = 0; i0 < lMin; i0++) { 
-    TAddJet *pAddJet = getAddJet(iObjects[i0]);
-    //JEC    
-    double x1 = x1List[i0];
-    double x2 = x2List[i0];
-    double x3 = x3List[i0];
-    
-    double JEC_old = (iObjects[i0]->pt)/(iObjects[i0]->ptRaw);
-    TLorentzVector vPJet;
-    vPJet.SetPtEtaPhiM(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, (iObjects[i0]->mass)/JEC_old);
-    double jetE = vPJet.E();
-    
-    double JEC = JetEnergyCorrectionFactor(iObjects[i0]->ptRaw, iObjects[i0]->eta, iObjects[i0]->phi, jetE, 
-                 iRho, iObjects[i0]->area, 
-                 runNum,
-                JetCorrectionsIOV,JetCorrector);
-    double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
-    
-    double unc_old = iObjects[i0]->unc;
-    double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default
-    
-    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
-    float sigma_MC = resolution.getResolution(parameters);
-    float sf = resolution_sf.getScaleFactor(parameters);
     float sfUp = resolution_sf.getScaleFactor(parameters, Variation::UP);
     float sfDown = resolution_sf.getScaleFactor(parameters, Variation::DOWN);
 
-    
     double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
     double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
     double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
-    
     
     double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
     double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
     double jetPtJERDown = jetCorrPt*jetEnergySmearFactorDown;
-    /*
-    if (true){
-      std::cout << "VJet" << std::endl;
-      std::cout << "i0 =" << i0 << std::endl;
-      std::cout << "ptraw = " << iObjects[i0]->ptRaw << std::endl;
-      std::cout << "eta = " << iObjects[i0]->eta << std::endl;
-      std::cout << "rho = " << iRho << std::endl;
-      std::cout << "runNum = " << runNum << std::endl;
-      std::cout << "sf = " << sf << ", " <<  sfUp << ", " << sfDown << std::endl;
-      std::cout << "sigma_MC = " << sigma_MC << std::endl;    
-      std::cout << "runNum = " << runNum << std::endl;
-      std::cout << "unc_old = " << unc_old << std::endl;
-      std::cout << "unc = " << unc << std::endl;
-      std::cout << "JEC_old = " << JEC_old << std::endl;
-      std::cout << "JEC = " << JEC << std::endl;
-      std::cout << "x1 = " << x1 << std::endl;
-      std::cout << "x2 = " << x2 << std::endl;
-      std::cout << "x3 = " << x3 << std::endl;
-      std::cout << "ptcorr = " << jetCorrPt << std::endl;
-      std::cout << "ptcorrsmear = " << jetCorrPtSmear << std::endl;
-      std::cout << "jesup = " << jetPtJESUp << std::endl;
-      std::cout << "jesdown = " << jetPtJESDown << std::endl;
-      std::cout << "jerup = " << jetPtJERUp << std::endl;
-      std::cout << "jerdown = " << jetPtJERDown << std::endl;
-    }
-    */    
-    unsigned fillIdx = fillEach ? 0 : i0;
 
-    iVals[lBase+fillIdx*lNLabel+0]  = JEC*jetEnergySmearFactor*(iObjects[i0]->mass);
-    iVals[lBase+fillIdx*lNLabel+1]  = iObjects[i0]->csv;
-    iVals[lBase+fillIdx*lNLabel+2]  = iObjects[i0]->chHadFrac;
-    iVals[lBase+fillIdx*lNLabel+3]  = iObjects[i0]->neuHadFrac;
-    iVals[lBase+fillIdx*lNLabel+4]  = iObjects[i0]->neuEmFrac;
-    iVals[lBase+fillIdx*lNLabel+5]  = (pAddJet->tau2/pAddJet->tau1);
-    iVals[lBase+fillIdx*lNLabel+6]  = (pAddJet->tau3/pAddJet->tau2);
-    iVals[lBase+fillIdx*lNLabel+7]  = pAddJet->mass_sd0;
-    iVals[lBase+fillIdx*lNLabel+8]  = log((pAddJet->mass_sd0*pAddJet->mass_sd0)/iObjects[i0]->pt);
-    iVals[lBase+fillIdx*lNLabel+9]  = TMath::Min(pAddJet->sj1_csv,pAddJet->sj2_csv);
-    iVals[lBase+fillIdx*lNLabel+10] = TMath::Max(TMath::Max(pAddJet->sj1_csv,pAddJet->sj2_csv),TMath::Max(pAddJet->sj3_csv,pAddJet->sj4_csv));
-    iVals[lBase+fillIdx*lNLabel+11] = pAddJet->doublecsv;
-    iVals[lBase+fillIdx*lNLabel+12] = pAddJet->Double_sub;
-    iVals[lBase+fillIdx*lNLabel+13] = iObjects[i0]->ptRaw;
-    iVals[lBase+fillIdx*lNLabel+14] = iObjects[i0]->genpt;
-    iVals[lBase+fillIdx*lNLabel+15] = pAddJet->e2_b1;
-    iVals[lBase+fillIdx*lNLabel+16] = pAddJet->e3_b1;
-    iVals[lBase+fillIdx*lNLabel+17] = pAddJet->e3_v1_b1;
-    iVals[lBase+fillIdx*lNLabel+18] = pAddJet->e3_v2_b1;
-    iVals[lBase+fillIdx*lNLabel+19] = pAddJet->e4_v1_b1;
-    iVals[lBase+fillIdx*lNLabel+20] = pAddJet->e4_v2_b1;
-    iVals[lBase+fillIdx*lNLabel+21] = pAddJet->e2_b2;
-    iVals[lBase+fillIdx*lNLabel+22] = pAddJet->e3_b2;
-    iVals[lBase+fillIdx*lNLabel+23] = pAddJet->e3_v1_b2;
-    iVals[lBase+fillIdx*lNLabel+24] = pAddJet->e3_v2_b2;
-    iVals[lBase+fillIdx*lNLabel+25] = pAddJet->e4_v1_b2;
-    iVals[lBase+fillIdx*lNLabel+26] = pAddJet->e4_v2_b2;
-    iVals[lBase+fillIdx*lNLabel+27] = pAddJet->e2_sdb1;
-    iVals[lBase+fillIdx*lNLabel+28] = pAddJet->e3_sdb1;
-    iVals[lBase+fillIdx*lNLabel+29] = pAddJet->e3_v1_sdb1;
-    iVals[lBase+fillIdx*lNLabel+30] = pAddJet->e3_v2_sdb1;
-    iVals[lBase+fillIdx*lNLabel+31] = pAddJet->e4_v1_sdb1;
-    iVals[lBase+fillIdx*lNLabel+32] = pAddJet->e4_v2_sdb1;
-    iVals[lBase+fillIdx*lNLabel+33] = pAddJet->e2_sdb2;
-    iVals[lBase+fillIdx*lNLabel+34] = pAddJet->e3_sdb2;
-    iVals[lBase+fillIdx*lNLabel+35] = pAddJet->e3_v1_sdb2;
-    iVals[lBase+fillIdx*lNLabel+36] = pAddJet->e3_v2_sdb2;
-    iVals[lBase+fillIdx*lNLabel+37] = pAddJet->e4_v1_sdb2;
-    iVals[lBase+fillIdx*lNLabel+38] = pAddJet->e4_v2_sdb2;
-    iVals[lBase+fillIdx*lNLabel+39] = pAddJet->e3_v2_sdb1/(pAddJet->e2_sdb1*pAddJet->e2_sdb1);
-    iVals[lBase+fillIdx*lNLabel+40] = pAddJet->e3_v2_sdb2/(pAddJet->e2_sdb2*pAddJet->e2_sdb2);
-    iVals[lBase+fillIdx*lNLabel+41] = pAddJet->e3_v1_sdb1/(pAddJet->e2_sdb1);
-    iVals[lBase+fillIdx*lNLabel+42] = pAddJet->e3_v1_sdb2/(pAddJet->e2_sdb2);
-    iVals[lBase+fillIdx*lNLabel+43] = pAddJet->e3_sdb1/(pAddJet->e2_sdb1*pAddJet->e2_sdb1*pAddJet->e2_sdb1);
-    iVals[lBase+fillIdx*lNLabel+44] = pAddJet->e3_sdb2/(pAddJet->e2_sdb2*pAddJet->e2_sdb2*pAddJet->e2_sdb2);
-    iVals[lBase+fillIdx*lNLabel+45] = pAddJet->e3_v2_b1/(pAddJet->e2_b1*pAddJet->e2_b1);
-    iVals[lBase+fillIdx*lNLabel+46] = pAddJet->e3_v2_b2/(pAddJet->e2_b2*pAddJet->e2_b2);
-    iVals[lBase+fillIdx*lNLabel+47] = pAddJet->e3_v1_b1/(pAddJet->e2_b1);
-    iVals[lBase+fillIdx*lNLabel+48] = pAddJet->e3_v1_b2/(pAddJet->e2_b2);
-    iVals[lBase+fillIdx*lNLabel+49] = pAddJet->e3_b1/(pAddJet->e2_b1*pAddJet->e2_b1*pAddJet->e2_b1);
-    iVals[lBase+fillIdx*lNLabel+50] = pAddJet->e3_b2/(pAddJet->e2_b2*pAddJet->e2_b2*pAddJet->e2_b2);
-    iVals[lBase+fillIdx*lNLabel+51] = iObjects[i0]->pt;
-    iVals[lBase+fillIdx*lNLabel+52] = jetPtJESUp;
-    iVals[lBase+fillIdx*lNLabel+53] = jetPtJESDown;
-    iVals[lBase+fillIdx*lNLabel+54] = jetPtJERUp;
-    iVals[lBase+fillIdx*lNLabel+55] = jetPtJERDown;
-    iVals[lBase+fillIdx*lNLabel+56] = pAddJet->e2_sdb05;
-    iVals[lBase+fillIdx*lNLabel+57] = pAddJet->e3_sdb05;
-    iVals[lBase+fillIdx*lNLabel+58] = pAddJet->e3_v1_sdb05;
-    iVals[lBase+fillIdx*lNLabel+59] = pAddJet->e3_v2_sdb05;
-    iVals[lBase+fillIdx*lNLabel+60] = pAddJet->e4_v1_sdb05;
-    iVals[lBase+fillIdx*lNLabel+61] = pAddJet->e4_v2_sdb05;
-    iVals[lBase+fillIdx*lNLabel+62] = pAddJet->e2_sdb4;
-    iVals[lBase+fillIdx*lNLabel+63] = pAddJet->e3_sdb4;
-    iVals[lBase+fillIdx*lNLabel+64] = pAddJet->e3_v1_sdb4;
-    iVals[lBase+fillIdx*lNLabel+65] = pAddJet->e3_v2_sdb4;
-    iVals[lBase+fillIdx*lNLabel+66] = pAddJet->e4_v1_sdb4;
-    iVals[lBase+fillIdx*lNLabel+67] = pAddJet->e4_v2_sdb4;
-    iVals[lBase+fillIdx*lNLabel+68] = pAddJet->flavour;
-    iVals[lBase+fillIdx*lNLabel+69] = pAddJet->nbHadrons;
-    iVals[lBase+fillIdx*lNLabel+70] = pAddJet->nSV;
-    iVals[lBase+fillIdx*lNLabel+71] = pAddJet->jetNTracks;
-    iVals[lBase+fillIdx*lNLabel+72] = pAddJet->tau_flightDistance2dSig_1;
-    iVals[lBase+fillIdx*lNLabel+73] = pAddJet->SubJet_csv;
-    iVals[lBase+fillIdx*lNLabel+74] = pAddJet->z_ratio;
-    iVals[lBase+fillIdx*lNLabel+75] = pAddJet->trackSipdSig_3;
-    iVals[lBase+fillIdx*lNLabel+76] = pAddJet->trackSipdSig_2;
-    iVals[lBase+fillIdx*lNLabel+77] = pAddJet->trackSipdSig_1;
-    iVals[lBase+fillIdx*lNLabel+78] = pAddJet->trackSipdSig_0;
-    iVals[lBase+fillIdx*lNLabel+79] = pAddJet->trackSipdSig_1_0;
-    iVals[lBase+fillIdx*lNLabel+80] = pAddJet->trackSipdSig_0_0;
-    iVals[lBase+fillIdx*lNLabel+81] = pAddJet->trackSipdSig_1_1;
-    iVals[lBase+fillIdx*lNLabel+82] = pAddJet->trackSipdSig_0_1;
-    iVals[lBase+fillIdx*lNLabel+83] = pAddJet->trackSip2dSigAboveCharm_0;
-    iVals[lBase+fillIdx*lNLabel+84] = pAddJet->trackSip2dSigAboveBottom_0;
-    iVals[lBase+fillIdx*lNLabel+85] = pAddJet->trackSip2dSigAboveBottom_1;
-    iVals[lBase+fillIdx*lNLabel+86] = pAddJet->tau1_trackEtaRel_0;
-    iVals[lBase+fillIdx*lNLabel+87] = pAddJet->tau1_trackEtaRel_1;
-    iVals[lBase+fillIdx*lNLabel+88] = pAddJet->tau1_trackEtaRel_2;
-    iVals[lBase+fillIdx*lNLabel+89] = pAddJet->tau0_trackEtaRel_0;
-    iVals[lBase+fillIdx*lNLabel+90] = pAddJet->tau0_trackEtaRel_1;
-    iVals[lBase+fillIdx*lNLabel+91] = pAddJet->tau0_trackEtaRel_2;
-    iVals[lBase+fillIdx*lNLabel+92] = pAddJet->tau_vertexMass_0;
-    iVals[lBase+fillIdx*lNLabel+93] = pAddJet->tau_vertexEnergyRatio_0;
-    iVals[lBase+fillIdx*lNLabel+94] = pAddJet->tau_vertexDeltaR_0;
-    iVals[lBase+fillIdx*lNLabel+95] = pAddJet->tau_flightDistance2dSig_0;
-    iVals[lBase+fillIdx*lNLabel+96] = pAddJet->tau_vertexMass_1;
-    iVals[lBase+fillIdx*lNLabel+97] = pAddJet->tau_vertexEnergyRatio_1;
+    fSingletons["pt"] = jetCorrPtSmear;
+    fSingletons["eta"] = iObjects[i0]->eta;
+    fSingletons["phi"] = iObjects[i0]->phi;
+    
+    TAddJet *pAddJet = getAddJet(iObjects[i0]);
+
+    
+
+    fSingletons["mass"]  = JEC*jetEnergySmearFactor*(iObjects[i0]->mass);
+    fSingletons["csv"]  = iObjects[i0]->csv;
+    fSingletons["CHF"]  = iObjects[i0]->chHadFrac;
+    fSingletons["NHF"]  = iObjects[i0]->neuHadFrac;
+    fSingletons["NEMF"]  = iObjects[i0]->neuEmFrac;
+    fSingletons["tau21"]  = (pAddJet->tau2/pAddJet->tau1);
+    fSingletons["tau32"]  = (pAddJet->tau3/pAddJet->tau2);
+    fSingletons["msd"]  = pAddJet->mass_sd0;
+    fSingletons["rho"]  = log((pAddJet->mass_sd0*pAddJet->mass_sd0)/iObjects[i0]->pt);
+    fSingletons["minsubscv"]  = TMath::Min(pAddJet->sj1_csv,pAddJet->sj2_csv);
+    fSingletons["maxsubscv"] = TMath::Max(TMath::Max(pAddJet->sj1_csv,pAddJet->sj2_csv),TMath::Max(pAddJet->sj3_csv,pAddJet->sj4_csv));
+    fSingletons["doublecsv"] = pAddJet->doublecsv;
+    fSingletons["doublesub"] = pAddJet->Double_sub;
+    fSingletons["ptraw"] = iObjects[i0]->ptRaw;
+    fSingletons["genpt"] = iObjects[i0]->genpt;
+    fSingletons["e2_b1"] = pAddJet->e2_b1;
+    fSingletons["e3_b1"] = pAddJet->e3_b1;
+    fSingletons["e3_v1_b1"] = pAddJet->e3_v1_b1;
+    fSingletons["e3_v2_b1"] = pAddJet->e3_v2_b1;
+    fSingletons["e4_v1_b1"] = pAddJet->e4_v1_b1;
+    fSingletons["e4_v2_b1"] = pAddJet->e4_v2_b1;
+    fSingletons["e2_b2"] = pAddJet->e2_b2;
+    fSingletons["e3_b2"] = pAddJet->e3_b2;
+    fSingletons["e3_v1_b2"] = pAddJet->e3_v1_b2;
+    fSingletons["e3_v2_b2"] = pAddJet->e3_v2_b2;
+    fSingletons["e4_v1_b2"] = pAddJet->e4_v1_b2;
+    fSingletons["e4_v2_b2"] = pAddJet->e4_v2_b2;
+    fSingletons["e2_sdb1"] = pAddJet->e2_sdb1;
+    fSingletons["e3_sdb1"] = pAddJet->e3_sdb1;
+    fSingletons["e3_v1_sdb1"] = pAddJet->e3_v1_sdb1;
+    fSingletons["e3_v2_sdb1"] = pAddJet->e3_v2_sdb1;
+    fSingletons["e4_v1_sdb1"] = pAddJet->e4_v1_sdb1;
+    fSingletons["e4_v2_sdb1"] = pAddJet->e4_v2_sdb1;
+    fSingletons["e2_sdb2"] = pAddJet->e2_sdb2;
+    fSingletons["e3_sdb2"] = pAddJet->e3_sdb2;
+    fSingletons["e3_v1_sdb2"] = pAddJet->e3_v1_sdb2;
+    fSingletons["e3_v2_sdb2"] = pAddJet->e3_v2_sdb2;
+    fSingletons["e4_v1_sdb2"] = pAddJet->e4_v1_sdb2;
+    fSingletons["e4_v2_sdb2"] = pAddJet->e4_v2_sdb2;
+    fSingletons["N2sdb1"] = pAddJet->e3_v2_sdb1/(pAddJet->e2_sdb1*pAddJet->e2_sdb1);
+    fSingletons["N2sdb2"] = pAddJet->e3_v2_sdb2/(pAddJet->e2_sdb2*pAddJet->e2_sdb2);
+    fSingletons["M2sdb1"] = pAddJet->e3_v1_sdb1/(pAddJet->e2_sdb1);
+    fSingletons["M2sdb2"] = pAddJet->e3_v1_sdb2/(pAddJet->e2_sdb2);
+    fSingletons["D2sdb1"] = pAddJet->e3_sdb1/(pAddJet->e2_sdb1*pAddJet->e2_sdb1*pAddJet->e2_sdb1);
+    fSingletons["D2sdb2"] = pAddJet->e3_sdb2/(pAddJet->e2_sdb2*pAddJet->e2_sdb2*pAddJet->e2_sdb2);
+    fSingletons["N2b1"] = pAddJet->e3_v2_b1/(pAddJet->e2_b1*pAddJet->e2_b1);
+    fSingletons["N2b2"] = pAddJet->e3_v2_b2/(pAddJet->e2_b2*pAddJet->e2_b2);
+    fSingletons["M2b1"] = pAddJet->e3_v1_b1/(pAddJet->e2_b1);
+    fSingletons["M2b2"] = pAddJet->e3_v1_b2/(pAddJet->e2_b2);
+    fSingletons["D2b1"] = pAddJet->e3_b1/(pAddJet->e2_b1*pAddJet->e2_b1*pAddJet->e2_b1);
+    fSingletons["D2b2"] = pAddJet->e3_b2/(pAddJet->e2_b2*pAddJet->e2_b2*pAddJet->e2_b2);
+    fSingletons["pt_old"] = iObjects[i0]->pt;
+    // fSingletons[""] = jetPtJESUp;
+    // fSingletons[""] = jetPtJESDown;
+    // fSingletons[""] = jetPtJERUp;
+    // fSingletons[""] = jetPtJERDown;
+    // fSingletons[""] = pAddJet->e2_sdb05;
+    // fSingletons[""] = pAddJet->e3_sdb05;
+    // fSingletons[""] = pAddJet->e3_v1_sdb05;
+    // fSingletons[""] = pAddJet->e3_v2_sdb05;
+    // fSingletons[""] = pAddJet->e4_v1_sdb05;
+    // fSingletons[""] = pAddJet->e4_v2_sdb05;
+    // fSingletons[""] = pAddJet->e2_sdb4;
+    // fSingletons[""] = pAddJet->e3_sdb4;
+    // fSingletons[""] = pAddJet->e3_v1_sdb4;
+    // fSingletons[""] = pAddJet->e3_v2_sdb4;
+    // fSingletons[""] = pAddJet->e4_v1_sdb4;
+    // fSingletons[""] = pAddJet->e4_v2_sdb4;
+    // fSingletons[""] = pAddJet->flavour;
+    // fSingletons[""] = pAddJet->nbHadrons;
+    // fSingletons[""] = pAddJet->nSV;
+    // fSingletons[""] = pAddJet->jetNTracks;
+    // fSingletons[""] = pAddJet->tau_flightDistance2dSig_1;
+    // fSingletons[""] = pAddJet->SubJet_csv;
+    // fSingletons[""] = pAddJet->z_ratio;
+    // fSingletons[""] = pAddJet->trackSipdSig_3;
+    // fSingletons[""] = pAddJet->trackSipdSig_2;
+    // fSingletons[""] = pAddJet->trackSipdSig_1;
+    // fSingletons[""] = pAddJet->trackSipdSig_0;
+    // fSingletons[""] = pAddJet->trackSipdSig_1_0;
+    // fSingletons[""] = pAddJet->trackSipdSig_0_0;
+    // fSingletons[""] = pAddJet->trackSipdSig_1_1;
+    // fSingletons[""] = pAddJet->trackSipdSig_0_1;
+    // fSingletons[""] = pAddJet->trackSip2dSigAboveCharm_0;
+    // fSingletons[""] = pAddJet->trackSip2dSigAboveBottom_0;
+    // fSingletons[""] = pAddJet->trackSip2dSigAboveBottom_1;
+    // fSingletons[""] = pAddJet->tau1_trackEtaRel_0;
+    // fSingletons[""] = pAddJet->tau1_trackEtaRel_1;
+    // fSingletons[""] = pAddJet->tau1_trackEtaRel_2;
+    // fSingletons[""] = pAddJet->tau0_trackEtaRel_0;
+    // fSingletons[""] = pAddJet->tau0_trackEtaRel_1;
+    // fSingletons[""] = pAddJet->tau0_trackEtaRel_2;
+    // fSingletons[""] = pAddJet->tau_vertexMass_0;
+    // fSingletons[""] = pAddJet->tau_vertexEnergyRatio_0;
+    // fSingletons[""] = pAddJet->tau_vertexDeltaR_0;
+    // fSingletons[""] = pAddJet->tau_flightDistance2dSig_0;
+    // fSingletons[""] = pAddJet->tau_vertexMass_1;
+    // fSingletons[""] = pAddJet->tau_vertexEnergyRatio_1;
 
     unsigned nG = fGens->GetEntriesFast();
     unsigned nP = 0;
@@ -640,7 +530,7 @@ void PerJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<doub
       partons.insert(part);
       ++nP;
     }  
-    iVals[lBase+fillIdx*lNLabel+98] = nP;
+    fSingletons["nProngs"] = nP;
 
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
@@ -651,69 +541,24 @@ void PerJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<doub
     fnVtxFlavor     = iObjects[0]->vtxFlavor;
     fnVtxFlavInfo   = iObjects[0]->vtxFlavInfo;
 
-    if (fillEach)
-      fTree->Fill(); // do the fill here to get all arrays
+    fTree->Fill(); 
 
   }
 }
-int PerJetLoader::getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR) {  
-  TLorentzVector iJet1;
-  int iJet1id(0), nmatched(0);
-  float mindR = dR;
-  for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
-    if ((iJets1[i0].DeltaR(iJet2) < mindR) && (fabs(iJets1[i0].Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))) {
-      nmatched++;
-      iJet1 = iJets1[i0];
-      iJet1id = i0;
-      mindR= iJets1[i0].DeltaR(iJet2);  
-    }
-  }
-  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){    
-    return iJet1id;
-  }
-  return -999;
-}
+
 void PerJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex){
   TLorentzVector iJet1;
-  int iJet1id(0), nmatched(0);
+  int nmatched(0);
   float mindR = dR;
   for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
     if ((iJets1[i0].DeltaR(iJet2) < mindR) && (fabs(iJets1[i0].Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))) {
       nmatched++;
       iJet1 = iJets1[i0];
-      iJet1id = i0;
       mindR= iJets1[i0].DeltaR(iJet2);  
     }
   }
-  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){
-    fillVJetCHS(fLooseVJetsCHS[iJet1id], jIndex);
-  }
 }
 
-/*void PerJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR){
-  TLorentzVector iJet1;
-  int nmatched(0);
-  float mindR = dR;  
-  for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
-    if ((iJets1[i0].DeltaR(iJet2) < mindR)) {
-      nmatched++;
-      iJet1 = iJets1[i0];
-      mindR= iJets1[i0].DeltaR(iJet2);
-    }
-  }
-  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR)){
-    fRatioPt = iJet2.Pt()/iJet1.Pt();
-  }
-}
-*/
-void PerJetLoader::fillVJetCHS(TJet *iJet, int jIndex){
-  TAddJet *pAddJet = getAddJetCHS(iJet);
-  fdoublecsvCHS[jIndex] = double(pAddJet->doublecsv);
-  fdoublesubCHS[jIndex] = double(pAddJet->Double_sub);
-  fptCHS[jIndex] = double(iJet->pt);
-  fetaCHS[jIndex] = double(iJet->eta);
-  fphiCHS[jIndex] = double(iJet->phi);
-}
 TAddJet *PerJetLoader::getAddJet(TJet *iJet) { 
   int lIndex = -1;
   TAddJet *lJet = 0; 
@@ -723,19 +568,6 @@ TAddJet *PerJetLoader::getAddJet(TJet *iJet) {
   if(lIndex == -1) return 0;
   for  (int i0 = 0; i0 < fVAddJets->GetEntriesFast(); i0++) { 
     TAddJet *pJet = (TAddJet*)((*fVAddJets)[i0]);
-    if(pJet->index == fabs(lIndex)) { lJet = pJet; break;}
-  }
-  return lJet;
-}
-TAddJet *PerJetLoader::getAddJetCHS(TJet *iJet) {
-  int lIndex = -1;
-  TAddJet *lJet = 0;
-  for(int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
-    if((*fVJetsCHS)[i0] == iJet) { lIndex = i0; break;}
-  }
-  if(lIndex == -1) return 0;
-  for  (int i0 = 0; i0 < fVAddJetsCHS->GetEntriesFast(); i0++) {
-    TAddJet *pJet = (TAddJet*)((*fVAddJetsCHS)[i0]);
     if(pJet->index == fabs(lIndex)) { lJet = pJet; break;}
   }
   return lJet;

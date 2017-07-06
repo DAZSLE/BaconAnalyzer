@@ -15,6 +15,7 @@
 #include "../include/MuonLoader.hh"
 #include "../include/PhotonLoader.hh"
 #include "../include/VJetLoader.hh"
+#include "../include/RunLumiRangeMap.h"
 
 #include "TROOT.h"
 #include "TFile.h"
@@ -29,6 +30,7 @@ MuonLoader      *fMuon       = 0;
 ElectronLoader  *fElectron   = 0; 
 PhotonLoader    *fPhoton     = 0; 
 VJetLoader      *fVJet8      = 0;
+RunLumiRangeMap *fRangeMap   = 0;
 
 TH1F *fHist                  = 0;
 
@@ -74,7 +76,6 @@ int main( int argc, char **argv ) {
   fElectron  = new ElectronLoader(lTree);                                                   // fElectrons and fElectronBr, fN = 2
   fPhoton    = new PhotonLoader  (lTree);                                                   // fPhotons and fPhotonBr, fN = 1
   fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS",3, isData);     // fVJets, fVJetBr => AK8PUPPI
-  if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                     // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
 
   TFile *lFile = TFile::Open("Output.root","RECREATE");
   TTree *lOut  = new TTree("Events","Events");
@@ -89,11 +90,10 @@ int main( int argc, char **argv ) {
   // Setup Tree
   fEvt      ->setupTree      (lOut); 
   fVJet8    ->setupTree      (lOut,"AK8Puppijet"); 
-  fVJet8    ->setupTreeQbert(lOut,"AK8Puppijet");
+  fVJet8    ->setupTreeZprime(lOut,"AK8Puppijet");
   fMuon     ->setupTree      (lOut); 
   fElectron ->setupTree      (lOut); 
   fPhoton   ->setupTree      (lOut); 
-  if(lOption.compare("data")!=0) fGen ->setupTree (lOut,float(lXS));
 
   // Loop over events i0 = iEvent
   int neventstest = 0;
@@ -116,9 +116,9 @@ int main( int argc, char **argv ) {
     float lWeight = 1;
     unsigned int passJson = 0;
     if(lOption.compare("data")!=0){
-      fGen->load(i0);
-      //lWeight = (float(lXS)*1000.*fGen->fWeight)/weight;
-      lWeight = fGen->fWeight;
+      // fGen->load(i0);
+      // //lWeight = (float(lXS)*1000.*fGen->fWeight)/weight;
+      // lWeight = fGen->fWeight;
       passJson = 1;
     }
     else{
