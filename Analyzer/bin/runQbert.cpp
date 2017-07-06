@@ -14,7 +14,7 @@
 #include "../include/ElectronLoader.hh"
 #include "../include/MuonLoader.hh"
 #include "../include/PhotonLoader.hh"
-#include "../include/VJetLoader.hh"
+#include "../include/PerJetLoader.hh"
 #include "../include/RunLumiRangeMap.h"
 
 #include "TROOT.h"
@@ -29,7 +29,7 @@ EvtLoader       *fEvt        = 0;
 MuonLoader      *fMuon       = 0; 
 ElectronLoader  *fElectron   = 0; 
 PhotonLoader    *fPhoton     = 0; 
-VJetLoader      *fVJet8      = 0;
+PerJetLoader    *fVJet8      = 0;
 RunLumiRangeMap *fRangeMap   = 0;
 
 TH1F *fHist                  = 0;
@@ -75,7 +75,7 @@ int main( int argc, char **argv ) {
   fMuon      = new MuonLoader    (lTree);                                                   // fMuon and fMuonBr, fN = 2 - muonArr and muonBr
   fElectron  = new ElectronLoader(lTree);                                                   // fElectrons and fElectronBr, fN = 2
   fPhoton    = new PhotonLoader  (lTree);                                                   // fPhotons and fPhotonBr, fN = 1
-  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS",3, isData);     // fVJets, fVJetBr => AK8PUPPI
+  fVJet8     = new PerJetLoader    (lTree,"AK8Puppi","AddAK8Puppi","AK8CHS","AddAK8CHS",3, isData);     // fVJets, fVJetBr => AK8PUPPI
 
   TFile *lFile = TFile::Open("Output.root","RECREATE");
   TTree *lOut  = new TTree("Events","Events");
@@ -170,7 +170,7 @@ int main( int argc, char **argv ) {
     if(fVJet8->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 2;
 
 
-    lOut->Fill();
+//    lOut->Fill(); // fill is done in fVJet8 now
     neventstest++;
   }
   std::cout << neventstest << std::endl;

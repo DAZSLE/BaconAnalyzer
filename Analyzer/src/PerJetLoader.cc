@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 #define NCPF 50
-#define NIPF 50
+#define NIPF 100
 #define NSV 5
 #define PI 3.141592654
 
@@ -74,6 +74,7 @@ void PerJetLoader::reset() {
   for (auto &iter : fSingletons) {
     fSingletons[iter.first] = 0;
   }
+  fN_cpf = 0; fN_ipf = 0; fN_sv = 0;
   for (auto &iter : fCPFArrs) {
     for (unsigned i = 0; i != NCPF; ++i) 
       fCPFArrs[iter.first][i] = 0;
@@ -231,26 +232,26 @@ void PerJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   fCPFArrs["cpf_dphidxy"] = new float[NCPF]; 
   fCPFArrs["cpf_dlambdadz"] = new float[NCPF]; 
 
-  fIPFArrs["IPF_pt"] = new float[NIPF]; 
-  fIPFArrs["IPF_eta"] = new float[NIPF]; 
-  fIPFArrs["IPF_phi"] = new float[NIPF]; 
-  fIPFArrs["IPF_m"] = new float[NIPF]; 
-  fIPFArrs["IPF_e"] = new float[NIPF]; 
-  fIPFArrs["IPF_pfType"] = new float[NIPF]; 
-  fIPFArrs["IPF_pup"] = new float[NIPF]; 
-  fIPFArrs["IPF_ecalE"] = new float[NIPF]; 
-  fIPFArrs["IPF_hcalE"] = new float[NIPF]; 
-  fIPFArrs["IPF_d0"] = new float[NIPF]; 
-  fIPFArrs["IPF_dz"] = new float[NIPF]; 
-  fIPFArrs["IPF_d0Err"] = new float[NIPF]; 
-  fIPFArrs["IPF_dptdpt"] = new float[NIPF]; 
-  fIPFArrs["IPF_detadeta"] = new float[NIPF]; 
-  fIPFArrs["IPF_dphidphi"] = new float[NIPF]; 
-  fIPFArrs["IPF_dxydxy"] = new float[NIPF]; 
-  fIPFArrs["IPF_dzdz"] = new float[NIPF]; 
-  fIPFArrs["IPF_dxydz"] = new float[NIPF]; 
-  fIPFArrs["IPF_dphidxy"] = new float[NIPF]; 
-  fIPFArrs["IPF_dlambdadz"] = new float[NIPF]; 
+  fIPFArrs["ipf_pt"] = new float[NIPF]; 
+  fIPFArrs["ipf_eta"] = new float[NIPF]; 
+  fIPFArrs["ipf_phi"] = new float[NIPF]; 
+  fIPFArrs["ipf_m"] = new float[NIPF]; 
+  fIPFArrs["ipf_e"] = new float[NIPF]; 
+  fIPFArrs["ipf_pfType"] = new float[NIPF]; 
+  fIPFArrs["ipf_pup"] = new float[NIPF]; 
+  fIPFArrs["ipf_ecalE"] = new float[NIPF]; 
+  fIPFArrs["ipf_hcalE"] = new float[NIPF]; 
+  fIPFArrs["ipf_d0"] = new float[NIPF]; 
+  fIPFArrs["ipf_dz"] = new float[NIPF]; 
+  fIPFArrs["ipf_d0Err"] = new float[NIPF]; 
+  fIPFArrs["ipf_dptdpt"] = new float[NIPF]; 
+  fIPFArrs["ipf_detadeta"] = new float[NIPF]; 
+  fIPFArrs["ipf_dphidphi"] = new float[NIPF]; 
+  fIPFArrs["ipf_dxydxy"] = new float[NIPF]; 
+  fIPFArrs["ipf_dzdz"] = new float[NIPF]; 
+  fIPFArrs["ipf_dxydz"] = new float[NIPF]; 
+  fIPFArrs["ipf_dphidxy"] = new float[NIPF]; 
+  fIPFArrs["ipf_dlambdadz"] = new float[NIPF]; 
 
   fSVArrs["sv_pt"] = new float[NSV];
   fSVArrs["sv_eta"] = new float[NSV];
@@ -276,28 +277,31 @@ void PerJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   for (auto &iter : fSingletons) {
     std::stringstream bname;
     bname << iJetLabel << "_" << iter.first;
-    fTree->Branch(bname.str().c_str(), &(iter.second), (bname.str()+"/f").c_str());
+    fTree->Branch(bname.str().c_str(), &(iter.second), (bname.str()+"/F").c_str());
   }
+  fTree->Branch("n_cpf",&fN_cpf,"n_cpf/I");
   for (auto &iter : fCPFArrs) {
     std::stringstream bname;
     bname << iJetLabel << "_" << iter.first;
     std::stringstream bname2;
-    bname2 << bname.str() << "[" << NCPF << "]/f";
-    fTree->Branch(bname.str().c_str(), &(iter.second), bname2.str().c_str());
+    bname2 << bname.str() << "[n_cpf]/F";
+    fTree->Branch(bname.str().c_str(), (iter.second), bname2.str().c_str());
   }
+  fTree->Branch("n_ipf",&fN_ipf,"n_ipf/I");
   for (auto &iter : fIPFArrs) {
     std::stringstream bname;
     bname << iJetLabel << "_" << iter.first;
     std::stringstream bname2;
-    bname2 << bname.str() << "[" << NIPF << "]/f";
-    fTree->Branch(bname.str().c_str(), &(iter.second), bname2.str().c_str());
+    bname2 << bname.str() << "[n_ipf]/F";
+    fTree->Branch(bname.str().c_str(), (iter.second), bname2.str().c_str());
   }
+  fTree->Branch("n_sv",&fN_sv,"n_sv/F");
   for (auto &iter : fSVArrs) {
     std::stringstream bname;
     bname << iJetLabel << "_" << iter.first;
     std::stringstream bname2;
-    bname2 << bname.str() << "[" << NSV << "]/f";
-    fTree->Branch(bname.str().c_str(), &(iter.second), bname2.str().c_str());
+    bname2 << bname.str() << "[n_sv]/I";
+    fTree->Branch(bname.str().c_str(), (iter.second), bname2.str().c_str());
   }
 
 }
@@ -414,10 +418,6 @@ void PerJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons,
     lCountT++;
   }
   addVJet(fLooseVJets,selectedVJets);
-
-  for  (int i0 = 0; i0 < int(selectedVJets.size()); i0++) { 
-    if(passJetTightLepVetoSel(fLooseVJets[i0])) fisTightVJet[i0] = 1;
-  }
   fNLooseVJets = lCount;
   fNTightVJets = lCountT;
 
@@ -475,14 +475,11 @@ void PerJetLoader::fillVJet(int iN,
     double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
     double jetPtJERDown = jetCorrPt*jetEnergySmearFactorDown;
 
+    TAddJet *pAddJet = getAddJet(iObjects[i0]);
+
     fSingletons["pt"] = jetCorrPtSmear;
     fSingletons["eta"] = iObjects[i0]->eta;
     fSingletons["phi"] = iObjects[i0]->phi;
-    
-    TAddJet *pAddJet = getAddJet(iObjects[i0]);
-
-    
-
     fSingletons["mass"]  = JEC*jetEnergySmearFactor*(iObjects[i0]->mass);
     fSingletons["csv"]  = iObjects[i0]->csv;
     fSingletons["CHF"]  = iObjects[i0]->chHadFrac;
@@ -625,8 +622,8 @@ void PerJetLoader::fillVJet(int iN,
     }
     std::sort(jetPFs.begin(),
               jetPFs.end(),
-              [](TPFPart *x, TPFPart *y) {return x->pt > y->pt;});
-    unsigned iCPF=0, iIPF=0;
+              [](TPFPart *x, TPFPart *y) {return x->pt * x->pup > y->pt * y->pup;});
+    int iCPF=0, iIPF=0;
     for (auto *pf : jetPFs) {
       if (pf->q && iCPF < NCPF) { // charged PF
         fCPFArrs["cpf_pt"][iCPF] = pf->pup * pf->pt / iObjects[i0]->pt; 
@@ -655,7 +652,10 @@ void PerJetLoader::fillVJet(int iN,
         fCPFArrs["cpf_dlambdadz"][iCPF] = pf->dlambdadz; 
         iCPF++;
       } 
+      if (iIPF >= NIPF)
+        continue;
       fIPFArrs["ipf_pt"][iIPF] = pf->pup * pf->pt / iObjects[i0]->pt; 
+      // fIPFArrs["ipf_pt"][iIPF] = pf->pup * pf->pt / iObjects[i0]->pt; 
       fIPFArrs["ipf_eta"][iIPF] = pf->eta - iObjects[i0]->eta; 
       fIPFArrs["ipf_phi"][iIPF] = SignedDeltaPhi(pf->phi, iObjects[i0]->phi); 
       fIPFArrs["ipf_m"][iIPF] = pf->m; 
@@ -666,6 +666,8 @@ void PerJetLoader::fillVJet(int iN,
       fIPFArrs["ipf_hcalE"][iIPF] = pf->hcalE; 
       iIPF++;
     }
+    fN_cpf = std::min(iCPF, NCPF);
+    fN_ipf = std::min(iIPF, NIPF);
 
     // fill PF 
     std::vector<TSVtx*> jetSVs;
@@ -675,7 +677,7 @@ void PerJetLoader::fillVJet(int iN,
     std::sort(jetSVs.begin(),
               jetSVs.end(),
               [](TSVtx *x, TSVtx *y) {return x->pt > y->pt;});
-    unsigned iSV=0;
+    int iSV=0;
     for (auto *sv : jetSVs) {
       if (iSV == NSV)
         break;
@@ -699,6 +701,7 @@ void PerJetLoader::fillVJet(int iN,
       fSVArrs["sv_enratio"][iSV] = sv->sv_enratio;      
       iSV++;
     }
+    fN_sv = std::min(iSV, NSV);
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
     fhadronFlavor   = iObjects[0]->hadronFlavor;
