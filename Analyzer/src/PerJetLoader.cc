@@ -16,21 +16,27 @@ PerJetLoader::PerJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std
   fVJets         = new TClonesArray("baconhep::TJet");
   fVAddJets      = new TClonesArray("baconhep::TAddJet");
   fGens         = new TClonesArray("baconhep::TGenParticle");
+  fPFs = new TClonesArray("baconhep::TPFPart");
+  fSVs = new TClonesArray("baconhep::TSVtx");
 
   iTree->SetBranchAddress(iJet.c_str(),       &fVJets);
   iTree->SetBranchAddress(iAddJet.c_str(),    &fVAddJets);
   iTree->SetBranchAddress("GenParticle", &fGens);
+  iTree->SetBranchAddress("PFPart", &fPFs);
+  iTree->SetBranchAddress("SV", &fSVs);
 
   fVJetBr        = iTree->GetBranch(iJet.c_str());
   fVAddJetBr     = iTree->GetBranch(iAddJet.c_str());
   fGenBr         = iTree->GetBranch("GenParticle");
+  fPFBr = iTree->GetBranch("PFPart");
+  fSVBr = iTree->GetBranch("SV");
 
   fN = iN;
 
   isData = iData;  
   loadJECs_Rereco(isData);
 
-  r = new TRandom3(1988);
+  r = new TRandom3(1993);
 
   const std::string cmssw_base = getenv("CMSSW_BASE");
   std::string cmssw_base_env = "${CMSSW_BASE}";
@@ -43,6 +49,10 @@ PerJetLoader::~PerJetLoader() {
   delete fVAddJetBr;
   delete fGens;
   delete fGenBr;
+  delete fPFs;
+  delete fPFBr;
+  delete fSVs;
+  delete fSVBr;
   for (auto &iter : fCPFArrs) 
     delete iter.second;
   for (auto &iter : fNPFArrs) 
@@ -197,6 +207,8 @@ void PerJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
 
   fCPFArrs["cpfPt"] = new float[NCPF]; // example - add more
 
+  fSVArrs["svPt"] = new float[NSV];
+
   fTree = iTree;
 
   for (auto &iter : fSingletons) {
@@ -261,6 +273,10 @@ void PerJetLoader::load(int iEvent) {
   fVAddJetBr   ->GetEntry(iEvent);
   fGens        ->Clear();
   fGenBr       ->GetEntry(iEvent);
+  fPFs        ->Clear();
+  fPFBr       ->GetEntry(iEvent);
+  fSVs        ->Clear();
+  fSVBr       ->GetEntry(iEvent);
 }
 
 void PerJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, 
@@ -449,52 +465,52 @@ void PerJetLoader::fillVJet(int iN,
     fSingletons["D2b1"] = pAddJet->e3_b1/(pAddJet->e2_b1*pAddJet->e2_b1*pAddJet->e2_b1);
     fSingletons["D2b2"] = pAddJet->e3_b2/(pAddJet->e2_b2*pAddJet->e2_b2*pAddJet->e2_b2);
     fSingletons["pt_old"] = iObjects[i0]->pt;
-    // fSingletons[""] = jetPtJESUp;
-    // fSingletons[""] = jetPtJESDown;
-    // fSingletons[""] = jetPtJERUp;
-    // fSingletons[""] = jetPtJERDown;
-    // fSingletons[""] = pAddJet->e2_sdb05;
-    // fSingletons[""] = pAddJet->e3_sdb05;
-    // fSingletons[""] = pAddJet->e3_v1_sdb05;
-    // fSingletons[""] = pAddJet->e3_v2_sdb05;
-    // fSingletons[""] = pAddJet->e4_v1_sdb05;
-    // fSingletons[""] = pAddJet->e4_v2_sdb05;
-    // fSingletons[""] = pAddJet->e2_sdb4;
-    // fSingletons[""] = pAddJet->e3_sdb4;
-    // fSingletons[""] = pAddJet->e3_v1_sdb4;
-    // fSingletons[""] = pAddJet->e3_v2_sdb4;
-    // fSingletons[""] = pAddJet->e4_v1_sdb4;
-    // fSingletons[""] = pAddJet->e4_v2_sdb4;
-    // fSingletons[""] = pAddJet->flavour;
-    // fSingletons[""] = pAddJet->nbHadrons;
-    // fSingletons[""] = pAddJet->nSV;
-    // fSingletons[""] = pAddJet->jetNTracks;
-    // fSingletons[""] = pAddJet->tau_flightDistance2dSig_1;
-    // fSingletons[""] = pAddJet->SubJet_csv;
-    // fSingletons[""] = pAddJet->z_ratio;
-    // fSingletons[""] = pAddJet->trackSipdSig_3;
-    // fSingletons[""] = pAddJet->trackSipdSig_2;
-    // fSingletons[""] = pAddJet->trackSipdSig_1;
-    // fSingletons[""] = pAddJet->trackSipdSig_0;
-    // fSingletons[""] = pAddJet->trackSipdSig_1_0;
-    // fSingletons[""] = pAddJet->trackSipdSig_0_0;
-    // fSingletons[""] = pAddJet->trackSipdSig_1_1;
-    // fSingletons[""] = pAddJet->trackSipdSig_0_1;
-    // fSingletons[""] = pAddJet->trackSip2dSigAboveCharm_0;
-    // fSingletons[""] = pAddJet->trackSip2dSigAboveBottom_0;
-    // fSingletons[""] = pAddJet->trackSip2dSigAboveBottom_1;
-    // fSingletons[""] = pAddJet->tau1_trackEtaRel_0;
-    // fSingletons[""] = pAddJet->tau1_trackEtaRel_1;
-    // fSingletons[""] = pAddJet->tau1_trackEtaRel_2;
-    // fSingletons[""] = pAddJet->tau0_trackEtaRel_0;
-    // fSingletons[""] = pAddJet->tau0_trackEtaRel_1;
-    // fSingletons[""] = pAddJet->tau0_trackEtaRel_2;
-    // fSingletons[""] = pAddJet->tau_vertexMass_0;
-    // fSingletons[""] = pAddJet->tau_vertexEnergyRatio_0;
-    // fSingletons[""] = pAddJet->tau_vertexDeltaR_0;
-    // fSingletons[""] = pAddJet->tau_flightDistance2dSig_0;
-    // fSingletons[""] = pAddJet->tau_vertexMass_1;
-    // fSingletons[""] = pAddJet->tau_vertexEnergyRatio_1;
+    fSingletons["jetPtJESUp"] = jetPtJESUp;
+    fSingletons["jetPtJESDown"] = jetPtJESDown;
+    fSingletons["jetPtJERUp"] = jetPtJERUp;
+    fSingletons["jetPtJERDown"] = jetPtJERDown;
+    fSingletons["e2_sdb05"] = pAddJet->e2_sdb05;
+    fSingletons["e3_sdb05"] = pAddJet->e3_sdb05;
+    fSingletons["e3_v1_sdb05"] = pAddJet->e3_v1_sdb05;
+    fSingletons["e3_v2_sdb05"] = pAddJet->e3_v2_sdb05;
+    fSingletons["e4_v1_sdb05"] = pAddJet->e4_v1_sdb05;
+    fSingletons["e4_v2_sdb05"] = pAddJet->e4_v2_sdb05;
+    fSingletons["e2_sdb4"] = pAddJet->e2_sdb4;
+    fSingletons["e3_sdb4"] = pAddJet->e3_sdb4;
+    fSingletons["e3_v1_sdb4"] = pAddJet->e3_v1_sdb4;
+    fSingletons["e3_v2_sdb4"] = pAddJet->e3_v2_sdb4;
+    fSingletons["e4_v1_sdb4"] = pAddJet->e4_v1_sdb4;
+    fSingletons["e4_v2_sdb4"] = pAddJet->e4_v2_sdb4;
+    fSingletons["flavour"] = pAddJet->flavour;
+    fSingletons["nbHadrons"] = pAddJet->nbHadrons;
+    fSingletons["nSV"] = pAddJet->nSV;
+    fSingletons["jetNTracks"] = pAddJet->jetNTracks;
+    fSingletons["tau_flightDistance2dSig_1"] = pAddJet->tau_flightDistance2dSig_1;
+    fSingletons["SubJet_csv"] = pAddJet->SubJet_csv;
+    fSingletons["z_ratio"] = pAddJet->z_ratio;
+    fSingletons["trackSipdSig_3"] = pAddJet->trackSipdSig_3;
+    fSingletons["trackSipdSig_2"] = pAddJet->trackSipdSig_2;
+    fSingletons["trackSipdSig_1"] = pAddJet->trackSipdSig_1;
+    fSingletons["trackSipdSig_0"] = pAddJet->trackSipdSig_0;
+    fSingletons["trackSipdSig_1_0"] = pAddJet->trackSipdSig_1_0;
+    fSingletons["trackSipdSig_0_0"] = pAddJet->trackSipdSig_0_0;
+    fSingletons["trackSipdSig_1_1"] = pAddJet->trackSipdSig_1_1;
+    fSingletons["trackSipdSig_0_1"] = pAddJet->trackSipdSig_0_1;
+    fSingletons["trackSip2dSigAboveCharm_0"] = pAddJet->trackSip2dSigAboveCharm_0;
+    fSingletons["trackSip2dSigAboveBottom_0"] = pAddJet->trackSip2dSigAboveBottom_0;
+    fSingletons["trackSip2dSigAboveBottom_1"] = pAddJet->trackSip2dSigAboveBottom_1;
+    fSingletons["tau1_trackEtaRel_0"] = pAddJet->tau1_trackEtaRel_0;
+    fSingletons["tau1_trackEtaRel_1"] = pAddJet->tau1_trackEtaRel_1;
+    fSingletons["tau1_trackEtaRel_2"] = pAddJet->tau1_trackEtaRel_2;
+    fSingletons["tau0_trackEtaRel_0"] = pAddJet->tau0_trackEtaRel_0;
+    fSingletons["tau0_trackEtaRel_1"] = pAddJet->tau0_trackEtaRel_1;
+    fSingletons["tau0_trackEtaRel_2"] = pAddJet->tau0_trackEtaRel_2;
+    fSingletons["tau_vertexMass_0"] = pAddJet->tau_vertexMass_0;
+    fSingletons["tau_vertexEnergyRatio_0"] = pAddJet->tau_vertexEnergyRatio_0;
+    fSingletons["tau_vertexDeltaR_0"] = pAddJet->tau_vertexDeltaR_0;
+    fSingletons["tau_flightDistance2dSig_0"] = pAddJet->tau_flightDistance2dSig_0;
+    fSingletons["tau_vertexMass_1"] = pAddJet->tau_vertexMass_1;
+    fSingletons["tau_vertexEnergyRatio_1"] = pAddJet->tau_vertexEnergyRatio_1;
 
     unsigned nG = fGens->GetEntriesFast();
     unsigned nP = 0;
@@ -532,6 +548,39 @@ void PerJetLoader::fillVJet(int iN,
     }  
     fSingletons["nProngs"] = nP;
 
+    // fill neutral and charged PF candidates
+    std::vector<TPFPart*> jetPFs;
+    for (auto idx : iObjects[i0]->pfCands) {
+      jetPFs.push_back( (TPFPart*)(fPFs->At(idx)) );
+    }
+    std::sort(jetPFs.begin(),
+              jetPFs.end(),
+              [](TPFPart *x, TPFPart *y) {return x->pt > y->pt;});
+    unsigned iCPF=0, iNPF=0;
+    for (auto *pf : jetPFs) {
+      if (pf->q && iCPF < NCPF) { // charged PF
+        fCPFArrs["cpfPt"][iCPF] = pf->pt;
+        iCPF++;
+      } else if (pf->q == 0 && iNPF < NNPF) {
+        iNPF++;
+      }
+    }
+
+    // fill PF 
+    std::vector<TSVtx*> jetSVs;
+    for (auto idx : pAddJet->svtx) {
+      jetSVs.push_back( (TSVtx*)(fSVs->At(idx)) );
+    }
+    std::sort(jetSVs.begin(),
+              jetSVs.end(),
+              [](TSVtx *x, TSVtx *y) {return x->pt > y->pt;});
+    unsigned iSV=0;
+    for (auto *sv : jetSVs) {
+      if (iSV == NSV)
+        break;
+      fSVArrs["svPt"][iSV] = sv->pt;
+      iSV++;
+    }
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
     fhadronFlavor   = iObjects[0]->hadronFlavor;

@@ -7,6 +7,8 @@
 #include "TBranch.h"
 #include "TClonesArray.h"
 #include "BaconAna/DataFormats/interface/TGenParticle.hh"
+#include "BaconAna/DataFormats/interface/TPFPart.hh"
+#include "BaconAna/DataFormats/interface/TSVtx.hh"
 #include "BaconAna/DataFormats/interface/TJet.hh"
 #include "BaconAna/DataFormats/interface/TAddJet.hh"
 #include "Utils.hh"
@@ -85,6 +87,10 @@ protected:
   TBranch      *fVAddJetBrCHS;
   TClonesArray *fGens;
   TBranch      *fGenBr;
+  TClonesArray *fPFs;
+  TBranch      *fPFBr;
+  TClonesArray *fSVs;
+  TBranch      *fSVBr;
 
   TTree        *fTree;
 
