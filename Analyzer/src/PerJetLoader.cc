@@ -295,12 +295,12 @@ void PerJetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
     bname2 << bname.str() << "[n_ipf]/F";
     fTree->Branch(bname.str().c_str(), (iter.second), bname2.str().c_str());
   }
-  fTree->Branch("n_sv",&fN_sv,"n_sv/F");
+  fTree->Branch("n_sv",&fN_sv,"n_sv/I");
   for (auto &iter : fSVArrs) {
     std::stringstream bname;
     bname << iJetLabel << "_" << iter.first;
     std::stringstream bname2;
-    bname2 << bname.str() << "[n_sv]/I";
+    bname2 << bname.str() << "[n_sv]/F";
     fTree->Branch(bname.str().c_str(), (iter.second), bname2.str().c_str());
   }
 
