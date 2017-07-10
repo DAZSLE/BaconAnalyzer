@@ -1,5 +1,5 @@
-#ifndef VJetLoader_H
-#define VJetLoader_H
+#ifndef PerJetLoader_H
+#define PerJetLoader_H
 #include "TTree.h"
 #include "TLorentzVector.h"
 #include "TLorentzRotation.h"
@@ -7,6 +7,8 @@
 #include "TBranch.h"
 #include "TClonesArray.h"
 #include "BaconAna/DataFormats/interface/TGenParticle.hh"
+#include "BaconAna/DataFormats/interface/TPFPart.hh"
+#include "BaconAna/DataFormats/interface/TSVtx.hh"
 #include "BaconAna/DataFormats/interface/TJet.hh"
 #include "BaconAna/DataFormats/interface/TAddJet.hh"
 #include "Utils.hh"
@@ -26,29 +28,19 @@
 
 using namespace baconhep;
 
-class VJetLoader { 
+class PerJetLoader { 
 public:
-  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1, bool iData=false);
-  ~VJetLoader();
+  PerJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1, bool iData=false);
+  ~PerJetLoader();
   double correction(TJet &iJet,double iRho);
   void reset();
   void resetZprime();
-  void resetCHS();
-  void resetDoubleB();
   void setupTree(TTree *iTree,std::string iJetLabel);
   void setupTreeZprime(TTree *iTree,std::string iJetLabel);
-  void setupTreeCHS(TTree *iTree,std::string iJetLabel);
   void load(int iEvent);
   void selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);
-  void selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);  
-  void selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);
-  void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals,double dR, double iRho, unsigned int runNum);
-  void countVJetProngs(double dR);
-  int getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
+  void fillVJet(int iN,std::vector<TJet*> &iObjects,double dR, double iRho, unsigned int runNum);
   void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex);
-  void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
-  void fillVJetCHS(TJet *iJet, int jIndex);
-  void fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum);
   TAddJet *getAddJet(TJet *iJet);
   TAddJet *getAddJetCHS(TJet *iJet);
 
@@ -95,6 +87,10 @@ protected:
   TBranch      *fVAddJetBrCHS;
   TClonesArray *fGens;
   TBranch      *fGenBr;
+  TClonesArray *fPFs;
+  TBranch      *fPFBr;
+  TClonesArray *fSVs;
+  TBranch      *fSVBr;
 
   TTree        *fTree;
 
@@ -102,8 +98,9 @@ protected:
   int           fNTightVJets, fNTightVJetsCHS;
   int           fNProngs;
 
-  std::vector<double> fVars, fVarsZprime;
-  std::vector<std::string> fLabels, fLabelsZprime;
+  std::map<std::string,float> fSingletons; 
+  int fN_cpf, fN_ipf, fN_sv;
+	std::map<std::string,float*> fCPFArrs, fIPFArrs, fSVArrs;
   std::vector<std::string> fTrigString;
 
   int           fN;

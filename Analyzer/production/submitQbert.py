@@ -83,7 +83,7 @@ if __name__ == '__main__':
     
     xsec = 1
 
-    eosOutDir = '/eos/cms/store/group/phys_exotica/dijet/qbert'
+    eosOutDir = '/eos/cms/store/group/phys_exotica/monotop/qbert/'
 
     
     optionsDataMc = {
@@ -94,7 +94,7 @@ if __name__ == '__main__':
         
     #analysisDir = "zprimebits-v11.051"
     analysisDir = options.tag
-    executable = "runZprime"
+    executable = "runQbert"
     
     samples = samplesDict[options.sample]
 
