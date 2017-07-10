@@ -1,0 +1,10 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_10.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_8.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZinv_narrow_M_1200_13TeV_madgraph/BulkGravToZZToZhadZinv_narrow_M-1200_13TeV-madgraph/CRAB3/170709_033954/0000/Output_9.root

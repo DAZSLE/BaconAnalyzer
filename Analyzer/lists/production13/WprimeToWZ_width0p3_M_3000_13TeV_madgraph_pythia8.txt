@@ -1,0 +1,4 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZ_width0p3_M_3000_13TeV_madgraph_pythia8/WprimeToWZ_width0p3_M-3000_TuneCUETP8M1_13TeV-madgraph-pythia8/CRAB3/170709_003620/0000/Output_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZ_width0p3_M_3000_13TeV_madgraph_pythia8/WprimeToWZ_width0p3_M-3000_TuneCUETP8M1_13TeV-madgraph-pythia8/CRAB3/170709_003620/0000/Output_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZ_width0p3_M_3000_13TeV_madgraph_pythia8/WprimeToWZ_width0p3_M-3000_TuneCUETP8M1_13TeV-madgraph-pythia8/CRAB3/170709_003620/0000/Output_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZ_width0p3_M_3000_13TeV_madgraph_pythia8/WprimeToWZ_width0p3_M-3000_TuneCUETP8M1_13TeV-madgraph-pythia8/CRAB3/170709_003620/0000/Output_5.root

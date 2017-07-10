@@ -1,0 +1,4 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/ZprimeToWWToWlepWhad_narrow_M_3500_13TeV_madgraph/ZprimeToWWToWlepWhad_narrow_M-3500_13TeV-madgraph/CRAB3/170709_005552/0000/Output_1.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/ZprimeToWWToWlepWhad_narrow_M_3500_13TeV_madgraph/ZprimeToWWToWlepWhad_narrow_M-3500_13TeV-madgraph/CRAB3/170709_005552/0000/Output_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/ZprimeToWWToWlepWhad_narrow_M_3500_13TeV_madgraph/ZprimeToWWToWlepWhad_narrow_M-3500_13TeV-madgraph/CRAB3/170709_005552/0000/Output_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/ZprimeToWWToWlepWhad_narrow_M_3500_13TeV_madgraph/ZprimeToWWToWlepWhad_narrow_M-3500_13TeV-madgraph/CRAB3/170709_005552/0000/Output_5.root

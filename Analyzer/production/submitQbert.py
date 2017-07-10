@@ -17,14 +17,25 @@ samplesDict['HH'] = {
    #'BulkGravToWW_narrow_M_3000_13TeV_madgraph': 'mc', 
    #'BulkGravToWW_narrow_M_3000_13TeV_madgraph_herwigpp': 'mc', 
    'BulkGravTohhTohbbhbb_narrow_M_1000_13TeV_madgraph':'mc', 
-#   'BulkGravTohhTohbbhbb_narrow_M_1200_13TeV_madgraph':'mc',
-#   'BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph':'mc',
-#   'BulkGravTohhTohbbhbb_narrow_M_1600_13TeV_madgraph':'mc', 
-#   'BulkGravTohhTohbbhbb_narrow_M_1800_13TeV_madgraph':'mc',
-#   'BulkGravTohhTohbbhbb_narrow_M_2000_13TeV_madgraph': 'mc', 
-#   'BulkGravTohhTohbbhbb_narrow_M_2500_13TeV_madgraph': 'mc', 
-#   'BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph': 'mc', 
-#   'BulkGravTohhTohbbhbb_narrow_M_3500_13TeV_madgraph': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_1200_13TeV_madgraph':'mc',
+   'BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph':'mc',
+   'BulkGravTohhTohbbhbb_narrow_M_1600_13TeV_madgraph':'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_1800_13TeV_madgraph':'mc',
+   'BulkGravTohhTohbbhbb_narrow_M_2000_13TeV_madgraph': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_2500_13TeV_madgraph': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_3000_13TeV_madgraph': 'mc', 
+   'BulkGravTohhTohbbhbb_narrow_M_3500_13TeV_madgraph': 'mc', 
+}
+samplesDict['QQ'] = {
+   'RSGravitonToQuarkQuark_kMpl01_M_1000_13TeV_pythia8':'mc',
+   'RSGravitonToQuarkQuark_kMpl01_M_2000_13TeV_pythia8':'mc',
+   'RSGravitonToQuarkQuark_kMpl01_M_3000_13TeV_pythia8':'mc',
+   'RSGravitonToQuarkQuark_kMpl01_M_4000_13TeV_pythia8':'mc',
+   'RSGravitonToQuarkQuark_kMpl01_M_5000_13TeV_pythia8':'mc',
+   'RSGravitonToQuarkQuark_kMpl01_M_6000_13TeV_pythia8':'mc',
+   'RSGravitonToQuarkQuark_kMpl01_M_7000_13TeV_pythia8':'mc',
+   'RSGravitonToQuarkQuark_kMpl01_M_8000_13TeV_pythia8':'mc',
+   'RSGravitonToQuarkQuark_kMpl01_M_9000_13TeV_pythia8':'mc'
 }
 samplesDict['TT'] = {
    'RSGluonToTT_M_1000_13TeV_pythia8':'mc',
@@ -40,11 +51,25 @@ samplesDict['TT'] = {
    'RSGluonToTT_M_750_13TeV_pythia8':'mc',
 }
 samplesDict['QCD'] = {       
-    'QCD_Pt_15to7000_Flat_13TeV_pythia8':'mc'
+    #'QCD_Pt_15to7000_Flat_13TeV_pythia8':'mc',
+    'QCD_Pt_1000to1400_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_120to170_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_1400to1800_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_170to300_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_1800to2400_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_2400to3200_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_300to470_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_3200toInf_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_470to600_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_600to800_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_800to1000_13TeV_pythia8_ext':'mc',
+    'QCD_Pt_80to120_13TeV_pythia8_ext':'mc'
+	
     }
 
 samplesDict['MC'] = dict(samplesDict['HH'].items() +
 		         samplesDict['TT'].items() +
+			 samplesDict['QQ'].items() +
                          samplesDict['QCD'].items())
 
 #samplesDict['Data'] = dict(samplesDict['JetHT'].items() +
@@ -69,7 +94,7 @@ if __name__ == '__main__':
     parser.add_option('-s','--sample',dest="sample", default="All",
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
-    parser.add_option('-t','--tag',dest="tag", default = "qbertbits-v13", help = "tag, which is the same as folder") 
+    parser.add_option('-t','--tag',dest="tag", default = "qbertbits-v13.2", help = "tag, which is the same as folder") 
     parser.add_option("--njobs-per-file",dest="njobs_per_file",type='int',default=1,help="Split into n jobs per file, will automatically produce submission scripts")
     
     (options,args) = parser.parse_args()
@@ -83,7 +108,7 @@ if __name__ == '__main__':
     
     xsec = 1
 
-    eosOutDir = '/eos/cms/store/group/phys_exotica/monotop/qbert/'
+    eosOutDir = '/eos/cms/store/group/phys_exotica/dijet/qbert/'
 
     
     optionsDataMc = {

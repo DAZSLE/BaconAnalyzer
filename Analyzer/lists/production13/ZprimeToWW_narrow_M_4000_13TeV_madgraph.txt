@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/ZprimeToWW_narrow_M_4000_13TeV_madgraph/ZprimeToWW_narrow_M-4000_13TeV-madgraph/CRAB3/170709_014757/0000/Output_2.root

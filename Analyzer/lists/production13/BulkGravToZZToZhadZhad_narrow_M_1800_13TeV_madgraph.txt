@@ -1,0 +1,1 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravToZZToZhadZhad_narrow_M_1800_13TeV_madgraph/BulkGravToZZToZhadZhad_narrow_M-1800_13TeV-madgraph/CRAB3/170709_025845/0000/Output_1.root

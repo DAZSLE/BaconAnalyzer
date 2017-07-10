@@ -1,2 +1,11 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_1.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_10.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_11.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_2.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_3.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_5.root
 root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_8.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/BulkGravTohhTohbbhbb_narrow_M_1400_13TeV_madgraph/BulkGravTohhTohbbhbb_narrow_M-1400_13TeV-madgraph/CRAB3/170608_014836/0000/Output_9.root

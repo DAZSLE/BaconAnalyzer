@@ -1,0 +1,9 @@
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_10.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_11.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_12.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_4.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_5.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_6.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_7.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_8.root
+root://eoscms.cern.ch//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZlep_narrow_M_450_13TeV_madgraph/WprimeToWZToWhadZlep_narrow_M-450_13TeV-madgraph/CRAB3/170708_221657/0000/Output_9.root

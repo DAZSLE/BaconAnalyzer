@@ -1,0 +1,1 @@
+../eos/cms//store/cmst3/group/monojet/production/13/WprimeToWZToWhadZhad_narrow_M_1000_13TeV_madgraph_herwigpp/WprimeToWZToWhadZhad_narrow_M-1000_13TeV-madgraph-herwigpp/CRAB3/170708_205050/0000/Output_1.root
