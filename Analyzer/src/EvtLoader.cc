@@ -87,6 +87,7 @@ EvtLoader::~EvtLoader() {
 void EvtLoader::reset() { 
   fEvtV         = 0; 
   fITrigger     = 0; 
+  fIMoreTrigger = 0;
   fsf_eleTrig   = 1;
   fsf_phoTrig   = 1;
   fsf_metTrig   = 1;
@@ -135,6 +136,7 @@ void EvtLoader::setupTree(TTree *iTree) {
   fTree->Branch("passJson"        ,&fPassJson       ,"fPassJson/i");
   fTree->Branch("metfilter"       ,&fMetFilters     ,"fMetFilters/i");
   fTree->Branch("triggerBits"     ,&fITrigger       ,"fITrigger/i");
+  fTree->Branch("moreTriggerBits" ,&fIMoreTrigger   ,"fIMoreTrigger/i");
   fTree->Branch("selectBits"      ,&fselectBits     ,"fselectBits/i");
  
   fTree->Branch("sf_eleTrig"      ,&fsf_eleTrig     ,"fsf_eleTrig/D");
@@ -193,6 +195,7 @@ void EvtLoader::fillEvent(unsigned int trigBit,float lWeight, unsigned int passJ
   fPassJson     = passJson;
   fNVtx         = nVtx();
   fITrigger     = trigBit;
+  fIMoreTrigger = triggerBit();
   fselectBits   = 1;
   fPUWeight     = puWeight(float(fNPU)); 
   fScale        = lWeight;
@@ -283,8 +286,25 @@ void EvtLoader::triggerEff(std::vector<TLorentzVector> iElectrons, std::vector<T
     fsf_phoTrig = getVal(hPhoTrig,iPhotons[0].Pt());
   }
 }
+void EvtLoader::addTrigger(std::string iName) { 
+  fTrigString.push_back(iName);
+}
+bool EvtLoader::passTrigger() {
+  bool lPass = false;
+  for(unsigned int i0 = 0; i0 < fTrigString.size(); i0++) { 
+    if(fTrigger->pass(fTrigString[i0],fEvt->triggerBits)) lPass = true;
+  }
+  return lPass;
+}
 bool EvtLoader::passTrigger(std::string iTrigger) {
   return fTrigger->pass(iTrigger,fEvt->triggerBits);
+}
+unsigned int EvtLoader::triggerBit() {
+  unsigned int lBit = 0;
+  for(unsigned int i0 = 0; i0 < fTrigString.size(); i0++) { 
+    if(fTrigger->pass(fTrigString[i0],fEvt->triggerBits))  lBit |= 1 << i0;
+  }
+  return lBit;
 }
 // puWeight
 float EvtLoader::puWeight(float iNPU) { 

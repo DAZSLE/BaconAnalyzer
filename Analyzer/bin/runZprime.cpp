@@ -170,6 +170,34 @@ int main( int argc, char **argv ) {
 	  ) trigbits = trigbits | 8; // single electron control region 
       // if(trigbits==1) continue;
     }
+    // More trigger bits
+
+    //Add the triggers we want
+    fEvt ->addTrigger("HLT_AK8PFJet360_TrimMass30_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*");
+    fEvt ->addTrigger("HLT_PFHT800_v*");
+    fEvt ->addTrigger("HLT_PFHT900_v*");
+    fEvt ->addTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*");
+    fEvt ->addTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*");
+    fEvt ->addTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*");
+    fEvt ->addTrigger("HLT_PFJet450_v*");
+
+    fEvt ->addTrigger("HLT_IsoMu24_v*"); // W(munu)H(bb)
+    fEvt ->addTrigger("HLT_IsoTkMu24_v*"); // W(munu)H(bb)
+    fEvt ->addTrigger("HLT_Mu50_v*");
+    fEvt ->addTrigger("HLT_TkMu50_v*");
+    
+    fEvt ->addTrigger("HLT_Ele27_WPTight_Gsf_v*"); // W(enu)H(bb)
+    fEvt ->addTrigger("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v*"); //Z(ee)H(bb)
+    fEvt ->addTrigger("HLT_Ele45_WPLoose_v*");
+    fEvt ->addTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*"); 
+
+    fEvt ->addTrigger("HLT_PFMET110_PFMHT110_IDTight_v*"); // Z(nunu)H(bb) 
+    fEvt ->addTrigger("HLT_PFMET120_PFMHT120_IDTight_v*"); // Z(nunu)H(bb)
+    fEvt ->addTrigger("HLT_PFMET170_NoiseCleaned_v*"); // Z(nunu)H(bb)
+    fEvt ->addTrigger("HLT_PFMET170_HBHECleaned_v*"); // Z(nunu)H(bb)
+    fEvt ->addTrigger("HLT_PFMET170_HBHE_BeamHaloCleaned_v*"); // Z(nunu)H(bb)
+
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
     
     // Objects
@@ -245,9 +273,11 @@ int main( int argc, char **argv ) {
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,10031);
     }
     if(lName.find("Spin0")!=std::string::npos){
-      fGen->findBoson(9900032,1);
-      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,9900032);
-      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,9900032);
+      // 9900032 for older, private samples
+      // 55 for newer, public samples (to be consistent with DM samples)
+      fGen->findBoson(55,1);
+      if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,55);
+      if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,55);
     }
     if(lName.find("TTJets")!=std::string::npos || lName.find("TT_")!=std::string::npos){
       float ttbarPtWeight = fGen->computeTTbarCorr();

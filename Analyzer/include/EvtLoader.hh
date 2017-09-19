@@ -32,7 +32,10 @@ public:
   void fillLepSF(std::vector<TLorentzVector> iLeptons, double lepPdgId, int islep0Tight, int islep1Tight);
   //Trigger
   bool passFilter();
+  void addTrigger(std::string iName);
+  bool passTrigger();
   bool passTrigger(std::string iTrigger);
+  unsigned int triggerBit();
   void triggerEff(std::vector<TLorentzVector> iElectrons, std::vector<TLorentzVector> iPhotons);
   //PU
   float        puWeight(float iPU);
@@ -126,10 +129,11 @@ protected:
   TH1D         *hMetTrig;
   TH1D         *hPhoTrig;
 
-  std::vector<std::vector<std::string>> fTrigString;
+  std::vector<std::string> fTrigString;
 
   char*  fSample;
   unsigned int fITrigger;
+  unsigned int fIMoreTrigger;
   unsigned int fMetFilters;
   unsigned int fNPU;
   unsigned int fNPUP;
