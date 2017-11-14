@@ -1,0 +1,1 @@
+root://131.225.204.161:1094//store/group/lpcbacon/13/JetHTRun2017A_PromptReco_v1/JetHTRun2017A_PromptReco_v1_0.root
