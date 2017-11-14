@@ -1,6 +1,7 @@
 #include "../include/SimpleJetResolution.h"
 #include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
-#include "JetCorrUtilities.cc"
+#include "CondFormats/JetMETObjects/interface/Utilities.h"
+//#include "JetCorrUtilities.cc"
 #include <iostream>
 #include <sstream>
 #include <cmath>
