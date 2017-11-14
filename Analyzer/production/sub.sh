@@ -29,7 +29,7 @@ function scan {
     local scandir=$1
     echo $scandir
     submitted=0
-    for x in `/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select ls $scandir |  awk '{print $1}'`; do
+    for x in `ls $scandir |  awk '{print $1}'`; do
         hasfailed=`echo $scandir | grep -c "failed"`
 	if [ "$hasfailed" -eq 1 ]; then
 	    break
@@ -50,7 +50,7 @@ function scan {
     done
 }
 
-for x in `/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select ls $scandir |  awk '{print $scandir}'`; do
+for x in `eos ls $scandir |  awk '{print $scandir}'`; do
     hasrootdir=`echo $x | grep -c .root`
     if [ "$hasrootdir" -eq 1 ]; then
 	break

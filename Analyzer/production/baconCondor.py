@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-# baconBatch.py #############################################################################
-# Python driver for Bacon Analyzer executable
+# baconCondor.py #############################################################################
+# Python driver for Bacon Analyzer executable in Condor
 # Original Author N.Wardle (CERN) 
 
 # ------------------------------------------------------------------------------------
@@ -15,42 +15,36 @@ from numpy import arange
 from itertools import product
 from BaconAna.Utils.makeFilelist import *
 
-# from makeFilelist import *
-
-# I want to make jobs out of ANY executable and separate based on groups of files or [list] input parameters. Also need the input swap to be as generic as possible
-
-# Ok this is dangerous since we pretty much have to assume some arguments for the exec
-# Take WAnalysis as the standard command line style
-# 'maxevents, input, isGen
-# default_args = ['10000000','nothing.root','1'] #,output.root -> could add to analyzer
 default_args = []
 EOS = ''
 
 # Options
 parser = OptionParser()
 parser = OptionParser(usage="usage: %prog analyzer outputfile [options] \nrun with --help to get list of options")
-parser.add_option("-d", "--directory", default='',
-                  help="Pick up files from a particular directory. can also pass from /eos/. Will initiate split by files (note you must also pass which index the file goes to)")
-parser.add_option("-l", "--list", default='', help="Pick up files from a particular list of files")
+parser.add_option("-l", "--list", default='', 
+                  help="Pick up files from a particular list of files")
 parser.add_option("-o", "--outdir", default='bacon',
                   help="output for analyzer. This will always be the output for job scripts.")
-parser.add_option("-e", "--eosoutdir", default='', help="eos output directory for analyzer files.")
+parser.add_option("-e", "--eosoutdir", default='', 
+                  help="eos output directory for analyzer files.")
 parser.add_option("-a", "--args", dest="args", default=[], action="append",
                   help="Pass executable args n:arg OR named arguments name:arg. Multiple args can be passed with <val1,val2...> or lists of integers with [min,max,stepsize]")
-parser.add_option("-v", "--verbose", dest="verbose", default=False, action="store_true", help="Spit out more info")
+parser.add_option("-v", "--verbose", dest="verbose", default=False, action="store_true", 
+                  help="Spit out more info")
 parser.add_option("", "--passSumEntries", dest="passSumEntries", default="",
                   help="x:treename Get Entries in TTree treename and pass to argument x")
 parser.add_option("", "--blacklist", dest="blacklist", default=[], action="append",
                   help="Add blacklist file types (search for this string in files and ignore them")
 
-# Make batch submission scripts options
+# Make condor submission scripts options
 parser.add_option("-n", "--njobs", dest="njobs", type='int', default=-1,
                   help="Split into n jobs, will automatically produce submission scripts")
 parser.add_option("--njobs-per-file", dest="njobs_per_file", type='int', default=1,
                   help="Split into n jobs per file, will automatically produce submission scripts")
-parser.add_option("-q", "--queue", default='1nh', help="submission queue")
-
-parser.add_option("--dryRun", default=False, action="store_true", help="Do nothing, just create jobs if requested")
+parser.add_option("-q", "--queue", default='1nh', 
+                  help="submission queue")
+parser.add_option("--dryRun", default=False, action="store_true", 
+                  help="Do nothing, just create jobs if requested")
 
 # Monitor options (submit,check,resubmit failed)  -- just pass outodir as usual but this time pass --monitor sub --monitor check or --monitor resub
 parser.add_option("--monitor", default='', help="Monitor mode (sub/resub/check directory of jobs)")
@@ -60,7 +54,7 @@ cwd = os.getcwd()
 if len(args) < 2 and not options.monitor: sys.exit('Error -- must specify ANALYZER and OUTPUTNAME')
 njobs = options.njobs if options.njobs > 0 else 1
 njobs_per_file = options.njobs_per_file
-
+cmssw = "CMSSW_9_2_12"
 
 def write_job(exec_line, out, analyzer, i, n, j, eosout=''):
     cwd = os.getcwd()
@@ -70,33 +64,23 @@ def write_job(exec_line, out, analyzer, i, n, j, eosout=''):
     sub_file = open('%s/sub_%s_job%d_subjob%d.sh' % (out, analyzer_short, i, j), 'w')
     sub_file.write('#!/bin/bash\n')
     sub_file.write('# Job Number %d, running over %d files, subjob %d \n' % (i, n, j))
+    sub_file.write('source /cvmfs/cms.cern.ch/cmsset_default.sh\n')
     sub_file.write('pwd\n')
-    sub_file.write('touch %s.run\n' % os.path.abspath(sub_file.name))
-    sub_file.write('cd %s\n' % cwd)
-    sub_file.write('pwd\n')
+    sub_file.write('tar -xf %s.tgz\n'% (cmssw))
+    sub_file.write('rm %s.tgz\n'% (cmssw))
+    sub_file.write('export SCRAM_ARCH=slc6_amd64_gcc630\n')
+    sub_file.write('mkdir -p %s/src\n'% (cmssw))
+    sub_file.write('cd CMSSW_9_2_12/src\n')
+    sub_file.write('scram b ProjectRename\n')
     sub_file.write('eval `scramv1 runtime -sh`\n')
-    sub_file.write('cd -\n')
-    sub_file.write('pwd\n')
+    sub_file.write('cp ../../data.tgz .\n')
+    sub_file.write('mkdir -p ${PWD}/BaconAnalyzer/Analyzer/\n')
+    sub_file.write('tar -xvzf data.tgz -C ${PWD}/BaconAnalyzer/Analyzer/\n')
     sub_file.write("export TWD=${PWD}/%s_job%d_subjob%d\n" % (analyzer_short, i, j))
     sub_file.write("mkdir -p $TWD\n")
     sub_file.write("cd $TWD\n")
-    # sub_file.write('cp -p $CMSSW_BASE/bin/$SCRAM_ARCH/%s .\n'%analyzer)
-    # sub_file.write('cp -p %s .\n'%(os.path.abspath(analyzer)))
-    sub_file.write('mkdir -p %s\n' % (out))
-    if eosout:
-        sub_file.write('%s mkdir -p %s\n' % (EOS, eosout))
-
-    sub_file.write('if ( %s ) then\n' % exec_line)
-    # sub_file.write('\t hadd -f Output_job%d.root %s/*.root \n'%(i,(out)))
-    # sub_file.write('\t mv Output_job*.root %s\n'%os.path.abspath(out))
-    # sub_file.write('\t cmsMkdir %s/%s \n'%('/store/cmst3/user/pharris/output',options.outdir))
-    # sub_file.write('\t cmsStage Output_job%d.root %s/%s \n'%(i,'/store/cmst3/user/pharris/output',options.outdir))
-    sub_file.write('\t rm -rf ./bacon ./Output_job* \n')
-    sub_file.write('\t touch %s.done\n' % os.path.abspath(sub_file.name))
-    sub_file.write('else\n')
-    sub_file.write('\t touch %s.fail\n' % os.path.abspath(sub_file.name))
-    sub_file.write('fi\n')
-    sub_file.write('rm -f %s.run\n' % os.path.abspath(sub_file.name))
+    sub_file.write("cp ../../../runZprime .\n")
+    sub_file.write('%s\n' % exec_line)
     sub_file.write('cd ..\n')
     sub_file.write('rm -rf $TWD\n')
     sub_file.close()
@@ -105,56 +89,44 @@ def write_job(exec_line, out, analyzer, i, n, j, eosout=''):
 
 def submit_jobs(lofjobs):
     for sub_file in lofjobs:
-        os.system('rm -f %s.done' % os.path.abspath(sub_file))
-        os.system('rm -f %s.fail' % os.path.abspath(sub_file))
-        os.system('rm -f %s.log' % os.path.abspath(sub_file))
-        os.system('bsub -q %s -o %s.log %s'%(options.queue,os.path.abspath(sub_file),os.path.abspath(sub_file)))
-        #os.system('bsub -q %s -o /dev/null %s' % (options.queue, os.path.abspath(sub_file)))
-
+        os.system('rm -f %s.stdout' % sub_file)
+        os.system('rm -f %s.stderr' % sub_file)
+        os.system('rm -f %s.' % sub_file)
+        os.system('rm -f %s.jdl'% sub_file)
+        condor_file = open('%s.jdl' % sub_file, 'w')
+        condor_file.write('universe = vanilla\n')
+        condor_file.write('Executable = %s\n'% sub_file)
+        condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
+        condor_file.write('request_disk = 3000000\n')
+        condor_file.write('request_memory = 5000\n')
+        condor_file.write('Should_Transfer_Files = YES\n')
+        condor_file.write('WhenToTransferOutput = ON_EXIT\n')
+        condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/cmsset_default.sh, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/runZprime, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz\n')
+        condor_file.write('use_x509userproxy = true\n')
+        condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
+        condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
+        condor_file.write('Error = %s.stderr\n' % os.path.abspath(condor_file.name))
+        condor_file.write('Log = %s.log\n' % os.path.abspath(condor_file.name))
+        condor_file.write('Queue 1\n')
+        condor_file.close()
+        os.system('chmod +x %s'% os.path.abspath(condor_file.name))
+        os.system('condor_submit %s'%(os.path.abspath(condor_file.name)))
 
 if options.monitor:
-    if options.monitor not in ['sub', 'check', 'resub']: sys.exit('Error -- Unknown monitor mode %s' % options.monitor)
+    if options.monitor not in ['sub']: sys.exit('Error -- Unknown monitor mode %s' % options.monitor)
     dir = options.outdir
 
-    if options.monitor == 'check' or options.monitor == 'resub':
-        failjobs = []
-        runjobs = []
-        donejobs = []
-        number_of_jobs = 0
-        for root, dirs, files in os.walk(dir):
-            for file in fnmatch.filter(files, '*.sh'):
-                if os.path.isfile('%s/%s.fail' % (root, file)):
-                    failjobs.append('%s/%s' % (root, file))
-                elif os.path.isfile('%s/%s.done' % (root, file)):
-                    if not '%s.sh' % file in failjobs: donejobs.append('%s/%s' % (root, file))
-                elif os.path.isfile('%s/%s.run' % (root, file)):
-                    runjobs.append('%s/%s' % (root, file))
-                else:
-                    failjobs.append('%s/%s' % (root, file))
-                number_of_jobs += 1
-        print 'Status of jobs directory ', dir
-        print '  Total of %d jobs' % number_of_jobs
-        print '  %d in status Fail -> (resub them with --monitor resub)' % len(failjobs)
-        for job in failjobs: print '\t FAIL %s' % job
-        print '  %d in status Running -> ' % len(runjobs)
-        for job in runjobs: print '\t RUN %s' % job
-        print '  %d in status Done -> ' % len(donejobs)
-        for job in donejobs: print '\t DONE %s' % job
-        print "\n  %d/%d Running, %d/%d Done, %d/%d Failed (resub with --monitor resub)" \
-              % (len(runjobs), number_of_jobs, len(donejobs), number_of_jobs, len(failjobs), number_of_jobs)
-
-    if options.monitor == 'sub' or options.monitor == 'resub':
+    if options.monitor == 'sub':
         # pick up job scripts in output directory (ends in .sh)
         lofjobs = []
         for root, dirs, files in os.walk(dir):
             for file in fnmatch.filter(files, '*.sh'):
-                if options.monitor == 'resub' and '%s/%s' % (root, file) not in failjobs: continue
                 lofjobs.append('%s/%s' % (os.path.abspath(root), file))
         print 'Submitting %d jobs from directory %s' % (len(lofjobs), dir)
         submit_jobs(lofjobs)
 
-    sys.exit('Finished Monitor -- %s' % options.monitor)
 
+    sys.exit('Finished Monitor -- %s' % options.monitor)
 
 def parse_to_dict(l_list):
     if len(l_list) < 1: return {}
@@ -192,26 +164,6 @@ def parse_to_dict(l_list):
             iskey += 1
     return ret
 
-
-def getFilesJob(dirin, job, tnjobs):
-    if tnjobs == 1:
-        tnjobs = -1
-        job = 0
-    infiles = []
-    if "," in dirin:
-        alldirs = dirin.split(',')
-    else:
-        alldirs = [dirin]
-    infiles = []
-    for dir in alldirs:
-        if '/store/' in dir:
-            infiles.extend(makeCaFiles(dir, options.blacklist, tnjobs, job))
-        else:
-            infiles.extend(makeFiles(dir, options.blacklist, tnjobs, job))
-    if options.verbose: print "VERB -- Found following files for dir %s --> " % dir, infiles
-    return infiles
-
-
 def getArgsJob(interationsobject, job_id, njobs):
     injobs = []
     #   nf = 0
@@ -239,12 +191,10 @@ print analyzer_args
 if options.passSumEntries:
     pos, treenam = options.passSumEntries.split(":")
     numEntries = 0
-    if options.directory:
-        files = getFilesJob(options.directory.split(":")[1], 0, -1)
-    elif options.list:
+    if options.list:
         with open(options.list.split(":")[1], 'r') as mylist:
             files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
-            #print files
+        # print files
         for fi in files:
             tf = r.TFile.Open(fi[0])
             try:
@@ -267,23 +217,17 @@ if options.passSumEntries:
         numEntries = -1;
     analyzer_args[int(pos)] = ['', ['{:e}'.format(float(numEntries))]]
 else:
-    if options.directory:
-        files = getFilesJob(options.directory.split(":")[1], 0, -1)
-    elif options.list:
+    if options.list:
         with open(options.list.split(":")[1], 'r') as mylist:
             files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
-
+            
 exec_line = '%s' % analyzer
 
-if options.directory:
-    filepos, options.directory = options.directory.split(':')
-    analyzer_args[int(filepos)] = ['', "fileinput"]
-elif options.list:
+if options.list:
     filepos, options.list = options.list.split(':')
     analyzer_args[int(filepos)] = ['', "fileinput"]
-
+    
 # NEED TO ITERATE OF MAP OF ARGS, FORGET DEFAULT ARGGS I THINK, forec them set!!!!!
-# for arg_i,arg in enumerate(default_args):
 sortedkeys = analyzer_args.keys()
 if len(sortedkeys): sortedkeys.sort()
 
@@ -319,9 +263,7 @@ for job_i in range(njobs):
         # i.e it iterates over all combinations of arguments in the args list
         iterationsobject = product(*listoflists)
         ################################
-        if options.directory:
-            files = getFilesJob(options.directory, job_i, njobs)
-        elif options.list:
+        if options.list:
             with open(options.list, 'r') as mylist:
                 allfiles = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
                 #print allfiles
@@ -333,27 +275,21 @@ for job_i in range(njobs):
 
         nfiles_i = 0
         for fil_i, fil in enumerate(files):
-            # if options.directory :
             if not fil[1]: continue
-            if options.directory:
-                exec_line_i = exec_line.replace('subjob_i','%d'%subjob_i)
-                exec_line_i = exec_line_i.replace('fileinput', " " + fil[0] + " ")
-            elif options.list:
+            if options.list:
                 exec_line_i = exec_line.replace('subjob_i','%d'%subjob_i)
                 exec_line_i = exec_line_i.replace('fileinput', " " + fil[0] + " ")
             else:
                 exec_line_i = exec_line.replace('subjob_i','%d'%subjob_i)
-                for i, m in enumerate(
-                        fil[0]):  # no defaults so guarantee (make the check) that all of the args are there)
-                    exec_line_i = exec_line_i.replace(" MULTARG_%d " % i, " " + str(
-                        m) + " ")  # LIST  OVER iterated arguments and produce and replace MULTIARG_i with arguemnt at i in list ?
+                for i, m in enumerate(fil[0]):  # no defaults so guarantee (make the check) that all of the args are there)
+                    exec_line_i = exec_line_i.replace(" MULTARG_%d " % i, " " + str(m) + " ")  # LIST  OVER iterated arguments and produce and replace MULTIARG_i with arguemnt at i in list ?
             if options.eosoutdir:
                 if njobs_per_file > 1:                    
                     job_exec += exec_line_i + '; %s cp %s %s/%s_job%d_file%d_subjob%d.root; ' % (
                     EOS, outfile, options.eosoutdir, outfile, job_i, fil_i, subjob_i)
                 else:
-                    job_exec += exec_line_i + '; %s cp %s %s/%s_job%d_file%d.root; ' % (
-                    EOS, outfile, options.eosoutdir, outfile, job_i, fil_i)
+                    job_exec += exec_line_i + '; xrdcp -s %s root://cmseos.fnal.gov/%s/%s_job%d_file%d.root; ' % (
+                    outfile, options.eosoutdir, outfile, job_i, fil_i)
             else:
                 if njobs_per_file > 1:
                     job_exec += exec_line_i + '; mv %s %s/%s_job%d_file%d_subjob%d.root; ' % (

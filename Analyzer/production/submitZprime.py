@@ -3,18 +3,33 @@
 import sys, commands, os, fnmatch
 from optparse import OptionParser
 
-EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
 samplesDict = {}
 samplesDict['JetHT'] = {
-    'JetHTRun2016B_03Feb2017_ver1_v1_v3': 'rereco',
-    'JetHTRun2016B_03Feb2017_ver2_v2_v3': 'rereco',
-    'JetHTRun2016C_03Feb2017_v1_v3': 'rereco',
-    'JetHTRun2016D_03Feb2017_v1_v3': 'rereco',
-    'JetHTRun2016E_03Feb2017_v1_v3': 'rereco',
-    'JetHTRun2016F_03Feb2017_v1_v3': 'rereco',
-    'JetHTRun2016G_03Feb2017_v1_v3': 'rereco',
-    'JetHTRun2016H_03Feb2017_ver2_v1_v3': 'data',
-    'JetHTRun2016H_03Feb2017_ver3_v1_v3': 'data'
+    # 'JetHTRun2017A_12Sep2017_v1': 'prompt17',
+    'JetHTRun2017A_PromptReco_v1': 'prompt17',
+    'JetHTRun2017A_PromptReco_v2': 'prompt17',
+    'JetHTRun2017A_PromptReco_v3': 'prompt17',
+    # 'JetHTRun2017B_12Sep2017_v1': 'prompt17',
+    'JetHTRun2017B_22Jun2017_v1': 'prompt17',
+    'JetHTRun2017B_23Jun2017_v1': 'prompt17',
+    # 'JetHTRun2017B_PromptReco_v1': 'prompt17',
+    'JetHTRun2017B_PromptReco_v2': 'prompt17',
+    'JetHTRun2017C_12Sep2017_v1': 'prompt17',
+    'JetHTRun2017C_PromptReco_v1': 'prompt17',
+    'JetHTRun2017C_PromptReco_v2': 'prompt17',
+    'JetHTRun2017C_PromptReco_v3': 'prompt17',
+    # 'JetHTRun2017D_PromptReco_v1': 'prompt17',
+    # 'JetHTRun2017E_PromptReco_v1': 'prompt17',
+    # 'JetHTRun2017F_PromptReco_v1': 'prompt17',
+    # 'JetHTRun2016B_03Feb2017_ver1_v1_v3': 'rereco',
+    # 'JetHTRun2016B_03Feb2017_ver2_v2_v3': 'rereco',
+    # 'JetHTRun2016C_03Feb2017_v1_v3': 'rereco',
+    # 'JetHTRun2016D_03Feb2017_v1_v3': 'rereco',
+    # 'JetHTRun2016E_03Feb2017_v1_v3': 'rereco',
+    # 'JetHTRun2016F_03Feb2017_v1_v3': 'rereco',
+    # 'JetHTRun2016G_03Feb2017_v1_v3': 'rereco',
+    # 'JetHTRun2016H_03Feb2017_ver2_v1_v3': 'data',
+    # 'JetHTRun2016H_03Feb2017_ver3_v1_v3': 'data'
 }
 samplesDict['SingleMuon'] = {
     'SingleMuonRun2016B_03Feb2017_ver1_v1': 'rereco',
@@ -237,8 +252,9 @@ if __name__ == '__main__':
     parser.add_option("--monitor",default='',help="Monitor mode (sub/resub/check directory of jobs)")
     parser.add_option('-s','--sample',dest="sample", default="All",
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
-                      help="samples to produces")
+                      help="samples to produce")
     parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v12.04", help = "tag, which is the same as folder") 
+    parser.add_option('-b','--batch',dest="sub", default = False, help = "use condor or batch system")
     parser.add_option("--njobs-per-file",dest="njobs_per_file",type='int',default=1,help="Split into n jobs per file, will automatically produce submission scripts")
     
     (options,args) = parser.parse_args()
@@ -249,28 +265,36 @@ if __name__ == '__main__':
     
     jsonPrompt = "$PWD/../data/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt"
     jsonRereco = "$PWD/../data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"
-    
+    jsonPrompt17 = "Cert_294927-305636_13TeV_PromptReco_Collisions17_JSON.txt"
+
     xsec = 1
-
-    eosOutDir = '/eos/cms/store/group/phys_exotica/dijet/dazsle'
-
-    
-    optionsDataMc = {
-        'mc': "Output.root --passSumEntries 5:Events -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
-        'data': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt,options.njobs_per_file),        
-        'rereco': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonRereco,options.njobs_per_file)
-    }
-        
-    #analysisDir = "zprimebits-v11.051"
     analysisDir = options.tag
     executable = "runZprime"
-    
     samples = samplesDict[options.sample]
+
+    if options.sub:
+        eosOutDir = '/eos/cms/store/group/phys_exotica/dijet/dazsle'
+        execPython = 'baconBatch.py'
+        EOS = ''
+        optionsDataMc = {
+            'mc': "Output.root --passSumEntries 5:Events -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
+            'data': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt,options.njobs_per_file),        
+            'rereco': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonRereco,options.njobs_per_file),
+            }
+    else:
+        eosOutDir = '/store/user/lpcbacon/dazsle'
+        execPython = 'baconCondor.py'
+        EOS = 'eos root://cmseos.fnal.gov'
+        optionsDataMc = {
+            'prompt17': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt17,options.njobs_per_file),
+            }
 
     exec_me('%s mkdir -p %s/%s'%(EOS,eosOutDir,analysisDir))  
     for label, isMc in samples.iteritems():
         exec_me('%s mkdir -p %s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
-        if isMc in ['data','rereco']:
-            exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12a/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+        if isMc in ['prompt17']:
+            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production13/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+        elif isMc in ['data','rereco']:
+            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production12a/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
         else:            
-            exec_me("python baconBatch.py %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
