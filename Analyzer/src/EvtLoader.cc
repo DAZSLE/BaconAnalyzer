@@ -17,6 +17,7 @@ EvtLoader::EvtLoader(TTree *iTree,std::string iName,std::string iHLTFile,std::st
   fEvt      = new TEventInfo();
   iTree->SetBranchAddress("Info",       &fEvt);
   fEvtBr    = iTree->GetBranch("Info");
+  std::cout << "trigger file " << iHLTFile << std::endl;
   fTrigger  = new TTrigger(iHLTFile);
   
   fVertices = new TClonesArray("baconhep::TVertex");

@@ -10,18 +10,18 @@ using namespace baconhep;
 VJetLoader::VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS,std::string iAddJetCHS,int iN, bool iData) { 
   fVJets         = new TClonesArray("baconhep::TJet");
   fVAddJets      = new TClonesArray("baconhep::TAddJet");
-  fVJetsCHS      = new TClonesArray("baconhep::TJet");
-  fVAddJetsCHS   = new TClonesArray("baconhep::TAddJet");
+  // fVJetsCHS      = new TClonesArray("baconhep::TJet");
+  // fVAddJetsCHS   = new TClonesArray("baconhep::TAddJet");
 
   iTree->SetBranchAddress(iJet.c_str(),       &fVJets);
   iTree->SetBranchAddress(iAddJet.c_str(),    &fVAddJets);
-  iTree->SetBranchAddress(iJetCHS.c_str(),    &fVJetsCHS);
-  iTree->SetBranchAddress(iAddJetCHS.c_str(), &fVAddJetsCHS);
+  // iTree->SetBranchAddress(iJetCHS.c_str(),    &fVJetsCHS);
+  // iTree->SetBranchAddress(iAddJetCHS.c_str(), &fVAddJetsCHS);
 
   fVJetBr        = iTree->GetBranch(iJet.c_str());
   fVAddJetBr     = iTree->GetBranch(iAddJet.c_str());
-  fVJetBrCHS     = iTree->GetBranch(iJetCHS.c_str());
-  fVAddJetBrCHS  = iTree->GetBranch(iAddJetCHS.c_str());
+  // fVJetBrCHS     = iTree->GetBranch(iJetCHS.c_str());
+  // fVAddJetBrCHS  = iTree->GetBranch(iAddJetCHS.c_str());
 
   fN = iN;
 
@@ -38,10 +38,10 @@ VJetLoader::~VJetLoader() {
   delete fVJetBr;
   delete fVAddJets;
   delete fVAddJetBr;
-  delete fVJetsCHS;
-  delete fVJetBrCHS;
-  delete fVAddJetsCHS;
-  delete fVAddJetBrCHS;
+  // delete fVJetsCHS;
+  // delete fVJetBrCHS;
+  // delete fVAddJetsCHS;
+  // delete fVAddJetBrCHS;
 }
 void VJetLoader::reset() { 
   fNLooseVJets        = 0;
@@ -175,41 +175,41 @@ void VJetLoader::setupTreeZprime(TTree *iTree, std::string iJetLabel) {
   fTree->Branch(pSnP.str().c_str() ,&fnParticles          ,(pSnP.str()+"/I").c_str());
   fTree->Branch(pSratio.str().c_str() ,&fRatioPt          ,(pSratio.str()+"/D").c_str());
 }
-void VJetLoader::setupTreeCHS(TTree *iTree, std::string iJetLabel) {
-  resetCHS();  
-  fTree = iTree;
-  for(int i0 = 0; i0 < fN; i0++) {
-    fdoublecsvCHS.push_back(-999);
-    fdoublesubCHS.push_back(-999);
-    fptCHS.push_back(-999);
-    fetaCHS.push_back(-999);
-    fphiCHS.push_back(-999);
-    fisTightVJetCHS.push_back(-999);
-  }
-  for(int i0 = 0; i0 < fN; i0++) {
-    std::stringstream pSdc;   pSdc << iJetLabel << i0 << "_doublecsv";
-    std::stringstream pSds;   pSds << iJetLabel << i0 << "_doublesub";    
-    std::stringstream pSpt;   pSpt << iJetLabel << i0 << "_pt";    
-    std::stringstream pSeta;   pSeta << iJetLabel << i0 << "_eta";  
-    std::stringstream pSphi;   pSphi << iJetLabel << i0 << "_phi";
-    std::stringstream pSTJ;   pSTJ << iJetLabel << i0 << "_isTightVJet";    
-    fTree->Branch(pSTJ.str().c_str() ,&fisTightVJetCHS[i0]         ,(pSTJ.str()+"/I").c_str());
-    fTree->Branch(pSdc.str().c_str() ,&fdoublecsvCHS.at(i0)        ,(pSdc.str()+"/D").c_str());
-    fTree->Branch(pSds.str().c_str() ,&fdoublesubCHS.at(i0)       ,(pSds.str()+"/D").c_str());
-    fTree->Branch(pSpt.str().c_str() ,&fptCHS.at(i0)       ,(pSpt.str()+"/D").c_str());
-    fTree->Branch(pSeta.str().c_str() ,&fetaCHS.at(i0)       ,(pSeta.str()+"/D").c_str());
-    fTree->Branch(pSphi.str().c_str() ,&fphiCHS.at(i0)       ,(pSphi.str()+"/D").c_str());
-  }
-}
+// void VJetLoader::setupTreeCHS(TTree *iTree, std::string iJetLabel) {
+//   resetCHS();  
+//   fTree = iTree;
+//   for(int i0 = 0; i0 < fN; i0++) {
+//     fdoublecsvCHS.push_back(-999);
+//     fdoublesubCHS.push_back(-999);
+//     fptCHS.push_back(-999);
+//     fetaCHS.push_back(-999);
+//     fphiCHS.push_back(-999);
+//     fisTightVJetCHS.push_back(-999);
+//   }
+//   for(int i0 = 0; i0 < fN; i0++) {
+//     std::stringstream pSdc;   pSdc << iJetLabel << i0 << "_doublecsv";
+//     std::stringstream pSds;   pSds << iJetLabel << i0 << "_doublesub";    
+//     std::stringstream pSpt;   pSpt << iJetLabel << i0 << "_pt";    
+//     std::stringstream pSeta;   pSeta << iJetLabel << i0 << "_eta";  
+//     std::stringstream pSphi;   pSphi << iJetLabel << i0 << "_phi";
+//     std::stringstream pSTJ;   pSTJ << iJetLabel << i0 << "_isTightVJet";    
+//     fTree->Branch(pSTJ.str().c_str() ,&fisTightVJetCHS[i0]         ,(pSTJ.str()+"/I").c_str());
+//     fTree->Branch(pSdc.str().c_str() ,&fdoublecsvCHS.at(i0)        ,(pSdc.str()+"/D").c_str());
+//     fTree->Branch(pSds.str().c_str() ,&fdoublesubCHS.at(i0)       ,(pSds.str()+"/D").c_str());
+//     fTree->Branch(pSpt.str().c_str() ,&fptCHS.at(i0)       ,(pSpt.str()+"/D").c_str());
+//     fTree->Branch(pSeta.str().c_str() ,&fetaCHS.at(i0)       ,(pSeta.str()+"/D").c_str());
+//     fTree->Branch(pSphi.str().c_str() ,&fphiCHS.at(i0)       ,(pSphi.str()+"/D").c_str());
+//   }
+// }
 void VJetLoader::load(int iEvent) { 
   fVJets       ->Clear();
   fVJetBr      ->GetEntry(iEvent);
   fVAddJets    ->Clear();
   fVAddJetBr   ->GetEntry(iEvent);
-  fVJetsCHS    ->Clear();
-  fVJetBrCHS   ->GetEntry(iEvent);
-  fVAddJetsCHS ->Clear();
-  fVAddJetBrCHS->GetEntry(iEvent);
+  // fVJetsCHS    ->Clear();
+  // fVJetBrCHS   ->GetEntry(iEvent);
+  // fVAddJetsCHS ->Clear();
+  // fVAddJetBrCHS->GetEntry(iEvent);
 }
 void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
   reset();  
@@ -335,64 +335,64 @@ void VJetLoader::selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons
   addVJet(fLooseVJetsByDoubleB,selectedVJetsByDoubleB);
 
   // now do CHS jets (pT > 400 GeV)
-  for  (int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
-    TJet *pVJet = (TJet*)((*fVJetsCHS)[i0]);
-    if(pVJet->pt        <=  400)                                           continue;
-    if(fabs(pVJet->eta) >=  2.5)                                           continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-    if(!passJetLooseSel(pVJet))                                            continue;
-    addJet(pVJet,fLooseVJetsCHSByDoubleB);
-    if(!passJetTightLepVetoSel(pVJet))                                     continue;
-  }
-  addVJet(fLooseVJetsCHSByDoubleB,selectedVJetsCHSByDoubleB);
+  // for  (int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
+  //   TJet *pVJet = (TJet*)((*fVJetsCHS)[i0]);
+  //   if(pVJet->pt        <=  400)                                           continue;
+  //   if(fabs(pVJet->eta) >=  2.5)                                           continue;
+  //   if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
+  //   if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
+  //   if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
+  //   if(!passJetLooseSel(pVJet))                                            continue;
+  //   addJet(pVJet,fLooseVJetsCHSByDoubleB);
+  //   if(!passJetTightLepVetoSel(pVJet))                                     continue;
+  // }
+  // addVJet(fLooseVJetsCHSByDoubleB,selectedVJetsCHSByDoubleB);
   
-  std::vector<int> indexCHS;
-  std::vector<double> doubleBCHS;
-  for (int i0 = 0; i0 < int(selectedVJetsByDoubleB.size()); i0++) {    
-    int iCHSJet = -999;
-    double dbCHSJet = -999;
-    iCHSJet = getMatchedCHSJetIndex(selectedVJetsCHSByDoubleB,selectedVJetsByDoubleB[i0],0.8);
-    if (iCHSJet > -999) {
-      //selectedVJetsCHS[iCHSJet];      
-      TAddJet *pAddJetCHS = getAddJetCHS(fLooseVJetsCHSByDoubleB[iCHSJet]);  
-      dbCHSJet = pAddJetCHS->doublecsv;      
-    }
-    std::cout << "index CHS    = " << iCHSJet << std::endl;
-    std::cout << "double-b CHS = " << dbCHSJet << std::endl;
-    indexCHS.push_back(iCHSJet);
-    doubleBCHS.push_back(dbCHSJet);
-  }
+  // std::vector<int> indexCHS;
+  // std::vector<double> doubleBCHS;
+  // for (int i0 = 0; i0 < int(selectedVJetsByDoubleB.size()); i0++) {    
+  //   int iCHSJet = -999;
+  //   double dbCHSJet = -999;
+  //   iCHSJet = getMatchedCHSJetIndex(selectedVJetsCHSByDoubleB,selectedVJetsByDoubleB[i0],0.8);
+  //   if (iCHSJet > -999) {
+  //     //selectedVJetsCHS[iCHSJet];      
+  //     TAddJet *pAddJetCHS = getAddJetCHS(fLooseVJetsCHSByDoubleB[iCHSJet]);  
+  //     dbCHSJet = pAddJetCHS->doublecsv;      
+  //   }
+  //   std::cout << "index CHS    = " << iCHSJet << std::endl;
+  //   std::cout << "double-b CHS = " << dbCHSJet << std::endl;
+  //   indexCHS.push_back(iCHSJet);
+  //   doubleBCHS.push_back(dbCHSJet);
+  // }
 
   
 }
-void VJetLoader::selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
-  resetCHS();
-  int lCount(0), lCountT(0);
-  for  (int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
-    TJet *pVJet = (TJet*)((*fVJetsCHS)[i0]);
-    if(pVJet->pt        <=  150)                                           continue;
-    if(fabs(pVJet->eta) >=  2.5)                                           continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
-    if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-    if(!passJetLooseSel(pVJet))                                            continue;
-    addJet(pVJet,fLooseVJetsCHS);
-    lCount++;
+// void VJetLoader::selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum){
+//   resetCHS();
+//   int lCount(0), lCountT(0);
+//   for  (int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
+//     TJet *pVJet = (TJet*)((*fVJetsCHS)[i0]);
+//     if(pVJet->pt        <=  150)                                           continue;
+//     if(fabs(pVJet->eta) >=  2.5)                                           continue;
+//     if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
+//     if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
+//     if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
+//     if(!passJetLooseSel(pVJet))                                            continue;
+//     addJet(pVJet,fLooseVJetsCHS);
+//     lCount++;
 
-    if(!passJetTightLepVetoSel(pVJet))                                     continue;
-    lCountT++;
-  }
-  addVJet(fLooseVJetsCHS,selectedVJetsCHS);
+//     if(!passJetTightLepVetoSel(pVJet))                                     continue;
+//     lCountT++;
+//   }
+//   addVJet(fLooseVJetsCHS,selectedVJetsCHS);
 
   
-  for  (int i0 = 0; i0 < int(selectedVJetsCHS.size()); i0++) { 
-    if(passJetTightLepVetoSel(fLooseVJetsCHS[i0])) fisTightVJetCHS[i0] = 1;
-  }
-  fNLooseVJetsCHS = lCount;
-  fNTightVJetsCHS = lCountT;
-}
+//   for  (int i0 = 0; i0 < int(selectedVJetsCHS.size()); i0++) { 
+//     if(passJetTightLepVetoSel(fLooseVJetsCHS[i0])) fisTightVJetCHS[i0] = 1;
+//   }
+//   fNLooseVJetsCHS = lCount;
+//   fNTightVJetsCHS = lCountT;
+// }
 void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum){ 
   int lBase = 3.*fN;
   int lMin = iObjects.size();
@@ -529,36 +529,38 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
 }
 int VJetLoader::getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR) {  
   TLorentzVector iJet1;
-  int iJet1id(0), nmatched(0);
+  //int iJet1id(0);
+  int nmatched(0);
   float mindR = dR;
   for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
     if ((iJets1[i0].DeltaR(iJet2) < mindR) && (fabs(iJets1[i0].Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))) {
       nmatched++;
       iJet1 = iJets1[i0];
-      iJet1id = i0;
+      //iJet1id = i0;
       mindR= iJets1[i0].DeltaR(iJet2);	
     }
   }
-  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){    
-    return iJet1id;
-  }
+  //if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){    
+  //  return iJet1id;
+  //}
   return -999;
 }
 void VJetLoader::matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex){
   TLorentzVector iJet1;
-  int iJet1id(0), nmatched(0);
+  //int iJet1id(0);
+  int nmatched(0);
   float mindR = dR;
   for(int i0 = 0; i0 < int(iJets1.size()); i0++) {
     if ((iJets1[i0].DeltaR(iJet2) < mindR) && (fabs(iJets1[i0].Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))) {
       nmatched++;
       iJet1 = iJets1[i0];
-      iJet1id = i0;
+      // iJet1id = i0;
       mindR= iJets1[i0].DeltaR(iJet2);	
     }
   }
-  if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){
-    fillVJetCHS(fLooseVJetsCHS[iJet1id], jIndex);
-  }
+  // if (nmatched >0 && (iJet1.DeltaR(iJet2) < dR) && (fabs(iJet1.Pt()-iJet2.Pt())<0.35*fabs(iJet2.Pt()))){
+  //   fillVJetCHS(fLooseVJetsCHS[iJet1id], jIndex);
+  // }
 }
 
 void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR){
@@ -576,14 +578,14 @@ void VJetLoader::matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector i
     fRatioPt = iJet2.Pt()/iJet1.Pt();
   }
 }
-void VJetLoader::fillVJetCHS(TJet *iJet, int jIndex){
-  TAddJet *pAddJet = getAddJetCHS(iJet);
-  fdoublecsvCHS[jIndex] = double(pAddJet->doublecsv);
-  fdoublesubCHS[jIndex] = double(pAddJet->Double_sub);
-  fptCHS[jIndex] = double(iJet->pt);
-  fetaCHS[jIndex] = double(iJet->eta);
-  fphiCHS[jIndex] = double(iJet->phi);
-}
+// void VJetLoader::fillVJetCHS(TJet *iJet, int jIndex){
+//   TAddJet *pAddJet = getAddJetCHS(iJet);
+//   fdoublecsvCHS[jIndex] = double(pAddJet->doublecsv);
+//   fdoublesubCHS[jIndex] = double(pAddJet->Double_sub);
+//   fptCHS[jIndex] = double(iJet->pt);
+//   fetaCHS[jIndex] = double(iJet->eta);
+//   fphiCHS[jIndex] = double(iJet->phi);
+// }
 TAddJet *VJetLoader::getAddJet(TJet *iJet) { 
   int lIndex = -1;
   TAddJet *lJet = 0; 
@@ -597,19 +599,19 @@ TAddJet *VJetLoader::getAddJet(TJet *iJet) {
   }
   return lJet;
 }
-TAddJet *VJetLoader::getAddJetCHS(TJet *iJet) {
-  int lIndex = -1;
-  TAddJet *lJet = 0;
-  for(int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
-    if((*fVJetsCHS)[i0] == iJet) { lIndex = i0; break;}
-  }
-  if(lIndex == -1) return 0;
-  for  (int i0 = 0; i0 < fVAddJetsCHS->GetEntriesFast(); i0++) {
-    TAddJet *pJet = (TAddJet*)((*fVAddJetsCHS)[i0]);
-    if(pJet->index == fabs(lIndex)) { lJet = pJet; break;}
-  }
-  return lJet;
-}
+// TAddJet *VJetLoader::getAddJetCHS(TJet *iJet) {
+//   int lIndex = -1;
+//   TAddJet *lJet = 0;
+//   for(int i0 = 0; i0 < fVJetsCHS->GetEntriesFast(); i0++) {
+//     if((*fVJetsCHS)[i0] == iJet) { lIndex = i0; break;}
+//   }
+//   if(lIndex == -1) return 0;
+//   for  (int i0 = 0; i0 < fVAddJetsCHS->GetEntriesFast(); i0++) {
+//     TAddJet *pJet = (TAddJet*)((*fVAddJetsCHS)[i0]);
+//     if(pJet->index == fabs(lIndex)) { lJet = pJet; break;}
+//   }
+//   return lJet;
+// }
 
 //2016 Prompt Reco
 void VJetLoader::loadJECs(bool isData) {

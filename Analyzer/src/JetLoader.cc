@@ -10,9 +10,9 @@ JetLoader::JetLoader(TTree *iTree, bool iData) {
   iTree->SetBranchAddress("AK4Puppi",       &fJets);
   fJetBr = iTree->GetBranch("AK4Puppi");
 
-  fJetsCHS  = new TClonesArray("baconhep::TJet");
-  iTree->SetBranchAddress("AK4CHS",       &fJetsCHS);
-  fJetBrCHS = iTree->GetBranch("AK4CHS");
+  // fJetsCHS  = new TClonesArray("baconhep::TJet");
+  // iTree->SetBranchAddress("AK4CHS",       &fJetsCHS);
+  // fJetBrCHS = iTree->GetBranch("AK4CHS");
 
   fN = 4;
   fNV = 3; // max number of V jets to consider for dR anti-matching
@@ -25,8 +25,8 @@ JetLoader::JetLoader(TTree *iTree, bool iData) {
 JetLoader::~JetLoader() { 
   delete fJets;
   delete fJetBr;
-  delete fJetsCHS;
-  delete fJetBrCHS;
+  // delete fJetsCHS;
+  // delete fJetBrCHS;
 }
 void JetLoader::reset() { 
   fNJetsPt30           = 0;
