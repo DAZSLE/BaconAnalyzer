@@ -12,10 +12,9 @@ Setup
  * Setup BaconAnalyzer, Development Packages
  * Compile
 ```
-cmsrel CMSSW_8_0_20
-cd CMSSW_8_0_20/src
+cmsrel CMSSW_9_2_12
+cd CMSSW_9_2_12/src
 cmsenv
-git cms-addpkg DataFormats/BTauReco
 git cms-addpkg PhysicsTools/PatAlgos
 git cms-addpkg PhysicsTools/PatUtils
 git cms-addpkg RecoBTag/SecondaryVertex
@@ -62,6 +61,8 @@ Baconbits production
 -----------
 Define samples on submitZprime.py
 
+Run makeList.sh on $PROD.txt to list bacon files.
+
 Run submitZprime.py for a given SAMPLE and TAG as following:
 
 ```
@@ -69,3 +70,16 @@ python submitZprime.py -s SAMPLE -t TAG --monitor sub # (to submit)
 python submitZprime.py -s SAMPLE -t TAG --monitor check # (to check status - also bjobs)
 python submitZprime.py -s SAMPLE -t TAG --monitor resub # (to resubmit)
 ```
+
+Some temporary instructions for cmslpc
+-----------
+After compiling, tar CMSSW_9_2_12 environment and data/ dir
+
+```
+cd ../../
+tar --exclude-caches-all --exclude-vcs --exclude-caches-all --exclude-vcs -cvzf CMSSW_9_2_12.tgz CMSSW_9_2_12 --exclude=src --exclude=tmp
+cd CMSSW_9_2_12/src
+tar -zcvf data.tgz data
+```
+
+Those are transferred to condor. Follow same instructions to produce submission files.
