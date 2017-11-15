@@ -5,22 +5,22 @@ from optparse import OptionParser
 
 samplesDict = {}
 samplesDict['JetHT'] = {
-    # 'JetHTRun2017A_12Sep2017_v1': 'prompt17',
+    'JetHTRun2017A_12Sep2017_v1': 'prompt17',
     'JetHTRun2017A_PromptReco_v1': 'prompt17',
     'JetHTRun2017A_PromptReco_v2': 'prompt17',
     'JetHTRun2017A_PromptReco_v3': 'prompt17',
-    # 'JetHTRun2017B_12Sep2017_v1': 'prompt17',
+    'JetHTRun2017B_12Sep2017_v1': 'prompt17',
     'JetHTRun2017B_22Jun2017_v1': 'prompt17',
     'JetHTRun2017B_23Jun2017_v1': 'prompt17',
-    # 'JetHTRun2017B_PromptReco_v1': 'prompt17',
+    'JetHTRun2017B_PromptReco_v1': 'prompt17',
     'JetHTRun2017B_PromptReco_v2': 'prompt17',
     'JetHTRun2017C_12Sep2017_v1': 'prompt17',
     'JetHTRun2017C_PromptReco_v1': 'prompt17',
     'JetHTRun2017C_PromptReco_v2': 'prompt17',
     'JetHTRun2017C_PromptReco_v3': 'prompt17',
-    # 'JetHTRun2017D_PromptReco_v1': 'prompt17',
-    # 'JetHTRun2017E_PromptReco_v1': 'prompt17',
-    # 'JetHTRun2017F_PromptReco_v1': 'prompt17',
+    'JetHTRun2017D_PromptReco_v1': 'prompt17',
+    'JetHTRun2017E_PromptReco_v1': 'prompt17',
+    'JetHTRun2017F_PromptReco_v1': 'prompt17',
     # 'JetHTRun2016B_03Feb2017_ver1_v1_v3': 'rereco',
     # 'JetHTRun2016B_03Feb2017_ver2_v2_v3': 'rereco',
     # 'JetHTRun2016C_03Feb2017_v1_v3': 'rereco',
@@ -293,7 +293,10 @@ if __name__ == '__main__':
     for label, isMc in samples.iteritems():
         exec_me('%s mkdir -p %s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
         if isMc in ['prompt17']:
-            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production13/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            if 'JetHTRun2017B_12Sep2017_v1' in label or 'JetHTRun2017B_PromptReco_v1' in label:
+                exec_me("python %s %s %s -a 4:%f --list 1:../lists/productiontest/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            else:
+                exec_me("python %s %s %s -a 4:%f --list 1:../lists/production13/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
         elif isMc in ['data','rereco']:
             exec_me("python %s %s %s -a 4:%f --list 1:../lists/production12a/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
         else:            

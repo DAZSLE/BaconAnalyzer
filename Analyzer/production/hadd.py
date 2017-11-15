@@ -8,6 +8,9 @@ import time
 from optparse import OptionParser
 from submitZprime import samplesDict, exec_me
 
+EOS = 'eos root://cmseos.fnal.gov'
+cmssw = "CMSSW_9_2_12"
+
 import ROOT
 normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia8',
             'WJetsToQQ_HT180_13TeV': 'WJetsToQQ_HT180_13TeV-madgraphMLM-pythia8',
@@ -153,7 +156,6 @@ def justHadd(options,args):
     
     samples = samplesDict[options.sample]
     
-    EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
     postfix = ''
     exec_me('mkdir -p $PWD/hadd_jobs/',options.dryRun)
     exec_me('%s mkdir -p /%s/hadd'%(EOS,OutDir),options.dryRun)
@@ -175,19 +177,45 @@ def justHadd(options,args):
                 haddOutExistsList.append(False)
                 haddOutList.append(OutDir+'/hadd/'+basename.replace('.root','_%i.root'%i))
                 haddCommand = '#!/bin/bash\n'
+                haddCommand += 'source /cvmfs/cms.cern.ch/cmsset_default.sh\n'
                 haddCommand += 'pwd\n'
-                haddCommand += 'cd %s\n'%cwd
-                haddCommand += 'pwd\n'
+                haddCommand += 'tar -xf %s.tgz\n'% (cmssw)
+                haddCommand += 'rm %s.tgz\n'% (cmssw)
+                haddCommand += 'export SCRAM_ARCH=slc6_amd64_gcc630\n'
+                haddCommand += 'mkdir -p %s/src\n'% (cmssw)
+                haddCommand += 'scramv1 project CMSSW CMSSW_9_2_12\n'
+                haddCommand += 'cd CMSSW_9_2_12/src\n'
+                haddCommand += 'scram b ProjectRename\n'
                 haddCommand += 'eval `scramv1 runtime -sh`\n'
-                haddCommand += 'cd -\n'
                 haddCommand += 'pwd\n'
-                haddCommand += 'mkdir -p $PWD/hadd\n'        
-                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])).replace('eos','root://eoscms.cern.ch//eos'))
-                haddCommand += '%s cp $PWD/hadd/%s /%s/hadd/%s\n'%(EOS,basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))
+                haddCommand += 'mkdir -p $PWD/hadd\n'       
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])))
+                haddCommand += 'xrdcp -s $PWD/hadd/%s root://cmseos.fnal.gov//%s/hadd/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))
                 haddCommand += 'rm -r $PWD/hadd\n'
                 with open('hadd_jobs/hadd_command_%s.sh'%(basename.replace('.root','_%i.root'%i)),'w') as f:
                     f.write(haddCommand)
-                exec_me('bsub -q 8nh -o $PWD/hadd_jobs/hadd_command_%s.log source $PWD/hadd_jobs/hadd_command_%s.sh'%(basename.replace('.root','_%i.root'%i),basename.replace('.root','_%i.root'%i)),options.dryRun)
+                os.system('rm -f hadd_jobs/hadd_command_%s.stdout' % basename.replace('.root','_%i.root'%i))
+                os.system('rm -f hadd_jobs/hadd_command_%s.stderr' % basename.replace('.root','_%i.root'%i))
+                os.system('rm -f hadd_jobs/hadd_command_%s.log' % basename.replace('.root','_%i.root'%i))
+                os.system('rm -f hadd_jobs/hadd_command_%s.jdl'% basename.replace('.root','_%i.root'%i))
+                condor_file = open('hadd_jobs/hadd_command_%s.jdl' % basename.replace('.root','_%i.root'%i), 'w')
+                condor_file.write('universe = vanilla\n')
+                condor_file.write('Executable = hadd_jobs/hadd_command_%s.sh\n'% basename.replace('.root','_%i.root'%i))
+                condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
+                condor_file.write('request_disk = 3000000\n')
+                condor_file.write('request_memory = 5000\n')
+                condor_file.write('Should_Transfer_Files = YES\n')
+                condor_file.write('WhenToTransferOutput = ON_EXIT\n')
+                condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/NormalizeNtuple, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmer.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/submitZprime.py\n')
+                condor_file.write('use_x509userproxy = true\n')
+                condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
+                condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
+                condor_file.write('Error = %s.stderr\n' % os.path.abspath(condor_file.name))
+                condor_file.write('Log = %s.log\n' % os.path.abspath(condor_file.name))
+                condor_file.write('Queue 1\n')
+                condor_file.close()
+                os.system('chmod +x %s'% os.path.abspath(condor_file.name))
+                exec_me('condor_submit %s'%(os.path.abspath(condor_file.name)),options.dryRun)
             else:
                 haddOutExistsList.append(True)
                 haddOutList.append(OutDir+'/hadd/'+basename.replace('.root','_%i.root'%i))
@@ -200,20 +228,45 @@ def justHadd(options,args):
         
         if haddAll:
             haddCommand = '#!/bin/bash\n'
+            haddCommand += 'source /cvmfs/cms.cern.ch/cmsset_default.sh\n'
             haddCommand += 'pwd\n'
-            haddCommand += 'cd %s\n'%cwd
-            haddCommand += 'pwd\n'
+            haddCommand += 'tar -xf %s.tgz\n'% (cmssw)
+            haddCommand += 'rm %s.tgz\n'% (cmssw)
+            haddCommand += 'export SCRAM_ARCH=slc6_amd64_gcc630\n'
+            haddCommand += 'mkdir -p %s/src\n'% (cmssw)
+            haddCommand += 'scramv1 project CMSSW %s\n'% (cmssw)
+            haddCommand += 'cd %s/src\n'% (cmssw)
+            haddCommand += 'scram b ProjectRename\n'
             haddCommand += 'eval `scramv1 runtime -sh`\n'
-            haddCommand += 'cd -\n'
             haddCommand += 'pwd\n'
             haddCommand += 'mkdir -p $PWD/hadd\n'        
-            haddCommand += 'hadd -f hadd/%s %s\n'%(basename,(' '.join(haddOutList)).replace('eos','root://eoscms.cern.ch//eos'))
-            haddCommand += '%s cp $PWD/hadd/%s /%s/hadd/%s\n'%(EOS,basename,OutDir,basename)
+            haddCommand += 'hadd -f hadd/%s %s\n'%(basename,(' '.join(haddOutList)))
+            haddCommand += 'xrdcp -s $PWD/hadd/%s root://cmseos.fnal.gov/%s/hadd/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))
             haddCommand += 'rm -r $PWD/hadd\n'
             with open('hadd_jobs/hadd_command_%s.sh'%(basename),'w') as f:
                 f.write(haddCommand)
-            exec_me('bsub -q 8nh -o $PWD/hadd_jobs/hadd_command_%s.log source $PWD/hadd_jobs/hadd_command_%s.sh'%(basename,basename),options.dryRun)
-            
+            os.system('rm -f hadd_jobs/hadd_command_%s.stdout' % basename)
+            os.system('rm -f hadd_jobs/hadd_command_%s.stderr' % basename)
+            os.system('rm -f hadd_jobs/hadd_command_%s.log' % basename)
+            os.system('rm -f hadd_jobs/hadd_command_%s.jdl'% basename)
+            condor_file = open('hadd_jobs/hadd_command_%s.jdl' % basename, 'w')
+            condor_file.write('universe = vanilla\n')
+            condor_file.write('Executable = hadd_jobs/hadd_command_%s.sh\n'% basename)
+            condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
+            condor_file.write('request_disk = 3000000\n')
+            condor_file.write('request_memory = 5000\n')
+            condor_file.write('Should_Transfer_Files = YES\n')
+            condor_file.write('WhenToTransferOutput = ON_EXIT\n')
+            condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/NormalizeNtuple, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmer.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/submitZprime.py\n')
+            condor_file.write('use_x509userproxy = true\n')
+            condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
+            condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
+            condor_file.write('Error = %s.stderr\n' % os.path.abspath(condor_file.name))
+            condor_file.write('Log = %s.log\n' % os.path.abspath(condor_file.name))
+            condor_file.write('Queue 1\n')
+            condor_file.close()
+            os.system('chmod +x %s'% os.path.abspath(condor_file.name))
+            exec_me('condor_submit %s'%(os.path.abspath(condor_file.name)),options.dryRun)
 
     
 def main(options,args):
@@ -223,7 +276,7 @@ def main(options,args):
     
     samples = samplesDict[options.sample]
     
-    EOS = '/afs/cern.ch/project/eos/installation/0.3.84-aquamarine/bin/eos.select'
+    EOS = 'eos root://cmseos.fnal.gov'
     postfix = ''
     exec_me('mkdir -p $PWD/hadd_jobs/',options.dryRun)
     exec_me('%s mkdir -p /%s/hadd'%(EOS,OutDir),options.dryRun)
@@ -253,8 +306,7 @@ def main(options,args):
             sklimOn = True
             normOn = False
             
-            
-        
+                    
         filesToConvert = []
         badFiles = []
         if haddOn:
@@ -263,33 +315,45 @@ def main(options,args):
         print "bad files = ", badFiles
         cwd = os.getcwd()
         haddCommand = '#!/bin/bash\n'
+        haddCommand += 'source /cvmfs/cms.cern.ch/cmsset_default.sh\n'
         haddCommand += 'pwd\n'
-        haddCommand += 'cd %s\n'%cwd
-        haddCommand += 'pwd\n'
+        haddCommand += 'tar -xf %s.tgz\n'% (cmssw)
+        haddCommand += 'rm %s.tgz\n'% (cmssw)
+        haddCommand += 'export SCRAM_ARCH=slc6_amd64_gcc630\n'
+        haddCommand += 'mkdir -p %s/src\n'% (cmssw)
+        haddCommand += 'scramv1 project CMSSW CMSSW_9_2_12\n'
+        haddCommand += 'cd CMSSW_9_2_12/src\n'
+        haddCommand += 'scram b ProjectRename\n'
         haddCommand += 'eval `scramv1 runtime -sh`\n'
-        haddCommand += 'cd -\n'
         haddCommand += 'pwd\n'
-        haddCommand += 'mkdir -p $PWD/hadd\n'        
+        haddCommand += 'cp ../../data.tgz .\n'
+        haddCommand += 'mkdir -p ${PWD}/BaconAnalyzer/Analyzer/\n'
+        haddCommand += 'tar -xvzf data.tgz -C ${PWD}/BaconAnalyzer/Analyzer/\n'
+        haddCommand += 'mkdir -p $PWD/hadd\n'
+        print "files len = ",len(filesToConvert)/500+1
         for i in range(0,len(filesToConvert)/500+1):         
             if haddOn:
-                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])).replace('eos','root://eoscms.cern.ch//eos'))
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])))
         if haddOn:
             haddCommand += 'hadd -f $PWD/hadd/%s $PWD/hadd/%s\n'%(basename,basename.replace('.root','_*.root'))
             haddCommand += 'rm $PWD/hadd/%s\n'%(basename.replace('.root','_*.root'))     
-            haddCommand += '%s cp $PWD/hadd/%s /%s/hadd/%s\n'%(EOS,basename,OutDir,basename)
+            haddCommand += 'xrdcp $PWD/hadd/%s root://cmseos.fnal.gov/%s/hadd/%s\n'%(basename,OutDir,basename)
         if sklimOn:
             haddCommand += 'mkdir -p $PWD/sklim\n'
-            haddCommand += 'export PYTHONPATH=${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/:${PYTHONPATH}\n'
+            haddCommand += 'cp ../../submitZprime.py .\n'
+            haddCommand += 'cp ../../skimmer.py .\n'
+            haddCommand += 'eval `scramv1 runtime -sh`\n'
             if not haddOn:
-                haddCommand += '%s cp /%s/hadd/%s $PWD/hadd/%s\n'%(EOS,OutDir,basename,basename)                
-            haddCommand += 'python ${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
-            haddCommand += '%s cp $PWD/sklim/%s /%s/sklim/%s\n'%(EOS,basename,OutDir,basename)        
+                haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/hadd/%s $PWD/hadd/%s\n'%(OutDir,basename,basename)     
+            haddCommand += 'python skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
+            haddCommand += 'xrdcp -s $PWD/sklim/%s root://cmseos.fnal.gov//%s/sklim/%s\n'%(basename,OutDir,basename)   
         if isMc=='mc' and normOn:            
+            haddCommand += 'cp ../../NormalizeNtuple .\n'
             if not sklimOn:
-                haddCommand += '%s cp /%s/sklim/%s $PWD/sklim/%s\n'%(EOS,OutDir,basename,basename)                
+                haddCommand += 'xrdcp -s /%s/sklim/%s $PWD/sklim/%s\n'%(OutDir,basename,basename)                
             haddCommand += 'echo "%s\t${PWD}/sklim/%s" > normlist.txt\n'%(normDict[basename.replace('.root','')],basename)
             haddCommand += 'NormalizeNtuple normlist.txt\n'
-            haddCommand += '%s cp $PWD/sklim/%s /%s/norm/%s\n'%(EOS,basename.replace('.root','_1000pb_weighted.root'),OutDir,basename.replace('.root','_1000pb_weighted.root'))
+            haddCommand += 'xrdcp $PWD/sklim/%s root://cmseos.fnal.gov//%s/norm/%s\n'%(basename.replace('.root','_1000pb_weighted.root'),OutDir,basename.replace('.root','_1000pb_weighted.root'))
         haddCommand += 'rm -r $PWD/hadd\n'
         haddCommand += 'rm -r $PWD/sklim\n'
             
@@ -297,9 +361,30 @@ def main(options,args):
         with open('hadd_jobs/hadd_command_%s.sh'%(basename),'w') as f:
             f.write(haddCommand)
 
-            if haddOn or sklimOn or (isMc=='mc' and normOn):
-                exec_me('bsub -q 8nh -o $PWD/hadd_jobs/hadd_command_%s.log source $PWD/hadd_jobs/hadd_command_%s.sh'%(basename,basename),options.dryRun)
-
+        if haddOn or sklimOn or (isMc=='mc' and normOn):
+            os.system('rm -f hadd_jobs/hadd_command_%s.stdout' % basename)
+            os.system('rm -f hadd_jobs/hadd_command_%s.stderr' % basename)
+            os.system('rm -f hadd_jobs/hadd_command_%s.log' % basename)
+            os.system('rm -f hadd_jobs/hadd_command_%s.jdl'% basename)
+            condor_file = open('hadd_jobs/hadd_command_%s.jdl' % basename, 'w')
+            condor_file.write('universe = vanilla\n')
+            condor_file.write('Executable = hadd_jobs/hadd_command_%s.sh\n'% basename)
+            condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
+            condor_file.write('request_disk = 3000000\n')
+            condor_file.write('request_memory = 5000\n')
+            condor_file.write('Should_Transfer_Files = YES\n')
+            condor_file.write('WhenToTransferOutput = ON_EXIT\n')
+            condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/NormalizeNtuple, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmer.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/submitZprime.py\n')
+            condor_file.write('use_x509userproxy = true\n')
+            condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
+            condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
+            condor_file.write('Error = %s.stderr\n' % os.path.abspath(condor_file.name))
+            condor_file.write('Log = %s.log\n' % os.path.abspath(condor_file.name))
+            condor_file.write('Queue 1\n')
+            condor_file.close()
+            os.system('chmod +x %s'% os.path.abspath(condor_file.name))
+            exec_me('condor_submit %s'%(os.path.abspath(condor_file.name)),options.dryRun)
+                
         with open('hadd_jobs/bad_files_%s.txt'%basename,'w') as f:
             for badFile in badFiles:
                 f.write(badFile+'\n')
@@ -316,37 +401,40 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
 
     cfiles = []
     badfiles = []
-    for root, dirs, files in os.walk(dir+'/'+thesearchstring):
-        nfiles = len(files)
-        for ifile, file in enumerate(files):
-            
-            if ifile%100==0:
-                print '%i/%i files checked in %s'%(ifile,nfiles,dir+'/'+thesearchstring)
-            try:
-                #f = ROOT.TFile.Open((os.path.join(root, file)).replace('eos','root://eoscms.cern.ch//eos'))
-                f = ROOT.TFile.Open((os.path.join(root, file)))
-                if f.IsZombie():
-                    print 'file is zombie'
-                    f.Close()
-                    badfiles.append(os.path.join(root, file))                    
-                    continue
-                elif not f.Get('Events'):
-                    print 'tree is false'
-                    f.Close()
-                    badfiles.append(os.path.join(root, file))                    
-                    continue
-                elif not f.Get('Events').InheritsFrom('TTree'):
-                    print 'tree is not a tree'
-                    f.Close()
-                    badfiles.append(os.path.join(root, file))                    
-                    continue
-                else:
-                    f.Close()
-                    cfiles.append(os.path.join(root, file))                    
-            except:
-                print 'could not open file or tree'
-                badfiles.append(os.path.join(root, file))                    
+    files = []
+    os.system('%s ls %s/%s > tmp.txt'%(EOS,dir,thesearchstring))
+    with open("tmp.txt", 'r') as mylist:
+        files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
+
+    nfiles = len(files)
+    for ifile, fi in enumerate(files):
+        if ifile%100==0:
+            print '%i/%i files checked in %s'%(ifile,nfiles,dir+'/'+thesearchstring)
+        try:
+            filename = 'root://cmseos.fnal.gov//%s/%s/%s'%(dir,thesearchstring,fi[0])
+            f = ROOT.TFile.Open(filename)
+            if f.IsZombie():
+                print 'file is zombie'
+                f.Close()
+                badfiles.append(filename)
                 continue
+            elif not f.Get('Events'):
+                print 'tree is false'
+                f.Close()
+                badfiles.append(filename)
+                continue
+            elif not f.Get('Events').InheritsFrom('TTree'):
+                print 'tree is not a tree'
+                f.Close()
+                badfiles.append(filename)
+                continue
+            else:
+                f.Close()
+                cfiles.append(filename)
+        except:
+            print 'could not open file or tree'
+            badfiles.append(filename)
+            continue
                 
     return cfiles, badfiles
 

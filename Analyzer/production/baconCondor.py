@@ -91,7 +91,7 @@ def submit_jobs(lofjobs):
     for sub_file in lofjobs:
         os.system('rm -f %s.stdout' % sub_file)
         os.system('rm -f %s.stderr' % sub_file)
-        os.system('rm -f %s.' % sub_file)
+        os.system('rm -f %s.log' % sub_file)
         os.system('rm -f %s.jdl'% sub_file)
         condor_file = open('%s.jdl' % sub_file, 'w')
         condor_file.write('universe = vanilla\n')
@@ -285,8 +285,8 @@ for job_i in range(njobs):
                     exec_line_i = exec_line_i.replace(" MULTARG_%d " % i, " " + str(m) + " ")  # LIST  OVER iterated arguments and produce and replace MULTIARG_i with arguemnt at i in list ?
             if options.eosoutdir:
                 if njobs_per_file > 1:                    
-                    job_exec += exec_line_i + '; %s cp %s %s/%s_job%d_file%d_subjob%d.root; ' % (
-                    EOS, outfile, options.eosoutdir, outfile, job_i, fil_i, subjob_i)
+                    job_exec += exec_line_i + '; xrdcp -s %s root://cmseos.fnal.gov/%s/%s_job%d_file%d_subjob%d.root; ' % (
+                    outfile, options.eosoutdir, outfile, job_i, fil_i, subjob_i)
                 else:
                     job_exec += exec_line_i + '; xrdcp -s %s root://cmseos.fnal.gov/%s/%s_job%d_file%d.root; ' % (
                     outfile, options.eosoutdir, outfile, job_i, fil_i)
