@@ -77,6 +77,9 @@ public:
   unsigned int fEvtV;
   unsigned int fLumi;
   unsigned int fPassJson;
+  
+  float fPu;
+
   TEventInfo   *fEvt;
 
   float fevtWeight;

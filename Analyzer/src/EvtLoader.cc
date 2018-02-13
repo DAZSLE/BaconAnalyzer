@@ -184,8 +184,10 @@ void EvtLoader::load(int iEvent) {
   fVertices ->Clear();
   fEvtBr    ->GetEntry(iEvent);
   fVertexBr ->GetEntry(iEvent);
+  fTrigString.clear();
   fRun   = fEvt->runNum;
   fLumi  = fEvt->lumiSec;
+  fPu    = fEvt->nPUmean;
 }
 void EvtLoader::fillEvent(unsigned int trigBit,float lWeight, unsigned int passJson) { 
   reset();
@@ -302,6 +304,7 @@ bool EvtLoader::passTrigger(std::string iTrigger) {
 }
 unsigned int EvtLoader::triggerBit() {
   unsigned int lBit = 0;
+  //std::cout << "trig size " <<fTrigString.size() << std::endl;
   for(unsigned int i0 = 0; i0 < fTrigString.size(); i0++) { 
     if(fTrigger->pass(fTrigString[i0],fEvt->triggerBits))  lBit |= 1 << i0;
   }

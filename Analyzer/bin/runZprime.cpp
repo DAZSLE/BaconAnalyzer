@@ -1,6 +1,5 @@
 //================================================================================================
 //
-// Perform preselection for W/Zprime(->qq)+jets events and produce bacon bits 
 //
 // Input arguments
 //   argv[1] => lName = input bacon file name
@@ -71,8 +70,16 @@ int main( int argc, char **argv ) {
 
   std::string lJson="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/";
   lJson.append(lJSON);
+  const std::string cmssw_base = getenv("CMSSW_BASE");
+  std::string cmssw_base_env = "${CMSSW_BASE}";
+  size_t start_pos = lJson.find(cmssw_base_env);
+  if(start_pos != std::string::npos) {
+    lJson.replace(start_pos, cmssw_base_env.length(), cmssw_base);
+  }
+
   fRangeMap = new RunLumiRangeMap();
-  if(lJSON.size() > 0) fRangeMap->AddJSONFile(lJSON.c_str());
+  std::cout << "json " << lJson << std::endl;
+  if(lJSON.size() > 0) fRangeMap->AddJSONFile(lJson.c_str());
 
   bool isData;
   if(lOption.compare("data")!=0) isData = false;
@@ -118,6 +125,7 @@ int main( int argc, char **argv ) {
   // Loop over events i0 = iEvent
   int neventstest = 0;
   int neventsTotal = int(lTree->GetEntriesFast());
+  std::cout << maxSplit << std::endl;
   int minEventsPerJob = neventsTotal / maxSplit;
   int leftoverEvents = neventsTotal % maxSplit;
   int minEvent = iSplit * minEventsPerJob;
@@ -142,7 +150,7 @@ int main( int argc, char **argv ) {
       passJson = 1;
     }
     else{
-      if(passEvent(fEvt->fRun,fEvt->fLumi)) passJson = 1;
+      if(passEvent(fEvt->fRun,fEvt->fLumi)) { passJson = 1;}
     }
 
     
@@ -155,14 +163,21 @@ int main( int argc, char **argv ) {
     // Triggerbits
     unsigned int trigbits=1;   
     if(lOption.find("data")!=std::string::npos){
-      if(fEvt ->passTrigger("HLT_AK8PFJet360_TrimMass30_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*") ||
-	 fEvt ->passTrigger("HLT_PFHT800_v*") || 
-	 fEvt ->passTrigger("HLT_PFHT900_v*") || 
-	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*") ||
-	 fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*") ||
-	 fEvt ->passTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*") || 
-	 fEvt ->passTrigger("HLT_PFJet450_v*")
+      if(fEvt ->passTrigger("HLT_AK8PFJet400_TrimMass30_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFHT800_TrimMass50_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFHT850_TrimMass50_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFHT900_TrimMass50_v*") ||
+	 fEvt ->passTrigger("HLT_PFJet500_v*") ||
+         fEvt ->passTrigger("HLT_PFHT890_v*") ||
+	 fEvt ->passTrigger("HLT_PFHT1050_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFJet500_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFJet550_v*") ||
+	 fEvt ->passTrigger("HLT_CaloJet500_NoJetID_v*") ||
+	 fEvt ->passTrigger("HLT_CaloJet550_NoJetId_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFJet380_TrimMass30_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFJet420_TrimMass30_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p1_v*")
 	 )  trigbits = trigbits | 2;  // hadronic signal region
       if( fEvt ->passTrigger("HLT_Mu50_v*") ||
 	  fEvt ->passTrigger("HLT_TkMu50_v*")
@@ -170,7 +185,30 @@ int main( int argc, char **argv ) {
       if( fEvt ->passTrigger("HLT_Ele45_WPLoose_v*") ||
 	  fEvt ->passTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*")
 	  ) trigbits = trigbits | 8; // single electron control region 
-      // if(trigbits==1) continue;
+      if(fEvt ->passTrigger("HLT_AK8PFJet360_TrimMass30_v*")) trigbits = trigbits | 16;
+      if(fEvt ->passTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*")) trigbits = trigbits | 32;
+      if(fEvt ->passTrigger("HLT_PFHT800_v*")) trigbits = trigbits | 64;
+      if(fEvt ->passTrigger("HLT_PFHT900_v*")) trigbits = trigbits | 128;
+      if(fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*")) trigbits = trigbits | 256;
+      if(fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*")) trigbits = trigbits | 512;
+      if(fEvt ->passTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*")) trigbits = trigbits | 1024;
+      if(fEvt ->passTrigger("HLT_PFJet450_v*")) trigbits = trigbits | 2048;
+      if(fEvt ->passTrigger("HLT_AK8PFJet400_TrimMass30_v*")) trigbits = trigbits | 4096;
+      if(fEvt ->passTrigger("HLT_AK8PFHT800_TrimMass50_v*")) trigbits = trigbits | 8192;
+      if(fEvt ->passTrigger("HLT_PFJet500_v*")) trigbits = trigbits | 16384;
+      if(fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*")) trigbits = trigbits | 32768;
+      if(fEvt ->passTrigger("HLT_Mu50_v*")) trigbits = trigbits | 65536;
+      if(fEvt ->passTrigger("HLT_PFHT890_v*")) trigbits = trigbits | 131072;
+      if(fEvt ->passTrigger("HLT_AK8PFHT850_TrimMass50_v*")) trigbits = trigbits | 262144;
+      if(fEvt ->passTrigger("HLT_AK8PFHT900_TrimMass50_v*")) trigbits = trigbits | 524288;
+      if(fEvt ->passTrigger("HLT_CaloJet500_NoJetID_v*")) trigbits = trigbits | 1048576;
+      if(fEvt ->passTrigger("HLT_AK8PFJet500_v*")) trigbits = trigbits | 2097152;
+      if(fEvt ->passTrigger("HLT_AK8PFJet550_v*")) trigbits = trigbits | 4194304;
+      if(fEvt ->passTrigger("HLT_CaloJet550_NoJetId_v*")) trigbits = trigbits | 8388608;
+      if(fEvt ->passTrigger("HLT_AK8PFJet380_TrimMass30_v*")) trigbits = trigbits | 16777216;
+      if(fEvt ->passTrigger("HLT_AK8PFJet420_TrimMass30_v*")) trigbits = trigbits | 33554432;
+      if(fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p1_v*")) trigbits = trigbits | 67108864;
+      if(fEvt ->passTrigger("HLT_PFHT1050_v*")) trigbits = trigbits | 134217728;
     }
     // More trigger bits
 
@@ -199,6 +237,11 @@ int main( int argc, char **argv ) {
     fEvt ->addTrigger("HLT_PFMET170_NoiseCleaned_v*"); // Z(nunu)H(bb)
     fEvt ->addTrigger("HLT_PFMET170_HBHECleaned_v*"); // Z(nunu)H(bb)
     fEvt ->addTrigger("HLT_PFMET170_HBHE_BeamHaloCleaned_v*"); // Z(nunu)H(bb)
+
+    fEvt ->addTrigger("HLT_AK8PFJet400_TrimMass30_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT800_TrimMass50_v*");
+    fEvt ->addTrigger("HLT_PFJet500_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*");
 
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
     
@@ -270,7 +313,9 @@ int main( int argc, char **argv ) {
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,24);
     }
     if(lName.find("ZPrime")!=std::string::npos || lName.find("VectorDiJet")!=std::string::npos){
-      fGen->findBoson(10031,0);
+      // 55 for newer, public samples (to be consistent with DM samples) 
+      //fGen->findBoson(10031,0);
+      fGen->findBoson(55,1);
       if(fGen->fBosonPt>0)      fEvt->computeCorr(fGen->fBosonPt,"ZJets_012j_NLO/nominal","ZJets_LO/inv_pt","EWKcorr/Z","ZJets_012j_NLO");
       if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,10031);
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,10031);
