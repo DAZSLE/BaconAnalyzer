@@ -46,6 +46,7 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'ST_tW_top_5f_inclusiveDecays_13TeV_powheg_pythia8_TuneCUETP8M2T4': 'ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1',
             'TTJets_13TeV': 'TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'TT_powheg': 'TT_TuneCUETP8M1_13TeV-powheg-pythia8',
+            'TT_13TeV_powheg_pythia8_ext': 'TT_TuneCUETP8M1_13TeV-powheg-pythia8',
             'WJetsToQQ_HT_600ToInf_13TeV': 'WJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',            
             'WJetsToLNu_HT_70To100_13TeV': 'WJetsToLNu_HT_70To100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_70To100_13TeV_ext': 'WJetsToLNu_HT-70To100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
@@ -130,6 +131,16 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8',
             'bbHToBB_M_125_4FS_yb2_13TeV_amcatnlo': 'bbHToBB_M_125_4FS_yb2_13TeV_amcatnlo',
             'bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo': 'bbHToBB_M_125_4FS_ybyt_13TeV_amcatnlo',
+            'VectorDiJet1Jet_100_madgraph_2016':'VectorDiJet1Jet_M100',
+            'VectorDiJet1Jet_125_madgraph_2017_noPF':'VectorDiJet1Jet_M125',
+            'VectorDiJet1Jet_75_madgraph_2017_noPF' : 'VectorDiJet1Jet_M75',
+            'VectorDiJet1Jet_50_madgraph_2017_noPF' : 'VectorDiJet1Jet_M50',
+            'VectorDiJet1Jet_100_madgraph_2017_noPF' : 'VectorDiJet1Jet_M100',
+            'VectorDiJet1Jet_115_madgraph_2017_noPF' : 'VectorDiJet1Jet_M125',
+            'VectorDiJet1Jet_150_madgraph_2017_noPF' : 'VectorDiJet1Jet_M150',
+            'VectorDiJet1Jet_175_madgraph_2017_noPF' : 'VectorDiJet1Jet_M175',
+            'VectorDiJet1Jet_250_madgraph_2017_noPF' : 'VectorDiJet1Jet_M250',
+            'VectorDiJet1Jet_300_madgraph_2017_noPF' : 'VectorDiJet1Jet_M300',
             'VectorDiJet1Jet_100_13TeV_madgraph':'VectorDiJet1Jet_M100',
             'VectorDiJet1Jet_125_13TeV_madgraph':'VectorDiJet1Jet_M125',
             'VectorDiJet1Jet_150_13TeV_madgraph':'VectorDiJet1Jet_M150',
@@ -172,7 +183,7 @@ def justHadd(options,args):
         haddAll = False
         haddOutExistsList = []
         haddOutList = []
-        for i in range(0,len(filesToConvert)/500+1):
+        for i in range(0,len(filesToConvert)/50+1):
             if not os.path.isfile(OutDir+'/hadd/'+basename.replace('.root','_%i.root'%i)):
                 haddOutExistsList.append(False)
                 haddOutList.append(OutDir+'/hadd/'+basename.replace('.root','_%i.root'%i))
@@ -189,7 +200,7 @@ def justHadd(options,args):
                 haddCommand += 'eval `scramv1 runtime -sh`\n'
                 haddCommand += 'pwd\n'
                 haddCommand += 'mkdir -p $PWD/hadd\n'       
-                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])))
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*50:(i+1)*50])))
                 haddCommand += 'xrdcp -s $PWD/hadd/%s root://cmseos.fnal.gov//%s/hadd/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))
                 haddCommand += 'rm -r $PWD/hadd\n'
                 with open('hadd_jobs/hadd_command_%s.sh'%(basename.replace('.root','_%i.root'%i)),'w') as f:
@@ -330,10 +341,10 @@ def main(options,args):
         haddCommand += 'mkdir -p ${PWD}/BaconAnalyzer/Analyzer/\n'
         haddCommand += 'tar -xvzf data.tgz -C ${PWD}/BaconAnalyzer/Analyzer/\n'
         haddCommand += 'mkdir -p $PWD/hadd\n'
-        print "files len = ",len(filesToConvert)/500+1
-        for i in range(0,len(filesToConvert)/500+1):         
+        print "files len = ",len(filesToConvert)/50+1
+        for i in range(0,len(filesToConvert)/50+1):         
             if haddOn:
-                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*500:(i+1)*500])))
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*50:(i+1)*50])))
         if haddOn:
             haddCommand += 'hadd -f $PWD/hadd/%s $PWD/hadd/%s\n'%(basename,basename.replace('.root','_*.root'))
             haddCommand += 'rm $PWD/hadd/%s\n'%(basename.replace('.root','_*.root'))     

@@ -4,23 +4,42 @@ import sys, commands, os, fnmatch
 from optparse import OptionParser
 
 samplesDict = {}
+samplesDict['JetHTrereco'] = {
+    'JetHTRun2017B_17Nov2017_v1_noPF_old': 'prompt17',
+    'JetHTRun2017C_17Nov2017_v1_noPF_old': 'prompt17',
+    'JetHTRun2017D_17Nov2017_v1_noPF_old': 'prompt17',
+    'JetHTRun2017E_17Nov2017_v1_noPF_old': 'prompt17',
+    'JetHTRun2017F_17Nov2017_v1_noPF_old': 'prompt17',
+}
 samplesDict['JetHT'] = {
-    'JetHTRun2017A_12Sep2017_v1': 'prompt17',
-    'JetHTRun2017A_PromptReco_v1': 'prompt17',
-    'JetHTRun2017A_PromptReco_v2': 'prompt17',
-    'JetHTRun2017A_PromptReco_v3': 'prompt17',
-    'JetHTRun2017B_12Sep2017_v1': 'prompt17',
-    'JetHTRun2017B_22Jun2017_v1': 'prompt17',
-    'JetHTRun2017B_23Jun2017_v1': 'prompt17',
-    'JetHTRun2017B_PromptReco_v1': 'prompt17',
-    'JetHTRun2017B_PromptReco_v2': 'prompt17',
-    'JetHTRun2017C_12Sep2017_v1': 'prompt17',
-    'JetHTRun2017C_PromptReco_v1': 'prompt17',
-    'JetHTRun2017C_PromptReco_v2': 'prompt17',
-    'JetHTRun2017C_PromptReco_v3': 'prompt17',
-    'JetHTRun2017D_PromptReco_v1': 'prompt17',
-    'JetHTRun2017E_PromptReco_v1': 'prompt17',
-    'JetHTRun2017F_PromptReco_v1': 'prompt17',
+    # 'JetHTRun2017A_12Sep2017_v1': 'prompt17',
+    # 'JetHTRun2017A_PromptReco_v1': 'prompt17',
+    # 'JetHTRun2017A_PromptReco_v2': 'prompt17',
+    # 'JetHTRun2017A_PromptReco_v3': 'prompt17',
+    #'JetHTRun2017B_12Sep2017_v1': 'prompt17',
+    #'JetHTRun2017B_22Jun2017_v1': 'prompt17',
+    #'JetHTRun2017B_23Jun2017_v1': 'prompt17',
+    #'JetHTRun2017B_12Sep2017_v1_noPF' : 'prompt17',
+    #'JetHTRun2017B_22Jun2017_v1_noPF' : 'prompt17',
+    #'JetHTRun2017B_23Jun2017_v1_noPF' : 'prompt17',
+    'JetHTRun2017B_PromptReco_v1_noPF' : 'prompt17',
+    'JetHTRun2017B_PromptReco_v2_noPF' : 'prompt17',
+    #'JetHTRun2017C_12Sep2017_v1_noPF' : 'prompt17',
+    'JetHTRun2017C_PromptReco_v1_noPF' : 'prompt17',
+    'JetHTRun2017C_PromptReco_v2_noPF' : 'prompt17',
+    'JetHTRun2017C_PromptReco_v3_noPF' : 'prompt17',
+    'JetHTRun2017D_PromptReco_v1_noPF' : 'prompt17',
+    'JetHTRun2017E_PromptReco_v1_noPF' : 'prompt17',
+    'JetHTRun2017F_PromptReco_v1_noPF' : 'prompt17',
+    #'JetHTRun2017B_PromptReco_v1': 'prompt17',
+    #'JetHTRun2017B_PromptReco_v2_noPF': 'prompt17',
+    #'JetHTRun2017C_12Sep2017_v1': 'prompt17',
+    #'JetHTRun2017C_PromptReco_v1': 'prompt17',
+    #'JetHTRun2017C_PromptReco_v2': 'prompt17',
+    #'JetHTRun2017C_PromptReco_v3': 'prompt17',
+    #'JetHTRun2017D_PromptReco_v1': 'prompt17',
+    #'JetHTRun2017E_PromptReco_v1_noPF': 'prompt17',
+    #'JetHTRun2017F_PromptReco_v1_noPF': 'prompt17',
     # 'JetHTRun2016B_03Feb2017_ver1_v1_v3': 'rereco',
     # 'JetHTRun2016B_03Feb2017_ver2_v2_v3': 'rereco',
     # 'JetHTRun2016C_03Feb2017_v1_v3': 'rereco',
@@ -31,17 +50,42 @@ samplesDict['JetHT'] = {
     # 'JetHTRun2016H_03Feb2017_ver2_v1_v3': 'data',
     # 'JetHTRun2016H_03Feb2017_ver3_v1_v3': 'data'
 }
+samplesDict['SingleMuonrereco'] = {
+    'SingleMuonRun2017B_17Nov2017_v1_noPF': 'prompt17',
+    #'SingleMuonRun2017C_17Nov2017_v1_noPF': 'prompt17',
+    'SingleMuonRun2017D_17Nov2017_v1_noPF': 'prompt17',
+    'SingleMuonRun2017E_17Nov2017_v1_noPF_304119': 'prompt17',
+    'SingleMuonRun2017E_17Nov2017_v1_noPF_304507': 'prompt17',
+    'SingleMuonRun2017E_17Nov2017_v1_noPF_305185': 'prompt17',
+    'SingleMuonRun2017E_17Nov2017_v1_noPF_306029': 'prompt17',
+    'SingleMuonRun2017E_17Nov2017_v1_noPF_306126': 'prompt17',
+    'SingleMuonRun2017F_17Nov2017_v1_noPF_305185': 'prompt17',
+    'SingleMuonRun2017F_17Nov2017_v1_noPF_305248': 'prompt17',
+    'SingleMuonRun2017F_17Nov2017_v1_noPF_305364': 'prompt17',
+    'SingleMuonRun2017F_17Nov2017_v1_noPF_305636': 'prompt17',
+    'SingleMuonRun2017F_17Nov2017_v1_noPF_306029': 'prompt17',
+    'SingleMuonRun2017F_17Nov2017_v1_noPF_306126': 'prompt17',
+}
 samplesDict['SingleMuon'] = {
-    'SingleMuonRun2016B_03Feb2017_ver1_v1': 'rereco',
-    'SingleMuonRun2016B_03Feb2017_ver2_v2': 'rereco',
-    'SingleMuonRun2016C_03Feb2017_v1': 'rereco',
-    'SingleMuonRun2016D_03Feb2017_v1': 'rereco',
-    'SingleMuonRun2016E_03Feb2017_v1': 'rereco',
-    'SingleMuonRun2016F_03Feb2017_v1': 'rereco',
-    'SingleMuonRun2016G_03Feb2017_v1': 'rereco',
-    'SingleMuonRun2016H_03Feb2017_ver2_v1': 'data',
-    'SingleMuonRun2016H_03Feb2017_ver3_v1': 'data'
-    }
+    'SingleMuonRun2017B_PromptReco_v2_noPF' : 'prompt17',
+    'SingleMuonRun2017C_PromptReco_v1_noPF' : 'prompt17',
+    'SingleMuonRun2017C_PromptReco_v2_noPF' : 'prompt17',
+    'SingleMuonRun2017C_PromptReco_v3_noPF' : 'prompt17',
+    'SingleMuonRun2017D_PromptReco_v1_noPF' : 'prompt17',
+    #'SingleMuonRun2017E_PromptReco_v1_noPF' : 'prompt17',
+    #'SingleMuonRun2017F_PromptReco_v1_noPF' : 'prompt17',
+    'SingleMuonRun2017G_PromptReco_v1_noPF' : 'prompt17',
+    #'SingleMuonRun2017H_PromptReco_v1_noPF' : 'prompt17',
+    # 'SingleMuonRun2016B_03Feb2017_ver1_v1': 'rereco',
+    # 'SingleMuonRun2016B_03Feb2017_ver2_v2': 'rereco',
+    # 'SingleMuonRun2016C_03Feb2017_v1': 'rereco',
+    # 'SingleMuonRun2016D_03Feb2017_v1': 'rereco',
+    # 'SingleMuonRun2016E_03Feb2017_v1': 'rereco',
+    # 'SingleMuonRun2016F_03Feb2017_v1': 'rereco',
+    # 'SingleMuonRun2016G_03Feb2017_v1': 'rereco',
+    # 'SingleMuonRun2016H_03Feb2017_ver2_v1': 'data',
+    # 'SingleMuonRun2016H_03Feb2017_ver3_v1': 'data'
+}
 samplesDict['BulkGrav'] = {
    'BulkGravToWW_narrow_M_4000_13TeV_madgraph': 'mc',
    'BulkGravToWW_narrow_M_4000_13TeV_madgraph_herwigpp': 'mc', 
@@ -85,26 +129,26 @@ samplesDict['Hbb'] = {
     }
 samplesDict['QCD'] = {       
     #'QCD_HT1000to1500_13TeV': 'mc',
-    #'QCD_HT1000to1500_13TeV_ext': 'mc',
+    'QCD_HT1000to1500_13TeV_ext': 'mc',
    # 'QCD_HT1000to1500_13TeV_all': 'mc',
-   # 'QCD_HT100to200_13TeV': 'mc',
+    'QCD_HT100to200_13TeV': 'mc',
   #  'QCD_HT1500to2000_13TeV': 'mc',
-  #  'QCD_HT1500to2000_13TeV_ext': 'mc',
+    'QCD_HT1500to2000_13TeV_ext': 'mc',
    # 'QCD_HT1500to2000_13TeV_all': 'mc',
   #  'QCD_HT2000toInf_13TeV': 'mc',
-  ##  'QCD_HT2000toInf_13TeV_ext': 'mc',
+    'QCD_HT2000toInf_13TeV_ext': 'mc',
    # 'QCD_HT2000toInf_13TeV_all': 'mc',
-  #  'QCD_HT200to300_13TeV': 'mc',
+    'QCD_HT200to300_13TeV': 'mc',
   #  'QCD_HT200to300_13TeV_ext': 'mc',
   #  'QCD_HT200to300_13TeV_all': 'mc',
   #  'QCD_HT300to500_13TeV': 'mc',
-  #  'QCD_HT300to500_13TeV_ext': 'mc',
+    'QCD_HT300to500_13TeV_ext': 'mc',
  #   'QCD_HT300to500_13TeV_all': 'mc',
-    'QCD_HT500to700_13TeV': 'mc',
+  #  'QCD_HT500to700_13TeV': 'mc',
     'QCD_HT500to700_13TeV_ext': 'mc',
  #   'QCD_HT500to700_13TeV_all': 'mc',
   #  'QCD_HT50to100_13TeV': 'mc',
-    'QCD_HT700to1000_13TeV': 'mc',
+  #  'QCD_HT700to1000_13TeV': 'mc',
     'QCD_HT700to1000_13TeV_ext': 'mc',
  #   'QCD_HT700to1000_13TeV_all': 'mc',
     }
@@ -135,19 +179,30 @@ samplesDict['Triboson'] = {
     #'ZZZ_13TeV_amcatnlo_pythia8': 'mc'
     }
 samplesDict['VectorDiJet1Jet'] = {
-    'VectorDiJet1Jet_100_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_150_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_200_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_25_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_300_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_400_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_500_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_50_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_600_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_800_13TeV_madgraph': 'mc', 
-    'VectorDiJet1Jet_1000_13TeV_madgraph': 'mc',
-    'VectorDiJet1Jet_125_13TeV_madgraph': 'mc',
-    'VectorDiJet1Jet_75_13TeV_madgraph': 'mc'
+    #'VectorDiJet1Jet_100_madgraph_2016': 'mc',
+    #'VectorDiJet1Jet_125_madgraph_2017_noPF': 'mc',
+    #'VectorDiJet1Jet_200_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_75_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_50_madgraph_2017_noPF' : 'mc',
+    'VectorDiJet1Jet_100_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_115_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_150_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_175_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_250_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_300_madgraph_2017_noPF' : 'mc',
+    # 'VectorDiJet1Jet_100_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_150_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_200_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_25_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_300_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_400_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_500_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_50_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_600_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_800_13TeV_madgraph': 'mc', 
+    # 'VectorDiJet1Jet_1000_13TeV_madgraph': 'mc',
+    # 'VectorDiJet1Jet_125_13TeV_madgraph': 'mc',
+    # 'VectorDiJet1Jet_75_13TeV_madgraph': 'mc'
     }
 samplesDict['VectorDiJet1Gamma'] = {
     #'VectorDiJet1Gamma_1000_13TeV_madgraph': 'mc', 
@@ -165,7 +220,7 @@ samplesDict['VectorDiJet1Gamma'] = {
     #'VectorDiJet1Gamma_800_13TeV_madgraph': 'mc', 
     }
 samplesDict['W'] = {
-    #'WJetsToQQ_HT180_13TeV': 'mc',
+    'WJetsToQQ_HT180_13TeV': 'mc',
     #'WJetsToQQ_HT_600ToInf_13TeV': 'mc',
     #'WJetsToLNu_HT_70To100_13TeV': 'mc',
     #'WJetsToLNu_HT_100To200_13TeV': 'mc',
@@ -178,22 +233,22 @@ samplesDict['W'] = {
     #'WJetsToLNu_HT_400To600_13TeV_ext1': 'mc',
     #'WJetsToLNu_HT_600To800_13TeV': 'mc',
     #'WJetsToLNu_HT_600To800_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_800To1200_13TeV': 'mc',
-    'WJetsToLNu_HT_800To1200_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_1200To2500_13TeV': 'mc',
-    'WJetsToLNu_HT_1200To2500_13TeV_ext1': 'mc',
-    'WJetsToLNu_HT_2500ToInf_13TeV': 'mc',
-    'WJetsToLNu_HT_2500ToInf_13TeV_ext1': 'mc',
+    #'WJetsToLNu_HT_800To1200_13TeV': 'mc',
+    #'WJetsToLNu_HT_800To1200_13TeV_ext1': 'mc',
+    #'WJetsToLNu_HT_1200To2500_13TeV': 'mc',
+    #'WJetsToLNu_HT_1200To2500_13TeV_ext1': 'mc',
+    #'WJetsToLNu_HT_2500ToInf_13TeV': 'mc',
+    #'WJetsToLNu_HT_2500ToInf_13TeV_ext1': 'mc',
     }
 samplesDict['DY'] = {
-    'DYJetsToLL_M_50_13TeV_ext': 'mc',
-    #'DYJetsToQQ_HT180_13TeV': 'mc',
+    #'DYJetsToLL_M_50_13TeV_ext': 'mc',
+    'DYJetsToQQ_HT180_13TeV': 'mc',
     #'ZJetsToQQ_HT600toInf_13TeV_madgraph': 'mc',
     }
 samplesDict['TT'] = {
-    #'TTJets_13TeV':'mc',
-    'TT_powheg':'mc',
-    'TT_TuneEE5C_13TeV_powheg_herwigpp':'mc'
+    'TT_13TeV_powheg_pythia8_ext':'mc',
+    #'TT_powheg':'mc',
+    #'TT_TuneEE5C_13TeV_powheg_herwigpp':'mc'
     }
 samplesDict['DMSpin0'] = {
     'Spin0_ggPhibb1j_g1_1000_PseudoScalar': 'mc',
@@ -265,7 +320,7 @@ if __name__ == '__main__':
     
     jsonPrompt = "$PWD/../data/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt"
     jsonRereco = "$PWD/../data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"
-    jsonPrompt17 = "Cert_294927-305636_13TeV_PromptReco_Collisions17_JSON.txt"
+    jsonPrompt17 = "Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt"
 
     xsec = 1
     analysisDir = options.tag
@@ -287,17 +342,20 @@ if __name__ == '__main__':
         EOS = 'eos root://cmseos.fnal.gov'
         optionsDataMc = {
             'prompt17': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt17,options.njobs_per_file),
+            'mc': "Output.root --passSumEntries 5:Events -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
             }
 
     exec_me('%s mkdir -p %s/%s'%(EOS,eosOutDir,analysisDir))  
     for label, isMc in samples.iteritems():
         exec_me('%s mkdir -p %s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
         if isMc in ['prompt17']:
-            if 'JetHTRun2017B_12Sep2017_v1' in label or 'JetHTRun2017B_PromptReco_v1' in label:
-                exec_me("python %s %s %s -a 4:%f --list 1:../lists/productiontest/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
-            else:
-                exec_me("python %s %s %s -a 4:%f --list 1:../lists/production13/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            #if 'JetHTRun2017B_12Sep2017_v1' in label or 'JetHTRun2017B_PromptReco_v1' in label or 'SingleMuon' in label:
+            #if 'SingleMuon' in label:
+            #    exec_me("python %s %s %s -a 4:%f --list 1:../lists/productiontest/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            #else:
+            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production13/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
         elif isMc in ['data','rereco']:
             exec_me("python %s %s %s -a 4:%f --list 1:../lists/production12a/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
         else:            
-            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production13/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            #exec_me("python %s %s %s -a 4:%f --list 1:../lists/production12/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)

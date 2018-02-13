@@ -1,0 +1,5 @@
+root://131.225.204.161:1094//store/group/lpcbacon/13/SingleMuonRun2017D_PromptReco_v1/SingleMuon/CRAB3/171116_210550/0001/Output_1936.root
+root://131.225.204.161:1094//store/group/lpcbacon/13/SingleMuonRun2017D_PromptReco_v1/SingleMuon/CRAB3/171116_210550/0003/Output_3970.root
+root://131.225.204.161:1094//store/group/lpcbacon/13/SingleMuonRun2017D_PromptReco_v1/SingleMuon/CRAB3/171116_210550/0004/Output_4124.root
+root://131.225.204.161:1094//store/group/lpcbacon/13/SingleMuonRun2017D_PromptReco_v1/SingleMuon/CRAB3/171116_210550/0004/Output_4647.root
+root://131.225.204.161:1094//store/group/lpcbacon/13/SingleMuonRun2017D_PromptReco_v1/SingleMuon/CRAB3/171116_210550/0004/Output_4676.root

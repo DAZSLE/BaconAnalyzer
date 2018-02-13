@@ -1,0 +1,2 @@
+root://131.225.204.161:1094//store/group/lpcbacon/13/SingleMuonRun2017C_PromptReco_v3/SingleMuon/CRAB3/171116_210315/0000/Output_40.root
+root://131.225.204.161:1094//store/group/lpcbacon/13/SingleMuonRun2017C_PromptReco_v3/SingleMuon/CRAB3/171116_210315/0005/Output_5694.root
