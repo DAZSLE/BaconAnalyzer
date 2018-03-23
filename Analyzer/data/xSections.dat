@@ -119,8 +119,14 @@ ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1 
 ST_tW_antitop_5f_DS_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1              35.6
 ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1                 35.6
 ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1                     35.6
+WJetsToQQ_HT400to600_TuneCP5_13TeV						   1477
+WJetsToQQ_HT600to800_TuneCP5_13TeV						   328.9
+WJetsToQQ_HT_800toInf_TuneCP5_13TeV						   161.3
 WJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8                       95.14
 ZJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8  			   5.67
+ZJetsToQQ_HT400to600_TuneCP5_13TeV						   1347
+ZJetsToQQ_HT600to800_3j_TuneCP5_13TeV						   138.7
+ZJetsToQQ_HT_800toInf_TuneCP5_13TeV						   195.4
 WJetsToQQ_HT180_13TeV-madgraphMLM-pythia8					   2788 # from DAS
 WW_TuneCUETP8M1_13TeV-pythia8                                                      63.21*1.878
 WWTo4Q_13TeV_powheg                                                                51.723
@@ -277,8 +283,41 @@ ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8			1.227E-01*5.824E-01*0.0335962*3.
 ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8			8.839E-01*5.824E-01*0.201030
 ZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp			8.839E-01*5.824E-01*0.201030
 ZH_HToBB_ZToNuNu_M125_13TeV_amcatnloFXFX_madspin_pythia8			8.839E-01*5.824E-01*0.201030
-VectorDiJet1Jet_M100					1
-VectorDiJet1Jet_M1000					1
+
+VectorDiJet1Jet_madgraph_Mphi50Mchi1_13TeV		1.604E+01
+VectorDiJet1Jet_madgraph_Mphi75Mchi1_13TeV		1.614E+01
+VectorDiJet1Jet_madgraph_Mphi100Mchi1_13TeV		1.541E+01 
+VectorDiJet1Jet_madgraph_Mphi115Mchi1_13TeV		1.436E+01
+VectorDiJet1Jet_madgraph_Mphi125Mchi1_13TeV		1.476E+01
+VectorDiJet1Jet_madgraph_Mphi150Mchi1_13TeV		1.493E+01
+VectorDiJet1Jet_madgraph_Mphi175Mchi1_13TeV		1.492E+01
+VectorDiJet1Jet_madgraph_Mphi200Mchi1_13TeV		1.423E+01 
+VectorDiJet1Jet_madgraph_Mphi225Mchi1_13TeV		1.446E+01
+VectorDiJet1Jet_madgraph_Mphi250Mchi1_13TeV		1.418E+01 
+VectorDiJet1Jet_madgraph_Mphi300Mchi1_13TeV		1.486E+01
+VectorDiJet1Jet_madgraph_Mphi350Mchi1_13TeV		1.610E+01		
+VectorDiJet1Jet_madgraph_Mphi400Mchi1_13TeV		1.877E+01
+VectorDiJet1Jet_madgraph_Mphi450Mchi1_13TeV		2.556E+01
+VectorDiJet1Jet_madgraph_Mphi500Mchi1_13TeV		4.826E+01
+
+VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV		1.604E+01
+VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV		1.614E+01
+VectorDiJet1Jet_madgraph_Mphi100Mchi3000_13TeV		1.541E+01
+VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV		1.436E+01
+VectorDiJet1Jet_madgraph_Mphi125Mchi3000_13TeV		1.476E+01
+VectorDiJet1Jet_madgraph_Mphi150Mchi3000_13TeV		1.493E+01
+VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV		1.492E+01
+VectorDiJet1Jet_madgraph_Mphi200Mchi3000_13TeV		1.423E+01
+VectorDiJet1Jet_madgraph_Mphi225Mchi3000_13TeV		1.446E+01
+VectorDiJet1Jet_madgraph_Mphi250Mchi3000_13TeV		1.418E+01
+VectorDiJet1Jet_madgraph_Mphi300Mchi3000_13TeV		1.486E+01
+VectorDiJet1Jet_madgraph_Mphi350Mchi3000_13TeV		1.610E+01		
+VectorDiJet1Jet_madgraph_Mphi400Mchi3000_13TeV		1.877E+01
+VectorDiJet1Jet_madgraph_Mphi450Mchi3000_13TeV		2.556E+01
+VectorDiJet1Jet_madgraph_Mphi500Mchi3000_13TeV		4.826E+01
+
+VectorDiJet1Jet_M100				1
+VectorDiJet1Jet_M1000				1
 VectorDiJet1Jet_M125				1
 VectorDiJet1Jet_M150				1
 VectorDiJet1Jet_M200				1
