@@ -10,9 +10,9 @@ JetLoader::JetLoader(TTree *iTree, bool iData) {
   iTree->SetBranchAddress("AK4Puppi",       &fJets);
   fJetBr = iTree->GetBranch("AK4Puppi");
 
-  // fJetsCHS  = new TClonesArray("baconhep::TJet");
-  // iTree->SetBranchAddress("AK4CHS",       &fJetsCHS);
-  // fJetBrCHS = iTree->GetBranch("AK4CHS");
+  //fJetsCHS  = new TClonesArray("baconhep::TJet");
+  //iTree->SetBranchAddress("AK4CHS",       &fJetsCHS);
+  //fJetBrCHS = iTree->GetBranch("AK4CHS");
 
   fN = 4;
   fNV = 3; // max number of V jets to consider for dR anti-matching
@@ -25,8 +25,8 @@ JetLoader::JetLoader(TTree *iTree, bool iData) {
 JetLoader::~JetLoader() { 
   delete fJets;
   delete fJetBr;
-  // delete fJetsCHS;
-  // delete fJetBrCHS;
+  //delete fJetsCHS;
+  //delete fJetBrCHS;
 }
 void JetLoader::reset() { 
   fNJetsPt30           = 0;
@@ -46,7 +46,7 @@ void JetLoader::reset() {
   MetYCorrjerUp        = 0;
   MetXCorrjerDown      = 0;
   MetYCorrjerDown      = 0;
-  fLooseJets.clear();
+  fTightJets.clear();
   fGoodJets.clear();
   selectedJets8.clear();
   selectedJets15.clear();
@@ -308,11 +308,11 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     if(jetCorrPtSmear  <=  30)                                            continue;    
     if(fabs(pJet->eta) > 2.5 && fabs(pJet->eta) < 4.5) lNFwdPt30++;
     if(fabs(pJet->eta) >= 2.5)                                            continue;
-    if(!passJetLooseSel(pJet))                                            continue;
+    if(!passJetTightSel(pJet))                                            continue;
     x1List.push_back(x1);
     x2List.push_back(x2);
     x3List.push_back(x3);
-    addJet(pJet,fLooseJets);
+    addJet(pJet,fTightJets);
     fGoodJets.push_back(pJet);
     
     if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVL){
@@ -343,7 +343,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
       }
     }
   }
-  addVJet(fLooseJets,selectedJets);
+  addVJet(fTightJets,selectedJets);
   fNJetsPt30           = lCountPt30;
   fNJetsPt30jesUp      = lCountPt30jesUp;
   fNJetsPt30jesDown    = lCountPt30jesDown;
@@ -354,8 +354,8 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
   fNBTagsMPt30         = lNBTagMPt30;
   fNBTagsTPt30         = lNBTagTPt30;
 
-  fillJetCorr(fN,fLooseJets,fVars,iRho,runNum);
-  fillOthers(fN,fLooseJets,fVars,iVJets,iRho, runNum);
+  fillJetCorr(fN,fTightJets,fVars,iRho,runNum);
+  fillOthers(fN,fTightJets,fVars,iVJets,iRho, runNum);
 }
 void JetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum){ 
   int lMin = iObjects.size();

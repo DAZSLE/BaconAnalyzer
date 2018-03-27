@@ -22,7 +22,7 @@ public:
   void setupTree(TTree *iTree, std::string iJetLabel);
   void load(int iEvent);
   void selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, std::vector<TLorentzVector> &iVJets, double iRho, unsigned int runNum);
-  std::vector<TJet*> fLooseJets;
+  std::vector<TJet*> fTightJets;
   std::vector<const TJet*> fGoodJets, selectedJets15, selectedJets8;
   std::vector<TLorentzVector> selectedJets;
 
@@ -50,9 +50,9 @@ public:
 				    bool printDebug = false);
   TRandom3* r;
 
-  const double CSVL = 0.5426; // CSVv2 WP
-  const double CSVM = 0.8484;
-  const double CSVT = 0.9535;
+  const double CSVL = 0.5803; // CSVv2 WP
+  const double CSVM = 0.8838;
+  const double CSVT = 0.9693;
 
   int           fNJetsPt30;
   int           fNJetsPt30jesUp;
