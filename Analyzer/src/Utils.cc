@@ -435,7 +435,7 @@ bool passMuonHighPtSel(const baconhep::TMuon *muon)
 bool passTauSel(const baconhep::TTau *tau)
 {
   if(!(tau->hpsDisc & baconhep::kByDecayModeFinding)) return false;
-  if(tau->rawIso3Hits > 5.)                           return false;
+  if(tau->rawIso3Hits > 4.5)                           return false;
 
   return true;
 }
