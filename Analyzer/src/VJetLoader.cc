@@ -268,7 +268,7 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
     
     if(jetCorrPtSmear   <=  200)                                           continue;
     if(fabs(pVJet->eta) >=  2.5)                                           continue;
-    if(!passJetLooseSel(pVJet))                                            continue;
+    if(!passJetTightSel(pVJet))                                            continue;
     addJet(pVJet,fLooseVJets);
     lCount++;
     x1List.push_back(x1);
@@ -328,7 +328,7 @@ void VJetLoader::selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons
     if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-    if(!passJetLooseSel(pVJet))                                            continue;
+    if(!passJetTightSel(pVJet))                                            continue;
     addJet(pVJet,fLooseVJetsByDoubleB);
     if(!passJetTightLepVetoSel(pVJet))                                     continue;
   }
@@ -342,7 +342,7 @@ void VJetLoader::selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons
   //   if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
   //   if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
   //   if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-  //   if(!passJetLooseSel(pVJet))                                            continue;
+  //   if(!passJetTightSel(pVJet))                                            continue;
   //   addJet(pVJet,fLooseVJetsCHSByDoubleB);
   //   if(!passJetTightLepVetoSel(pVJet))                                     continue;
   // }
@@ -377,7 +377,7 @@ void VJetLoader::selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons
 //     if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
 //     if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
 //     if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-//     if(!passJetLooseSel(pVJet))                                            continue;
+//     if(!passJetTightSel(pVJet))                                            continue;
 //     addJet(pVJet,fLooseVJetsCHS);
 //     lCount++;
 
