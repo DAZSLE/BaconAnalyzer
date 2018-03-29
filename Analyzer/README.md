@@ -83,3 +83,14 @@ tar -zcvf data.tgz data
 ```
 
 Those are transferred to condor. Follow same instructions to produce submission files.
+
+To update lists
+-----------
+In cmslpc:
+
+```
+(Before doing cmsenv)
+cd lists/
+eosls /store/group/lpcbacon/${PROD} > ${PROD}.txt
+bash makeList.sh ${PROD}.txt
+```
