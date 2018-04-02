@@ -34,7 +34,7 @@ void TauLoader::selectTaus(std::vector<TLorentzVector> &iElectrons, std::vector<
     TTau *pTau = (TTau*)((*fTaus)[i0]);
     if(passVeto(pTau->eta,pTau->phi,0.4,iElectrons)) continue; 
     if(passVeto(pTau->eta,pTau->phi,0.4,iMuons))     continue;
-    if(pTau->pt        <=  18)                       continue;
+    if(pTau->pt        <=  20)                       continue;
     if(fabs(pTau->eta) >=  2.3)                      continue;
     if(!passTauSel(pTau))                            continue;
     addTau(pTau,fSelTaus);
