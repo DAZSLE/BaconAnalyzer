@@ -302,21 +302,21 @@ VectorDiJet1Jet_madgraph_Mphi400Mchi1_13TeV		1.877E+01
 VectorDiJet1Jet_madgraph_Mphi450Mchi1_13TeV		2.556E+01
 VectorDiJet1Jet_madgraph_Mphi500Mchi1_13TeV		4.826E+01
 
-VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV		1.604E+01
-VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV		1.614E+01
-VectorDiJet1Jet_madgraph_Mphi100Mchi3000_13TeV		1.541E+01
-VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV		1.436E+01
-VectorDiJet1Jet_madgraph_Mphi125Mchi3000_13TeV		1.476E+01
-VectorDiJet1Jet_madgraph_Mphi150Mchi3000_13TeV		1.493E+01
-VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV		1.492E+01
-VectorDiJet1Jet_madgraph_Mphi200Mchi3000_13TeV		1.423E+01
-VectorDiJet1Jet_madgraph_Mphi225Mchi3000_13TeV		1.446E+01
-VectorDiJet1Jet_madgraph_Mphi250Mchi3000_13TeV		1.418E+01
-VectorDiJet1Jet_madgraph_Mphi300Mchi3000_13TeV		1.486E+01
-VectorDiJet1Jet_madgraph_Mphi350Mchi3000_13TeV		1.610E+01		
-VectorDiJet1Jet_madgraph_Mphi400Mchi3000_13TeV		1.877E+01
-VectorDiJet1Jet_madgraph_Mphi450Mchi3000_13TeV		2.556E+01
-VectorDiJet1Jet_madgraph_Mphi500Mchi3000_13TeV		4.826E+01
+VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV		1.604E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV		1.614E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi100Mchi3000_13TeV		1.541E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV		1.436E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi125Mchi3000_13TeV		1.476E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi150Mchi3000_13TeV		1.493E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV		1.492E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi200Mchi3000_13TeV		1.423E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi225Mchi3000_13TeV		1.446E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi250Mchi3000_13TeV		1.418E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi300Mchi3000_13TeV		1.486E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi350Mchi3000_13TeV		1.610E+01*2.065		
+VectorDiJet1Jet_madgraph_Mphi400Mchi3000_13TeV		1.877E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi450Mchi3000_13TeV		2.556E+01*2.065
+VectorDiJet1Jet_madgraph_Mphi500Mchi3000_13TeV		4.826E+01*2.065
 
 VectorDiJet1Jet_M100				1
 VectorDiJet1Jet_M1000				1
