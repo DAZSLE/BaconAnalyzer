@@ -50,6 +50,7 @@ public:
 				    bool printDebug = false);
   TRandom3* r;
 
+  //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
   const double CSVL = 0.5803; // CSVv2 WP
   const double CSVM = 0.8838;
   const double CSVT = 0.9693;
