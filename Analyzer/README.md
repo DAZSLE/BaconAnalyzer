@@ -78,7 +78,7 @@ After compiling, tar CMSSW_9_2_12 environment and data/ dir
 ```
 cd ../../
 tar --exclude-caches-all --exclude-vcs --exclude-caches-all --exclude-vcs -cvzf CMSSW_9_2_12.tgz CMSSW_9_2_12 --exclude=src --exclude=tmp
-cd CMSSW_9_2_12/src
+cd CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/
 tar -zcvf data.tgz data
 ```
 
