@@ -569,99 +569,118 @@ void JetLoader::loadJECs_Rereco(bool isData) {
     resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Spring16_25nsV10_MC/Spring16_25nsV10_MC_SF_AK4PFPuppi.txt",jecPathname.c_str()));
  
     if (isData) {
-      //IOV: 2016BCD
-      std::vector<JetCorrectorParameters> correctionParametersBCD = std::vector<JetCorrectorParameters> ();
-      correctionParametersBCD.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016BCDV3_DATA/Summer16_23Sep2016BCDV3_DATA_L1FastJet_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersBCD.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016BCDV3_DATA/Summer16_23Sep2016BCDV3_DATA_L2Relative_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersBCD.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016BCDV3_DATA/Summer16_23Sep2016BCDV3_DATA_L3Absolute_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersBCD.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016BCDV3_DATA/Summer16_23Sep2016BCDV3_DATA_L2L3Residual_AK4PFPuppi.txt", jecPathname.c_str())));
-      FactorizedJetCorrector *JetCorrectorBCD = new FactorizedJetCorrector(correctionParametersBCD);
-      std::string jecUncPathBCD = jecPathname+"/Summer16_23Sep2016BCDV3_DATA/Summer16_23Sep2016BCDV3_DATA_Uncertainty_AK4PFPuppi.txt";
-      JetCorrectionUncertainty *jecUncBCD = new JetCorrectionUncertainty(jecUncPathBCD);
+      //IOV: 2016B
+      std::vector<JetCorrectorParameters> correctionParametersB = std::vector<JetCorrectorParameters> ();
+      correctionParametersB.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017B_V6_DATA/Fall17_17Nov2017B_V6_DATA_L1FastJet_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersB.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017B_V6_DATA/Fall17_17Nov2017B_V6_DATA_L2Relative_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersB.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017B_V6_DATA/Fall17_17Nov2017B_V6_DATA_L3Absolute_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersB.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017B_V6_DATA/Fall17_17Nov2017B_V6_DATA_L2L3Residual_AK8PFPuppi.txt", jecPathname.c_str())));
+      FactorizedJetCorrector *JetCorrectorB = new FactorizedJetCorrector(correctionParametersB);
+      std::string jecUncPathB = jecPathname+"/Fall17_17Nov2017B_V6_DATA/Fall17_17Nov2017B_V6_DATA_Uncertainty_AK8PFPuppi.txt";
+      JetCorrectionUncertainty *jecUncB = new JetCorrectionUncertainty(jecUncPathB);
 
-      correctionParameters.push_back(correctionParametersBCD);
-      JetCorrector.push_back( JetCorrectorBCD );
-      jecUnc.push_back(jecUncBCD);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 276811 ));
+      correctionParameters.push_back(correctionParametersB);
+      JetCorrector.push_back( JetCorrectorB );
+      jecUnc.push_back(jecUncB);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 299329 ));
 
-      //IOV: 2016EF
-      std::vector<JetCorrectorParameters> correctionParametersEF = std::vector<JetCorrectorParameters> ();
-      correctionParametersEF.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016EFV3_DATA/Summer16_23Sep2016EFV3_DATA_L1FastJet_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersEF.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016EFV3_DATA/Summer16_23Sep2016EFV3_DATA_L2Relative_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersEF.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016EFV3_DATA/Summer16_23Sep2016EFV3_DATA_L3Absolute_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersEF.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016EFV3_DATA/Summer16_23Sep2016EFV3_DATA_L2L3Residual_AK4PFPuppi.txt", jecPathname.c_str())));
-      FactorizedJetCorrector *JetCorrectorEF = new FactorizedJetCorrector(correctionParametersEF);
-      std::string jecUncPathEF = jecPathname+"/Summer16_23Sep2016EFV3_DATA/Summer16_23Sep2016EFV3_DATA_Uncertainty_AK4PFPuppi.txt";
-      JetCorrectionUncertainty *jecUncEF = new JetCorrectionUncertainty(jecUncPathEF);
+      //IOV: 2017C                                                                                                                             
+      std::vector<JetCorrectorParameters> correctionParametersC = std::vector<JetCorrectorParameters> ();
+      correctionParametersC.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017C_V6_DATA/Fall17_17Nov2017C_V6_DATA_L1FastJet_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersC.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017C_V6_DATA/Fall17_17Nov2017C_V6_DATA_L2Relative_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersC.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017C_V6_DATA/Fall17_17Nov2017C_V6_DATA_L3Absolute_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersC.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017C_V6_DATA/Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFPuppi.txt", jecPathname.c_str())));
+      FactorizedJetCorrector *JetCorrectorC = new FactorizedJetCorrector(correctionParametersC);
+      std::string jecUncPathC = jecPathname+"/Fall17_17Nov2017C_V6_DATA/Fall17_17Nov2017C_V6_DATA_Uncertainty_AK8PFPuppi.txt";
+      JetCorrectionUncertainty *jecUncC = new JetCorrectionUncertainty(jecUncPathC);
 
-      correctionParameters.push_back(correctionParametersEF);
-      JetCorrector.push_back( JetCorrectorEF );
-      jecUnc.push_back(jecUncEF);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 276831, 278801 ));
+      correctionParameters.push_back(correctionParametersC);
+      JetCorrector.push_back( JetCorrectorC );
+      jecUnc.push_back(jecUncC);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 299368, 302029 ));
 
-      //IOV: 2016G
-      std::vector<JetCorrectorParameters> correctionParametersG = std::vector<JetCorrectorParameters> ();
-      correctionParametersG.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016GV3_DATA/Summer16_23Sep2016GV3_DATA_L1FastJet_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersG.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016GV3_DATA/Summer16_23Sep2016GV3_DATA_L2Relative_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersG.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016GV3_DATA/Summer16_23Sep2016GV3_DATA_L3Absolute_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersG.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016GV3_DATA/Summer16_23Sep2016GV3_DATA_L2L3Residual_AK4PFPuppi.txt", jecPathname.c_str())));
-      FactorizedJetCorrector *JetCorrectorG = new FactorizedJetCorrector(correctionParametersG);
-      std::string jecUncPathG = jecPathname+"/Summer16_23Sep2016GV3_DATA/Summer16_23Sep2016GV3_DATA_Uncertainty_AK4PFPuppi.txt";
-      JetCorrectionUncertainty *jecUncG = new JetCorrectionUncertainty(jecUncPathG);
+      //IOV: 2017D
+      std::vector<JetCorrectorParameters> correctionParametersD = std::vector<JetCorrectorParameters> ();
+      correctionParametersD.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017D_V6_DATA/Fall17_17Nov2017D_V6_DATA_L1FastJet_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017D_V6_DATA/Fall17_17Nov2017D_V6_DATA_L2Relative_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017D_V6_DATA/Fall17_17Nov2017D_V6_DATA_L3Absolute_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017D_V6_DATA/Fall17_17Nov2017D_V6_DATA_L2L3Residual_AK8PFPuppi.txt", jecPathname.c_str())));
+      FactorizedJetCorrector *JetCorrectorD = new FactorizedJetCorrector(correctionParametersD);
+      std::string jecUncPathD = jecPathname+"/Fall17_17Nov2017D_V6_DATA/Fall17_17Nov2017D_V6_DATA_Uncertainty_AK8PFPuppi.txt";
+      JetCorrectionUncertainty *jecUncD = new JetCorrectionUncertainty(jecUncPathD);
 
-      correctionParameters.push_back(correctionParametersG);
-      JetCorrector.push_back( JetCorrectorG );
-      jecUnc.push_back(jecUncG);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 278802, 280385 ));
+      correctionParameters.push_back(correctionParametersD);
+      JetCorrector.push_back( JetCorrectorD );
+      jecUnc.push_back(jecUncD);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 302031, 302663));
 
-      //IOV: 2016H
-      std::vector<JetCorrectorParameters> correctionParametersH = std::vector<JetCorrectorParameters> ();
-      correctionParametersH.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016HV3_DATA/Summer16_23Sep2016HV3_DATA_L1FastJet_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersH.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016HV3_DATA/Summer16_23Sep2016HV3_DATA_L2Relative_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersH.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016HV3_DATA/Summer16_23Sep2016HV3_DATA_L3Absolute_AK4PFPuppi.txt", jecPathname.c_str())));
-      correctionParametersH.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016HV3_DATA/Summer16_23Sep2016HV3_DATA_L2L3Residual_AK4PFPuppi.txt", jecPathname.c_str())));
-      FactorizedJetCorrector *JetCorrectorH = new FactorizedJetCorrector(correctionParametersH);
-      std::string jecUncPathH = jecPathname+"/Summer16_23Sep2016HV3_DATA/Summer16_23Sep2016HV3_DATA_Uncertainty_AK4PFPuppi.txt";
-      JetCorrectionUncertainty *jecUncH = new JetCorrectionUncertainty(jecUncPathH);
+      //IOV: 2016E  
+      std::vector<JetCorrectorParameters> correctionParametersE = std::vector<JetCorrectorParameters> ();
+      correctionParametersE.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_L1EastJet_AK8PEPuppi.txt", jecPathname.c_str())));
+      correctionParametersE.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_L2Relative_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersE.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_L3Absolute_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersE.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_L2L3Residual_AK8PFPuppi.txt", jecPathname.c_str())));
+      FactorizedJetCorrector *JetCorrectorE = new FactorizedJetCorrector(correctionParametersE);
+      std::string jecUncPathE = jecPathname+"/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_Uncertainty_AK8PFPuppi.txt";
+      JetCorrectionUncertainty *jecUncE = new JetCorrectionUncertainty(jecUncPathE);
 
-      correctionParameters.push_back(correctionParametersH);
-      JetCorrector.push_back( JetCorrectorH );
-      jecUnc.push_back(jecUncH);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 280919, 99999999 ));
+      correctionParameters.push_back(correctionParametersE);
+      JetCorrector.push_back( JetCorrectorE );
+      jecUnc.push_back(jecUncE);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 303825, 304797 ));
 
+      //IOV: 2016F
+      std::vector<JetCorrectorParameters> correctionParametersF = std::vector<JetCorrectorParameters> ();
+      correctionParametersF.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017F_V6_DATA/Fall17_17Nov2017F_V6_DATA_L1FastJet_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersF.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017F_V6_DATA/Fall17_17Nov2017F_V6_DATA_L2Relative_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersF.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017F_V6_DATA/Fall17_17Nov2017F_V6_DATA_L3Absolute_AK8PFPuppi.txt", jecPathname.c_str())));
+      correctionParametersF.push_back(JetCorrectorParameters(
+		  Form("%s/Fall17_17Nov2017F_V6_DATA/Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK8PFPuppi.txt", jecPathname.c_str())));
+      FactorizedJetCorrector *JetCorrectorF = new FactorizedJetCorrector(correctionParametersF);
+      std::string jecUncPathF = jecPathname+"/Fall17_17Nov2017F_V6_DATA/Fall17_17Nov2017F_V6_DATA_Uncertainty_AK8PFPuppi.txt";
+      JetCorrectionUncertainty *jecUncF = new JetCorrectionUncertainty(jecUncPathF);
+
+      correctionParameters.push_back(correctionParametersF);
+      JetCorrector.push_back( JetCorrectorF );
+      jecUnc.push_back(jecUncF);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 305055, 99999999 ));
     }
     else {
       std::vector<JetCorrectorParameters> correctionParametersMC = std::vector<JetCorrectorParameters> ();
       correctionParametersMC.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016V3_MC/Summer16_23Sep2016V3_MC_L1FastJet_AK4PFPuppi.txt", jecPathname.c_str())));
+		  Form("%s/Fall17_17Nov2017_V6_MC/Fall17_17Nov2017_V6_MC_L1FastJet_AK8PFPuppi.txt", jecPathname.c_str())));
       correctionParametersMC.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016V3_MC/Summer16_23Sep2016V3_MC_L2Relative_AK4PFPuppi.txt", jecPathname.c_str())));
+		  Form("%s/Fall17_17Nov2017_V6_MC/Fall17_17Nov2017_V6_MC_L2Relative_AK8PFPuppi.txt", jecPathname.c_str())));
       correctionParametersMC.push_back(JetCorrectorParameters(
-                  Form("%s/Summer16_23Sep2016V3_MC/Summer16_23Sep2016V3_MC_L3Absolute_AK4PFPuppi.txt", jecPathname.c_str())));
+		  Form("%s/Fall17_17Nov2017_V6_MC/Fall17_17Nov2017_V6_MC_L3Absolute_AK8PFPuppi.txt", jecPathname.c_str())));
       FactorizedJetCorrector *JetCorrectorMC = new FactorizedJetCorrector(correctionParametersMC);
-      std::string jecUncPath = jecPathname+"/Summer16_23Sep2016V3_MC/Summer16_23Sep2016V3_MC_Uncertainty_AK4PFPuppi.txt";
+      std::string jecUncPath = jecPathname+"/Fall17_17Nov2017_V6_MC/Fall17_17Nov2017_V6_MC_Uncertainty_AK8PFPuppi.txt";
       JetCorrectionUncertainty *jecUncMC = new JetCorrectionUncertainty(jecUncPath);
 
       correctionParameters.push_back(correctionParametersMC);
       JetCorrector.push_back( JetCorrectorMC );
       jecUnc.push_back(jecUncMC);
       JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 99999999 ));
+      
     }
   
 }
