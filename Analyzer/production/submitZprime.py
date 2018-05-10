@@ -42,13 +42,13 @@ samplesDict['Hbb'] = {
     }
 samplesDict['QCD'] = {       
     'QCD_HT1000to1500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT2000toInf_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT200to300_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
-    'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
-    'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
+    # 'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    # 'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    # 'QCD_HT2000toInf_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    # 'QCD_HT200to300_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    # 'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
+    # 'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
+    # 'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
     }
 samplesDict['SingleTop'] = {
     'ST_s_channel_4f_leptonDecays_TuneCP5_13TeV_amcatnlo_pythia8_noPF': 'mc',
@@ -114,8 +114,8 @@ samplesDict['VectorDiJet1Jet2016'] = {
     # 'VectorDiJet1Jet_75_13TeV_madgraph': 'mc'
     }
 samplesDict['W'] = {
-    'WJetsToQQ_HT400to600_TuneCP5_13TeV_noPF': 'mc',
-    'WJetsToQQ_HT600to800_TuneCP5_13TeV_noPF': 'mc',
+    #'WJetsToQQ_HT400to600_TuneCP5_13TeV_noPF': 'mc',
+    #'WJetsToQQ_HT600to800_TuneCP5_13TeV_noPF': 'mc',
     'WJetsToQQ_HT_800toInf_TuneCP5_13TeV_noPF': 'mc',
     }
 samplesDict['DY'] = {

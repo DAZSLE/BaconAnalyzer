@@ -11,7 +11,7 @@ from submitZprime import samplesDict
 
 import ROOT
 
-PT_CUT = 450.
+PT_CUT = 350.
 
 def main(options,args):
 
