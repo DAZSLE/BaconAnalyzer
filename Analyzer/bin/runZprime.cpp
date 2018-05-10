@@ -327,7 +327,7 @@ int main( int argc, char **argv ) {
       if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,55);
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,55);
     }
-    if(lName.find("TTJets")!=std::string::npos || lName.find("TT_")!=std::string::npos){
+    if(lName.find("TTJets")!=std::string::npos || lName.find("TT_")!=std::string::npos || lName.find("TTTo")!=std::string::npos){
       float ttbarPtWeight = fGen->computeTTbarCorr();
       fEvt->fevtWeight *= ttbarPtWeight;
       fGen->fWeight *= ttbarPtWeight;
