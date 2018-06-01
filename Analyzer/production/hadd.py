@@ -275,8 +275,10 @@ def justHadd(options,args):
                 condor_file.write('universe = vanilla\n')
                 condor_file.write('Executable = hadd_jobs/hadd_command_%s.sh\n'% basename.replace('.root','_%i.root'%i))
                 condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
-                condor_file.write('request_disk = 3000000\n')
-                condor_file.write('request_memory = 5000\n')
+                #condor_file.write('request_disk = 3000000\n')
+                condor_file.write('request_disk = 5000000\n')
+                #condor_file.write('request_memory = 5000\n')
+                condor_file.write('request_memory = 6000\n')
                 condor_file.write('Should_Transfer_Files = YES\n')
                 condor_file.write('WhenToTransferOutput = ON_EXIT\n')
                 condor_file.write('Transfer_Input_Files = %s\n'%filesToTransfer)
@@ -321,8 +323,10 @@ def justHadd(options,args):
             condor_file.write('universe = vanilla\n')
             condor_file.write('Executable = hadd_jobs/hadd_command_%s.sh\n'% basename)
             condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
-            condor_file.write('request_disk = 3000000\n')
-            condor_file.write('request_memory = 5000\n')
+            #condor_file.write('request_disk = 3000000\n')
+            condor_file.write('request_disk = 5000000\n')
+            #condor_file.write('request_memory = 5000\n')
+            condor_file.write('request_memory = 8000\n')
             condor_file.write('Should_Transfer_Files = YES\n')
             condor_file.write('WhenToTransferOutput = ON_EXIT\n')
             condor_file.write('Transfer_Input_Files = %s\n'%filesToTransfer)
@@ -359,7 +363,8 @@ def addSklimCommand(iBasename,isMc,options):
         haddCommand += 'python skimmerN2.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s \n'%(basename.replace('.root',''))
     elif WtagOn:
         if isMc=='mc':
-            haddCommand += 'python skimmerWtag.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s --isMc --isPu --jet %s --ddt %s --iddt %s \n'%(basename.replace('.root',''),options.jet,options.ddt,options.iddt)
+            #haddCommand += 'python skimmerWtag.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s --isMc --isPu --jet %s --ddt %s --iddt %s \n'%(basename.replace('.root',''),options.jet,options.ddt,options.iddt)
+            haddCommand += 'python skimmerWtag.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s --isMc --jet %s --ddt %s --iddt %s \n'%(basename.replace('.root',''),options.jet,options.ddt,options.iddt)
         else:
             haddCommand += 'python skimmerWtag.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s --isPu --jet %s --ddt %s --iddt %s \n'%(basename.replace('.root',''),options.jet,options.ddt,options.iddt)
     else:
@@ -389,8 +394,8 @@ def main(options,args):
     if options.justN2:
         exec_me('mkdir -p /%s/sklimN2'%(OutDir),options.dryRun)
         exec_me('mkdir -p /%s/normN2'%(OutDir),options.dryRun)
-    if options.justWtag:
-        exec_me('mkdir -p /%s/sklimWtag'%(OutDir),options.dryRun)
+    # if options.justWtag:
+    #     exec_me('mkdir -p /%s/sklimWtag%s'%(OutDir,options.jet),options.dryRun)
 
     for label, isMc in samples.iteritems():
         basename = label + '.root'
@@ -427,9 +432,11 @@ def main(options,args):
             DDTOn = True
         elif options.justN2:
             haddOn = False
+            normOn = True
             N2On = True
         elif options.justWtag:
             haddOn = False
+            #sklimOn = True
             WtagOn = True
             normOn = False
         else:
@@ -441,6 +448,7 @@ def main(options,args):
         badFiles = []
         if haddOn or loopOverFiles:
             filesToConvert, badFiles = getFilesRecursively(DataDir,label+'/',None,None)
+            #filesToConvert, badFiles = getFilesRecursively(DataDir+'/'+haddDir+'/',label+'/',None,None)
         print "files To Convert = ",filesToConvert
         print "bad files = ", badFiles
         cwd = os.getcwd()
@@ -473,14 +481,15 @@ def main(options,args):
         haddCommand += 'mkdir -p $PWD/hadd\n'
         haddCommand += 'mkdir -p $PWD/sklim\n'
         if haddOn:
-            if options.haddlarge:
-                print "files len = ",len(filesToConvert)/50+1
-                for i in range(0,len(filesToConvert)/50+1):
-                    haddCommand += 'mkdir -p $PWD/hadd\n'
-                    haddCommand += 'mkdir -p $PWD/sklim\n'
-                    print 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*50:(i+1)*50])))
-                    haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*50:(i+1)*50])))
+            print "files len = ",len(filesToConvert)/50+1
+            for i in range(0,len(filesToConvert)/50+1):
+                haddCommand += 'mkdir -p $PWD/hadd\n'
+                haddCommand += 'mkdir -p $PWD/sklim\n'
+                print 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*50:(i+1)*50])))
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*50:(i+1)*50])))
+                if options.haddlarge:
                     haddCommand += 'xrdcp $PWD/hadd/%s root://cmseos.fnal.gov/%s/%s/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,haddDir,basename.replace('.root','_%i.root'%i))
+                    haddCommand += 'rm -r -f hadd/*'
             else:
                 haddCommand += 'hadd -f $PWD/hadd/%s $PWD/hadd/%s\n'%(basename,basename.replace('.root','_*.root'))
                 haddCommand += 'rm $PWD/hadd/%s\n'%(basename.replace('.root','_*.root'))
@@ -501,10 +510,12 @@ def main(options,args):
                     for i in range(0,len(filesToConvert)/50+1):
                         haddCommand += 'xrdcp -s $PWD/sklim/%s root://cmseos.fnal.gov//%s/%s/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,sklimDir,basename.replace('.root','_%i.root'%i))
             else:
+                print 'sklimon'
                 if not haddOn:
                     if not WtagOn:
-                        haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/hadd/%s $PWD/hadd/%s\n'%(OutDir,basename,basename)
+                        haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/%s/%s $PWD/hadd/%s\n'%(OutDir,haddDir,basename,basename)
                     else:
+                        print  'xrdcp root://cmseos.fnal.gov//%s/normN2/%s $PWD/hadd/%s\n'%(OutDir,basename.replace('.root','_1000pb_weighted.root'),basename)
                         if isMc=='mc':
                             haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/normN2/%s $PWD/hadd/%s\n'%(OutDir,basename.replace('.root','_1000pb_weighted.root'),basename)
                         else:
@@ -541,7 +552,9 @@ def main(options,args):
             condor_file.write('Executable = hadd_jobs/hadd_command_%s.sh\n'% basename)
             condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
             condor_file.write('request_disk = 3000000\n')
-            condor_file.write('request_memory = 5000\n')
+            #condor_file.write('request_disk = 4000000\n')
+            condor_file.write('request_memory = 10000\n')
+            #condor_file.write('request_memory = 10000\n')
             condor_file.write('Should_Transfer_Files = YES\n')
             condor_file.write('WhenToTransferOutput = ON_EXIT\n')
             condor_file.write('Transfer_Input_Files = %s\n'%filesToTransfer)
@@ -570,6 +583,7 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
     cfiles = []
     badfiles = []
     files = []
+    print 'ls %s/%s'%(dir,thesearchstring)
     os.system('ls %s/%s > tmp.txt'%(dir,thesearchstring))
     with open("tmp.txt", 'r') as mylist:
         files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
@@ -625,6 +639,7 @@ if __name__ == '__main__':
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
     parser.add_option('-e','--executable',dest="executable", default="runZprime", help = "executable name")
+    parser.add_option("--tagddt", type=str, default='', help="tagddt")
     parser.add_option("--ddt", type=str, default='GridOutput_v13.root', help="ddt")
     parser.add_option("--iddt", type=str, default='Rho2D', help="iddt")
     parser.add_option('--jet', dest='jet', default='AK8', help='jet type')
@@ -664,7 +679,11 @@ if __name__ == '__main__':
             normDir +='N2'
         if options.justWtag:
             haddDir = "hadd"
-            sklimDir +='Wtag'
+            sklimDir +='Wtag%s%s'%(options.jet,options.tagddt)
 
+        if '2016' in options.sample:
+            haddDir+='2016'
+            sklimDir+='2016'
+            normDir+='2016'
         main(options,args)
     

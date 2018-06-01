@@ -44,6 +44,7 @@ def sklimAdd(fn,odir,mass=0):
 
     f1 = ROOT.TFile.Open(fn,'read')
     tree = f1.Get("Events")
+    #tree = f1.Get("otree")
     try:
         if not tree.InheritsFrom("TTree"):
             return -1
@@ -126,7 +127,7 @@ def sklimAdd(fn,odir,mass=0):
     otree2.SetBranchStatus("CA15Puppijet0_ptraw",0)
     otree2.SetBranchStatus("CA15Puppijet0_genpt",0)
     otree2.SetBranchStatus("*Met*Corr*",0)
-    otree2.SetBranchStatus("*tau21*",0)
+    #otree2.SetBranchStatus("*tau21*",0)
     otree2.SetBranchStatus("*tau32*",0)
     otree2.SetBranchStatus("*doublesub*",0)
     otree2.SetBranchStatus("*CHF*",0)

@@ -8,12 +8,23 @@ import time
 from optparse import OptionParser
 from submitZprime import samplesDict, exec_me
 
-EOS = 'eos root://cmseos.fnal.gov'
+EOS = ''#eos root://cmseos.fnal.gov'
 cmssw = "CMSSW_9_2_12"
 
 import ROOT
 normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia8',
             'WJetsToQQ_HT180_13TeV': 'WJetsToQQ_HT180_13TeV-madgraphMLM-pythia8',
+            'WJetsToQQ_HT400to600_TuneCP5_13TeV_noPF': 'WJetsToQQ_HT400to600_TuneCP5_13TeV',
+            'WJetsToQQ_HT600to800_TuneCP5_13TeV_noPF': 'WJetsToQQ_HT600to800_TuneCP5_13TeV',
+            'WJetsToQQ_HT_800toInf_TuneCP5_13TeV_noPF': 'WJetsToQQ_HT_800toInf_TuneCP5_13TeV',
+            'QCD_HT1000to1500_TuneCP5_13TeV_madgraph_pythia8': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT2000toInf_TuneCP5_13TeV_madgraph_pythia8': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT200to300_TuneCP5_13TeV_madgraph_pythia8': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT50to100_13TeV': 'QCD_HT50to100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT100to200_13TeV': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT100to200_13TeV_ext': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
@@ -151,7 +162,7 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'ZZ_13TeV_pythia8': 'ZZ_TuneCUETP8M1_13TeV-pythia8'
             }
 
-def justHadd(options,args):    
+def justhadd(options,args):    
     DataDir = options.idir
     OutDir = options.idir
     
@@ -159,7 +170,7 @@ def justHadd(options,args):
     
     postfix = ''
     exec_me('mkdir -p $PWD/hadd_jobs/',options.dryRun)
-    exec_me('%s mkdir -p /%s/hadd'%(EOS,OutDir),options.dryRun)
+    exec_me('mkdir -p /%s/hadd'%(OutDir),options.dryRun)
     for label, isMc in samples.iteritems():
         basename = label + '.root'
         
@@ -173,7 +184,7 @@ def justHadd(options,args):
         haddAll = False
         haddOutExistsList = []
         haddOutList = []
-        for i in range(0,len(filesToConvert)/5+1):
+        for i in range(0,len(filesToConvert)/50+1):
             if not os.path.isfile(OutDir+'/hadd/'+basename.replace('.root','_%i.root'%i)):
                 haddOutExistsList.append(False)
                 haddOutList.append(OutDir+'/hadd/'+basename.replace('.root','_%i.root'%i))
@@ -190,7 +201,7 @@ def justHadd(options,args):
                 haddCommand += 'eval `scramv1 runtime -sh`\n'
                 haddCommand += 'pwd\n'
                 haddCommand += 'mkdir -p $PWD/hadd\n'       
-                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*5:(i+1)*5])))
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*50:(i+1)*50])))
                 haddCommand += 'xrdcp -s $PWD/hadd/%s root://cmseos.fnal.gov//%s/hadd/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))
                 haddCommand += 'rm -r $PWD/hadd\n'
                 with open('hadd_jobs/hadd_command_%s.sh'%(basename.replace('.root','_%i.root'%i)),'w') as f:
@@ -207,7 +218,7 @@ def justHadd(options,args):
                 condor_file.write('request_memory = 5000\n')
                 condor_file.write('Should_Transfer_Files = YES\n')
                 condor_file.write('WhenToTransferOutput = ON_EXIT\n')
-                condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/NormalizeNtuple, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmer.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/submitZprime.py\n')
+                condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/NormalizeNtuple, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmer.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/skimmerDDT.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmerN2.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/submitZprime.py\n')
                 condor_file.write('use_x509userproxy = true\n')
                 condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
                 condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
@@ -267,7 +278,7 @@ def justHadd(options,args):
             condor_file.write('Queue 1\n')
             condor_file.close()
             os.system('chmod +x %s'% os.path.abspath(condor_file.name))
-            exec_me('condor_submit %s'%(os.path.abspath(condor_file.name)),options.dryRun)
+            #exec_me('condor_submit %s'%(os.path.abspath(condor_file.name)),options.dryRun)
 
     
 def main(options,args):
@@ -277,12 +288,29 @@ def main(options,args):
     
     samples = samplesDict[options.sample]
     
-    EOS = 'eos root://cmseos.fnal.gov'
+    EOS = ''#eos root://cmseos.fnal.gov'
     postfix = ''
+    haddDir = "hadd"
+    sklimDir = "sklim"
+    normDir = "sklim"
+    if options.justDDT:
+        haddDir = "hadd"
+        sklimDir +='DDT'
+        normDir +='DDT'
+    if options.justN2:
+        haddDir = "hadd"
+        sklimDir +='N2'
+        normDir +='N2'
     exec_me('mkdir -p $PWD/hadd_jobs/',options.dryRun)
-    exec_me('%s mkdir -p /%s/hadd'%(EOS,OutDir),options.dryRun)
-    exec_me('%s mkdir -p /%s/sklim'%(EOS,OutDir),options.dryRun)
-    exec_me('%s mkdir -p /%s/norm'%(EOS,OutDir),options.dryRun)
+    exec_me('mkdir -p /%s/%s'%(OutDir,haddDir),options.dryRun)
+    exec_me('mkdir -p /%s/%s'%(OutDir,sklimDir),options.dryRun)
+    exec_me('mkdir -p /%s/%s'%(OutDir,normDir),options.dryRun)
+    if options.justDDT:
+        exec_me('mkdir -p /%s/sklimDDT'%(OutDir),options.dryRun)
+        exec_me('mkdir -p /%s/normDDT'%(OutDir),options.dryRun)
+    if options.justN2:
+        exec_me('mkdir -p /%s/sklimN2'%(OutDir),options.dryRun)
+        exec_me('mkdir -p /%s/normN2'%(OutDir),options.dryRun)
     for label, isMc in samples.iteritems():
         basename = label + '.root'
         if options.job>-1:
@@ -291,11 +319,13 @@ def main(options,args):
         haddOn = True
         sklimOn = True
         normOn = True
-        if os.path.isfile(OutDir+'/hadd/'+basename):
+        DDTOn = False
+        N2On = False
+        if os.path.isfile(OutDir+'/'+haddDir+'/'+basename):
             haddOn = False
-        if os.path.isfile(OutDir+'/sklim/'+basename):
+        if os.path.isfile(OutDir+'/'+sklimDir+'/'+basename):
             sklimOn = False
-        if os.path.isfile(OutDir+'/norm/'+basename.replace('.root','_1000pb_weighted.root')):
+        if os.path.isfile(OutDir+'/'+normDir+'/'+basename.replace('.root','_1000pb_weighted.root')):
             normOn = False
 
         if options.justNorm:            
@@ -307,7 +337,14 @@ def main(options,args):
             sklimOn = True
             normOn = False
             
-                    
+        if options.justDDT:
+            DDTOn = True
+        elif options.justN2:
+            N2On = True
+        else:
+            DDTOn = False
+            N2On = False
+
         filesToConvert = []
         badFiles = []
         filesToConvert, badFiles = getFilesRecursively(DataDir,label+'/',None,None)
@@ -332,36 +369,51 @@ def main(options,args):
         if sklimOn:
             haddCommand += 'cp ../../submitZprime.py .\n'
             haddCommand += 'cp ../../skimmer.py .\n'
+            if DDTOn:
+                haddCommand += 'cp ../../skimmerDDT.py .\n'
+            if N2On:
+                haddCommand += 'cp ../../skimmerN2.py .\n'
             haddCommand += 'eval `scramv1 runtime -sh`\n'
         if haddOn:
-            print "files len = ",len(filesToConvert)/5+1
-            for i in range(0,len(filesToConvert)/5+1):         
+            print "files len = ",len(filesToConvert)/50+1
+            for i in range(0,len(filesToConvert)/50+1):         
                 haddCommand += 'mkdir -p $PWD/sklim\n'
                 haddCommand += 'mkdir -p $PWD/hadd\n'
-                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*5:(i+1)*5])))
-                haddCommand += 'xrdcp $PWD/hadd/%s root://cmseos.fnal.gov/%s/hadd/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))
+                haddCommand += 'hadd -f hadd/%s %s\n'%(basename.replace('.root','_%i.root'%i),(' '.join(filesToConvert[i*50:(i+1)*50])))
+                haddCommand += 'xrdcp $PWD/hadd/%s root://cmseos.fnal.gov/%s/%s/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,haddDir,basename.replace('.root','_%i.root'%i))
                 if sklimOn:
-                    haddCommand += 'python skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
-                    haddCommand += 'xrdcp -s $PWD/sklim/%s root://cmseos.fnal.gov//%s/sklim/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))
+                    if DDTOn:
+                        haddCommand += 'python skimmerDDT.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
+                    elif N2On:
+                        haddCommand += 'python skimmerN2.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
+                    else:
+                        haddCommand += 'python skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
+                    haddCommand += 'xrdcp -s $PWD/sklim/%s root://cmseos.fnal.gov//%s/%s/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,sklimDir,basename.replace('.root','_%i.root'%i))
+
                 haddCommand += 'rm -r $PWD/hadd\n'
                 haddCommand += 'rm -r $PWD/sklim\n'
         else:
-            print "files len = ",len(filesToConvert)/5+1
-            for i in range(0,len(filesToConvert)/5+1):
+            print "files len = ",len(filesToConvert)/50+1
+            for i in range(0,len(filesToConvert)/50+1):
                 haddCommand += 'mkdir -p $PWD/sklim\n'
                 haddCommand += 'mkdir -p $PWD/hadd\n'
-                haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/hadd/%s $PWD/hadd/%s\n'%(OutDir,basename.replace('.root','_%i.root'%i),basename.replace('.root','_%i.root'%i))     
-                haddCommand += 'python skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
-                haddCommand += 'xrdcp -s $PWD/sklim/%s root://cmseos.fnal.gov//%s/sklim/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,basename.replace('.root','_%i.root'%i))   
+                haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/%s/%s $PWD/hadd/%s\n'%(OutDir,haddDir,basename.replace('.root','_%i.root'%i),basename.replace('.root','_%i.root'%i))     
+                if DDTOn:
+                    haddCommand += 'python skimmerDDT.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
+                elif N2On:
+                    haddCommand += 'python skimmerN2.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
+                else:
+                    haddCommand += 'python skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
+                haddCommand += 'xrdcp -s $PWD/sklim/%s root://cmseos.fnal.gov//%s/%s/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,sklimDir,basename.replace('.root','_%i.root'%i))   
                 haddCommand += 'rm -r $PWD/hadd\n'
                 haddCommand += 'rm -r $PWD/sklim\n'
         if isMc=='mc' and normOn:            
             haddCommand += 'cp ../../NormalizeNtuple .\n'
             if not sklimOn:
-                haddCommand += 'xrdcp -s /%s/sklim/%s $PWD/sklim/%s\n'%(OutDir,basename,basename)                
+                haddCommand += 'xrdcp -s /%s/%s/%s $PWD/sklim/%s\n'%(OutDir,sklimDir,basename,basename)                
             haddCommand += 'echo "%s\t${PWD}/sklim/%s" > normlist.txt\n'%(normDict[basename.replace('.root','')],basename)
             haddCommand += 'NormalizeNtuple normlist.txt\n'
-            haddCommand += 'xrdcp $PWD/sklim/%s root://cmseos.fnal.gov//%s/norm/%s\n'%(basename.replace('.root','_1000pb_weighted.root'),OutDir,basename.replace('.root','_1000pb_weighted.root'))
+            haddCommand += 'xrdcp $PWD/sklim/%s root://cmseos.fnal.gov//%s/%s/%s\n'%(basename.replace('.root','_1000pb_weighted.root'),OutDir,normDir,basename.replace('.root','_1000pb_weighted.root'))
             haddCommand += 'rm -r $PWD/hadd\n'
             haddCommand += 'rm -r $PWD/sklim\n'
 
@@ -383,7 +435,7 @@ def main(options,args):
             condor_file.write('request_memory = 5000\n')
             condor_file.write('Should_Transfer_Files = YES\n')
             condor_file.write('WhenToTransferOutput = ON_EXIT\n')
-            condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/NormalizeNtuple, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmer.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/submitZprime.py\n')
+            condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/NormalizeNtuple, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmer.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmerDDT.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmerN2.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/submitZprime.py\n')
             condor_file.write('use_x509userproxy = true\n')
             condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
             condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
@@ -411,7 +463,7 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
     cfiles = []
     badfiles = []
     files = []
-    os.system('%s ls %s/%s > tmp.txt'%(EOS,dir,thesearchstring))
+    os.system('ls %s/%s > tmp.txt'%(dir,thesearchstring))
     with open("tmp.txt", 'r') as mylist:
         files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
 
@@ -462,13 +514,17 @@ if __name__ == '__main__':
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
     parser.add_option('--dry-run',dest="dryRun",default=False,action='store_true',
-                  help="Just print out commands to run")
+                      help="Just print out commands to run")
     parser.add_option('--just-hadd',dest="justHadd",default=False,action='store_true',
-                  help="Just run hadd (two-step)")
+                      help="Just run hadd (two-step)")
     parser.add_option('--just-sklim',dest="justSklim",default=False,action='store_true',
-                  help="Just run sklim step")
+                      help="Just run sklim step")
     parser.add_option('--just-norm',dest="justNorm",default=False,action='store_true',
-                  help="Just run norm step")
+                      help="Just run norm step")
+    parser.add_option('--just-DDT',dest="justDDT",default=False,action='store_true',
+                      help="Run DDT skimmer")
+    parser.add_option('--just-N2',dest="justN2",default=False,action='store_true',
+                      help="Run N2 skimmer")
     (options, args) = parser.parse_args()
 
     
