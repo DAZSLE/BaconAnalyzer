@@ -740,7 +740,7 @@ void VJetLoader::loadJECs_Rereco(bool isData) {
       //IOV: 2016E
       std::vector<JetCorrectorParameters> correctionParametersE = std::vector<JetCorrectorParameters> ();
       correctionParametersE.push_back(JetCorrectorParameters(
-                  Form("%s/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_L1EastJet_AK8PEPuppi.txt", jecPathname.c_str())));
+                  Form("%s/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_L1FastJet_AK8PFPuppi.txt", jecPathname.c_str())));
       correctionParametersE.push_back(JetCorrectorParameters(
                   Form("%s/Fall17_17Nov2017E_V6_DATA/Fall17_17Nov2017E_V6_DATA_L2Relative_AK8PFPuppi.txt", jecPathname.c_str())));
       correctionParametersE.push_back(JetCorrectorParameters(
