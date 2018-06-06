@@ -35,6 +35,7 @@ def main(options,args):
         print "files To Convert = ",filesToConvert
 
         for f in filesToConvert:
+            print f
             status = sklimAdd(f,OutDir,tags[i][1])
             print status
 
@@ -43,12 +44,15 @@ def sklimAdd(fn,odir,mass=0):
 
     basename = os.path.basename( fn )
 
+    print fn
     f1 = ROOT.TFile.Open(fn,'read')
     tree = f1.Get("Events")
     try:
         if not tree.InheritsFrom("TTree"):
+            print 'not Events'
             return -1
     except:
+        print 'exception'
         return -1
     
     ofile = ROOT.TFile.Open(odir+'/'+basename,'RECREATE')
@@ -148,7 +152,7 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
     cfiles = []
     for root, dirs, files in os.walk(dir):
         for file in files:
-            # print file	
+            print file	
             if thesearchstring in file:
                 if skipString != None and (skipString in file or skipString in dir or skipString in root):
                     print "already skimmed"

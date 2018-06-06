@@ -70,10 +70,10 @@ def setupkFactors(iPt,iType,iFilename=fDataDir+"kfactors.root"):
     hEWK_W.Divide(hQCD_W);
     hQCD_Z.Divide(hLO_Z);
     hQCD_W.Divide(hLO_W);
-    if iType == 0: #VectorDiJet                                                                                                                                                                                                          
+    if iType == 0: #VectorDiJet                                                                                                                                             
         iQCDKF = hQCD_Z.GetBinContent(hQCD_Z.FindBin(bosonpt));
         ivjetsKF = DY_SF*iQCDKF;
-    elif iType == 1: #Wjets                                                                                                                                                                                                          
+    elif iType == 1: #Wjets                                                                                                                                                       
         iQCDKF = hQCD_W.GetBinContent(hQCD_W.FindBin(bosonpt));
         iEWKKF = hEWK_W.GetBinContent(hEWK_W.FindBin(bosonpt));
         ivjetsKF = W_SF*iEWKKF*iQCDKF;
@@ -83,7 +83,7 @@ def setupkFactors(iPt,iType,iFilename=fDataDir+"kfactors.root"):
         for i in range(0, len(ptscale)):
             if iPt > ptscale[i] and iPt<ptscale[i+1]:  ptKF=wscale[i]
         ivjetsKF = W_SF*iEWKKF*iQCDKF*ptKF;
-    elif iType == 2: #DYJets                                                                                                                                                                                                              
+    elif iType == 2: #DYJets                                                                                                                                                    
         iEWKKF = hEWK_Z.GetBinContent(hEWK_Z.FindBin(bosonpt));
         ivjetsKF = DY_SF*iEWKKF;
     else:
@@ -175,10 +175,17 @@ class miniTreeProducer:
     def __init__(self, isMc, isPu, ofile, otree, ifile, itree, ijet = 'AK8'):
         self.isMc = isMc
         self.ibase = os.path.basename( ifile)
-        if isPu:
-            self.puw,self.puw_up,self.puw_down = setuppuw2017(self.ibase.replace('_1000pb_weighted',''))
+        self.Pu = False
+        if self.isMc is True:
+            self.cutFormula = "1==1"
+            if isPu:
+                self.Pu = True
+                print 'loading puweight from file '
+                self.puw,self.puw_up,self.puw_down = setuppuw2017(self.ibase.replace('_1000pb_weighted',''))
+            else:
+                self.puw, self.puw_up, self.puw_down = setuppuw()
         else:
-            self.puw, self.puw_up, self.puw_down = setuppuw()
+            self.cutFormula = "(triggerBits&4)&&passJson"
         self.ofile = ofile
         self.otree = otree
         self.ifile = ifile
@@ -192,11 +199,13 @@ class miniTreeProducer:
         genCorr =  self.corrGEN.Eval( iPt )
         if( abs(iEta)  < 1.3 ): recoCorr = self.corrRECO_cen.Eval( iPt )
         else: recoCorr = self.corrRECO_for.Eval( iPt )
+        #print recoCorr*genCorr
         return iMass*recoCorr*genCorr
 
     def runProducer(self,ih2ddt,fmutrig_eff,fmuid_eff,fmuiso_eff):
 
         self.Puppijet0_N2 = array('f', [-100.0])
+        self.Puppijet0_Tau21 = array('f', [-100.0])
         self.Puppijet0_N2DDT = array('f', [-100.0])
         self.Puppijet0_doublecsv = array('f', [-100.0])
         self.Puppijet0_pt = array('f', [-100.0])
@@ -228,9 +237,6 @@ class miniTreeProducer:
         self.vmuoLoose0_pt = array('f', [-100.0])
         self.vmuoLoose0_eta = array('f', [-100.0])
         self.vmuoLoose0_phi = array('f', [-100.0])
-        self.veleLoose0_pt = array('f', [-100.0])
-        self.veleLoose0_eta = array('f', [-100.0])
-        self.veleLoose0_phi = array('f', [-100.0])
         self.nLooseMu = array('f', [-100.0])
         self.nTightMu = array('f', [-100.0])
 
@@ -238,26 +244,13 @@ class miniTreeProducer:
         self.triggerBits = array('f', [-100.0])
         self.nEvents = array('f', [-100.0])
         self.LeadingJet_MatchedHadW = array('f', [-100.0])
-        self.puWeight = array('f', [-100.0])
         self.triggerpassbb = array('f', [-100.0])
         self.scale1fb = array('f',[-100.0])
         self.weight = array('f',[-100.0])
-        self.mutrigweight = array('f',[-100.0])
-        self.mutrigweightDown = array('f',[-100.0])
-        self.mutrigweightUp = array('f',[-100.0])
-        self.puweight = array('f',[-100.0])
-        self.puweight_up = array('f',[-100.0])
-        self.puweight_down = array('f',[-100.0])
-        self.muidweight = array('f',[-100.0])
-        self.muidweightDown = array('f',[-100.0])
-        self.muidweightUp = array('f',[-100.0])
-        self.muisoweight = array('f',[-100.0])
-        self.muisoweightDown = array('f',[-100.0])
-        self.muisoweightUp = array('f',[-100.0])
-        self.topPtWeight = array('f',[-100.0])
 
         # branches we need
         self.otree.Branch('Puppijet0_N2', self.Puppijet0_N2, 'Puppijet0_N2/F')
+        self.otree.Branch('Puppijet0_Tau21', self.Puppijet0_Tau21, 'Puppijet0_Tau21/F')
         self.otree.Branch('Puppijet0_N2DDT', self.Puppijet0_N2DDT, 'Puppijet0_N2DDT/F')
         self.otree.Branch('Puppijet0_doublecsv', self.Puppijet0_doublecsv, 'Puppijet0_doublecsv/F')
         self.otree.Branch('Puppijet0_pt', self.Puppijet0_pt, 'Puppijet0_pt/F')
@@ -268,23 +261,9 @@ class miniTreeProducer:
         self.otree.Branch('nTightMu', self.nTightMu, 'nTightMu/F')
         self.otree.Branch('nEvents', self.nEvents, 'nEvents/F')
         self.otree.Branch('LeadingJet_MatchedHadW', self.LeadingJet_MatchedHadW, 'LeadingJet_MatchedHadW/F')
-        self.otree.Branch('puWeight', self.puWeight, 'puWeight/F')
         self.otree.Branch('scale1fb', self.scale1fb, 'scale1fb/F')
         self.otree.Branch('triggerBits', self.triggerBits, 'triggerBits/F')
         self.otree.Branch('weight', self.weight, 'weight/F')
-        self.otree.Branch('mutrigweight', self.mutrigweight, 'mutrigweight/F')
-        self.otree.Branch('mutrigweightUp', self.mutrigweightUp, 'mutrigweightUp/F')
-        self.otree.Branch('mutrigweightDown', self.mutrigweightDown, 'mutrigweightDown/F')
-        self.otree.Branch('puweight', self.puweight, 'puweight/F')
-        self.otree.Branch('puweight_up', self.puweight_up, 'puweight_up/F')
-        self.otree.Branch('puweight_down', self.puweight_down, 'puweight_down/F')
-        self.otree.Branch('muidweight', self.muidweight, 'muidweight/F')
-        self.otree.Branch('muidweightUp', self.muidweightUp, 'muidweightUp/F')
-        self.otree.Branch('muidweightDown', self.muidweightDown, 'muidweightDown/F')
-        self.otree.Branch('muisoweight', self.muisoweight, 'muisoweight/F')
-        self.otree.Branch('muisoweightUp', self.muisoweightUp, 'muisoweightUp/F')
-        self.otree.Branch('muisoweightDown', self.muisoweightDown, 'muisoweightDown/F')
-        self.otree.Branch('topPtWeight', self.topPtWeight, 'topPtWeight/F')
 
         self.bb = ROOT.TH1F("bb", "No Cuts", 3, -0.5, 1.5)
         self.bb0 = ROOT.TH1F("bb0", "After MET", 3, -0.5, 1.5)
@@ -306,7 +285,17 @@ class miniTreeProducer:
             return -1
         
         nent = self.treeMine.GetEntries()
-        for i in range(nent):
+        fcutFormula = ROOT.TTreeFormula("cutFormula",self.cutFormula,self.treeMine)
+        for i in range(0,nent):
+
+            self.treeMine.LoadTree(i)
+            selected = False
+            for j in range(fcutFormula.GetNdata()):
+                if (fcutFormula.EvalInstance(j)):
+                    selected = True
+                    break
+            if not selected: continue
+
             if( nent/100 > 0 and i % (1 * nent/100) == 0):
                 sys.stdout.write("\r[" + "="*int(20*i/nent) + " " + str(round(100.*i/nent,0)) + "% done here")
                 sys.stdout.flush()
@@ -323,6 +312,7 @@ class miniTreeProducer:
             lVMatching = getattr(self.treeMine,"%sPuppijet0_vMatching"%(self.jet));
             lVHadronic = getattr(self.treeMine,"%sPuppijet0_isHadronicV"%(self.jet));
             lVSize = getattr(self.treeMine,"%sPuppijet0_vSize"%(self.jet));
+            lTau21 = getattr(self.treeMine,"%sPuppijet0_tau21"%(self.jet));
             lMass = self.correct(lEta,lPt,lMsd);
             if lMass <=0: lMass = 0.01
             pRho = 2.*math.log(lMass/lPt);
@@ -331,10 +321,11 @@ class miniTreeProducer:
             if 'CA15' in self.jet: lConeSize = 1.5;
 
             self.Puppijet0_N2[0] = lN2
+            self.Puppijet0_Tau21[0] = lTau21
             self.Puppijet0_N2DDT[0] = lN2DDT
             self.Puppijet0_doublecsv[0] = lDcsv
             self.Puppijet0_pt[0] = lPt
-            self.Puppijet0_msd[0] = lMsd
+            self.Puppijet0_msd[0] = lMass
             self.Puppijet0_vMatching[0] = lVMatching
             self.Puppijet0_isHadronicV[0] = lVHadronic
                 
@@ -359,29 +350,27 @@ class miniTreeProducer:
             self.pfmet[0] =self.treeMine.pfmet
             self.triggerBits[0] = self.treeMine.triggerBits&4
             self.nEvents[0] = self.f1.NEvents.GetBinContent(1)
-            self.puWeight[0] = self.treeMine.puWeight
             self.scale1fb[0] = self.treeMine.scale1fb
 
             # muon weights
-            mutrigweight = 1; mutrigweightUp = 1; mutrigweightDown = 1;
-            muidweight = 1;muidweightUp = 1; muidweightDown = 1;
-            muisoweight = 1; muisoweightUp = 1; muisoweightDown = 1;
-            if self.treeMine.nmuLoose > 0:
-                mutrigweight,mutrigweightUp,mutrigweightDown = correctEff(fmutrig_eff,self.treeMine.vmuoLoose0_pt,abs(self.treeMine.vmuoLoose0_eta))
-                muidweight,muidweightUp,muidweightDown = correctEff(fmuid_eff,self.treeMine.vmuoLoose0_pt,abs(self.treeMine.vmuoLoose0_eta),2,"NUM_SoftID_DEN_genTracks")
-                muisoweight,muisoweightUp,muisoweightDown = correctEff(fmuiso_eff,self.treeMine.vmuoLoose0_pt,abs(self.treeMine.vmuoLoose0_eta),2,"NUM_LooseRelIso_DEN_LooseID")
-            self.mutrigweight[0] = mutrigweight; self.mutrigweightDown[0] = mutrigweightDown; self.mutrigweightUp[0] = mutrigweightUp;
-            self.muidweight[0] = muidweight; self.muidweightDown[0] = muidweightDown; self.muidweightUp[0] = muidweightUp;
-            self.muisoweight[0] = muisoweight; self.muisoweightDown[0] = muisoweightDown; self.muisoweightUp[0] = muisoweightUp;
+            if self.isMc is True:
+                mutrigweight = 1; mutrigweightUp = 1; mutrigweightDown = 1;
+                muidweight = 1;muidweightUp = 1; muidweightDown = 1;
+                muisoweight = 1; muisoweightUp = 1; muisoweightDown = 1;
+                if self.treeMine.nmuLoose > 0:
+                    mutrigweight,mutrigweightUp,mutrigweightDown = correctEff(fmutrig_eff,self.treeMine.vmuoLoose0_pt,abs(self.treeMine.vmuoLoose0_eta))
+                    muidweight,muidweightUp,muidweightDown = correctEff(fmuid_eff,self.treeMine.vmuoLoose0_pt,abs(self.treeMine.vmuoLoose0_eta),2,"NUM_SoftID_DEN_genTracks")
+                    muisoweight,muisoweightUp,muisoweightDown = correctEff(fmuiso_eff,self.treeMine.vmuoLoose0_pt,abs(self.treeMine.vmuoLoose0_eta),2,"NUM_LooseRelIso_DEN_LooseID")
             
-            #puweight                                                                                                                           
-            nPuForWeight = min(self.treeMine.npu,49.5)
-            puweight = self.puw.GetBinContent(self.puw.FindBin(nPuForWeight))
-            puweight_up = self.puw_up.GetBinContent(self.puw_up.FindBin(nPuForWeight))
-            puweight_down = self.puw_down.GetBinContent(self.puw_down.FindBin(nPuForWeight))
-            self.puweight[0] = puweight
-            self.puweight_up[0] = puweight_up
-            self.puweight_down[0] = puweight_down
+            #puweight                
+            if self.isMc is True:
+                nPuForWeight = min(self.treeMine.npu,49.5)
+                puweight = self.treeMine.puWeight
+                if self.Pu:
+                    puweight = self.puw.GetBinContent(self.puw.FindBin(self.treeMine.npu));
+                    if puweight<= 0: puweight =1;
+                puweight_up = self.puw_up.GetBinContent(self.puw_up.FindBin(nPuForWeight))
+                puweight_down = self.puw_down.GetBinContent(self.puw_down.FindBin(nPuForWeight))
 
             #kfactor
             if 'WJets' in self.ifile:
@@ -395,20 +384,21 @@ class miniTreeProducer:
             if self.isMc is False:
                 self.weight[0] = 1
             if self.isMc is True:
-                self.weight[0] = puweight*self.treeMine.scale1fb*vjetsKF*mutrigweight
+                self.weight[0] = puweight*self.treeMine.scale1fb*vjetsKF*mutrigweight*muidweight*muisoweight
+                #print 'puweight scale1fb vjets ltrig lid liso ',puweight,self.treeMine.scale1fb,vjetsKF,mutrigweight,muidweight,muisoweight
                 #self.weight[0] = puweight*vjetsKF*mutrigweight # scale1fb is useless if sample not Norm
 
             # evt cuts
             self.triggerpassbb[0] = 1.
             self.bb.Fill(self.triggerpassbb[0])
-            if self.isMc is False:
-                if self.treeMine.passJson != 1 or self.treeMine.triggerBits&4!=4: continue
 
             # hadronic W matching
             if lVHadronic == 1 and lVMatching < lConeSize and lVMatching > 0.0:
-                self.LeadingJet_MatchedHadW[0] = 1.
+                lMatchedHadW = 1.
             else:
-                self.LeadingJet_MatchedHadW[0] = 0.
+                lMatchedHadW = 0.
+            self.LeadingJet_MatchedHadW[0]  = lMatchedHadW;
+
             if lVHadronic == 1:
                 self.bb6.Fill(self.triggerpassbb[0])
             if lVMatching < lConeSize:
@@ -417,128 +407,125 @@ class miniTreeProducer:
                 self.bb8.Fill(self.triggerpassbb[0])
 
             # met
-            if self.pfmet[0] > 40:
+            if self.treeMine.pfmet > 40:
                 self.bb0.Fill(self.triggerpassbb[0])
             else:
                 continue
 
             # number of loose muons
-            self.nLooseMuons = 0
+            lnLooseMuons = 0
             if self.treeMine.nmuLoose == 1:
                 if self.treeMine.vmuoLoose0_pt > 20 and abs(self.treeMine.vmuoLoose0_eta) < 2.4:
-                    self.nLooseMuons+= 1
+                    lnLooseMuons+= 1
             if self.treeMine.nmuLoose == 2:
                 if self.treeMine.vmuoLoose0_pt > 20 and abs(self.treeMine.vmuoLoose0_eta) < 2.4:
-                    self.nLooseMuons+= 1
+                    lnLooseMuons+= 1
                 if self.treeMine.vmuoLoose1_pt > 20 and abs(self.treeMine.vmuoLoose1_eta) < 2.4:
-                    self.nLooseMuons+= 1
-            self.nLooseMu[0] = self.nLooseMuons
+                    lnLooseMuons+= 1
+            self.nLooseMu[0] = lnLooseMuons
 
             # number of tight muons
-            self.nTightMuons = 0
+            lnTightMuons = 0
+            lmuPt = 0; lmuEta = 0; lmuPhi = 0;
             if self.treeMine.nmuTight == 1:
                 if self.treeMine.vmuoLoose0_pt > 53 and abs(self.treeMine.vmuoLoose0_eta) < 2.1:
-                    self.nTightMuons+= 1
-                    self.vmuoLoose0_pt[0] = self.treeMine.vmuoLoose0_pt
-                    self.vmuoLoose0_eta[0] = self.treeMine.vmuoLoose0_eta
-                    self.vmuoLoose0_phi[0] = self.treeMine.vmuoLoose0_phi
+                    lnTightMuons+= 1
+                    lmuPt = self.treeMine.vmuoLoose0_pt
+                    lmuEta = self.treeMine.vmuoLoose0_eta
+                    lmuPhi = self.treeMine.vmuoLoose0_phi
             if self.treeMine.nmuTight == 2:
                 if self.treeMine.vmuoLoose0_pt > 53 and abs(self.treeMine.vmuoLoose0_eta) < 2.1:
-                    self.nTightMuons+= 1
-                    self.vmuoLoose0_pt[0] = self.treeMine.vmuoLoose0_pt
-                    self.vmuoLoose0_eta[0] = self.treeMine.vmuoLoose0_eta
-                    self.vmuoLoose0_phi[0] = self.treeMine.vmuoLoose0_phi
+                    lnTightMuons+= 1
+                    lmuPt = self.treeMine.vmuoLoose0_pt
+                    lmuEta = self.treeMine.vmuoLoose0_eta
+                    lmuPhi = self.treeMine.vmuoLoose0_phi
                 if self.treeMine.vmuoLoose1_pt > 53 and abs(self.treeMine.vmuoLoose1_eta) < 2.1:
-                    self.nTightMuons+= 1
-                    self.vmuoLoose0_pt[0] = self.treeMine.vmuoLoose1_pt
-                    self.vmuoLoose0_eta[0] = self.treeMine.vmuoLoose1_eta
-                    self.vmuoLoose0_phi[0] = self.treeMine.vmuoLoose1_phi
-            self.nTightMu[0] = self.nTightMuons
+                    lnTightMuons+= 1
+                    lmuPt = self.treeMine.vmuoLoose1_pt
+                    lmuEta = self.treeMine.vmuoLoose1_eta
+                    lmuPhi = self.treeMine.vmuoLoose1_phi
+            self.nTightMu[0] = lnTightMuons
+            self.vmuoLoose0_pt[0] = lmuPt
+            self.vmuoLoose0_eta[0] = lmuEta
+            self.vmuoLoose0_phi[0] = lmuPhi
 
-            if self.nTightMu[0] == 1:
+            if lnTightMuons == 1:
                 self.bb1.Fill(self.triggerpassbb[0])
-                if self.nLooseMu[0] == 1:
+                if lnLooseMuons == 1:
                     self.bb2.Fill(self.triggerpassbb[0])
-            if self.nTightMu[0] != 1 or self.nLooseMu[0] != 1:
+            if lnTightMuons != 1 or lnLooseMuons != 1:
                 continue
 
             # hadronic jet
-            HadronicJet = 0.
-            DPhi_Jet_TightMuon = lPhi - self.vmuoLoose0_phi[0]
-            if DPhi_Jet_TightMuon >= math.pi:
-                DPhi_Jet_TightMuon -= 2.*math.pi
-            elif DPhi_Jet_TightMuon < -math.pi:
-                DPhi_Jet_TightMuon += 2.*math.pi
-            DR_Jet_TightMuon = math.sqrt((lEta - self.vmuoLoose0_eta[0])*(lEta - self.vmuoLoose0_eta[0])+DPhi_Jet_TightMuon*DPhi_Jet_TightMuon)
-            if abs(lEta) < 2.4 and DR_Jet_TightMuon > 1.0:
-                HadronicJet = 1
-            if HadronicJet == 1:
-                self.bb3.Fill(self.triggerpassbb[0])
-            else:
+            lHadronicJet = 0.
+            lDPhi_Jet_TightMuon = lPhi - lmuPhi
+            if lDPhi_Jet_TightMuon >= math.pi:
+                lDPhi_Jet_TightMuon -= 2.*math.pi
+            elif lDPhi_Jet_TightMuon < -math.pi:
+                lDPhi_Jet_TightMuon += 2.*math.pi
+            lDR_Jet_TightMuon = math.sqrt((lEta - lmuEta)*(lEta - lmuEta)+lDPhi_Jet_TightMuon*lDPhi_Jet_TightMuon)
+            if abs(lEta) < 2.4 and lDR_Jet_TightMuon > 1.0:
+                lHadronicJet = 1
+            if lHadronicJet != 1:
                 continue
+            else:
+                self.bb3.Fill(self.triggerpassbb[0])
 
             # at least one b-tagged AK4 jet, isolated from jet and muon
-            nBTaggedAK4Jet = 0
+            lnBTaggedAK4Jet = 0
             for i0 in range(0,4):
-                DR_TightMuon_Matched = 0
-                DR_Jet_Matched = 0
+                lDR_TightMuon_Matched = 0
+                lDR_Jet_Matched = 0
                 lAK4Pt = getattr(self.treeMine,"AK4Puppijet%i_pt"%i0);    
                 lAK4Phi = getattr(self.treeMine,"AK4Puppijet%i_phi"%i0);
                 lAK4Eta = getattr(self.treeMine,"AK4Puppijet%i_eta"%i0);
                 lAK4Csv = getattr(self.treeMine,"AK4Puppijet%i_csv"%i0);
                 
-                # (AK4,tight muon): DPhi,DR                                                                                                                                                                                               
-                DPhi_AK4Jet_TightMuon = lAK4Phi - self.vmuoLoose0_phi[0]
-                if DPhi_AK4Jet_TightMuon >= math.pi:
-                    DPhi_AK4Jet_TightMuon -= 2.*math.pi
-                elif DPhi_AK4Jet_TightMuon < -math.pi:
-                    DPhi_AK4Jet_TightMuon += 2.*math.pi
-                    
-                DR_AK4Jet_TightMuon = math.sqrt((lAK4Eta - self.vmuoLoose0_eta[0])*(lAK4Eta - self.vmuoLoose0_eta[0])+DPhi_AK4Jet_TightMuon*DPhi_AK4Jet_TightMuon)
-                if DR_AK4Jet_TightMuon < 0.3:
-                    DR_TightMuon_Matched = 1
+                # (AK4,tight muon): DPhi,DR      
+                lDPhi_AK4Jet_TightMuon = lAK4Phi - lmuPhi
+                if lDPhi_AK4Jet_TightMuon >= math.pi:
+                    lDPhi_AK4Jet_TightMuon -= 2.*math.pi
+                elif lDPhi_AK4Jet_TightMuon < -math.pi:
+                    lDPhi_AK4Jet_TightMuon += 2.*math.pi
+                lDR_AK4Jet_TightMuon = math.sqrt((lAK4Eta - lmuEta)*(lAK4Eta - lmuEta)+lDPhi_AK4Jet_TightMuon*lDPhi_AK4Jet_TightMuon)
+                if lDR_AK4Jet_TightMuon < 0.3:
+                    lDR_TightMuon_Matched = 1                                     
 
-                # (AK4,jet): DPhi,DR                                                                                                                                                                                                      
-                DPhi_AK4Jet_Jet = lAK4Phi - lPhi
-                if DPhi_AK4Jet_Jet >= math.pi:
-                    DPhi_AK4Jet_Jet -= 2.*math.pi
-                elif DPhi_AK4Jet_Jet < -math.pi:
-                    DPhi_AK4Jet_Jet += 2.*math.pi
-                    
-                DR_AK4Jet_Jet = math.sqrt((lAK4Eta - lEta)*(lAK4Eta - lEta)+DPhi_AK4Jet_Jet*DPhi_AK4Jet_Jet)
-                if DR_AK4Jet_Jet < lConeSize:
-                    DR_Jet_Matched = 1
+                # (AK4,jet): DPhi,DR
+                lDPhi_AK4Jet_Jet = lAK4Phi - lPhi
+                if lDPhi_AK4Jet_Jet >= math.pi:
+                    lDPhi_AK4Jet_Jet -= 2.*math.pi
+                elif lDPhi_AK4Jet_Jet < -math.pi:
+                    lDPhi_AK4Jet_Jet += 2.*math.pi
+                lDR_AK4Jet_Jet = math.sqrt((lAK4Eta - lEta)*(lAK4Eta - lEta)+lDPhi_AK4Jet_Jet*lDPhi_AK4Jet_Jet)
+                if lDR_AK4Jet_Jet < lConeSize:
+                    lDR_Jet_Matched = 1
 
-                if abs(lAK4Eta) < 2.4 and lAK4Csv > fMCSV and DR_TightMuon_Matched ==0 and DR_Jet_Matched == 0 and lAK4Pt > 30.:
-                    nBTaggedAK4Jet += 1
+                if abs(lAK4Eta) < 2.4 and lAK4Csv > fMCSV and lDR_TightMuon_Matched ==0 and lDR_Jet_Matched == 0 and lAK4Pt > 30.:
+                    lnBTaggedAK4Jet += 1
 
-            if nBTaggedAK4Jet > 0:
+            if lnBTaggedAK4Jet > 0:
                 self.bb4.Fill(self.triggerpassbb[0])
             else:
                 continue
 
             # leptonic W
-            PassingLeptonicW = 0.
-            self.pxMet = self.pfmet[0]*math.cos(self.treeMine.pfmetphi)
-            self.pyMet = self.pfmet[0]*math.sin(self.treeMine.pfmetphi)
-            self.pxMuon = self.vmuoLoose0_pt[0]*math.cos(self.vmuoLoose0_phi[0])
-            self.pyMuon = self.vmuoLoose0_pt[0]*math.sin(self.vmuoLoose0_phi[0])
-            if math.sqrt((self.pxMet+self.pxMuon)*(self.pxMet+self.pxMuon) + (self.pyMet+self.pyMuon)*(self.pyMet+self.pyMuon)) > 200.:
-                PassingLeptonicW = 1.
-            if PassingLeptonicW > 0:
+            lPassingLeptonicW = 0.
+            lpxMet = self.treeMine.pfmet*math.cos(self.treeMine.pfmetphi)
+            lpyMet = self.treeMine.pfmet*math.sin(self.treeMine.pfmetphi)
+            lpxMuon = lmuPt*math.cos(lmuPhi)
+            lpyMuon = lmuPt*math.sin(lmuPhi)
+            if math.sqrt((lpxMet+lpxMuon)*(lpxMet+lpxMuon) + (lpyMet+lpyMuon)*(lpyMet+lpyMuon)) > 200.:
+                lPassingLeptonicW = 1.
+            if lPassingLeptonicW > 0:
                 self.bb5.Fill(self.triggerpassbb[0])
             else: 
                 continue
 
-
             # final selection
             #print 'MET %f, tightMu %i, looseMu %i, hadronicjet %i, btagAK4 %i, leptonicW %f, json %i, triggerbits %i'%(self.pfmet[0],self.nTightMu[0],self.nLooseMu[0],HadronicJet,nBTaggedAK4Jet,PassingLeptonicW,self.treeMine.passJson,self.treeMine.triggerBits&4)
-            if self.isMc is False:
-                if self.pfmet[0] > 40 and self.nTightMu[0] == 1 and self.nLooseMu[0] == 1 and HadronicJet == 1 and nBTaggedAK4Jet > 0 and PassingLeptonicW > 0 and self.treeMine.passJson == 1 and self.treeMine.triggerBits&4==4:
-                    self.otree.Fill()
-            if self.isMc is True:
-                if self.pfmet[0] > 40 and self.nTightMu[0] == 1 and self.nLooseMu[0] == 1 and HadronicJet == 1 and nBTaggedAK4Jet > 0 and PassingLeptonicW > 0:
-                    self.otree.Fill()
+            if self.treeMine.pfmet > 40 and lnTightMuons == 1 and lnLooseMuons == 1 and lHadronicJet == 1 and lnBTaggedAK4Jet > 0 and lPassingLeptonicW > 0:
+                self.otree.Fill()
 
         self.f1.Close()
 
