@@ -136,7 +136,7 @@ protected:
 
   char*  fSample;
   unsigned int fITrigger;
-  unsigned int fIMoreTrigger;
+  ULong64_t  fIMoreTrigger;
   unsigned int fMetFilters;
   unsigned int fNPU;
   unsigned int fNPUP;
