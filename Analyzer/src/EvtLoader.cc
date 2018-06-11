@@ -137,7 +137,7 @@ void EvtLoader::setupTree(TTree *iTree) {
   fTree->Branch("passJson"        ,&fPassJson       ,"fPassJson/i");
   fTree->Branch("metfilter"       ,&fMetFilters     ,"fMetFilters/i");
   fTree->Branch("triggerBits"     ,&fITrigger       ,"fITrigger/i");
-  fTree->Branch("moreTriggerBits" ,&fIMoreTrigger   ,"fIMoreTrigger/i");
+  fTree->Branch("moreTriggerBits" ,&fIMoreTrigger   ,"fIMoreTrigger/l");
   fTree->Branch("selectBits"      ,&fselectBits     ,"fselectBits/i");
  
   fTree->Branch("sf_eleTrig"      ,&fsf_eleTrig     ,"fsf_eleTrig/D");

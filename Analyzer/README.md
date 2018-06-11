@@ -12,18 +12,26 @@ Setup
  * Setup BaconAnalyzer, Development Packages
  * Compile
 ```
-cmsrel CMSSW_9_2_12
-cd CMSSW_9_2_12/src
+cmsrel CMSSW_9_4_7
+cd CMSSW_9_4_7/src
 cmsenv
 git cms-addpkg PhysicsTools/PatAlgos
 git cms-addpkg PhysicsTools/PatUtils
+git cms-addpkg PhysicsTools/TensorFlow
+git cms-addpkg CommonTools
 git cms-addpkg RecoBTag/SecondaryVertex
 git cms-addpkg RecoBTau/JetTagComputer
 git cms-addpkg RecoMET/METPUSubtraction
 git cms-addpkg CondFormats/JetMETObjects
 git cms-addpkg JetMETCorrections/Modules
-git pull official-cmssw pull/16224/head
 git clone https://github.com/jmduarte/ShowerDeconstruction 
+```
+comment out these two lines in `ShowerDeconstruction/SDProducer/plugins/SDProducer.cc`
+```
+   //iEvent.put(out_chi, "chi"); 
+   //iEvent.put(out_nmj, "nmicrojets");       
+```
+```
 git clone https://github.com/ksung25/BaconProd
 git clone https://github.com/ksung25/BaconAna
 cd BaconAna
@@ -32,6 +40,7 @@ git fetch jmgd
 git merge jmgd/add_python
 cd ..
 git clone https://github.com/DAZSLE/BaconAnalyzer
+git checkout 90x
 scram b clean
 scram b -j 10
 cd BaconAnalyzer

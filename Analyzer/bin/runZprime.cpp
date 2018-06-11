@@ -163,19 +163,18 @@ int main( int argc, char **argv ) {
     // Triggerbits
     unsigned int trigbits=1;   
     if(lOption.find("data")!=std::string::npos){
-      if(fEvt ->passTrigger("HLT_AK8PFJet400_TrimMass30_v*") ||
+      if(
+	 fEvt ->passTrigger("HLT_AK8PFJet400_TrimMass30_v*") ||
+	 fEvt ->passTrigger("HLT_AK8PFJet420_TrimMass30_v*") ||
 	 fEvt ->passTrigger("HLT_AK8PFHT800_TrimMass50_v*") ||
 	 fEvt ->passTrigger("HLT_AK8PFHT850_TrimMass50_v*") ||
 	 fEvt ->passTrigger("HLT_AK8PFHT900_TrimMass50_v*") ||
 	 fEvt ->passTrigger("HLT_PFJet500_v*") ||
-         fEvt ->passTrigger("HLT_PFHT890_v*") ||
 	 fEvt ->passTrigger("HLT_PFHT1050_v*") ||
 	 fEvt ->passTrigger("HLT_AK8PFJet500_v*") ||
 	 fEvt ->passTrigger("HLT_AK8PFJet550_v*") ||
 	 fEvt ->passTrigger("HLT_CaloJet500_NoJetID_v*") ||
 	 fEvt ->passTrigger("HLT_CaloJet550_NoJetId_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFJet380_TrimMass30_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFJet420_TrimMass30_v*") ||
 	 fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*") ||
 	 fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p1_v*")
 	 )  trigbits = trigbits | 2;  // hadronic signal region
@@ -185,42 +184,24 @@ int main( int argc, char **argv ) {
       if( fEvt ->passTrigger("HLT_Ele45_WPLoose_v*") ||
 	  fEvt ->passTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*")
 	  ) trigbits = trigbits | 8; // single electron control region 
-      if(fEvt ->passTrigger("HLT_AK8PFJet360_TrimMass30_v*")) trigbits = trigbits | 16;
-      if(fEvt ->passTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*")) trigbits = trigbits | 32;
-      if(fEvt ->passTrigger("HLT_PFHT800_v*")) trigbits = trigbits | 64;
-      if(fEvt ->passTrigger("HLT_PFHT900_v*")) trigbits = trigbits | 128;
-      if(fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*")) trigbits = trigbits | 256;
-      if(fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*")) trigbits = trigbits | 512;
-      if(fEvt ->passTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*")) trigbits = trigbits | 1024;
-      if(fEvt ->passTrigger("HLT_PFJet450_v*")) trigbits = trigbits | 2048;
-      if(fEvt ->passTrigger("HLT_AK8PFJet400_TrimMass30_v*")) trigbits = trigbits | 4096;
-      if(fEvt ->passTrigger("HLT_AK8PFHT800_TrimMass50_v*")) trigbits = trigbits | 8192;
-      if(fEvt ->passTrigger("HLT_PFJet500_v*")) trigbits = trigbits | 16384;
-      if(fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*")) trigbits = trigbits | 32768;
-      if(fEvt ->passTrigger("HLT_Mu50_v*")) trigbits = trigbits | 65536;
-      if(fEvt ->passTrigger("HLT_PFHT890_v*")) trigbits = trigbits | 131072;
-      if(fEvt ->passTrigger("HLT_AK8PFHT850_TrimMass50_v*")) trigbits = trigbits | 262144;
-      if(fEvt ->passTrigger("HLT_AK8PFHT900_TrimMass50_v*")) trigbits = trigbits | 524288;
-      if(fEvt ->passTrigger("HLT_CaloJet500_NoJetID_v*")) trigbits = trigbits | 1048576;
-      if(fEvt ->passTrigger("HLT_AK8PFJet500_v*")) trigbits = trigbits | 2097152;
-      if(fEvt ->passTrigger("HLT_AK8PFJet550_v*")) trigbits = trigbits | 4194304;
-      if(fEvt ->passTrigger("HLT_CaloJet550_NoJetId_v*")) trigbits = trigbits | 8388608;
-      if(fEvt ->passTrigger("HLT_AK8PFJet380_TrimMass30_v*")) trigbits = trigbits | 16777216;
-      if(fEvt ->passTrigger("HLT_AK8PFJet420_TrimMass30_v*")) trigbits = trigbits | 33554432;
-      if(fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p1_v*")) trigbits = trigbits | 67108864;
-      if(fEvt ->passTrigger("HLT_PFHT1050_v*")) trigbits = trigbits | 134217728;
+      if(
+	 fEvt ->passTrigger("HLT_DoublePFJets100MaxDeta1p6_DoubleCaloBTagCSV_p33_v*") ||
+	 fEvt ->passTrigger("HLT_DoublePFJets116MaxDeta1p6_DoubleCaloBTagCSV_p33_v*") ||
+	 fEvt ->passTrigger("HLT_DoublePFJets128MaxDeta1p6_DoubleCaloBTagCSV_p33_v*") 
+	)   trigbits = trigbits | 16; // AK4maxDeta + doubleBTag  
     }
     // More trigger bits
 
     //Add the triggers we want
-    fEvt ->addTrigger("HLT_AK8PFJet360_TrimMass30_v*");
     fEvt ->addTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*");
-    fEvt ->addTrigger("HLT_PFHT800_v*");
-    fEvt ->addTrigger("HLT_PFHT900_v*");
+    fEvt ->addTrigger("HLT_PFHT800_v*");//pre-scaled in 2017
+    fEvt ->addTrigger("HLT_PFHT900_v*");//pre-scaled in 2017
+    fEvt ->addTrigger("HLT_PFHT1050_v*")  ; 
     fEvt ->addTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*");
     fEvt ->addTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*");
     fEvt ->addTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*");
     fEvt ->addTrigger("HLT_PFJet450_v*");
+    fEvt ->addTrigger("HLT_PFJet500_v*");
 
     fEvt ->addTrigger("HLT_IsoMu24_v*"); // W(munu)H(bb)
     fEvt ->addTrigger("HLT_IsoTkMu24_v*"); // W(munu)H(bb)
@@ -238,10 +219,23 @@ int main( int argc, char **argv ) {
     fEvt ->addTrigger("HLT_PFMET170_HBHECleaned_v*"); // Z(nunu)H(bb)
     fEvt ->addTrigger("HLT_PFMET170_HBHE_BeamHaloCleaned_v*"); // Z(nunu)H(bb)
 
+    //ggH(bb)
+    fEvt ->addTrigger("HLT_AK8PFJet360_TrimMass30_v*");//pre-scaled in 2017
+    fEvt ->addTrigger("HLT_AK8PFJet380_TrimMass30_v*");//pre-scaled in 2017
     fEvt ->addTrigger("HLT_AK8PFJet400_TrimMass30_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet420_TrimMass30_v*");
     fEvt ->addTrigger("HLT_AK8PFHT800_TrimMass50_v*");
-    fEvt ->addTrigger("HLT_PFJet500_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT850_TrimMass50_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT900_TrimMass50_v*");
     fEvt ->addTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p1_v*");
+    fEvt ->addTrigger("HLT_DoublePFJets100MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
+    fEvt ->addTrigger("HLT_DoublePFJets116MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
+    fEvt ->addTrigger("HLT_DoublePFJets128MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
+    fEvt ->addTrigger("HLT_CaloJet500_NoJetID_v*");
+    fEvt ->addTrigger("HLT_CaloJet550_NoJetId_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet500_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet550_v*");
 
     fEvt      ->fillEvent(trigbits,lWeight,passJson);
     
