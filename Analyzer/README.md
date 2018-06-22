@@ -7,31 +7,14 @@ Setup
 -------------
  * Setup $CMSSW_BASE area
  * Setup extra packages
- * Pull new b-tagger 
  * Setup BaconProd, BaconAna, and add the missing python module
  * Setup BaconAnalyzer, Development Packages
  * Compile
+ * For tag:14 of BaconProd/BaconAna, CMSSW_VERSION = CMSSW_9_4_7
 ```
 cmsrel CMSSW_9_4_7
 cd CMSSW_9_4_7/src
 cmsenv
-git cms-addpkg PhysicsTools/PatAlgos
-git cms-addpkg PhysicsTools/PatUtils
-git cms-addpkg PhysicsTools/TensorFlow
-git cms-addpkg CommonTools
-git cms-addpkg RecoBTag/SecondaryVertex
-git cms-addpkg RecoBTau/JetTagComputer
-git cms-addpkg RecoMET/METPUSubtraction
-git cms-addpkg CondFormats/JetMETObjects
-git cms-addpkg JetMETCorrections/Modules
-git clone https://github.com/jmduarte/ShowerDeconstruction 
-```
-comment out these two lines in `ShowerDeconstruction/SDProducer/plugins/SDProducer.cc`
-```
-   //iEvent.put(out_chi, "chi"); 
-   //iEvent.put(out_nmj, "nmicrojets");       
-```
-```
 git clone https://github.com/ksung25/BaconProd
 git clone https://github.com/ksung25/BaconAna
 cd BaconAna
@@ -40,7 +23,8 @@ git fetch jmgd
 git merge jmgd/add_python
 cd ..
 git clone https://github.com/DAZSLE/BaconAnalyzer
-git checkout 90x
+git fetch
+git checkout -b 90x origin/90x
 scram b clean
 scram b -j 10
 cd BaconAnalyzer
@@ -82,12 +66,15 @@ python submitZprime.py -s SAMPLE -t TAG --monitor resub # (to resubmit)
 
 Some temporary instructions for cmslpc
 -----------
-After compiling, tar CMSSW_9_2_12 environment and data/ dir
+EVERYTIME after compiling: re-tar CMSSW environment and data/ dir
+
+For v14 (BaconProd,BaconAna)
+CMSMSW_VERSION = CMSSW_9_4_7
 
 ```
 cd ../../
-tar --exclude-caches-all --exclude-vcs --exclude-caches-all --exclude-vcs -cvzf CMSSW_9_2_12.tgz CMSSW_9_2_12 --exclude=src --exclude=tmp
-cd CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/
+tar --exclude-caches-all --exclude-vcs --exclude-caches-all --exclude-vcs -cvzf CMSSW_9_4_7.tgz CMSSW_9_4_7 --exclude=src --exclude=tmp
+cd CMSSW_9_4_7/src/BaconAnalyzer/Analyzer/
 tar -zcvf data.tgz data
 ```
 
