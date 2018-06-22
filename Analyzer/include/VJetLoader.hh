@@ -28,43 +28,37 @@ using namespace baconhep;
 
 class VJetLoader { 
 public:
-  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,std::string iJetCHS="AK8CHS",std::string iAddJetCHS="AddAK8CHS",int iN=1, bool iData=false);
+  VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,int iN=1, bool iData=false, bool is2016=false);
   ~VJetLoader();
   double correction(TJet &iJet,double iRho);
   void reset();
   void resetZprime();
-  void resetCHS();
   void resetDoubleB();
-  void setupTree(TTree *iTree,std::string iJetLabel);
+  void setupTree(TTree *iTree,std::string iJetLabel,bool iHWW=false);
   void setupTreeZprime(TTree *iTree,std::string iJetLabel);
-  void setupTreeCHS(TTree *iTree,std::string iJetLabel);
   void load(int iEvent);
-  void selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);
-  void selectVJetsByDoubleBCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);  
-  void selectVJetsCHS(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);
-  void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum);
-  int getMatchedCHSJetIndex(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
+  void selectVJets(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum, bool iHWW=false);
+  void selectVJetsByDoubleB(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons, std::vector<TLorentzVector> &iPhotons, double dR, double iRho, unsigned int runNum);  
+  void fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum, bool iHWW=false);
   void matchJet(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR, int jIndex);
   void matchJet15(std::vector<TLorentzVector> iJets1, TLorentzVector iJet2, double dR);
-  void fillVJetCHS(TJet *iJet, int jIndex);
   void fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum);
   TAddJet *getAddJet(TJet *iJet);
-  TAddJet *getAddJetCHS(TJet *iJet);
 
   double fvSize, fvMatching,fRatioPt;
   int fisHadronicV;
-  std::vector<int> fisTightVJet, fisTightVJetCHS;
+  std::vector<int> fisTightVJet, fisMatchedVJet;
   int fpartonFlavor, fhadronFlavor, fnbHadrons, fncHadrons, fnCharged, fnNeutrals, fnParticles;
 
-  std::vector<TJet*> fLooseVJets, fLooseVJetsCHS;
-  std::vector<TLorentzVector> selectedVJets, selectedVJetsCHS;
-  std::vector<double> fdoublecsvCHS, fdoublesubCHS, fptCHS, fetaCHS, fphiCHS;
-  std::vector<TJet*> fLooseVJetsByDoubleB, fLooseVJetsCHSByDoubleB;
-  std::vector<TLorentzVector> selectedVJetsByDoubleB, selectedVJetsCHSByDoubleB;
+  std::vector<TJet*> fLooseVJets;
+  std::vector<TLorentzVector> selectedVJets;
+  std::vector<TJet*> fLooseVJetsByDoubleB; 
+  std::vector<TLorentzVector> selectedVJetsByDoubleB; 
 
+  // 2017
+  double CSVL = 0.5803; // CSVv2SubJet WP                                                                                                                                                                                                                  
+  double CSVM = 0.8838;
 
-  const double CSVL = 0.5426; // CSVv2SubJet WP 
-  const double CSVM = 0.8484;
   // JEC tools
   std::vector<FactorizedJetCorrector*> getJetCorrector() { return JetCorrector; }
   std::vector<std::pair<int,int> > getJetCorrectionsIOV() { return JetCorrectionsIOV; }
@@ -88,15 +82,11 @@ protected:
   TBranch      *fVJetBr;
   TClonesArray *fVAddJets;
   TBranch      *fVAddJetBr;
-  TClonesArray *fVJetsCHS;
-  TBranch      *fVJetBrCHS;
-  TClonesArray *fVAddJetsCHS;
-  TBranch      *fVAddJetBrCHS;
 
   TTree        *fTree;
 
-  int           fNLooseVJets, fNLooseVJetsCHS;
-  int           fNTightVJets, fNTightVJetsCHS;
+  int           fNLooseVJets;
+  int           fNTightVJets; 
 
   std::vector<double> fVars, fVarsZprime;
   std::vector<std::string> fLabels, fLabelsZprime;
@@ -109,8 +99,8 @@ protected:
   // for jet energy corrections
   bool isData;
   void loadCMSSWPath();
-  void loadJECs(bool isData);
-  void loadJECs_Rereco(bool isData);
+  void loadJECs_Rereco2016(bool isData);
+  void loadJECs_Rereco2017(bool isData);
   std::vector<std::vector<JetCorrectorParameters> > correctionParameters;
   std::vector<FactorizedJetCorrector*> JetCorrector;
   std::vector<JetCorrectionUncertainty*> jecUnc;

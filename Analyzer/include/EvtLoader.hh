@@ -28,15 +28,12 @@ public:
   void fillEvent(unsigned int trigBit, float lWeight, unsigned int passJson);
   bool passSkim();
   TLorentzVector Met(int iOption);
-  //SFs
-  void fillLepSF(std::vector<TLorentzVector> iLeptons, double lepPdgId, int islep0Tight, int islep1Tight);
   //Trigger
   bool passFilter();
   void addTrigger(std::string iName);
   bool passTrigger();
   bool passTrigger(std::string iTrigger);
   unsigned int triggerBit();
-  void triggerEff(std::vector<TLorentzVector> iElectrons, std::vector<TLorentzVector> iPhotons);
   //PU
   float        puWeight(float iPU);
   int          nVtx();
@@ -67,12 +64,6 @@ public:
   float fFPuppEtPhi;
   float fFPuppEt;
 
-  float fUW, fUWPhi;
-  float fUA, fUAPhi;
-  float fUZ, fUZPhi;
-
-  float flep1Id, flep2Id;
-
   unsigned int fRun;
   unsigned int fEvtV;
   unsigned int fLumi;
@@ -88,15 +79,6 @@ public:
   float fkFactor_CENT;
   float fEwkCorr_CENT, fEwkCorr_UP, fEwkCorr_DO;
   float fkfactor;
-  float fPDF, fPDF_UP, fPDF_DO;
-  float fRenScale_UP, fRenScale_DO, fFacScale_UP, fFacScale_DO;
-
-  double fsf_lep, fsf_lepTrack;
-
-  double fsf_eleTrig;
-  double fsf_metTrig;
-  double fsf_phoTrig;
-  double fLepWeight;
 
   int fselectBits;
   int fNVtx;
@@ -113,24 +95,6 @@ protected:
   TH1F         *fHist0;
   TH1F         *fHist1;
   TH1F         *fHist2;
-  TH1F         *fHistPDF;
-  TH1F         *fHistRUP;
-  TH1F         *fHistRDO;
-  TH1F         *fHistFUP;
-  TH1F         *fHistFDO;
-
-  TH2D         *fhMuLoose;
-  TH2D         *fhMuTight;
-  TH1D         *fhMuTrack;
-  TH2D         *fhEleVeto;
-  TH2D         *fhEleTight;
-  TH2D         *fhEleTrack;
-  
-  TH1D         *hEleTrigB;
-  TH1D         *hEleTrigE;
-  TH2D         *hEleTrigLow;
-  TH1D         *hMetTrig;
-  TH1D         *hPhoTrig;
 
   std::vector<std::string> fTrigString;
 
