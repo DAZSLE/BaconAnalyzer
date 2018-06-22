@@ -9,7 +9,8 @@ from optparse import OptionParser
 from submitZprime import samplesDict, exec_me
 
 EOS = ''#eos root://cmseos.fnal.gov'
-cmssw = "CMSSW_9_2_12"
+cmssw = os.getenv('CMSSW_VERSION', 'CMSSW_9_4_7')
+cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_9_4_7')
 
 import ROOT
 normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia8',
@@ -218,10 +219,28 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'DYJetsToLL_M_50_13TeV_ext': 'DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8': 'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8',
             'WW_13TeV_pythia8': 'WW_TuneCUETP8M1_13TeV-pythia8',
-            'ZZ_13TeV_pythia8': 'ZZ_TuneCUETP8M1_13TeV-pythia8'
+            'ZZ_13TeV_pythia8': 'ZZ_TuneCUETP8M1_13TeV-pythia8',
+
+            'BulkGravTohhTohVVhbb_narrow_M_1000_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_1000_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_1200_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_1200_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_1400_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_1400_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_1600_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_1600_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_1800_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_1800_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_2000_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_2000_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_2500_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_2500_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_3000_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_3000_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_3500_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_3500_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_4000_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_4000_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_4500_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_4500_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_600_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_600_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_650_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_650_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_700_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_700_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_800_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_800_13TeV_madgraph',
+            'BulkGravTohhTohVVhbb_narrow_M_900_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_900_13TeV_madgraph',
+            
             }
 
-filesToTransfer = "/uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/NormalizeNtuple, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmer.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmerDDT.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmerN2.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/skimmerWtag.py, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/submitZprime.py"
+filesToTransfer = "%s.tgz, %s/bin/slc6_amd64_gcc630/NormalizeNtuple, %s/src/BaconAnalyzer/Analyzer/data.tgz, %s/src/BaconAnalyzer/Analyzer/production/skimmer.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerDDT.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerN2.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerWtag.py, %s/src/BaconAnalyzer/Analyzer/production/submitZprime.py"%(cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base)
 
 def justHadd(options,args):    
     DataDir = options.idir

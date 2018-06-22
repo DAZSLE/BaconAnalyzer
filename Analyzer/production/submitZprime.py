@@ -127,6 +127,24 @@ samplesDict['TT'] = {
     'TTToHadronic_TuneCP5_13TeV_powheg_pythia8_byLumi': 'mc',
     'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8_byLumi': 'mc',
     }
+samplesDict['BulkGrav_8X'] = {
+    'BulkGravTohhTohVVhbb_narrow_M_1000_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_1200_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_1400_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_1600_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_1800_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_2000_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_2500_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_3000_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_3500_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_4000_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_4500_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_600_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_650_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_700_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_800_13TeV_madgraph_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_900_13TeV_madgraph_8X': 'mc',
+}
 
 samplesDict['MC'] = dict(samplesDict['Hbb'].items() +
                          samplesDict['QCD'].items() +
@@ -179,6 +197,8 @@ if __name__ == '__main__':
     analysisDir = options.tag
     if 'runPu' in options.executable:
         analysisDir += '-Pu'
+    if 'runHWW' in options.executable:
+        analysisDir += '-HWW'
     executable = options.executable
     samples = samplesDict[options.sample]
 
@@ -205,8 +225,8 @@ if __name__ == '__main__':
     for label, isMc in samples.iteritems():
         exec_me('%s mkdir -p /eos/uscms/%s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
         if isMc in ['prompt17','rereco17']:
-            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production13/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production14/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
         elif isMc in ['data','rereco']:
             exec_me("python %s %s %s -a 4:%f --list 1:../lists/production12a/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
         else:            
-            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production13/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production14/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)

@@ -54,7 +54,8 @@ cwd = os.getcwd()
 if len(args) < 2 and not options.monitor: sys.exit('Error -- must specify ANALYZER and OUTPUTNAME')
 njobs = options.njobs if options.njobs > 0 else 1
 njobs_per_file = options.njobs_per_file
-cmssw = "CMSSW_9_2_12"
+cmssw = os.getenv('CMSSW_VERSION', 'CMSSW_9_4_7')
+cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_9_4_7')
 
 def write_job(exec_line, out, analyzer, i, n, j, eosout=''):
     cwd = os.getcwd()
@@ -70,7 +71,7 @@ def write_job(exec_line, out, analyzer, i, n, j, eosout=''):
     sub_file.write('rm %s.tgz\n'% (cmssw))
     sub_file.write('export SCRAM_ARCH=slc6_amd64_gcc630\n')
     sub_file.write('mkdir -p %s/src\n'% (cmssw))
-    sub_file.write('cd CMSSW_9_2_12/src\n')
+    sub_file.write('cd %s/src\n'%(cmssw))
     sub_file.write('scram b ProjectRename\n')
     sub_file.write('eval `scramv1 runtime -sh`\n')
     sub_file.write('cp ../../data.tgz .\n')
@@ -79,7 +80,6 @@ def write_job(exec_line, out, analyzer, i, n, j, eosout=''):
     sub_file.write("export TWD=${PWD}/%s_job%d_subjob%d\n" % (analyzer_short, i, j))
     sub_file.write("mkdir -p $TWD\n")
     sub_file.write("cd $TWD\n")
-    sub_file.write("cp ../../../runZprime .\n")
     sub_file.write('%s\n' % exec_line)
     sub_file.write('cd ..\n')
     sub_file.write('rm -rf $TWD\n')
@@ -97,11 +97,11 @@ def submit_jobs(lofjobs):
         condor_file.write('universe = vanilla\n')
         condor_file.write('Executable = %s\n'% sub_file)
         condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
-        condor_file.write('request_disk = 3000000\n')
+        condor_file.write('request_disk = 3000000\n') # modify these requirements depending on job
         condor_file.write('request_memory = 5000\n')
         condor_file.write('Should_Transfer_Files = YES\n')
         condor_file.write('WhenToTransferOutput = ON_EXIT\n')
-        condor_file.write('Transfer_Input_Files = /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/production/cmsset_default.sh, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12.tgz, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/bin/slc6_amd64_gcc630/runZprime, /uscms_data/d3/cmantill/bacon/baconbits/CMSSW_9_2_12/src/BaconAnalyzer/Analyzer/data.tgz\n')
+        condor_file.write('Transfer_Input_Files = %s/src/BaconAnalyzer/Analyzer/production/cmsset_default.sh, %s.tgz, %s/bin/slc6_amd64_gcc630/runZprime, %s/src/BaconAnalyzer/Analyzer/data.tgz\n'%(cmssw_base,cmssw_base,cmssw_base,cmssw_base))
         condor_file.write('use_x509userproxy = true\n')
         condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
         condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
