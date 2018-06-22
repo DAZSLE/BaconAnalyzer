@@ -80,6 +80,11 @@ tar -zcvf data.tgz data
 
 Those are transferred to condor. Follow same instructions to produce submission files.
 
+Also, initialize your proxy before submitting jobs.
+```
+voms-proxy-init --voms cms --valid 168:00
+```
+
 To update lists
 -----------
 In cmslpc:
