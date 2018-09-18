@@ -152,8 +152,15 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel, bool iHWW) {
     fLabels.push_back("tau42");
   }
 
+  bool iGen = true;
+  if(iGen) {
+    fLabels.push_back("genmsd");
+    fLabels.push_back("geneta");
+    fLabels.push_back("genphi");
+  }
+
   fTree = iTree;
-  for(int i0 = 0; i0 < fN*4.;                    i0++) {double pVar = 0; fVars.push_back(pVar);} // declare array of vars
+  for(int i0 = 0; i0 < fN*3.;                    i0++) {double pVar = 0; fVars.push_back(pVar);} // declare array of vars
   for(int i0 = 0; i0 < fN*(int(fLabels.size())); i0++) {double pVar = 0; fVars.push_back(pVar);} 
 
   setupNtuple(iJetLabel.c_str(),iTree,fN,fVars);                                                 // from Utils.cc => fN =1 *_pt,*_eta,*_phi for vjet0 (3*1=3)
@@ -480,6 +487,14 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
       iVals[lBase+i0*lNLabel+iN+41]  = (pAddJet->tau3/pAddJet->tau1);
       iVals[lBase+i0*lNLabel+iN+42]  = (pAddJet->tau4/pAddJet->tau2);
       iN = iN+42;
+    }
+
+    bool iGen = true;
+    if (iGen) {
+      iVals[lBase+i0*lNLabel+iN+1] = iObjects[i0]->genmsd;
+      iVals[lBase+i0*lNLabel+iN+2] = iObjects[i0]->geneta;
+      iVals[lBase+i0*lNLabel+iN+3] = iObjects[i0]->genphi;
+      iN = iN+3;
     }
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
