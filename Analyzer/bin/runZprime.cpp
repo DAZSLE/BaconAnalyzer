@@ -268,7 +268,7 @@ int main( int argc, char **argv ) {
 
     // Select at least one AK8 or one CA15 jet
     //if(!(fEvt->fselectBits & 2) || !(fEvt->fselectBits & 4)) continue;
-    if((fVJet8->selectedVJets[0].Pt() < 200) || (fVJet15->selectedVJets[0].Pt() < 200)) continue;
+    //if((fVJet8->selectedVJets[0].Pt() < 200) || (fVJet15->selectedVJets[0].Pt() < 200)) continue;
 
     // TTbar, EWK and kFactor correction
     if(lName.find("ZJets")!=std::string::npos || lName.find("DYJets")!=std::string::npos){
