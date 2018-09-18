@@ -474,7 +474,7 @@ void setupNtuple(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iV
     std::stringstream pVal;
     pVal  << iHeader << lCount  << "_" << iLabels[i0 % iLabels.size()];
     iTree->Branch(pVal .str().c_str(),&iVals[lBase],(pVal .str()+"/D").c_str());
-    if(i0 % int(iLabels.size()) == 0 && i0 > 0) lCount++; 
+    if(i0 % int(iLabels.size()) == int(iLabels.size())-1 && i0 > 0) lCount++; 
     lBase++;
   }
 }
