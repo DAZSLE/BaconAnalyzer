@@ -165,7 +165,7 @@ void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
     pSbTPt50dR08<< "n" << iJetLabel << "sTPt50dR08_" << i0;
     pSbLPt100dR08<< "n" << iJetLabel << "sLPt100dR08_" << i0;
     pSbMPt100dR08<< "n" << iJetLabel << "sMPt100dR08_" << i0;
-    pSbTPt100dR08<< "n" << iJetLabel << "sTPt100dR08_ " << i0;
+    pSbTPt100dR08<< "n" << iJetLabel << "sTPt100dR08_" << i0;
     pSbLPt150dR08<< "n" << iJetLabel << "sLPt150dR08_" << i0;
     pSbMPt150dR08<< "n" << iJetLabel << "sMPt150dR08_" << i0;
     pSbTPt150dR08<< "n" << iJetLabel << "sTPt150dR08_" << i0;
