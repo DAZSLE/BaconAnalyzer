@@ -122,9 +122,9 @@ def sklimAdd(fn,odir,mass=0):
 
         if (tree.AK8Puppijet0_pt > PT_CUT or tree.AK8Puppijet0_pt_JESUp > PT_CUT or tree.AK8Puppijet0_pt_JERUp > PT_CUT or tree.AK8Puppijet0_pt_JESDown > PT_CUT or tree.AK8Puppijet0_pt_JERDown > PT_CUT):
                 #or tree.CA15Puppijet0_pt > PT_CUT or tree.CA15Puppijet0_pt_JESUp > PT_CUT or tree.CA15Puppijet0_pt_JERUp > PT_CUT or tree.CA15Puppijet0_pt_JESDown > PT_CUT or tree.CA15Puppijet0_pt_JERDown > PT_CUT ) :
-	    # if 'GluGluHToBB_M125_13TeV_powheg' in fn:  		
-	    #     newscale1fb[0] =  tree.scale1fb*NLOcorr(tree.genVPt )
-            # if 'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix' in fn and tree.genVPt<1000. : newscale1fb[0] =  tree.scale1fb*h_vbf_num.GetBinContent( h_vbf_num.FindBin(tree.genVPt) )/h_vbf_den.GetBinContent( h_vbf_den.FindBin(tree.genVPt) )
+	    if 'GluGluHToBB_M125_13TeV_powheg' in fn:  		
+	        newscale1fb[0] =  tree.scale1fb*NLOcorr(tree.genVPt )
+            if 'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix' in fn and tree.genVPt<1000. : newscale1fb[0] =  tree.scale1fb*h_vbf_num.GetBinContent( h_vbf_num.FindBin(tree.genVPt) )/h_vbf_den.GetBinContent( h_vbf_den.FindBin(tree.genVPt) )
 	    # if 'VectorDiJet' in fn and mass > 0:
             #     ptToWeightFrom = tree.genVPt
             #     if ptToWeightFrom < PT_CUT: ptToWeightFrom = PT_CUT # protection
