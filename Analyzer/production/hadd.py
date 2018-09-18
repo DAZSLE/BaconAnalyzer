@@ -8,7 +8,7 @@ import time
 from optparse import OptionParser
 from submitZprime import samplesDict, exec_me
 
-EOS = ''#eos root://cmseos.fnal.gov'
+EOS = 'eos root://cmseos.fnal.gov'
 cmssw = os.getenv('CMSSW_VERSION', 'CMSSW_9_4_7')
 cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_9_4_7')
 
@@ -18,6 +18,9 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'WJetsToQQ_HT400to600_TuneCP5_13TeV_noPF': 'WJetsToQQ_HT400to600_TuneCP5_13TeV',
             'WJetsToQQ_HT600to800_TuneCP5_13TeV_noPF': 'WJetsToQQ_HT600to800_TuneCP5_13TeV',
             'WJetsToQQ_HT_800toInf_TuneCP5_13TeV_noPF': 'WJetsToQQ_HT_800toInf_TuneCP5_13TeV',
+            'WJetsToQQ_HT400to600_qc19_3j_TuneCP5_13TeV': 'WJetsToQQ_HT400to600_qc19_3j_TuneCP5_13TeV',
+            'WJetsToQQ_HT600to800_qc19_3j_TuneCP5_13TeV': 'WJetsToQQ_HT600to800_qc19_3j_TuneCP5_13TeV',
+            'WJetsToQQ_HT_800toInf_qc19_3j_TuneCP5_13TeV': 'WJetsToQQ_HT-800toInf_qc19_3j_TuneCP5_13TeV',
             'QCD_HT1000to1500_TuneCP5_13TeV_madgraph_pythia8': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
@@ -29,30 +32,30 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT50to100_13TeV': 'QCD_HT50to100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT100to200_13TeV': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT100to200_13TeV_ext': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT50to100_13TeV_8X': 'QCD_HT50to100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT100to200_13TeV_8X': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT100to200_13TeV_ext_8X': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT100to200_13TeV_all': 'QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT200to300_13TeV': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT200to300_13TeV_ext': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT200to300_13TeV_8X': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT200to300_13TeV_ext_8X': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT200to300_13TeV_all': 'QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT300to500_13TeV': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT300to500_13TeV_ext': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT300to500_13TeV_8X': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT300to500_13TeV_ext_8X': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT300to500_13TeV_all': 'QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT500to700_13TeV': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT500to700_13TeV_ext': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT500to700_13TeV_8X': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT500to700_13TeV_ext_8X': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT500to700_13TeV_all': 'QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT700to1000_13TeV': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT700to1000_13TeV_ext': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT700to1000_13TeV_8X': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT700to1000_13TeV_ext_8X': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT700to1000_13TeV_all': 'QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT1000to1500_13TeV': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT1000to1500_13TeV_ext': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT1000to1500_13TeV_8X': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT1000to1500_13TeV_ext_8X': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT1000to1500_13TeV_all': 'QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT1500to2000_13TeV': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT1500to2000_13TeV_ext': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT1500to2000_13TeV_8X': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT1500to2000_13TeV_ext_8X': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT1500to2000_13TeV_all': 'QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT2000toInf_13TeV': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
-            'QCD_HT2000toInf_13TeV_ext': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT2000toInf_13TeV_8X': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
+            'QCD_HT2000toInf_13TeV_ext_8X': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'QCD_HT2000toInf_13TeV_all': 'QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'ST_s_channel_4f_leptonDecays_13TeV_amcatnlo_pythia8_TuneCUETP8M1': 'ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1',
             'ST_t_channel_antitop_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin': 'ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1',
@@ -69,6 +72,8 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'TT_13TeV_powheg_pythia8_ext': 'TT_TuneCUETP8M1_13TeV-powheg-pythia8',
             'TTToHadronic_TuneCP5_13TeV_powheg_pythia8_byLumi': 'TTToHadronic_TuneCP5_13TeV_powheg_pythia8',
             'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8_byLumi': 'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8',
+            'TTToSemiLeptonic_WspTgt150_TuneCUETP8M2T4_13TeV_powheg_pythia8': 'TTToSemiLeptonic_WspTgt150_TuneCUETP8M2T4_13TeV_powheg_pythia8',
+            'TT_TuneCUETP8M2T4_13TeV_powheg_pythia8_8X': 'TT_TuneCUETP8M1_13TeV-powheg-pythia8',
             'WJetsToQQ_HT_600ToInf_13TeV': 'WJetsToQQ_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',            
             'WJetsToLNu_HT_70To100_13TeV': 'WJetsToLNu_HT_70To100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'WJetsToLNu_HT_70To100_13TeV_ext': 'WJetsToLNu_HT-70To100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
@@ -98,6 +103,9 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'ZJetsToQQ_HT400to600_TuneCP5_13TeV_noPF': 'ZJetsToQQ_HT400to600_TuneCP5_13TeV',
             'ZJetsToQQ_HT600to800_3j_TuneCP5_13TeV_noPF': 'ZJetsToQQ_HT600to800_3j_TuneCP5_13TeV',
             'ZJetsToQQ_HT_800toInf_TuneCP5_13TeV_noPF': 'ZJetsToQQ_HT_800toInf_TuneCP5_13TeV',
+            'ZJetsToQQ_HT400to600_qc19_4j_TuneCP5_13TeV': 'ZJetsToQQ_HT400to600_qc19_4j_TuneCP5_13TeV',
+            'ZJetsToQQ_HT600to800_qc19_4j_TuneCP5_13TeV': 'ZJetsToQQ_HT600to800_qc19_4j_TuneCP5_13TeV',
+            'ZJetsToQQ_HT_800toInf_qc19_4j_TuneCP5_13TeV': 'ZJetsToQQ_HT-800toInf_qc19_4j_TuneCP5_13TeV',
             'WWTo4Q_13TeV_amcatnlo': 'WWTo4Q_4f_13TeV_amcatnloFXFX_madspin_pythia8',
             'WWTo4Q_13TeV_powheg': 'WWTo4Q_13TeV_powheg',
             'WW_TuneCP5_13TeV_pythia8': 'WW_TuneCUETP8M1_13TeV-pythia8',
@@ -185,36 +193,39 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'VectorDiJet1Jet_125_13TeV_madgraph':'VectorDiJet1Jet_M125',
             'VectorDiJet1Jet_75_13TeV_madgraph':'VectorDiJet1Jet_M75',
 
-            'VectorDiJet1Jet_madgraph_Mphi50Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi50Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi75Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi75Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi100Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi100Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi115Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi115Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi125Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi125Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi150Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi150Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi175Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi175Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi200Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi200Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi250Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi250Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi300Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi300Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi350Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi350Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi400Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi400Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi450Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi450Mchi1_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi500Mchi1_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi500Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi50Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi50Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi75Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi75Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi100Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi100Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi115Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi115Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi125Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi125Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi150Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi150Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi175Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi175Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi200Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi200Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi225Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi225Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi250Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi250Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi275Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi275Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi300Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi300Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi350Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi350Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi400Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi400Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi450Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi450Mchi1_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi500Mchi1_13TeV': 'VectorDiJet1Jet_madgraph_Mphi500Mchi1_13TeV',
             
-            'VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi100Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi100Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi125Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi125Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi150Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi150Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi200Mchi3000_13TeV_noPF': 'VectorDiJet1Jet_madgraph_Mphi200Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi225Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi225Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi250Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi250Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi300Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi300Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi350Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi350Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi400Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi400Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi450Mchi3000_13TeV_noPF_8': 'VectorDiJet1Jet_madgraph_Mphi450Mchi3000_13TeV',
-            'VectorDiJet1Jet_madgraph_Mphi500Mchi3000_13TeV_noPF': 'VectorDiJet1Jet_madgraph_Mphi500Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi100Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi100Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi125Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi125Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi150Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi150Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi200Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi200Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi225Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi225Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi250Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi250Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi275Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi275Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi300Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi300Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi350Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi350Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi400Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi400Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi450Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi450Mchi3000_13TeV',
+            'VectorDiJet1Jet_madgraph_Mphi500Mchi3000_13TeV': 'VectorDiJet1Jet_madgraph_Mphi500Mchi3000_13TeV',
             
             'DYJetsToLL_M_50_13TeV_ext': 'DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
             'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8': 'ZZTo4Q_13TeV_amcatnloFXFX_madspin_pythia8',
@@ -238,9 +249,21 @@ normDict = {'DYJetsToQQ_HT180_13TeV': 'DYJetsToQQ_HT180_13TeV-madgraphMLM-pythia
             'BulkGravTohhTohVVhbb_narrow_M_800_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_800_13TeV_madgraph',
             'BulkGravTohhTohVVhbb_narrow_M_900_13TeV_madgraph_8X': 'BulkGravTohhTohVVhbb_narrow_M_900_13TeV_madgraph',
             
+            'BulkGravToWW_narrow_M_500_13TeV_madgraph':'BulkGravToWW_narrow_M_500_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_800_13TeV_madgraph':'BulkGravToWW_narrow_M_800_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_1000_13TeV_madgraph':'BulkGravToWW_narrow_M_1000_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_1200_13TeV_madgraph':'BulkGravToWW_narrow_M_1200_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_1400_13TeV_madgraph':'BulkGravToWW_narrow_M_1400_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_1600_13TeV_madgraph':'BulkGravToWW_narrow_M_1600_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_1800_13TeV_madgraph':'BulkGravToWW_narrow_M_1800_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_2000_13TeV_madgraph':'BulkGravToWW_narrow_M_2000_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_3000_13TeV_madgraph':'BulkGravToWW_narrow_M_3000_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_3500_13TeV_madgraph':'BulkGravToWW_narrow_M_3500_13TeV_madgraph',
+            'BulkGravToWW_narrow_M_4500_13TeV_madgraph':'BulkGravToWW_narrow_M_4500_13TeV_madgraph',
+
             }
 
-filesToTransfer = "%s.tgz, %s/bin/slc6_amd64_gcc630/NormalizeNtuple, %s/src/BaconAnalyzer/Analyzer/data.tgz, %s/src/BaconAnalyzer/Analyzer/production/skimmer.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerDDT.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerN2.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerWtag.py, %s/src/BaconAnalyzer/Analyzer/production/submitZprime.py"%(cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base)
+filesToTransfer = "%s.tgz, %s/bin/slc6_amd64_gcc630/NormalizeNtuple, %s/src/BaconAnalyzer/Analyzer/data.tgz, %s/src/BaconAnalyzer/Analyzer/production/skimmer.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerDDT.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerN2.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerWtag.py, %s/src/BaconAnalyzer/Analyzer/production/skimmerHWW.py, %s/src/BaconAnalyzer/Analyzer/production/submitZprime.py"%(cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base,cmssw_base)
 
 def justHadd(options,args):    
     DataDir = options.idir
@@ -275,8 +298,8 @@ def justHadd(options,args):
                 haddCommand += 'rm %s.tgz\n'% (cmssw)
                 haddCommand += 'export SCRAM_ARCH=slc6_amd64_gcc630\n'
                 haddCommand += 'mkdir -p %s/src\n'% (cmssw)
-                haddCommand += 'scramv1 project CMSSW CMSSW_9_2_12\n'
-                haddCommand += 'cd CMSSW_9_2_12/src\n'
+                haddCommand += 'scramv1 project CMSSW %s\n'%cmssw
+                haddCommand += 'cd %s/src\n'%cmssw
                 haddCommand += 'scram b ProjectRename\n'
                 haddCommand += 'eval `scramv1 runtime -sh`\n'
                 haddCommand += 'pwd\n'
@@ -366,16 +389,24 @@ def addSklimCommand(iBasename,isMc,options):
     DDTOn = False
     N2On = False
     WtagOn = False
+    HWWOn1a = False
+    HWWOn1b = False
     if options.justDDT:
         DDTOn = True
     elif options.justN2:
         N2On = True
     elif options.justWtag:
         WtagOn = True
+    elif options.justHWW1a:
+        HWWOn1a = True
+    elif options.justHWW1b:
+        HWWOn1b = True
     else:
         DDTOn = False
         N2On = False
         WtagOn = False
+        HWWOn1a = False
+        HWWOn1b = False        
     if DDTOn:
         haddCommand += 'python skimmerDDT.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
     elif N2On:
@@ -386,6 +417,10 @@ def addSklimCommand(iBasename,isMc,options):
             haddCommand += 'python skimmerWtag.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s --isMc --jet %s --ddt %s --iddt %s \n'%(basename.replace('.root',''),options.jet,options.ddt,options.iddt)
         else:
             haddCommand += 'python skimmerWtag.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s --isPu --jet %s --ddt %s --iddt %s \n'%(basename.replace('.root',''),options.jet,options.ddt,options.iddt)
+    elif HWWOn1a:
+        haddCommand += 'python skimmerHWW.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s --sel1a \n'%(basename.replace('.root',''))
+    elif HWWOn1b:
+        haddCommand += 'python skimmerHWW.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s --sel1b \n'%(basename.replace('.root',''))
     else:
         haddCommand += 'python skimmer.py -i $PWD/hadd/ -o $PWD/sklim/ -s %s\n'%(basename.replace('.root',''))
     return haddCommand
@@ -400,19 +435,26 @@ def main(options,args):
     loopOverFiles = options.loop
     if options.haddlarge: loopOverFiles = True
 
-    EOS = ''#eos root://cmseos.fnal.gov'
+    EOS = 'eos root://cmseos.fnal.gov'
     postfix = ''
 
-    exec_me('mkdir -p $PWD/hadd_jobs/',options.dryRun)
-    exec_me('mkdir -p /%s/%s'%(OutDir,haddDir),options.dryRun)
-    exec_me('mkdir -p /%s/%s'%(OutDir,sklimDir),options.dryRun)
-    exec_me('mkdir -p /%s/%s'%(OutDir,normDir),options.dryRun)
+    exec_me('%s mkdir -p $PWD/hadd_jobs/'%EOS,options.dryRun)
+    exec_me('%s mkdir -p /%s/%s'%(EOS,OutDir,haddDir),options.dryRun)
+    exec_me('%s mkdir -p /%s/%s'%(EOS,OutDir,sklimDir),options.dryRun)
+    exec_me('%s mkdir -p /%s/%s'%(EOS,OutDir,normDir),options.dryRun)
     if options.justDDT:
         exec_me('mkdir -p /%s/sklimDDT'%(OutDir),options.dryRun)
         exec_me('mkdir -p /%s/normDDT'%(OutDir),options.dryRun)
     if options.justN2:
         exec_me('mkdir -p /%s/sklimN2'%(OutDir),options.dryRun)
         exec_me('mkdir -p /%s/normN2'%(OutDir),options.dryRun)
+    if options.justHWW1a:
+        exec_me('mkdir -p /%s/sklimHWW1a'%(OutDir),options.dryRun)
+        exec_me('mkdir -p /%s/normHWW1a'%(OutDir),options.dryRun)
+    if options.justHWW1b:
+        exec_me('mkdir -p /%s/sklimHWW1b'%(OutDir),options.dryRun)
+        exec_me('mkdir -p /%s/normHWW1b'%(OutDir),options.dryRun)
+
     # if options.justWtag:
     #     exec_me('mkdir -p /%s/sklimWtag%s'%(OutDir,options.jet),options.dryRun)
 
@@ -427,6 +469,8 @@ def main(options,args):
         DDTOn = False
         N2On = False
         WtagOn = False            
+        HWWOn1a = False
+        HWWOn1b = False
         if os.path.isfile(OutDir+'/'+haddDir+'/'+basename):
             haddOn = False
         if os.path.isfile(OutDir+'/'+sklimDir+'/'+basename):
@@ -458,10 +502,20 @@ def main(options,args):
             #sklimOn = True
             WtagOn = True
             normOn = False
+        elif options.justHWW1a:
+            haddOn = False
+            HWWOn1a = True
+            normOn = True
+        elif options.justHWW1b:
+            haddOn = False
+            HWWOn1b = True
+            normOn = True
         else:
             DDTOn = False
             N2On = False
             WtagOn = False
+            HWWOn1a = False
+            HWWOn1b = False
 
         filesToConvert = []
         badFiles = []
@@ -478,8 +532,8 @@ def main(options,args):
         haddCommand += 'rm %s.tgz\n'% (cmssw)
         haddCommand += 'export SCRAM_ARCH=slc6_amd64_gcc630\n'
         haddCommand += 'mkdir -p %s/src\n'% (cmssw)
-        haddCommand += 'scramv1 project CMSSW CMSSW_9_2_12\n'
-        haddCommand += 'cd CMSSW_9_2_12/src\n'
+        haddCommand += 'scramv1 project CMSSW %s\n'%cmssw
+        haddCommand += 'cd %s/src\n'%cmssw
         haddCommand += 'scram b ProjectRename\n'
         haddCommand += 'eval `scramv1 runtime -sh`\n'
         haddCommand += 'pwd\n'
@@ -496,6 +550,8 @@ def main(options,args):
                 haddCommand += 'cp ../../skimmerN2.py .\n'
             if WtagOn:
                 haddCommand += 'cp ../../skimmerWtag.py .\n'
+            if HWWOn1a or HWWOn1b:
+                haddCommand += 'cp ../../skimmerHWW.py .\n'
         haddCommand += 'eval `scramv1 runtime -sh`\n'
         haddCommand += 'mkdir -p $PWD/hadd\n'
         haddCommand += 'mkdir -p $PWD/sklim\n'
@@ -518,12 +574,11 @@ def main(options,args):
                 if not haddOn:
                     print "files len = ",len(filesToConvert)/50+1
                     for i in range(0,len(filesToConvert)/50+1):
-                        haddCommand += 'mkdir -p $PWD/sklim\n'
-                        haddCommand += 'mkdir -p $PWD/hadd\n'
                         haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/%s/%s $PWD/hadd/%s\n'%(OutDir,haddDir,basename.replace('.root','_%i.root'%i),basename.replace('.root','_%i.root'%i))
-                    haddCommand += addSklimCommand(basename,isMc,options)
-                    for i in range(0,len(filesToConvert)/50+1):
+                        haddCommand += addSklimCommand(basename,isMc,options)
                         haddCommand += 'xrdcp -s $PWD/sklim/%s root://cmseos.fnal.gov//%s/%s/%s\n'%(basename.replace('.root','_%i.root'%i),OutDir,sklimDir,basename.replace('.root','_%i.root'%i))
+                        haddCommand += 'rm -r -f $PWD/sklim/*\n'
+                        haddCommand += 'rm -r -f $PWD/hadd/*\n'
                 else:
                     haddCommand += addSklimCommand(basename,isMc,options)
                     for i in range(0,len(filesToConvert)/50+1):
@@ -534,15 +589,15 @@ def main(options,args):
                     if not WtagOn:
                         haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/%s/%s $PWD/hadd/%s\n'%(OutDir,haddDir,basename,basename)
                     else:
-                        print  'xrdcp root://cmseos.fnal.gov//%s/normN2/%s $PWD/hadd/%s\n'%(OutDir,basename.replace('.root','_1000pb_weighted.root'),basename)
+                        print  'xrdcp root://cmseos.fnal.gov//%s/%s/%s $PWD/hadd/%s\n'%(OutDir,basename.replace('.root','_1000pb_weighted.root'),normDir,basename)
                         if isMc=='mc':
-                            haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/normN2/%s $PWD/hadd/%s\n'%(OutDir,basename.replace('.root','_1000pb_weighted.root'),basename)
+                            haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/%s/%s $PWD/hadd/%s\n'%(OutDir,basename.replace('.root','_1000pb_weighted.root'),normDir,basename)
                         else:
-                            haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/sklimN2/%s $PWD/hadd/%s\n'%(OutDir,basename,basename)
+                            haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/%s/%s $PWD/hadd/%s\n'%(OutDir,sklimDir,basename,basename)
                 haddCommand += addSklimCommand(basename,isMc,options)
                 haddCommand += 'xrdcp -s $PWD/sklim/%s root://cmseos.fnal.gov//%s/%s/%s\n'%(basename,OutDir,sklimDir,basename)
         if isMc=='mc' and normOn:            
-            haddCommand += 'cp ../../NormalizeNtuple .\n'
+            haddCommand += 'cp ../../../NormalizeNtuple .\n'
             #if not sklimOn:
                 #haddCommand += 'mkdir -p $PWD/sklim\n'
                 #haddCommand += 'xrdcp root://cmseos.fnal.gov//%s/sklim/%s $PWD/sklim/%s\n'%(OutDir,basename,basename)                
@@ -602,8 +657,8 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
     cfiles = []
     badfiles = []
     files = []
-    print 'ls %s/%s'%(dir,thesearchstring)
-    os.system('ls %s/%s > tmp.txt'%(dir,thesearchstring))
+    print '%s ls %s/%s'%(EOS,dir,thesearchstring)
+    os.system('%s ls %s/%s > tmp.txt'%(EOS,dir,thesearchstring))
     with open("tmp.txt", 'r') as mylist:
         files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
 
@@ -678,6 +733,10 @@ if __name__ == '__main__':
                       help="Run N2 skimmer")
     parser.add_option('--just-Wtag',dest="justWtag",default=False,action='store_true',
                       help="Run Wtag skimmer")
+    parser.add_option('--just-HWW1a',dest="justHWW1a",default=False,action='store_true',
+                      help="Run HWW skimmer")
+    parser.add_option('--just-HWW1b',dest="justHWW1b",default=False,action='store_true',
+                      help="Run HWW skimmer")
     (options, args) = parser.parse_args()
 
     
@@ -699,6 +758,14 @@ if __name__ == '__main__':
         if options.justWtag:
             haddDir = "hadd"
             sklimDir +='Wtag%s%s'%(options.jet,options.tagddt)
+        if options.justHWW1a:
+            haddDir = "hadd"
+            sklimDir +='HWW1a'
+            normDir +='HWW1a'
+        if options.justHWW1b:
+            haddDir = "hadd"
+            sklimDir +='HWW1b'
+            normDir +='HWW1b'
 
         if '2016' in options.sample:
             haddDir+='2016'
