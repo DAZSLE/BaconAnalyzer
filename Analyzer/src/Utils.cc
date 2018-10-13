@@ -430,13 +430,22 @@ bool passMuonHighPtSel(const baconhep::TMuon *muon)
   if(iso >= 0.25*(muon->pt)) return false;
   return true;
 }
-// TAUS
+// TAUS https://twiki.cern.ch/twiki/bin/view/CMS/TauIDRecommendation13TeV#2017v2_discriminators
 //--------------------------------------------------------------------------------------------------
 bool passTauSel(const baconhep::TTau *tau)
 {
   if(!(tau->hpsDisc & baconhep::kByDecayModeFinding)) return false;
   if(tau->rawIso3Hits > 4.5)                           return false;
 
+  return true;
+}
+// old decay mode finding? + tight MVA isolation + loose anti-electron MVA + tight anti-muon cut
+bool passTauTightSel(const baconhep::TTau *tau)
+{
+  if(!(tau->hpsDisc & baconhep::kByDecayModeFinding)) return false;
+  if(!(tau->hpsDisc & baconhep::kByVTightIsolationMVA3oldDMwLT)) return false;
+  if(!(tau->hpsDisc & baconhep::kByMVA6LooseElectronRejection)) return false;
+  if(!(tau->hpsDisc & baconhep::kByTightMuonRejection3)) return false;
   return true;
 }
 // Tools

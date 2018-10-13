@@ -16,12 +16,14 @@ TauLoader::~TauLoader() {
 }
 void TauLoader::reset() { 
   fNTaus = 0; 
+  fNTausTight = 0;
   fSelTaus.clear();
 }
 void TauLoader::setupTree(TTree *iTree) { 
   reset();
   fTree = iTree;
   fTree->Branch("ntau",&fNTaus,"fNTaus/I");                 // tau multiplicity
+  fTree->Branch("ntautight",&fNTausTight,"fNTausTight/I");  // tau tight multiplicity 
 }
 void TauLoader::load(int iEvent) { 
   fTaus   ->Clear();
@@ -29,7 +31,7 @@ void TauLoader::load(int iEvent) {
 }
 void TauLoader::selectTaus(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons) {
   reset(); 
-  int lCount = 0; 
+  int lCount(0), lCountTight(0); 
   for  (int i0 = 0; i0 < fTaus->GetEntriesFast(); i0++) { 
     TTau *pTau = (TTau*)((*fTaus)[i0]);
     if(passVeto(pTau->eta,pTau->phi,0.4,iElectrons)) continue; 
@@ -39,6 +41,8 @@ void TauLoader::selectTaus(std::vector<TLorentzVector> &iElectrons, std::vector<
     if(!passTauSel(pTau))                            continue;
     addTau(pTau,fSelTaus);
     lCount++;
+    if(passTauTightSel(pTau)) lCountTight ++;
   }
   fNTaus = lCount;
+  fNTausTight = lCountTight;
 }
