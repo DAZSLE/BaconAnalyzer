@@ -30,7 +30,6 @@ public:
   void fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, double iRho, unsigned int runNum);
   void addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals);
   void fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets, double iRho, unsigned int runNum);
-
   
   // JEC tools
   std::vector<FactorizedJetCorrector*> getJetCorrector() { return JetCorrector; }
@@ -110,7 +109,7 @@ protected:
   bool isData;
   void loadCMSSWPath();
   void loadJECs(bool isData);
-  void loadJECs_Rereco(bool isData);
+  void loadJECs_Rereco2017(bool isData);
   std::vector<std::vector<JetCorrectorParameters> > correctionParameters;
   std::vector<FactorizedJetCorrector*> JetCorrector;
   std::vector<JetCorrectionUncertainty*> jecUnc;

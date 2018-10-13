@@ -14,12 +14,12 @@ JetLoader::JetLoader(TTree *iTree, bool iData) {
   //iTree->SetBranchAddress("AK4CHS",       &fJetsCHS);
   //fJetBrCHS = iTree->GetBranch("AK4CHS");
 
-  fN = 4;
+  fN = 4; // number of jets to save
   fNV = 3; // max number of V jets to consider for dR anti-matching
   fNVars = 3; // pt, eta, phi
-  fNOtherVars = 10; // Mass, b-tag, qgid, dR, dPhi, pt_old, pt_JESUp, pt_JESDown, pt_JERUp, pt_JERDown
+  fNOtherVars = 18; // Mass, b-tag, qgid, dR, dPhi, pt_old, pt_JESUp, pt_JESDown, pt_JERUp, pt_JERDown + 8 DeepCSV vars
   isData = iData;
-  loadJECs_Rereco(isData);    
+  loadJECs_Rereco2017(isData);    
   r = new TRandom3(1988);
 }
 JetLoader::~JetLoader() { 
@@ -81,46 +81,44 @@ void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
   std::stringstream pSMetXCorrjerUp,pSMetYCorrjerUp;
   std::stringstream pSMetXCorrjerDown,pSMetYCorrjerDown;
   
-  pSNPt30     << "n" << iJetLabel << "sPt30";
-  pSNPt30jesUp << "n" << iJetLabel << "sPt30jesUp";
+  pSNPt30        << "n" << iJetLabel << "sPt30";
+  pSNPt30jesUp   << "n" << iJetLabel << "sPt30jesUp";
   pSNPt30jesDown << "n" << iJetLabel << "sPt30jesDown";
-  pSNPt30jerUp << "n" << iJetLabel << "sPt30jerUp";
+  pSNPt30jerUp   << "n" << iJetLabel << "sPt30jerUp";
   pSNPt30jerDown << "n" << iJetLabel << "sPt30jerDown";
-  pSfwdPt30   << "n" << iJetLabel << "sfwdPt30";
-  pSbPt30     << "n" << iJetLabel << "sbtagPt30";
-  pSbLPt30    << "n" << iJetLabel << "sbtagLPt30";
-  pSbMPt30    << "n" << iJetLabel << "sbtagMPt30";
-  pSbTPt30    << "n" << iJetLabel << "sbtagTPt30";
+  pSfwdPt30      << "n" << iJetLabel << "sfwdPt30";
+  pSbPt30        << "n" << iJetLabel << "sbtagPt30";
+  pSbLPt30       << "n" << iJetLabel << "sbtagLPt30";
+  pSbMPt30       << "n" << iJetLabel << "sbtagMPt30";
+  pSbTPt30       << "n" << iJetLabel << "sbtagTPt30";
   
   pSMetXCorrjesUp     << "MetXCorrjesUp";
   pSMetYCorrjesUp     << "MetYCorrjesUp";
-  pSMetXCorrjesDown     << "MetXCorrjesDown";
-  pSMetYCorrjesDown     << "MetYCorrjesDown";
+  pSMetXCorrjesDown   << "MetXCorrjesDown";
+  pSMetYCorrjesDown   << "MetYCorrjesDown";
   pSMetXCorrjerUp     << "MetXCorrjerUp";
   pSMetYCorrjerUp     << "MetYCorrjerUp";
-  pSMetXCorrjerDown     << "MetXCorrjerDown";
-  pSMetYCorrjerDown     << "MetYCorrjerDown";
+  pSMetXCorrjerDown   << "MetXCorrjerDown";
+  pSMetYCorrjerDown   << "MetYCorrjerDown";
 
   fTree->Branch(pSNPt30.str().c_str()           ,&fNJetsPt30           ,(pSNPt30.str()+"/I").c_str());  // jet multiplicity
-  fTree->Branch(pSNPt30jesUp.str().c_str()           ,&fNJetsPt30jesUp           ,(pSNPt30jesUp.str()+"/I").c_str());  
-  fTree->Branch(pSNPt30jesDown.str().c_str()           ,&fNJetsPt30jesDown           ,(pSNPt30jesDown.str()+"/I").c_str());
-  fTree->Branch(pSNPt30jerUp.str().c_str()           ,&fNJetsPt30jerUp           ,(pSNPt30jerUp.str()+"/I").c_str());  
-  fTree->Branch(pSNPt30jerDown.str().c_str()           ,&fNJetsPt30jerDown           ,(pSNPt30jerDown.str()+"/I").c_str());
+  fTree->Branch(pSNPt30jesUp.str().c_str()      ,&fNJetsPt30jesUp      ,(pSNPt30jesUp.str()+"/I").c_str());  
+  fTree->Branch(pSNPt30jesDown.str().c_str()    ,&fNJetsPt30jesDown    ,(pSNPt30jesDown.str()+"/I").c_str());
+  fTree->Branch(pSNPt30jerUp.str().c_str()      ,&fNJetsPt30jerUp      ,(pSNPt30jerUp.str()+"/I").c_str());  
+  fTree->Branch(pSNPt30jerDown.str().c_str()    ,&fNJetsPt30jerDown    ,(pSNPt30jerDown.str()+"/I").c_str());
   fTree->Branch(pSfwdPt30.str().c_str()         ,&fNFwdPt30            ,(pSfwdPt30.str()+"/I").c_str());
   fTree->Branch(pSbLPt30.str().c_str()          ,&fNBTagsLPt30         ,(pSbLPt30.str()+"/I").c_str()); // b tags
   fTree->Branch(pSbMPt30.str().c_str()          ,&fNBTagsMPt30         ,(pSbMPt30.str()+"/I").c_str());
   fTree->Branch(pSbTPt30.str().c_str()          ,&fNBTagsTPt30         ,(pSbTPt30.str()+"/I").c_str());
   
-  fTree->Branch(pSMetXCorrjesUp.str().c_str()           ,&MetXCorrjesUp           ,(pSMetXCorrjesUp.str()+"/D").c_str());  // Met corrections
-  fTree->Branch(pSMetYCorrjesUp.str().c_str()           ,&MetYCorrjesUp           ,(pSMetYCorrjesUp.str()+"/D").c_str());  
-  fTree->Branch(pSMetXCorrjesDown.str().c_str()           ,&MetXCorrjesDown           ,(pSMetXCorrjesDown.str()+"/D").c_str());  
-  fTree->Branch(pSMetYCorrjesDown.str().c_str()           ,&MetYCorrjesDown           ,(pSMetYCorrjesDown.str()+"/D").c_str());  
-  fTree->Branch(pSMetXCorrjerUp.str().c_str()           ,&MetXCorrjerUp           ,(pSMetXCorrjerUp.str()+"/D").c_str());  
-  fTree->Branch(pSMetYCorrjerUp.str().c_str()           ,&MetYCorrjerUp           ,(pSMetYCorrjerUp.str()+"/D").c_str());  
-  fTree->Branch(pSMetXCorrjerDown.str().c_str()           ,&MetXCorrjerDown           ,(pSMetXCorrjerDown.str()+"/D").c_str());  
-  fTree->Branch(pSMetYCorrjerDown.str().c_str()           ,&MetYCorrjerDown           ,(pSMetYCorrjerDown.str()+"/D").c_str());  
-
-
+  fTree->Branch(pSMetXCorrjesUp.str().c_str()   ,&MetXCorrjesUp        ,(pSMetXCorrjesUp.str()+"/D").c_str());  // Met corrections
+  fTree->Branch(pSMetYCorrjesUp.str().c_str()   ,&MetYCorrjesUp        ,(pSMetYCorrjesUp.str()+"/D").c_str());  
+  fTree->Branch(pSMetXCorrjesDown.str().c_str() ,&MetXCorrjesDown      ,(pSMetXCorrjesDown.str()+"/D").c_str());  
+  fTree->Branch(pSMetYCorrjesDown.str().c_str() ,&MetYCorrjesDown      ,(pSMetYCorrjesDown.str()+"/D").c_str());  
+  fTree->Branch(pSMetXCorrjerUp.str().c_str()   ,&MetXCorrjerUp        ,(pSMetXCorrjerUp.str()+"/D").c_str());  
+  fTree->Branch(pSMetYCorrjerUp.str().c_str()   ,&MetYCorrjerUp        ,(pSMetYCorrjerUp.str()+"/D").c_str());  
+  fTree->Branch(pSMetXCorrjerDown.str().c_str() ,&MetXCorrjerDown      ,(pSMetXCorrjerDown.str()+"/D").c_str());  
+  fTree->Branch(pSMetYCorrjerDown.str().c_str() ,&MetYCorrjerDown      ,(pSMetYCorrjerDown.str()+"/D").c_str());  
 
   fNJetsPt30dR08.clear();
   fNJetsPt30dR08jesUp.clear();
@@ -169,14 +167,14 @@ void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
     pSbLPt150dR08<< "n" << iJetLabel << "sLPt150dR08_" << i0;
     pSbMPt150dR08<< "n" << iJetLabel << "sMPt150dR08_" << i0;
     pSbTPt150dR08<< "n" << iJetLabel << "sTPt150dR08_" << i0;
-    fTree->Branch(pSNPt30dR08.str().c_str()       ,&fNJetsPt30dR08[i0]       ,(pSNPt30dR08.str()+"/I").c_str());
-    fTree->Branch(pSNPt30dR08jesUp.str().c_str()       ,&fNJetsPt30dR08jesUp[i0]       ,(pSNPt30dR08jesUp.str()+"/I").c_str());
-    fTree->Branch(pSNPt30dR08jesDown.str().c_str()       ,&fNJetsPt30dR08jesDown[i0]       ,(pSNPt30dR08jesDown.str()+"/I").c_str());
-    fTree->Branch(pSNPt30dR08jerUp.str().c_str()       ,&fNJetsPt30dR08jerUp[i0]       ,(pSNPt30dR08jerUp.str()+"/I").c_str());
-    fTree->Branch(pSNPt30dR08jerDown.str().c_str()       ,&fNJetsPt30dR08jerDown[i0]       ,(pSNPt30dR08jerDown.str()+"/I").c_str());
-    fTree->Branch(pSbLPt50dR08.str().c_str()      ,&fNBTagsLPt50dR08[i0]     ,(pSbLPt50dR08.str()+"/I").c_str());
-    fTree->Branch(pSbMPt50dR08.str().c_str()      ,&fNBTagsMPt50dR08[i0]     ,(pSbMPt50dR08.str()+"/I").c_str());
-    fTree->Branch(pSbTPt50dR08.str().c_str()      ,&fNBTagsTPt50dR08[i0]     ,(pSbTPt50dR08.str()+"/I").c_str());
+    fTree->Branch(pSNPt30dR08.str().c_str()        ,&fNJetsPt30dR08[i0]        ,(pSNPt30dR08.str()+"/I").c_str());
+    fTree->Branch(pSNPt30dR08jesUp.str().c_str()   ,&fNJetsPt30dR08jesUp[i0]   ,(pSNPt30dR08jesUp.str()+"/I").c_str());
+    fTree->Branch(pSNPt30dR08jesDown.str().c_str() ,&fNJetsPt30dR08jesDown[i0] ,(pSNPt30dR08jesDown.str()+"/I").c_str());
+    fTree->Branch(pSNPt30dR08jerUp.str().c_str()   ,&fNJetsPt30dR08jerUp[i0]   ,(pSNPt30dR08jerUp.str()+"/I").c_str());
+    fTree->Branch(pSNPt30dR08jerDown.str().c_str() ,&fNJetsPt30dR08jerDown[i0] ,(pSNPt30dR08jerDown.str()+"/I").c_str());
+    fTree->Branch(pSbLPt50dR08.str().c_str()       ,&fNBTagsLPt50dR08[i0]      ,(pSbLPt50dR08.str()+"/I").c_str());
+    fTree->Branch(pSbMPt50dR08.str().c_str()       ,&fNBTagsMPt50dR08[i0]      ,(pSbMPt50dR08.str()+"/I").c_str());
+    fTree->Branch(pSbTPt50dR08.str().c_str()       ,&fNBTagsTPt50dR08[i0]      ,(pSbTPt50dR08.str()+"/I").c_str());
     fTree->Branch(pSbLPt100dR08.str().c_str()      ,&fNBTagsLPt100dR08[i0]     ,(pSbLPt100dR08.str()+"/I").c_str());
     fTree->Branch(pSbMPt100dR08.str().c_str()      ,&fNBTagsMPt100dR08[i0]     ,(pSbMPt100dR08.str()+"/I").c_str());
     fTree->Branch(pSbTPt100dR08.str().c_str()      ,&fNBTagsTPt100dR08[i0]     ,(pSbTPt100dR08.str()+"/I").c_str());
@@ -185,9 +183,9 @@ void JetLoader::setupTree(TTree *iTree, std::string iJetLabel) {
     fTree->Branch(pSbTPt150dR08.str().c_str()      ,&fNBTagsTPt150dR08[i0]     ,(pSbTPt150dR08.str()+"/I").c_str());
   }
 
-  for(int i0 = 0; i0 < fN*(10)+4; i0++) {double pVar = 0; fVars.push_back(pVar);}           
-  setupNtuple(iJetLabel.c_str(),iTree,fN,fVars);                                            // from MonoXUtils.cc => fN=4 j*_pt,j*_eta,j*_phi for j1,j2,j3,j4 (3*4=12)
-  addOthers  (iJetLabel.c_str(),iTree,fN,fVars);                                            // Mass, b-tag, qgid, dR, dPhi for j1,j2,j3,j4 (5*4=20)
+  for(int i0 = 0; i0 < fN*(fNOtherVars)+fN*fNVars; i0++) {double pVar = 0; fVars.push_back(pVar);}           
+  setupNtuple(iJetLabel.c_str(),iTree,fN,fVars); // fNVars*fN first vars are j*_pt,j*_eta,j*_phi for fN = j1,j2,j3,j4 (3*4=12)
+  addOthers  (iJetLabel.c_str(),iTree,fN,fVars); // next fNOtherVars*fN vars (Mass, b-tag, qgid, dR, dPhi...) for j1,j2,j3,j4 (18*4=72)
 }
 void JetLoader::load(int iEvent) { 
   fJets   ->Clear();
@@ -231,7 +229,8 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
    					   JetCorrectionsIOV,JetCorrector);
     double jetCorrPt = JEC*(pJet->ptRaw);
     double jetCorrE = JEC*(vPJet.E());
-    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, pJet->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
+    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, pJet->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; 
+    // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
     float sigma_MC = resolution.getResolution(parameters);
     float sf = resolution_sf.getScaleFactor(parameters);
     float sfUp = resolution_sf.getScaleFactor(parameters, Variation::UP);
@@ -291,8 +290,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     if (jetPtJERUp  > 30) lCountPt30jerUp++;
     if (jetPtJERDown  > 30) lCountPt30jerDown++;
     
-    // jet and b-tag multiplicity
-    
+    // jet and b-tag multiplicity    
     vPJet.SetPtEtaPhiE(jetCorrPtSmear, pJet->eta, pJet->phi, jetCorrESmear);
     for (int i1 = 0; i1 < int(iVJets.size()); i1++) {      
       if(iVJets[i1].Pt()>200 && vPJet.DeltaR(iVJets[i1])>0.8) {
@@ -304,7 +302,6 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
       }
     }
 	
-    
     if(jetCorrPtSmear  <=  30)                                            continue;    
     if(fabs(pJet->eta) > 2.5 && fabs(pJet->eta) < 4.5) lNFwdPt30++;
     if(fabs(pJet->eta) >= 2.5)                                            continue;
@@ -325,9 +322,10 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
       lNBTagTPt30++;
     }
     
+    //https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation94X
+
     // jet and b-tag multiplicity
     for (int i1 = 0; i1 < int(iVJets.size()); i1++) {
-      
       if(iVJets[i1].Pt()>200 && vPJet.DeltaR(iVJets[i1])>0.8) {
 	if(pJet->pt>50 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt50dR08[i1]++;
 	if(pJet->pt>100 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt100dR08[i1]++;
@@ -375,10 +373,11 @@ void JetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<doub
     					   runNum,
    					   JetCorrectionsIOV,JetCorrector);    
     double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
-    double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default
+    //double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default
     double x1 = x1List[i0];
     double jetEnergySmearFactor = 1.0;    
-    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
+    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; 
+    // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED) -- I // NOT SURE IF THIS SHOULD CHANGE FOR Summer16_25nsV1_MC
     float sigma_MC = resolution.getResolution(parameters);
     float sf = resolution_sf.getScaleFactor(parameters);    
     if (!isData) {      
@@ -394,27 +393,47 @@ void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<do
   for(int i0 = 0; i0 < iN; i0++) { 
     int lBase = iN*fNVars+i0*fNOtherVars;
     std::stringstream pSMass,pSCSV,pSQGID,pSdR,pSdP,pScen,pSjesUp,pSjesDown,pSjerUp,pSjerDown;
-    pSMass  << iHeader << i0 << "_mass";
-    pSCSV   << iHeader << i0 << "_csv";
-    pSQGID  << iHeader << i0 << "_qgid";
-    pSdR    << iHeader << i0 << "_dR08";
-    pSdP    << iHeader << i0 << "_dPhi08";
-    pScen << iHeader << i0 << "_pt_old";
-    pSjesUp << iHeader << i0 << "_pt_JESUp";
-    pSjesDown << iHeader << i0 << "_pt_JESDown";
-    pSjerUp << iHeader << i0 << "_pt_JERUp";
-    pSjerDown << iHeader << i0 << "_pt_JERDown";
+    std::stringstream pSDeepCSVb,pSDeepCSVc,pSDeepCSVl,pSDeepCSVbb;
+    std::stringstream pSDeepCMVAb,pSDeepCMVAc,pSDeepCMVAl,pSDeepCMVAbb;
+    pSMass      << iHeader << i0 << "_mass";
+    pSCSV       << iHeader << i0 << "_csv";
+    pSQGID      << iHeader << i0 << "_qgid";
+    pSdR        << iHeader << i0 << "_dR08";
+    pSdP        << iHeader << i0 << "_dPhi08";
+    pScen       << iHeader << i0 << "_pt_old";
+    pSjesUp     << iHeader << i0 << "_pt_JESUp";
+    pSjesDown   << iHeader << i0 << "_pt_JESDown";
+    pSjerUp     << iHeader << i0 << "_pt_JERUp";
+    pSjerDown   << iHeader << i0 << "_pt_JERDown";
+    pSDeepCSVb  << iHeader << i0 << "_deepcsvb";
+    pSDeepCSVc  << iHeader << i0 << "_deepcsvc";
+    pSDeepCSVl  << iHeader << i0 << "_deepcsvl";
+    pSDeepCSVbb << iHeader << i0 << "_deepcsvbb";
+    pSDeepCMVAb << iHeader << i0 << "_deepcmvab";
+    pSDeepCMVAc << iHeader << i0 << "_deepcmvac";
+    pSDeepCMVAl << iHeader << i0 << "_deepcmval";
+    pSDeepCMVAbb<< iHeader << i0 << "_deepcmvabb";
     
-    iTree->Branch(pSMass .str().c_str(),&iVals[lBase+0],(pSMass .str()+"/D").c_str());
-    iTree->Branch(pSCSV .str().c_str() ,&iVals[lBase+1],(pSCSV  .str()+"/D").c_str());
-    iTree->Branch(pSQGID.str().c_str() ,&iVals[lBase+2],(pSQGID .str()+"/D").c_str());
-    iTree->Branch(pSdR  .str().c_str() ,&iVals[lBase+3],(pSdR   .str()+"/D").c_str());
-    iTree->Branch(pSdP  .str().c_str() ,&iVals[lBase+4],(pSdP   .str()+"/D").c_str());
-    iTree->Branch(pScen  .str().c_str() ,&iVals[lBase+5],(pScen   .str()+"/D").c_str());
-    iTree->Branch(pSjesUp  .str().c_str() ,&iVals[lBase+6],(pSjesUp   .str()+"/D").c_str());
-    iTree->Branch(pSjesDown.str().c_str() ,&iVals[lBase+7],(pSjesDown .str()+"/D").c_str());
-    iTree->Branch(pSjerUp  .str().c_str() ,&iVals[lBase+8],(pSjerUp   .str()+"/D").c_str());
-    iTree->Branch(pSjerDown.str().c_str() ,&iVals[lBase+9],(pSjerDown .str()+"/D").c_str());
+    iTree->Branch(pSMass     .str().c_str() ,&iVals[lBase+0], (pSMass       .str()+"/D").c_str());
+    iTree->Branch(pSCSV      .str().c_str() ,&iVals[lBase+1], (pSCSV        .str()+"/D").c_str());
+    iTree->Branch(pSQGID     .str().c_str() ,&iVals[lBase+2], (pSQGID       .str()+"/D").c_str());
+    iTree->Branch(pSdR       .str().c_str() ,&iVals[lBase+3], (pSdR         .str()+"/D").c_str());
+    iTree->Branch(pSdP       .str().c_str() ,&iVals[lBase+4], (pSdP         .str()+"/D").c_str());
+    iTree->Branch(pScen      .str().c_str() ,&iVals[lBase+5], (pScen        .str()+"/D").c_str());
+    iTree->Branch(pSjesUp    .str().c_str() ,&iVals[lBase+6], (pSjesUp      .str()+"/D").c_str());
+    iTree->Branch(pSjesDown  .str().c_str() ,&iVals[lBase+7], (pSjesDown    .str()+"/D").c_str());
+    iTree->Branch(pSjerUp    .str().c_str() ,&iVals[lBase+8], (pSjerUp      .str()+"/D").c_str());
+    iTree->Branch(pSjerDown  .str().c_str() ,&iVals[lBase+9], (pSjerDown    .str()+"/D").c_str());
+
+    iTree->Branch(pSDeepCSVb  .str().c_str() ,&iVals[lBase+10],(pSDeepCSVb  .str()+"/D").c_str());
+    iTree->Branch(pSDeepCSVc  .str().c_str() ,&iVals[lBase+11],(pSDeepCSVc  .str()+"/D").c_str());
+    iTree->Branch(pSDeepCSVl  .str().c_str() ,&iVals[lBase+12],(pSDeepCSVl  .str()+"/D").c_str());
+    iTree->Branch(pSDeepCSVbb .str().c_str() ,&iVals[lBase+13],(pSDeepCSVbb .str()+"/D").c_str());
+    iTree->Branch(pSDeepCMVAb .str().c_str() ,&iVals[lBase+14],(pSDeepCMVAb .str()+"/D").c_str());
+    iTree->Branch(pSDeepCMVAc .str().c_str() ,&iVals[lBase+15],(pSDeepCMVAc .str()+"/D").c_str());
+    iTree->Branch(pSDeepCMVAl .str().c_str() ,&iVals[lBase+16],(pSDeepCMVAl .str()+"/D").c_str());
+    iTree->Branch(pSDeepCMVAbb.str().c_str() ,&iVals[lBase+17],(pSDeepCMVAbb.str()+"/D").c_str());
+
   }
 }
 void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets, double iRho, unsigned int runNum){ 
@@ -434,7 +453,7 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
    					   JetCorrectionsIOV,JetCorrector);
     double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
     
-    double unc_old = iObjects[i0]->unc;
+    //double unc_old = iObjects[i0]->unc;
     double unc = getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default
     
     JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}};
@@ -456,7 +475,7 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
       jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
     }    
     
-    double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
+    //double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
     double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
@@ -499,7 +518,17 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     iVals[lBase+i0*fNOtherVars+7] = jetPtJESDown;
     iVals[lBase+i0*fNOtherVars+8] = jetPtJERUp;    
     iVals[lBase+i0*fNOtherVars+9] = jetPtJERDown;
-      
+
+    // deepcsv
+    iVals[lBase+i0*fNOtherVars+10] = iObjects[i0]->deepcsvb;
+    iVals[lBase+i0*fNOtherVars+11] = iObjects[i0]->deepcsvc;
+    iVals[lBase+i0*fNOtherVars+12] = iObjects[i0]->deepcsvl;
+    iVals[lBase+i0*fNOtherVars+13] = iObjects[i0]->deepcsvbb;
+    iVals[lBase+i0*fNOtherVars+14] = iObjects[i0]->deepcmvab;
+    iVals[lBase+i0*fNOtherVars+15] = iObjects[i0]->deepcmvac;
+    iVals[lBase+i0*fNOtherVars+16] = iObjects[i0]->deepcmval;
+    iVals[lBase+i0*fNOtherVars+17] = iObjects[i0]->deepcmvabb;
+
   }
 }
 //2016 Prompt Reco
@@ -555,8 +584,8 @@ void JetLoader::loadJECs(bool isData) {
     }
 
 }
-void JetLoader::loadJECs_Rereco(bool isData) {
-    std::cout << "JetLoader: loading Rereco jet energy correction constants" << std::endl;
+void JetLoader::loadJECs_Rereco2017(bool isData) {
+    std::cout << "JetLoader: loading 2017 Rereco jet energy correction constants" << std::endl;
     // initialize
     loadCMSSWPath();
     std::string jecPathname = cmsswPath + "/src/BaconAnalyzer/Analyzer/data/JEC/";
@@ -565,11 +594,11 @@ void JetLoader::loadJECs_Rereco(bool isData) {
     jecUnc = std::vector<JetCorrectionUncertainty*>();
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
     
-    resolution = JME::JetResolution(Form("%s/Spring16_25nsV10_MC/Spring16_25nsV10_MC_PtResolution_AK4PFPuppi.txt",jecPathname.c_str()));
-    resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Spring16_25nsV10_MC/Spring16_25nsV10_MC_SF_AK4PFPuppi.txt",jecPathname.c_str()));
+    resolution = JME::JetResolution(Form("%s/Summer16_25nsV1_MC/Summer16_25nsV1_MC_PtResolution_AK4PFPuppi.txt",jecPathname.c_str()));
+    resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Summer16_25nsV1_MC/Summer16_25nsV1_MC_SF_AK4PFPuppi.txt",jecPathname.c_str()));
  
     if (isData) {
-      //IOV: 2016B
+      //IOV: 2017B
       std::vector<JetCorrectorParameters> correctionParametersB = std::vector<JetCorrectorParameters> ();
       correctionParametersB.push_back(JetCorrectorParameters(
 		  Form("%s/Fall17_17Nov2017B_V6_DATA/Fall17_17Nov2017B_V6_DATA_L1FastJet_AK8PFPuppi.txt", jecPathname.c_str())));
