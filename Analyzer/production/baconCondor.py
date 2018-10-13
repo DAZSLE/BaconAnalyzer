@@ -31,19 +31,15 @@ parser.add_option("-a", "--args", dest="args", default=[], action="append",
                   help="Pass executable args n:arg OR named arguments name:arg. Multiple args can be passed with <val1,val2...> or lists of integers with [min,max,stepsize]")
 parser.add_option("-v", "--verbose", dest="verbose", default=False, action="store_true", 
                   help="Spit out more info")
-parser.add_option("", "--passSumEntries", dest="passSumEntries", default="",
-                  help="x:treename Get Entries in TTree treename and pass to argument x")
-parser.add_option("", "--blacklist", dest="blacklist", default=[], action="append",
-                  help="Add blacklist file types (search for this string in files and ignore them")
 
 # Make condor submission scripts options
 parser.add_option("-n", "--njobs", dest="njobs", type='int', default=-1,
                   help="Split into n jobs, will automatically produce submission scripts")
 parser.add_option("--njobs-per-file", dest="njobs_per_file", type='int', default=1,
                   help="Split into n jobs per file, will automatically produce submission scripts")
-parser.add_option("-q", "--queue", default='1nh', 
-                  help="submission queue")
-parser.add_option("--dryRun", default=False, action="store_true", 
+parser.add_option("--nfiles-per-job", dest="nfiles_per_job", type='int', default=1,
+                  help="Split into n files per job, will automatically produce submission scripts")
+parser.add_option("--dry-run", dest="dryRun", default=False, action="store_true", 
                   help="Do nothing, just create jobs if requested")
 
 # Monitor options (submit,check,resubmit failed)  -- just pass outodir as usual but this time pass --monitor sub --monitor check or --monitor resub
@@ -51,13 +47,16 @@ parser.add_option("--monitor", default='', help="Monitor mode (sub/resub/check d
 
 cwd = os.getcwd()
 (options, args) = parser.parse_args()
-if len(args) < 2 and not options.monitor: sys.exit('Error -- must specify ANALYZER and OUTPUTNAME')
+if len(args) < 1 and not options.monitor: sys.exit('Error -- must specify ANALYZER')
 njobs = options.njobs if options.njobs > 0 else 1
 njobs_per_file = options.njobs_per_file
+nfiles_per_job = options.nfiles_per_job
 cmssw = os.getenv('CMSSW_VERSION', 'CMSSW_9_4_7')
 cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_9_4_7')
 
+# write job
 def write_job(exec_line, out, analyzer, i, n, j, eosout=''):
+    #print 'job_i %i nfiles %i subjobi %i'%(i,n,j)
     cwd = os.getcwd()
     analyzer_short = analyzer.split("/")[-1]
 
@@ -86,7 +85,7 @@ def write_job(exec_line, out, analyzer, i, n, j, eosout=''):
     sub_file.close()
     os.system('chmod +x %s' % os.path.abspath(sub_file.name))
 
-
+# write condor submission script
 def submit_jobs(lofjobs):
     for sub_file in lofjobs:
         os.system('rm -f %s.stdout' % sub_file)
@@ -112,6 +111,7 @@ def submit_jobs(lofjobs):
         os.system('chmod +x %s'% os.path.abspath(condor_file.name))
         os.system('condor_submit %s'%(os.path.abspath(condor_file.name)))
 
+# submit jobs by looping over job scripts in output dir
 if options.monitor:
     if options.monitor not in ['sub']: sys.exit('Error -- Unknown monitor mode %s' % options.monitor)
     dir = options.outdir
@@ -125,9 +125,9 @@ if options.monitor:
         print 'Submitting %d jobs from directory %s' % (len(lofjobs), dir)
         submit_jobs(lofjobs)
 
-
     sys.exit('Finished Monitor -- %s' % options.monitor)
 
+# parse arguments to dictionary
 def parse_to_dict(l_list):
     if len(l_list) < 1: return {}
     ret = {}
@@ -164,65 +164,16 @@ def parse_to_dict(l_list):
             iskey += 1
     return ret
 
-def getArgsJob(interationsobject, job_id, njobs):
-    injobs = []
-    #   nf = 0
-    ifile = 0
-    for ff in iterationsobject:
-        if (njobs > 0) and (ifile % njobs != job_id):
-            injobs.append((ff, False))
-        else:
-            injobs.append((ff, True))
-        ifile += 1
-
-    return injobs
-
-
 # -- MAIN
-print options.outdir
 os.system('mkdir -p %s' % (options.outdir))
 
-mindeces = []
 analyzer = args[0]
-outfile = args[1]
-print options.args
 analyzer_args = parse_to_dict(options.args)
-print analyzer_args
-if options.passSumEntries:
-    pos, treenam = options.passSumEntries.split(":")
-    numEntries = 0
-    if options.list:
-        with open(options.list.split(":")[1], 'r') as mylist:
-            files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
-        # print files
-        for fi in files:
-            tf = r.TFile.Open(fi[0])
-            try:
-                tf.IsOpen()
-            except:
-                continue
-            hf = tf.Get(treenam)  # first try to see if its a histogram
-            hist = r.TH1F("tmpA", "tmpA", 1, -1000, 1000)
-            try:
-                getattr(tf, treenam).Draw("Info.nPUmean>>tmpA", "GenEvtInfo.weight")
-                numEntries += hist.Integral()
-                print "Adding :", hist.Integral(), " -- ", numEntries
-            except:
-                try:
-                    numEntries += int(getattr(tf, treenam).GetEntries())
-                    print "Adding Old :", numEntries
-                except:
-                    continue
-    else:
-        numEntries = -1;
-    analyzer_args[int(pos)] = ['', ['{:e}'.format(float(numEntries))]]
-else:
-    if options.list:
-        with open(options.list.split(":")[1], 'r') as mylist:
-            files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
+
+with open(options.list.split(":")[1], 'r') as mylist:
+    files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
             
 exec_line = '%s' % analyzer
-
 if options.list:
     filepos, options.list = options.list.split(':')
     analyzer_args[int(filepos)] = ['', "fileinput"]
@@ -231,73 +182,70 @@ if options.list:
 sortedkeys = analyzer_args.keys()
 if len(sortedkeys): sortedkeys.sort()
 
+print 'sortedkeys ',sortedkeys 
 for key in sortedkeys:
-    #  if arg_i in analyzer_args.keys():
     arg = analyzer_args[key][1]
     if arg == 'fileinput':
         exec_line += ' fileinput '
     elif len(arg) > 1:
-        mindeces.append(key)
         exec_line += ' MULTARG_%d ' % key
     else:
         exec_line += ' %s ' % arg[0]
 
 # check that from max to 0 all arguments are accounted for (could always add defaults above) !
-
 for arg_c in range(1, max(analyzer_args.keys())):
     if arg_c not in analyzer_args.keys(): sys.exit("ERROR -- missing argument %d" % arg_c)
 
 print 'running executable -- (default call) \n\t%s' % exec_line
-
+if len(files) < njobs:
+    njobs = len(files)
+if nfiles_per_job > 1:
+    njobs = njobs/nfiles_per_job
 if not options.dryRun and njobs > 0:
     print 'Writing %d Submission Scripts to %s (submit after with --monitor sub)' % (njobs, options.outdir)
 
-if len(files) < njobs:
-    njobs = len(files)
+with open(options.list, 'r') as mylist:
+    allfiles = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
+
 for job_i in range(njobs):
+    files = []
+
+    for subjob_i in range(nfiles_per_job):
+        files.append(allfiles[job_i*nfiles_per_job+subjob_i])
+
+    lIFile = job_i*nfiles_per_job
+    lFFile = lIFile+subjob_i
     for subjob_i in range(njobs_per_file):
-        ################################ WHY does this need to be recreate?
-        # This must be the sorted set of keys from the dictionary to build the iterations
-        listoflists = [analyzer_args[k][1] for k in sortedkeys]
-        # itertools section, make object containing all args to be considered
-        # i.e it iterates over all combinations of arguments in the args list
-        iterationsobject = product(*listoflists)
-        ################################
-        if options.list:
-            with open(options.list, 'r') as mylist:
-                allfiles = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
-                #print allfiles
-                files = [allfiles[job_i]]
-        else:
-            files = getArgsJob(iterationsobject, job_i, njobs)  # use itertools to split up any arglists into jobs
-        # else: files=[]
         job_exec = ''
 
         nfiles_i = 0
+        outfile = 'Output_%d'%job_i
+        job_hadd = 'hadd -f %s.root '%outfile
         for fil_i, fil in enumerate(files):
             if not fil[1]: continue
-            if options.list:
-                exec_line_i = exec_line.replace('subjob_i','%d'%subjob_i)
-                exec_line_i = exec_line_i.replace('fileinput', " " + fil[0] + " ")
-            else:
-                exec_line_i = exec_line.replace('subjob_i','%d'%subjob_i)
-                for i, m in enumerate(fil[0]):  # no defaults so guarantee (make the check) that all of the args are there)
-                    exec_line_i = exec_line_i.replace(" MULTARG_%d " % i, " " + str(m) + " ")  # LIST  OVER iterated arguments and produce and replace MULTIARG_i with arguemnt at i in list ?
-            if options.eosoutdir:
-                if njobs_per_file > 1:                    
-                    job_exec += exec_line_i + '; xrdcp -s %s root://cmseos.fnal.gov/%s/%s_job%d_file%d_subjob%d.root; ' % (
-                    outfile, options.eosoutdir, outfile, job_i, fil_i, subjob_i)
-                else:
-                    job_exec += exec_line_i + '; xrdcp -s %s root://cmseos.fnal.gov/%s/%s_job%d_file%d.root; ' % (
-                    outfile, options.eosoutdir, outfile, job_i, fil_i)
-            else:
-                if njobs_per_file > 1:
-                    job_exec += exec_line_i + '; mv %s %s/%s_job%d_file%d_subjob%d.root; ' % (
-                    outfile, options.outdir, outfile, job_i, fil_i, subjob_i)
-                else:
-                    job_exec += exec_line_i + '; mv %s %s/%s_job%d_file%d.root; ' % (
-                    outfile, options.outdir, outfile, job_i, fil_i)
+            exec_line_i = exec_line.replace('subjob_i','%d'%subjob_i)
+            exec_line_i = exec_line_i.replace('Output.root','Output_%d.root'%fil_i)
+            exec_line_i = exec_line_i.replace('fileinput', " " + fil[0] + " ")
+            job_exec += exec_line_i + '; '
+            job_hadd += 'Output_%d.root '%fil_i
             nfiles_i += 1
+
+        job_exec += '\n' +job_hadd + ';\n '
+        if options.eosoutdir:
+            if njobs_per_file > 1:                    
+                job_exec += 'xrdcp -s %s.root root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d_subjob%d.root; ' % (
+                    outfile, options.eosoutdir, outfile, job_i, lIFile, lFFile, subjob_i)
+            else:
+                job_exec += 'xrdcp -s %s.root root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d.root; ' % (
+                    outfile, options.eosoutdir, outfile, job_i, lIFile, lFFile)
+        else:
+            if njobs_per_file > 1:
+                job_exec += 'mv %s.root %s/%s_job%d_file%dto%d_subjob%d.root; ' % (
+                    outfile, options.outdir, outfile, job_i, lIFile, lFFile, subjob_i)
+            else:
+                job_exec += 'mv %s.root %s/%s_job%d_file%dto%d.root; ' % (
+                    outfile, options.outdir, outfile, job_i, lIFile, lFFile)
+
         if options.verbose: print "VERB -- job exec line --> ", job_exec
 
         if options.dryRun:
@@ -307,3 +255,4 @@ for job_i in range(njobs):
         else:
             print "Running: ", job_exec
             os.system(job_exec)
+
