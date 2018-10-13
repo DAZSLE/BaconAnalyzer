@@ -222,16 +222,22 @@ if __name__ == '__main__':
     
     parser = OptionParser()
     parser.add_option('--dry-run',dest="dryRun",default=False,action='store_true',
-                  help="Just print out commands to run")    
-    parser.add_option("--monitor",default='',help="Monitor mode (sub/resub/check directory of jobs)")
+                      help="Just print out commands to run")    
+    parser.add_option("--monitor",default='',
+                      help="Monitor mode (sub/resub/check directory of jobs)")
     parser.add_option('-s','--sample',dest="sample", default="All",
                       #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produce")
-    parser.add_option('-e','--executable',dest="executable", default="runZprime", help = "executable name")
-    parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v12.04", help = "tag, which is the same as folder") 
-    parser.add_option('-b','--batch',dest="sub", default = False, help = "use condor or batch system")
-    parser.add_option("--njobs-per-file",dest="njobs_per_file",type='int',default=1,help="Split into n jobs per file, will automatically produce submission scripts")
-    
+    parser.add_option('-e','--executable',dest="executable", default="runZprime", 
+                      help = "executable name")
+    parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v14.01", 
+                      help = "tag, which is the same as folder") 
+    parser.add_option('-b','--batch',dest="sub", default = False, 
+                      help = "use condor or batch system")
+    parser.add_option("--njobs-per-file",dest="njobs_per_file",type='int',default=1,
+                      help="Split into n jobs per file, will automatically produce submission scripts")
+    parser.add_option("--nfiles-per-job", dest="nfiles_per_job", type='int', default=1,
+                      help="Split into n files per job, will automatically produce submission scripts")    
     (options,args) = parser.parse_args()
 
     monitorOption = ''
@@ -243,7 +249,6 @@ if __name__ == '__main__':
     jsonPrompt17 = "Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt"
     jsonRereco17 = "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt"
 
-    xsec = 1
     analysisDir = options.tag
     if 'runPu' in options.executable:
         analysisDir += '-Pu'
@@ -257,7 +262,7 @@ if __name__ == '__main__':
         execPython = 'baconBatch.py'
         EOS = ''
         optionsDataMc = {
-            'mc': "Output.root --passSumEntries 5:Events -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
+            'mc': "Output.root -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
             'data': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt,options.njobs_per_file),        
             'rereco': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonRereco,options.njobs_per_file),
             }
@@ -266,17 +271,19 @@ if __name__ == '__main__':
         execPython = 'baconCondor.py'
         EOS = ''#eos root://cmseos.fnal.gov'
         optionsDataMc = {
-            'prompt17': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt17,options.njobs_per_file),
-            'rereco17': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonRereco17,options.njobs_per_file),
-            'mc': "Output.root --passSumEntries 5:Events -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
+            'prompt17': "-a 4:Output.root -a 5:subjob_i -a 6:%i -a 2:data -a 3:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,jsonPrompt17,options.njobs_per_file,options.nfiles_per_job),
+            'rereco17': "-a 4:Output.root -a 5:subjob_i -a 6:%i -a 2:data -a 3:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,jsonRereco17,options.njobs_per_file,options.nfiles_per_job),
+            'mc': "-a 4:Output.root -a 5:subjob_i -a 6:%i -a 2:mc -a 3:none -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,options.njobs_per_file,options.nfiles_per_job),
             }
 
     exec_me('%s mkdir -p /eos/uscms/%s/%s'%(EOS,eosOutDir,analysisDir))  
     for label, isMc in samples.iteritems():
         exec_me('%s mkdir -p /eos/uscms/%s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
         if isMc in ['prompt17','rereco17']:
-            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production14/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            listLabel = '../lists/production14/%s.txt'%label
         elif isMc in ['data','rereco']:
-            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production12a/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s  %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
-        else:            
-            exec_me("python %s %s %s -a 4:%f --list 1:../lists/production14/%s.txt --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],xsec,label,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
+            listLabel = '../lists/production12a/%s.txt'%label
+        else:
+            listLabel = '../lists/production14/%s.txt'%label
+
+        exec_me("python %s %s %s --list 1:%s --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],listLabel,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)
