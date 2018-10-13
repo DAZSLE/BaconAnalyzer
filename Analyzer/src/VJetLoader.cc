@@ -557,8 +557,8 @@ void VJetLoader::loadJECs_Rereco2017(bool isData) {
     jecUnc = std::vector<JetCorrectionUncertainty*>();
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
     
-    resolution = JME::JetResolution(Form("%s/Spring16_25nsV10_MC/Spring16_25nsV10_MC_PtResolution_AK8PFPuppi.txt",jecPathname.c_str()));
-    resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Spring16_25nsV10_MC/Spring16_25nsV10_MC_SF_AK8PFPuppi.txt",jecPathname.c_str()));
+    resolution = JME::JetResolution(Form("%s/Summer16_25nsV1_MC/Summer16_25nsV1_MC_PtResolution_AK8PFPuppi.txt",jecPathname.c_str()));
+    resolution_sf = JME::JetResolutionScaleFactor(Form("%s/Summer16_25nsV1_MC/Summer16_25nsV1_MC_SF_AK8PFPuppi.txt",jecPathname.c_str()));
  
     if (isData) {
       //IOV: 2017B
