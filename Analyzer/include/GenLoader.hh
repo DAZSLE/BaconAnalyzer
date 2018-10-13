@@ -12,7 +12,7 @@ public:
   GenLoader(TTree *iTree);
   ~GenLoader();
   void reset();
-  void setupTree(TTree *iTree,float iXSIn);
+  void setupTree(TTree *iTree,float iXSIn = 1);
   void resetHiggs();
   void setupTreeHiggs(TTree *iTree);
   void load (int iEvent);
