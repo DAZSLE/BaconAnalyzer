@@ -19,6 +19,7 @@ public:
   void selectTaus(std::vector<TLorentzVector> &iElectrons, std::vector<TLorentzVector> &iMuons);
   std::vector<TTau*> fSelTaus;
   int           fNTaus;
+  int           fNTausTight;
 
 protected: 
   TClonesArray *fTaus;

@@ -37,7 +37,7 @@ bool   passMuonTightSel       (const baconhep::TMuon *muon);
 bool   passMuonSoftSel        (const baconhep::TMuon *muon);
 bool   passMuonHighPtSel      (const baconhep::TMuon *muon);
 bool   passTauSel             (const baconhep::TTau *tau);
-
+bool   passTauTightSel        (const baconhep::TTau *tau);
 double getVal                 (TH1D*h,double val);
 double getVal2D               (TH2D*h,double val1, double val2);
 bool   passVeto               (double iEta,double iPhi,double idR,std::vector<TLorentzVector> &iVetoes);
