@@ -33,10 +33,8 @@ int main( int argc, char **argv ) {
   const std::string lName        = argv[1];
   const std::string lOption      = argv[2];
   const std::string lJSON        = argv[3];
-  const double      lXS          = atof(argv[4]);
-  //const double      weight       = atof(argv[5]);
-  const int      iSplit          = atoi(argv[6]);
-  const int      maxSplit        = atoi(argv[7]);
+  const int      iSplit          = atoi(argv[4]);
+  const int      maxSplit        = atoi(argv[5]);
 
   std::string lJson="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/";
   lJson.append(lJSON);

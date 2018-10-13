@@ -5,8 +5,9 @@
 //   argv[1] => lName = input bacon file name
 //   argv[2] => lOption = dataset type: "mc", "data"
 //   argv[3] => lJSON = JSON file for run-lumi filtering of data, specify "none" for MC or no filtering
-//   argv[4] => lXS = cross section (pb), ignored for data 
-//   argv[5] => weight = total weight, ignored for data
+//   argv[4] => lOutput = Output name
+//   argv[5] => iSplit = Number of job
+//   argv[6] => maxSplit = Number of jobs to split file into
 //________________________________________________________________________________________________
 
 #include "../include/GenLoader.hh"
@@ -63,11 +64,11 @@ int main( int argc, char **argv ) {
   const std::string lName        = argv[1];
   const std::string lOption      = argv[2];
   const std::string lJSON        = argv[3];
-  const double      lXS          = atof(argv[4]);
-  //const double      weight       = atof(argv[5]);
-  const int      iSplit          = atoi(argv[6]);
-  const int      maxSplit        = atoi(argv[7]);
+  const std::string lOutput      = argv[4];
+  const int         iSplit       = atoi(argv[5]);
+  const int         maxSplit     = atoi(argv[6]);
 
+  std::cout << argv[1] << " " << argv[2] << " "<< argv[3] << " " << argv[4] << " " << argv[5] << std::endl;
   std::string lJson="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/";
   lJson.append(lJSON);
   const std::string cmssw_base = getenv("CMSSW_BASE");
@@ -97,15 +98,12 @@ int main( int argc, char **argv ) {
   fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi",3, isData);
   if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                 
 
-  TFile *lFile = TFile::Open("Output.root","RECREATE");
+  TFile *lFile = TFile::Open(lOutput.c_str(),"RECREATE");
   TTree *lOut  = new TTree("Events","Events");
 
   //Setup histograms containing total number of processed events (for normalization)
   TH1F *NEvents = new TH1F("NEvents", "NEvents", 1, 0.5, 1.5);
   TH1F *SumWeights = new TH1F("SumWeights", "SumWeights", 1, 0.5, 1.5);
-  TH1F *SumScaleWeights = new TH1F("SumScaleWeights", "SumScaleWeights", 6, -0.5, 5.5);
-  TH1F *SumPdfWeights = new TH1F("SumPdfWeights", "SumPdfWeights", NUM_PDF_WEIGHTS, -0.5, NUM_PDF_WEIGHTS-0.5);
-  
     
   // Setup Tree
   fEvt      ->setupTree      (lOut); 
@@ -118,7 +116,7 @@ int main( int argc, char **argv ) {
   fElectron ->setupTree      (lOut); 
   fTau      ->setupTree      (lOut); 
   fPhoton   ->setupTree      (lOut); 
-  if(lOption.compare("data")!=0) fGen ->setupTree (lOut,float(lXS));
+  if(lOption.compare("data")!=0) fGen ->setupTree (lOut);
 
   // Loop over events i0 = iEvent
   int neventstest = 0;
@@ -126,6 +124,7 @@ int main( int argc, char **argv ) {
   std::cout << maxSplit << std::endl;
   int minEventsPerJob = neventsTotal / maxSplit;
   //int leftoverEvents = neventsTotal % maxSplit;
+  std::cout << minEventsPerJob << " min events per job " << std::endl;
   int minEvent = iSplit * minEventsPerJob;
   int maxEvent = (iSplit+1) * minEventsPerJob;
   if (iSplit + 1 == maxSplit) maxEvent = neventsTotal;
@@ -151,7 +150,6 @@ int main( int argc, char **argv ) {
       if(passEvent(fEvt->fRun,fEvt->fLumi)) { passJson = 1;}
     }
 
-    
     NEvents->SetBinContent(1, NEvents->GetBinContent(1)+lWeight);
     SumWeights->Fill(1.0, lWeight);
 
@@ -325,7 +323,5 @@ int main( int argc, char **argv ) {
   lOut->Write();  
   NEvents->Write();
   SumWeights->Write();
-  SumScaleWeights->Write();
-  SumPdfWeights->Write();
   lFile->Close();
 }
