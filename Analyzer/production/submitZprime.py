@@ -5,11 +5,11 @@ from optparse import OptionParser
 
 samplesDict = {}
 samplesDict['JetHTrereco'] = {
-    #'JetHTRun2017B_17Nov2017_v1_noPF': 'rereco17',
-    'JetHTRun2017C_17Nov2017_v1_noPF': 'rereco17',
-    #'JetHTRun2017D_17Nov2017_v1_noPF': 'rereco17',
-    #'JetHTRun2017E_17Nov2017_v1_noPF': 'rereco17',
-    #'JetHTRun2017F_17Nov2017_v1_noPF': 'rereco17',
+    'JetHTRun2017B_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017C_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017D_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017E_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017F_17Nov2017_v1': 'rereco17',
 }
 samplesDict['JetHTprompt'] = {
     'JetHTRun2017B_PromptReco_v1_noPF' : 'prompt17',
@@ -22,17 +22,19 @@ samplesDict['JetHTprompt'] = {
     'JetHTRun2017F_PromptReco_v1_noPF' : 'prompt17',
 }
 samplesDict['SingleMuonrereco'] = { 
-    'SingleMuonRun2017B_17Nov2017_v1_noPF': 'rereco17',
-    'SingleMuonRun2017C_17Nov2017_v1_noPF': 'rereco17',
-    'SingleMuonRun2017D_17Nov2017_v1_noPF': 'rereco17',
-    'SingleMuonRun2017E_17Nov2017_v1_noPF': 'rereco17',
-    'SingleMuonRun2017F_17Nov2017_v1_noPF': 'rereco17',
+    'SingleMuonRun2017B_17Nov2017_v1': 'rereco17',
+    'SingleMuonRun2017C_17Nov2017_v1': 'rereco17',
+    'SingleMuonRun2017D_17Nov2017_v1': 'rereco17',
+    'SingleMuonRun2017E_17Nov2017_v1': 'rereco17',
+    'SingleMuonRun2017F_17Nov2017_v1': 'rereco17',
 }
 samplesDict['Hbb'] = {
     'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp': 'mc',
     'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
     'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',
+    'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8': 'mc',
     'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
+    'GluGluHToCC_M125_13TeV_powheg_pythia8': 'mc',
     'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
     'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
     'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
@@ -57,18 +59,19 @@ samplesDict['QCD_8X'] = {
     'QCD_HT700to1000_13TeV_8X': 'mc',
     # 'QCD_HT700to1000_13TeV_ext_8X': 'mc',
     }
+# 5
 samplesDict['QCD'] = {       
     'QCD_HT1000to1500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    # 'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    # 'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    # 'QCD_HT2000toInf_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    # 'QCD_HT200to300_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    # 'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
-    # 'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
-    # 'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8_noPF_byLumi': 'mc',
+    'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    'QCD_HT2000toInf_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    'QCD_HT200to300_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     }
 samplesDict['SingleTop'] = {
-    'ST_s_channel_4f_leptonDecays_TuneCP5_13TeV_amcatnlo_pythia8_noPF': 'mc',
+    #'ST_s_channel_4f_leptonDecays_TuneCP5_13TeV_amcatnlo_pythia8_noPF': 'mc',
     'ST_t_channel_antitop_4f_inclusiveDecays_TuneCP5_13TeV_powhegV2_madspin_pythia8': 'mc',
     'ST_t_channel_top_4f_inclusiveDecays_TuneCP5_13TeV_powhegV2_madspin_pythia8': 'mc',
     'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV_powheg_pythia8': 'mc',
@@ -79,23 +82,24 @@ samplesDict['Diboson'] = {
     'WZ_TuneCP5_13TeV_pythia8': 'mc',
     'ZZ_TuneCP5_13TeV_pythia8': 'mc',
     }
+# 4
 samplesDict['VectorDiJet1Jet'] = {
-    'VectorDiJet1Jet_madgraph_Mphi50Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi75Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi100Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi115Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi125Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi150Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi175Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi200Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi225Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi250Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi275Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi300Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi350Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi400Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi450Mchi1_13TeV': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi500Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi50Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi75Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi100Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi115Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi125Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi150Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi175Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi200Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi225Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi250Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi275Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi300Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi350Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi400Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi450Mchi1_13TeV': 'mc',
+    # 'VectorDiJet1Jet_madgraph_Mphi500Mchi1_13TeV': 'mc',
 
     'VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV': 'mc',
@@ -116,14 +120,14 @@ samplesDict['VectorDiJet1Jet'] = {
 }
 samplesDict['VectorDiJet1Jet2016'] = {
     #'VectorDiJet1Jet_100_madgraph_2016': 'mc',
-    'VectorDiJet1Jet_125_madgraph_2017_noPF': 'mc',
+    #'VectorDiJet1Jet_125_madgraph_2017_noPF': 'mc',
     #'VectorDiJet1Jet_200_madgraph_2017_noPF' : 'mc',
-    'VectorDiJet1Jet_75_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_75_madgraph_2017_noPF' : 'mc',
     #'VectorDiJet1Jet_50_madgraph_2017_noPF' : 'mc',
-    'VectorDiJet1Jet_100_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_100_madgraph_2017_noPF' : 'mc',
     #'VectorDiJet1Jet_115_madgraph_2017_noPF' : 'mc',
-    'VectorDiJet1Jet_150_madgraph_2017_noPF' : 'mc',
-    'VectorDiJet1Jet_175_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_150_madgraph_2017_noPF' : 'mc',
+    #'VectorDiJet1Jet_175_madgraph_2017_noPF' : 'mc',
     #'VectorDiJet1Jet_250_madgraph_2017_noPF' : 'mc',
     #'VectorDiJet1Jet_300_madgraph_2017_noPF' : 'mc',
     # 'VectorDiJet1Jet_100_13TeV_madgraph': 'mc', 
@@ -156,10 +160,12 @@ samplesDict['DY'] = {
     'ZJetsToQQ_HT600to800_qc19_4j_TuneCP5_13TeV': 'mc',
     'ZJetsToQQ_HT_800toInf_qc19_4j_TuneCP5_13TeV': 'mc',
     }
+# 5
 samplesDict['TT'] = {
-    #'TTToHadronic_TuneCP5_13TeV_powheg_pythia8_byLumi': 'mc',
-    #'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8_byLumi': 'mc',
+    'TTToHadronic_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8': 'mc',
     'TTToSemiLeptonic_WspTgt150_TuneCUETP8M2T4_13TeV_powheg_pythia8': 'mc',
+    'TTTo2L2Nu_TuneCP5_13TeV_powheg_pythia8': 'mc',
     }
 samplesDict['TT_8X'] = {
     'TT_TuneCUETP8M2T4_13TeV_powheg_pythia8_8X': 'mc',
@@ -250,8 +256,6 @@ if __name__ == '__main__':
     jsonRereco17 = "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt"
 
     analysisDir = options.tag
-    if 'runPu' in options.executable:
-        analysisDir += '-Pu'
     if 'runHWW' in options.executable:
         analysisDir += '-HWW'
     executable = options.executable
