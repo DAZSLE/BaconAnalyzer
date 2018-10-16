@@ -654,7 +654,7 @@ void VJetLoader::loadJECs_Rereco2017(bool isData) {
       correctionParameters.push_back(correctionParametersF);
       JetCorrector.push_back( JetCorrectorF );
       jecUnc.push_back(jecUncF);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 305055, 99999999 ));
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 305044, 99999999 ));
 
     }
     else {
