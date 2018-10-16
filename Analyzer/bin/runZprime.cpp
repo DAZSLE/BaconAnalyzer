@@ -104,7 +104,9 @@ int main( int argc, char **argv ) {
   //Setup histograms containing total number of processed events (for normalization)
   TH1F *NEvents = new TH1F("NEvents", "NEvents", 1, 0.5, 1.5);
   TH1F *SumWeights = new TH1F("SumWeights", "SumWeights", 1, 0.5, 1.5);
-    
+  // And Pileup
+  TH1F *Pu = new TH1F("Pu", "Pu", 100, 0, 100);
+
   // Setup Tree
   fEvt      ->setupTree      (lOut); 
   fVJet8    ->setupTree      (lOut,"AK8Puppijet"); 
@@ -135,7 +137,7 @@ int main( int argc, char **argv ) {
   std::cout << maxEvent << " max event" << std::endl;  
   for(int i0 = minEvent; i0 < maxEvent; i0++) {
     //for(int i0 = 0; i0 < int(10000); i0++){ // for testing
-    if (i0%1000 == 0) std::cout << i0 << " events processed " << std::endl;
+    if (i0%10000 == 0) std::cout << i0 << " events processed " << std::endl;
     // Check GenInfo
     fEvt->load(i0);
     float lWeight = 1;
@@ -145,6 +147,7 @@ int main( int argc, char **argv ) {
       //lWeight = (float(lXS)*1000.*fGen->fWeight)/weight;
       lWeight = fGen->fWeight;
       passJson = 1;
+      Pu->Fill(fEvt->fPu); // no weight?                                                                                          
     }
     else{
       if(passEvent(fEvt->fRun,fEvt->fLumi)) { passJson = 1;}
