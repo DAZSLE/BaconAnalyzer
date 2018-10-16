@@ -8,7 +8,6 @@ import time
 from optparse import OptionParser
 from submitZprime import samplesDict
 
-
 import ROOT
 
 PT_CUT = 350.
@@ -18,27 +17,29 @@ def main(options,args):
     DataDir = options.idir
     OutDir = options.odir
 
+    if options.ifile is None:
+        try:
+            samples = samplesDict[options.sample]
+            tags = []
+            for sample in samples:
+                tags.append([sample, 0])
+        except KeyError:
+            tags = [[options.sample,0]]
 
-    try:
-        samples = samplesDict[options.sample]
-        tags = []
-        for sample in samples:
-            tags.append([sample, 0])
-    except KeyError:
+        for i in range(len(tags)):
+            lFiles = getFilesRecursively(DataDir,tags[i][0],None,None)
+            print "files To Convert = ",lFiles
+
+            for iFile in lFiles:
+                print iFile
+                status = sklimAdd(iFile,OutDir,tags[i][1])
+                print status
+    else:
+        iFile = options.ifile
+        print iFile
         tags = [[options.sample,0]]
-
-    # make a tmp dir
-    #####
-    postfix = ''
-    for i in range(len(tags)):
-        filesToConvert = getFilesRecursively(DataDir,tags[i][0],None,None)
-        print "files To Convert = ",filesToConvert
-
-        for f in filesToConvert:
-            print f
-            status = sklimAdd(f,OutDir,tags[i][1])
-            print status
-
+        status = sklimAdd(iFile,OutDir,tags[0][1])
+        print status
 
 def sklimAdd(fn,odir,mass=0):
 
@@ -69,48 +70,12 @@ def sklimAdd(fn,odir,mass=0):
         print key.GetName()
         obj.Write(key.GetName())
 
-        
-    
     otree = tree.CloneTree(0)
     otree.SetName("otree")
-
-    #otree.SetBranchStatus("*Puppijet0_e2*",0)
-    #otree.SetBranchStatus("*Puppijet0_e3*",0)
-    #otree.SetBranchStatus("*Puppijet0_e4*",0)
-
     nent = tree.GetEntries()
-    # print nent
-    # finfo = ROOT.TFile.Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/signalXS/sig_vectordijet_xspt.root")
-    # fvbf = ROOT.TFile.Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/signalXS/vbf_ptH_n3lo.root")
-    # fr = ROOT.TFile.Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/production/signalXS/Higgs_v2.root")
-    # h_ggh_num = fr.Get('gghpt_amcnlo012jmt')
-    # h_ggh_den = fr.Get('ggh_hpt')
-    # h_ggh_den.Scale(28.45024/h_ggh_den.Integral())
-    # h_vbf_num = fvbf.Get('h_nnnlo_ptH')
-    # h_vbf_den = fvbf.Get('h_lo_ptH')
 
-    # # # h_rw = ROOT.TH1F()
-    # h_rw = None
-    # if 'VectorDiJet' in fn and mass > 0: 	
-    #     hname = "med_"+str(mass)+"_0.1_proc_800"
-    #     if '75' in fn: hname = "med_"+str(mass)+"_0.1_proc_801"
-    #     hinfo = finfo.Get(hname)
-    #     hinfo.Scale(100*1000.) # 100. for coupling, 1000. for conversion to pb is the cross-section
-    #     hinfo_nbins = hinfo.GetNbinsX()
-    #     hinfo_xlo = hinfo.GetXaxis().GetBinLowEdge(1)
-    #     hinfo_xhi = hinfo.GetXaxis().GetBinUpEdge(hinfo_nbins)
-    #     htmp = ROOT.TH1F("htmp","htmp",hinfo_nbins,hinfo_xlo,hinfo_xhi)
-    #     for i in range(nent):
-    #         tree.GetEntry(i)
-    #         htmp.Fill(tree.genVPt,tree.scale1fb) 
-
-    #     h_rw = ROOT.TH1F( hinfo.Clone() )
-    #     h_rw.Divide(htmp)
-
-    newscale1fb = array( 'f', [ 0. ] ) #rewriting this guy
-    # newkfactor  = array( 'f', [ 0. ] ) #rewriting this guy
+    newscale1fb = array( 'f', [ 0. ] )
     tree.SetBranchAddress("scale1fb",newscale1fb)
-    # tree.SetBranchAddress("kfactor",newkfactor)
 
     for i in range(nent):
 
@@ -120,19 +85,23 @@ def sklimAdd(fn,odir,mass=0):
 
         tree.GetEntry(i)
 
-        if (tree.AK8Puppijet0_pt > PT_CUT or tree.AK8Puppijet0_pt_JESUp > PT_CUT or tree.AK8Puppijet0_pt_JERUp > PT_CUT or tree.AK8Puppijet0_pt_JESDown > PT_CUT or tree.AK8Puppijet0_pt_JERDown > PT_CUT):
-                #or tree.CA15Puppijet0_pt > PT_CUT or tree.CA15Puppijet0_pt_JESUp > PT_CUT or tree.CA15Puppijet0_pt_JERUp > PT_CUT or tree.CA15Puppijet0_pt_JESDown > PT_CUT or tree.CA15Puppijet0_pt_JERDown > PT_CUT ) :
+        if (tree.AK8Puppijet0_pt > PT_CUT or 
+            tree.AK8Puppijet0_pt_JESUp > PT_CUT or 
+            tree.AK8Puppijet0_pt_JERUp > PT_CUT or 
+            tree.AK8Puppijet0_pt_JESDown > PT_CUT or 
+            tree.AK8Puppijet0_pt_JERDown > PT_CUT or 
+            tree.CA15Puppijet0_pt > PT_CUT or 
+            tree.CA15Puppijet0_pt_JESUp > PT_CUT or 
+            tree.CA15Puppijet0_pt_JERUp > PT_CUT or 
+            tree.CA15Puppijet0_pt_JESDown > PT_CUT or 
+            tree.CA15Puppijet0_pt_JERDown > PT_CUT ) :
 	    if 'GluGluHToBB_M125_13TeV_powheg' in fn:  		
-	        newscale1fb[0] =  tree.scale1fb*NLOcorr(tree.genVPt )
-            if 'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix' in fn and tree.genVPt<1000. : newscale1fb[0] =  tree.scale1fb*h_vbf_num.GetBinContent( h_vbf_num.FindBin(tree.genVPt) )/h_vbf_den.GetBinContent( h_vbf_den.FindBin(tree.genVPt) )
-	    # if 'VectorDiJet' in fn and mass > 0:
-            #     ptToWeightFrom = tree.genVPt
-            #     if ptToWeightFrom < PT_CUT: ptToWeightFrom = PT_CUT # protection
-            #     newscale1fb[0] = tree.scale1fb*h_rw.GetBinContent( h_rw.FindBin(ptToWeightFrom) )
-
-            newscale1fb[0] = tree.scale1fb
+	        newscale1fb[0] = tree.scale1fb*NLOcorr(tree.genVPt )
+            elif 'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix' in fn and tree.genVPt<1000. : 
+                newscale1fb[0] = tree.scale1fb*h_vbf_num.GetBinContent( h_vbf_num.FindBin(tree.genVPt) )/h_vbf_den.GetBinContent( h_vbf_den.FindBin(tree.genVPt) )
+            else:
+                newscale1fb[0] = tree.scale1fb
             otree.Fill()   
-
 
     print "\n"
     otree.AutoSave()
@@ -150,7 +119,6 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
     if not additionalstring == None: 
         theadditionalstring = additionalstring
 
-    cfiles = []
     for root, dirs, files in os.walk(dir):
         for file in files:
             print file	
@@ -163,28 +131,27 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
     return cfiles
 
 def NLOcorr(Hpt=200.):
-        NLO_= ROOT.TF1("NLO_", "pol2", 200, 1200)
-	NLO_.SetParameter(0, 2.70299e+00)
-	NLO_.SetParameter(1, -2.18233e-03)
-	NLO_.SetParameter(2,5.22287e-07 )
-
-        Weight = 1.
-	if (Hpt>200) :
-        	Weight = NLO_.Eval(Hpt)
-	print Weight
-        return Weight
+    NLO_= ROOT.TF1("NLO_", "pol2", 200, 1200)
+    NLO_.SetParameter(0, 2.70299e+00)
+    NLO_.SetParameter(1, -2.18233e-03)
+    NLO_.SetParameter(2,5.22287e-07 )
+    
+    Weight = 1.
+    if (Hpt>200) :
+        Weight = NLO_.Eval(Hpt)
+        print Weight
+    return Weight
  	
-
 if __name__ == '__main__':
 
     parser = OptionParser()
     parser.add_option('-b', action='store_true', dest='noX', default=False, help='no X11 windows')
     parser.add_option('--train', action='store_true', dest='train', default=False, help='train')
     parser.add_option("--lumi", dest="lumi", default = 30,type='float',help="luminosity", metavar="lumi")
+    parser.add_option('--ifile', dest='ifile', default = None, help='file to skim')
     parser.add_option('-i','--idir', dest='idir', default = 'data/',help='directory with bacon bits', metavar='idir')
     parser.add_option('-o','--odir', dest='odir', default = 'skim/',help='directory to write skimmed backon bits', metavar='odir')
     parser.add_option('-s','--sample',dest="sample", default="All",type='string',
-                      #choices=['All','Hbb','QCD','JetHT','SingleMuon','DMSpin0','TT','DY','W','Diboson','Triboson','SingleTop','VectorDiJet1Jet','VectorDiJet1Gamma','MC','Data'],
                       help="samples to produces")
 
 
