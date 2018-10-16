@@ -24,7 +24,7 @@ git merge jmgd/add_python
 cd ..
 git clone https://github.com/DAZSLE/BaconAnalyzer
 git fetch
-git checkout -b 90x origin/90x
+git checkout -b 94x origin/94x
 scram b clean
 scram b -j 10
 cd BaconAnalyzer
