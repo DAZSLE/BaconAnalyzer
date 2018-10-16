@@ -326,5 +326,6 @@ int main( int argc, char **argv ) {
   lOut->Write();  
   NEvents->Write();
   SumWeights->Write();
+  Pu->Write();
   lFile->Close();
 }
