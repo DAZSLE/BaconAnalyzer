@@ -182,7 +182,6 @@ if options.list:
 sortedkeys = analyzer_args.keys()
 if len(sortedkeys): sortedkeys.sort()
 
-print 'sortedkeys ',sortedkeys 
 for key in sortedkeys:
     arg = analyzer_args[key][1]
     if arg == 'fileinput':
@@ -218,8 +217,9 @@ for job_i in range(njobs):
     for subjob_i in range(njobs_per_file):
         job_exec = ''
 
+        # exec line
         nfiles_i = 0
-        outfile = 'Output_%d'%job_i
+        outfile = 'Output_job%d'%job_i
         job_hadd = 'hadd -f %s.root '%outfile
         for fil_i, fil in enumerate(files):
             if not fil[1]: continue
@@ -230,22 +230,40 @@ for job_i in range(njobs):
             job_hadd += 'Output_%d.root '%fil_i
             nfiles_i += 1
 
+        # hadd and copy
         job_exec += '\n' +job_hadd + ';\n '
+        lOut = ''
         if options.eosoutdir:
             if njobs_per_file > 1:                    
-                job_exec += 'xrdcp -s %s.root root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d_subjob%d.root; ' % (
-                    outfile, options.eosoutdir, outfile, job_i, lIFile, lFFile, subjob_i)
+                lOut = 'root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d_subjob%d.root'%(
+                    options.eosoutdir, outfile, job_i, lIFile, lFFile, subjob_i)
             else:
-                job_exec += 'xrdcp -s %s.root root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d.root; ' % (
-                    outfile, options.eosoutdir, outfile, job_i, lIFile, lFFile)
+                lOut = 'root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d.root'%(
+                    options.eosoutdir, outfile, job_i, lIFile, lFFile)
+            job_copy = 'xrdcp -s %s.root %s; \n' %( outfile, lOut)
         else:
             if njobs_per_file > 1:
-                job_exec += 'mv %s.root %s/%s_job%d_file%dto%d_subjob%d.root; ' % (
-                    outfile, options.outdir, outfile, job_i, lIFile, lFFile, subjob_i)
+                lOut = '%s/%s_job%d_file%dto%d_subjob%d.root'%(
+                    options.outdir, outfile, job_i, lIFile, lFFile, subjob_i)
             else:
-                job_exec += 'mv %s.root %s/%s_job%d_file%dto%d.root; ' % (
-                    outfile, options.outdir, outfile, job_i, lIFile, lFFile)
+                lOut = '%s/%s_job%d_file%dto%d.root'%(
+                    options.outdir, outfile, job_i, lIFile, lFFile)
+            job_copy = 'mv %s.root %s; \n'%( outfile, lOut)
 
+        # add security if hadd does not work
+        job_size = 'file=%s.root \n'%outfile
+        job_size += 'minimumsize=1000 \n'
+        job_size += 'actualsize=$(wc -c <"$file") \n'
+        job_size += 'if [ $actualsize -ge $minimumsize ]; then \n'
+        job_size += '\t echo size is over $minimumsize bytes: all good \n'
+        job_size += '\t %s \n'%job_copy
+        job_size += 'else \n'
+        job_size += '\t echo size is under $minimumsize bytes \n'
+        for fil_i, fil in enumerate(files):
+            job_size += '\t xrdcp -s Output_%d.root %s ;\n'%(fil_i,lOut.replace('.root','_%d.root'%fil_i))
+        job_size += 'fi \n'
+
+        job_exec += job_size
         if options.verbose: print "VERB -- job exec line --> ", job_exec
 
         if options.dryRun:
