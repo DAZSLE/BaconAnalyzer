@@ -2,7 +2,6 @@
 <use name="BaconAnalyzer/Analyzer"/>
 <use name="root"/>
 <flags CXXFLAGS="-g -Wall"/>
-<bin file="runPu.cpp" name="runPu"> </bin>
 <bin file="runZprime.cpp" name="runZprime"> </bin>
 <bin file="runHWW.cpp" name="runHWW"> </bin>
 <bin file="../src/NormalizeNtuple.cc" name="NormalizeNtuple"> </bin>

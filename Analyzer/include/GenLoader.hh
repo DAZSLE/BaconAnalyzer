@@ -34,6 +34,7 @@ public:
   int ismatchedJet(TLorentzVector jet0, double dR,double &matching, double &size, int iId = 6);
   int ismatchedSubJet(TLorentzVector subjet0);
   int isHadronicBoson(int iV,int iId, float &genSize);
+  int isHWWsemilepBoson(int iH,int iId,int iIdDau,float &genSize);
   int isHDau(int iId, int iDauId, TLorentzVector jet, int iHiggs);
 
   // tt
