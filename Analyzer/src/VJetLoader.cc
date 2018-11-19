@@ -152,12 +152,12 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel, bool iHWW) {
     fLabels.push_back("tau42");
   }
 
-  bool iGen = true;
+  /*
   if(iGen) {
     fLabels.push_back("genmsd");
     fLabels.push_back("geneta");
     fLabels.push_back("genphi");
-  }
+    }*/
 
   fTree = iTree;
   for(int i0 = 0; i0 < fN*3.;                    i0++) {double pVar = 0; fVars.push_back(pVar);} // declare array of vars
@@ -489,13 +489,14 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
       iN = iN+42;
     }
 
+    /*
     bool iGen = true;
     if (iGen) {
       iVals[lBase+i0*lNLabel+iN+1] = iObjects[i0]->genmsd;
       iVals[lBase+i0*lNLabel+iN+2] = iObjects[i0]->geneta;
       iVals[lBase+i0*lNLabel+iN+3] = iObjects[i0]->genphi;
       iN = iN+3;
-    }
+      }*/
 
     fpartonFlavor   = iObjects[0]->partonFlavor;
     fhadronFlavor   = iObjects[0]->hadronFlavor;
