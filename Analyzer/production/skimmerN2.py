@@ -18,24 +18,29 @@ def main(options,args):
     DataDir = options.idir
     OutDir = options.odir
 
-    try:
-        samples = samplesDict[options.sample]
-        tags = []
-        for sample in samples:
-            tags.append([sample, 0])
-    except KeyError:
+    if options.ifile is None:
+        try:
+            samples = samplesDict[options.sample]
+            tags = []
+            for sample in samples:
+                tags.append([sample, 0])
+        except KeyError:
+            tags = [[options.sample,0]]
+
+        for i in range(len(tags)):
+            lFiles = getFilesRecursively(DataDir,tags[i][0],None,None)
+            print "files To Convert = ",lFiles
+
+            for iFile in lFiles:
+                print iFile
+                status = sklimAdd(iFile,OutDir,tags[i][1])
+                print status
+    else:
+        iFile = options.ifile
+        print iFile
         tags = [[options.sample,0]]
-
-    # make a tmp dir
-    #####
-    postfix = ''
-    for i in range(len(tags)):
-        filesToConvert = getFilesRecursively(DataDir,tags[i][0],None,None)
-        print "files To Convert = ",filesToConvert
-
-        for f in filesToConvert:
-            status = sklimAdd(f,OutDir,tags[i][1])
-            print status
+        status = sklimAdd(iFile,OutDir,tags[0][1])
+        print status
 
 
 def sklimAdd(fn,odir,mass=0):
@@ -173,6 +178,7 @@ if __name__ == '__main__':
     parser.add_option('-b', action='store_true', dest='noX', default=False, help='no X11 windows')
     parser.add_option('--train', action='store_true', dest='train', default=False, help='train')
     parser.add_option("--lumi", dest="lumi", default = 30,type='float',help="luminosity", metavar="lumi")
+    parser.add_option('--ifile', dest='ifile', default = None, help='file to skim')
     parser.add_option('-i','--idir', dest='idir', default = 'data/',help='directory with bacon bits', metavar='idir')
     parser.add_option('-o','--odir', dest='odir', default = 'skim/',help='directory to write skimmed backon bits', metavar='odir')
     parser.add_option('-s','--sample',dest="sample", default="All",type='string',

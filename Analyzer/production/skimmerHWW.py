@@ -213,7 +213,7 @@ if __name__ == '__main__':
     parser.add_option('-b', action='store_true', dest='noX', default=False, help='no X11 windows')
     parser.add_option('--train', action='store_true', dest='train', default=False, help='train')
     parser.add_option("--lumi", dest="lumi", default = 30,type='float',help="luminosity", metavar="lumi")
-    parser.add_option('--sel1a', action='store_true', dest='sel1a', default=False, help='selection 1a')
+    parser.add_option('--sel1a', action='store_true', dest='sel1a', default=True, help='selection 1a')
     parser.add_option('--sel1b', action='store_true', dest='sel1b', default=False, help='selection 1b')
     parser.add_option('-i','--idir', dest='idir', default = 'data/',help='directory with bacon bits', metavar='idir')
     parser.add_option('-o','--odir', dest='odir', default = 'skim/',help='directory to write skimmed backon bits', metavar='odir')

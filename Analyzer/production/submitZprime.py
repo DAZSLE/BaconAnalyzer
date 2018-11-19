@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, commands, os, fnmatch
 from optparse import OptionParser
 
@@ -7,9 +6,16 @@ samplesDict = {}
 samplesDict['JetHTrereco'] = {
     'JetHTRun2017B_17Nov2017_v1': 'rereco17',
     'JetHTRun2017C_17Nov2017_v1': 'rereco17',
-    'JetHTRun2017D_17Nov2017_v1': 'rereco17',
+    #'JetHTRun2017D_17Nov2017_v1': 'rereco17',
     'JetHTRun2017E_17Nov2017_v1': 'rereco17',
-    'JetHTRun2017F_17Nov2017_v1': 'rereco17',
+    #'JetHTRun2017F_17Nov2017_v1': 'rereco17',
+}
+samplesDict['JetHTrereco_13'] = {
+    'JetHTRun2017B_17Nov2017_v1_noPF': 'rereco17',
+    'JetHTRun2017C_17Nov2017_v1_noPF': 'rereco17',
+    'JetHTRun2017D_17Nov2017_v1_noPF': 'rereco17',
+    'JetHTRun2017E_17Nov2017_v1_noPF': 'rereco17',
+    'JetHTRun2017F_17Nov2017_v1_noPF': 'rereco17',
 }
 samplesDict['JetHTprompt'] = {
     'JetHTRun2017B_PromptReco_v1_noPF' : 'prompt17',
@@ -29,18 +35,18 @@ samplesDict['SingleMuonrereco'] = {
     'SingleMuonRun2017F_17Nov2017_v1': 'rereco17',
 }
 samplesDict['Hbb'] = {
-    'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp': 'mc',
-    'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    #'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp': 'mc',
+    #'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
     'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',
     'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8': 'mc',
-    'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
+    #'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
     'GluGluHToCC_M125_13TeV_powheg_pythia8': 'mc',
-    'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
-    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
-    'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-    'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-    'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
-    'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    #'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    #'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
+    #'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    #'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    #'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
+    #'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
     }
 samplesDict['QCD_8X'] = {
     # 'QCD_HT1000to1500_13TeV_8X': 'mc',
@@ -81,6 +87,19 @@ samplesDict['Diboson'] = {
     'WW_TuneCP5_13TeV_pythia8': 'mc',
     'WZ_TuneCP5_13TeV_pythia8': 'mc',
     'ZZ_TuneCP5_13TeV_pythia8': 'mc',
+    }
+samplesDict['WLNu'] = {
+    'WJetsToLNu_HT_100To200_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_200To400_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_400To600_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_600To800_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_800To1200_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_1200To2500_TuneCP5_13TeV': 'mc',
+    #'W1JetsToLNu_TuneCP5_13TeV': 'mc',
+    'W2JetsToLNu_TuneCP5_13TeV': 'mc',
+    'W3JetsToLNu_TuneCP5_13TeV': 'mc',
+    'W4JetsToLNu_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_TuneCP5_13TeV': 'mc'
     }
 # 4
 samplesDict['VectorDiJet1Jet'] = {
@@ -144,6 +163,22 @@ samplesDict['VectorDiJet1Jet2016'] = {
     # 'VectorDiJet1Jet_125_13TeV_madgraph': 'mc',
     # 'VectorDiJet1Jet_75_13TeV_madgraph': 'mc'
     }
+samplesDict['ZprimeWW'] = {
+    'ZprimeToWWToWlepWhad_narrow_M_1000_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_2000_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_4500_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_1200_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_2500_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_600_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_1400_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_3000_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_800_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_1600_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_3500_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_1800_TuneCP5_13TeV_madgraph': 'mc',
+    'ZprimeToWWToWlepWhad_narrow_M_4000_TuneCP5_13TeV_madgraph': 'mc',
+}
+
 samplesDict['W'] = {
     #'WJetsToQQ_HT400to600_TuneCP5_13TeV_noPF': 'mc',
     #'WJetsToQQ_HT600to800_TuneCP5_13TeV_noPF': 'mc',
@@ -162,10 +197,11 @@ samplesDict['DY'] = {
     }
 # 5
 samplesDict['TT'] = {
-    'TTToHadronic_TuneCP5_13TeV_powheg_pythia8': 'mc',
-    'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8': 'mc',
-    'TTToSemiLeptonic_WspTgt150_TuneCUETP8M2T4_13TeV_powheg_pythia8': 'mc',
-    'TTTo2L2Nu_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    #'TTToHadronic_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    #'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    #'TTToSemiLeptonic_WspTgt150_TuneCUETP8M2T4_13TeV_powheg_pythia8': 'mc',
+    #'TTTo2L2Nu_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    'TTJets_TuneCP5_13TeV_amcatnloFXFX_pythia8': 'mc',
     }
 samplesDict['TT_8X'] = {
     'TT_TuneCUETP8M2T4_13TeV_powheg_pythia8_8X': 'mc',
@@ -284,7 +320,8 @@ if __name__ == '__main__':
     for label, isMc in samples.iteritems():
         exec_me('%s mkdir -p /eos/uscms/%s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
         if isMc in ['prompt17','rereco17']:
-            listLabel = '../lists/production14/%s.txt'%label
+            #listLabel = '../lists/production14/%s.txt'%label
+            listLabel = '../lists/production13/%s.txt'%label
         elif isMc in ['data','rereco']:
             listLabel = '../lists/production12a/%s.txt'%label
         else:

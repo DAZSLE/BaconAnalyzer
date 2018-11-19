@@ -18,8 +18,9 @@ fLCSV = 0.5803
 fMCSV = 0.8838
 fTCSV = 0.9693
 #Pu
-fpuDir = "root://cmsxrootd.fnal.gov//store/group/lpcbacon/dazsle/zprimebits-v12.07-Pu/hadd/"
+#fpuDir = "root://cmsxrootd.fnal.gov//store/group/lpcbacon/dazsle/zprimebits-v12.07-Pu/hadd/"
 fDataDir = CMSSW+"/src/BaconAnalyzer/Analyzer/data/"
+fpuDir2017 = fDataDir+"pu2017/"
 fpuData = fDataDir+"pileup_Cert_294927-306462_13TeV_PromptReco_Collisions17_withVar.root"
 
 # msd correction
@@ -125,8 +126,8 @@ def setuppuw(ifilename=fDataDir+"puWeights_All.root"):
 
 # 2017 puweights
 def setuppuw2017(iSample):
-    print fpuDir+'/'+iSample
-    f_puMC = ROOT.TFile.Open(fpuDir+'/'+iSample)
+    print fpuDir2017+'/'+iSample+'.root'
+    f_puMC = ROOT.TFile.Open(fpuDir2017+'/'+iSample+'.root')
     lpuMC= f_puMC.Get("Pu")
     lpuMC.Scale(1/lpuMC.Integral())
     lpuMC.SetDirectory(0)
@@ -172,16 +173,19 @@ def correctEff(iEff,iX,iY,iType=1,iName=""):
     return lweight,lweightUp,lweightDown
 
 class miniTreeProducer:
-    def __init__(self, isMc, isPu, ofile, otree, ifile, itree, ijet = 'AK8'):
+    def __init__(self, isMc, isPu, ofile, otree, ifile, itree, ijet = 'AK8', isample = '', iLumi =1):
         self.isMc = isMc
         self.ibase = os.path.basename( ifile)
         self.Pu = False
+        self.sample = isample
+        self.Lumi = iLumi # lumiweight
         if self.isMc is True:
             self.cutFormula = "1==1"
             if isPu:
                 self.Pu = True
                 print 'loading puweight from file '
-                self.puw,self.puw_up,self.puw_down = setuppuw2017(self.ibase.replace('_1000pb_weighted',''))
+                #self.puw,self.puw_up,self.puw_down = setuppuw2017(self.ibase.replace('_1000pb_weighted',''))
+                self.puw,self.puw_up,self.puw_down = setuppuw2017(self.sample)
             else:
                 self.puw, self.puw_up, self.puw_down = setuppuw()
         else:
@@ -286,6 +290,7 @@ class miniTreeProducer:
         
         nent = self.treeMine.GetEntries()
         fcutFormula = ROOT.TTreeFormula("cutFormula",self.cutFormula,self.treeMine)
+        print self.cutFormula
         for i in range(0,nent):
 
             self.treeMine.LoadTree(i)
@@ -364,7 +369,7 @@ class miniTreeProducer:
             
             #puweight                
             if self.isMc is True:
-                nPuForWeight = min(self.treeMine.npu,49.5)
+                nPuForWeight = min(self.treeMine.npu,100)
                 puweight = self.treeMine.puWeight
                 if self.Pu:
                     puweight = self.puw.GetBinContent(self.puw.FindBin(self.treeMine.npu));
@@ -373,18 +378,21 @@ class miniTreeProducer:
                 puweight_down = self.puw_down.GetBinContent(self.puw_down.FindBin(nPuForWeight))
 
             #kfactor
-            if 'WJets' in self.ifile:
-                vjetsKF = setupkFactors(2,self.treeMine.fBosonPt)
-            elif 'DYJets' in self.ifile:
-                vjetsKF = setupkFactors(3,self.treeMine.fBosonPt)
-            else:
-                vjetsKF = 1;
+            #if 'WJets' in self.ifile:
+            #    vjetsKF = setupkFactors(2,self.treeMine.fBosonPt)
+            #elif 'DYJets' in self.ifile:
+            #    vjetsKF = setupkFactors(3,self.treeMine.fBosonPt)
+            #else:
+            vjetsKF = 1;
 
             # final weight
             if self.isMc is False:
                 self.weight[0] = 1
             if self.isMc is True:
-                self.weight[0] = puweight*self.treeMine.scale1fb*vjetsKF*mutrigweight*muidweight*muisoweight
+                #print 'lumi weight ',self.Lumi
+                #print 'scale ',self.treeMine.scale1fb
+                #print 'pu ',puweight
+                self.weight[0] = puweight*self.treeMine.scale1fb*vjetsKF*mutrigweight*muidweight*muisoweight*self.Lumi
                 #print 'puweight scale1fb vjets ltrig lid liso ',puweight,self.treeMine.scale1fb,vjetsKF,mutrigweight,muidweight,muisoweight
                 #self.weight[0] = puweight*vjetsKF*mutrigweight # scale1fb is useless if sample not Norm
 
@@ -557,23 +565,31 @@ def main(options,args):
         fmuiso_eff = json.load(ISO_input_file)
 
     for i in range(len(tags)):
-        filesToConvert = getFilesRecursively(DataDir,tags[i][0],None,None)
-        print "files To Convert = ",filesToConvert
 
+        if options.ifile is None:
+            filesToConvert = getFilesRecursively(DataDir,tags[i][0],None,None)
+            print "files To Convert = ",filesToConvert
+        else:
+            filesToConvert = [options.ifile]
+
+
+        print "files To Convert = ",filesToConvert
         for iFile in filesToConvert:
             basename = os.path.basename( iFile )
             oFile =  ROOT.TFile.Open(OutDir+'/'+basename, 'recreate')
             oFile.cd()
             oTree =  ROOT.TTree('otree2', 'otree2')
-            prod = miniTreeProducer(options.isMc, options.isPu,oFile,oTree, iFile, options.itree, options.jet)
+            prod = miniTreeProducer(options.isMc, options.isPu,oFile,oTree, iFile, options.itree, options.jet, tags[i][0], options.lumi)
             prod.runProducer(ftrans_h2ddt,fmutrig_eff,fmuid_eff,fmuiso_eff)
             oFile.cd()
             oFile.Write()
             oFile.Close()
+
 if __name__ == '__main__':
 
     parser = OptionParser()
     parser.add_option("-f", "--pathIn", dest="inputFile", help="inputFile path")
+    parser.add_option('--ifile', dest='ifile', default = None, help='file to skim')
     parser.add_option('-i','--idir', dest='idir', default = 'data/',help='directory with bacon bits', metavar='idir')
     parser.add_option('-o','--odir', dest='odir', default = 'skim/',help='directory to write skimmed backon bits', metavar='odir')
     parser.add_option("--isMc", dest="isMc", default=False, action='store_true',help="MC or data")
@@ -583,7 +599,8 @@ if __name__ == '__main__':
     parser.add_option('--jet', dest='jet', default='AK8', help='jet type')
     parser.add_option('--itree', dest='itree', default='otree', help='itree name')
     parser.add_option('-s','--sample',dest="sample", default="All",type='string', help="samples to produce")
-
+    parser.add_option('--lumi', type = float, dest='lumi',default=1,help="lumi weight")
     (options, args) = parser.parse_args()
 
+    print options
     main(options,args)
