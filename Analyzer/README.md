@@ -48,7 +48,10 @@ For other types of Jets  e.g:
     fVJet15CHS   ->setupTree      (lOut,"bst15_CHSjet");
 ```
 
+IMPORTANT
+```
 After modifications compile before running.
+```
 
 Baconbits production
 -----------
@@ -59,13 +62,14 @@ Run makeList.sh on $PROD.txt to list bacon files.
 Run submitZprime.py for a given SAMPLE and TAG as following:
 
 ```
+python submitZprime.py -s SAMPLE -t TAG (to create submission files)
 python submitZprime.py -s SAMPLE -t TAG --monitor sub # (to submit)
-python submitZprime.py -s SAMPLE -t TAG --monitor check # (to check status - also bjobs)
-python submitZprime.py -s SAMPLE -t TAG --monitor resub # (to resubmit)
 ```
 
-Some temporary instructions for cmslpc
+LPC instructions
 -----------
+94X is supposed to run @ CMSLPC cluster.
+
 EVERYTIME after compiling: re-tar CMSSW environment and data/ dir
 
 For v14 (BaconProd,BaconAna)
@@ -73,19 +77,19 @@ CMSMSW_VERSION = CMSSW_9_4_7
 
 ```
 cd ../../
-tar --exclude-caches-all --exclude-vcs --exclude-caches-all --exclude-vcs -cvzf CMSSW_9_4_7.tgz CMSSW_9_4_7 --exclude=src --exclude=tmp
+tar --exclude-caches-all --exclude-vcs --exclude-caches-all --exclude-vcs -cvzf CMSSW_9_4_7.tgz CMSSW_9_4_7 --exclude=src --exclude=tmp --exclude="*.scram" --exclude="*.SCRAM"
 cd CMSSW_9_4_7/src/BaconAnalyzer/Analyzer/
 tar -zcvf data.tgz data
 ```
 
 Those are transferred to condor. Follow same instructions to produce submission files.
 
-Also, initialize your proxy before submitting jobs.
+Also, DON'T FORGET TO initialize your proxy before submitting jobs.
 ```
 voms-proxy-init --voms cms --valid 168:00
 ```
 
-To update lists
+To update lists (i.e. if BaconProd changes or new samples are added)
 -----------
 In cmslpc:
 
@@ -95,3 +99,16 @@ cd lists/
 eosls /store/group/lpcbacon/${PROD} > ${PROD}.txt
 bash makeList.sh ${PROD}.txt
 ```
+
+Also, add the new samples to `submitZprime.py`.
+
+To produce skim
+-----------
+Skim is a version of baconbits with usually a simple pT cut e.g. 350 GeV. In cmslpc do:
+
+```
+e.g. EOSDIR = /eos/uscms//store/user/lpcbacon/dazsle/zprimebits-v14.01/
+python skim.py -s SAMPLE -i EOSDIR --files-to-hadd NFILES
+```
+
+Skimmed files should appear on sub-dir of baconbits. It can also hadd files for you.
