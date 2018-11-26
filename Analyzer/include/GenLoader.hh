@@ -30,7 +30,7 @@ public:
   int isHadronicWInTop(TGenParticle *genp,int j,TLorentzVector jet,double dR,double &topMatching, double &topSize);
   int isHadronicTop(TGenParticle *genp,int j,TLorentzVector jet,double dR,double &topMatching, double &topSize);
   int isHadronicV(TGenParticle *genp,int j,int iId,TLorentzVector jet,double dR,double &vMatching, double &vSize);
-  int isHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector jet,double dR,double &vMatching, double &vSize, int dauId);
+  int getHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector jet,double dR,double &vMatching, double &vSize);
   int ismatchedJet(TLorentzVector jet0, double dR,double &matching, double &size, int iId = 6);
   int ismatchedSubJet(TLorentzVector subjet0);
   int isHadronicBoson(int iV,int iId, float &genSize);
