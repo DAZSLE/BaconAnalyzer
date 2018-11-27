@@ -477,7 +477,7 @@ int GenLoader::getHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector
 
     if ( std::abs(dau1->pdgId) <= 3 && std::abs(dau2->pdgId) <= 3 ) return 1;
     else if ( std::abs(dau1->pdgId) == 4 || std::abs(dau2->pdgId) == 4 ) return 2;
-    else if ( std::abs(dau1->pdgId) == 5 || std::abs(dau2->pdgId) == 5 ) return 2;
+    else if ( std::abs(dau1->pdgId) == 5 || std::abs(dau2->pdgId) == 5 ) return 3;
     // W'(tb) ?
     else return 0;
   }
