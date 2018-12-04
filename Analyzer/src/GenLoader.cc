@@ -127,6 +127,14 @@ void GenLoader::load(int iEvent) {
 
   fWeight = fGenInfo->weight;
 }
+
+TGenParticle* GenLoader::getParticle(int i) {
+  if ( i >= 0 && i < fGens->GetEntriesFast() ) {
+    return (TGenParticle*) (*fGens)[i];
+  }
+  return nullptr;
+}
+
 bool GenLoader::isType(std::string boson,std::string mode)
 {
   int iPDGID,iId;
@@ -139,18 +147,18 @@ bool GenLoader::isType(std::string boson,std::string mode)
   if (mode.find("cc")==0) iId = 4;
 
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
-    TGenParticle *pGen = (TGenParticle*)((*fGens)[i0]);
+    TGenParticle *pGen = getParticle(i0);
     if (mode.find("bb")==0 || mode.find("cc")==0) {
       if(abs(pGen->pdgId)==iId) {
 	if(pGen->parent<0) continue;
-	TGenParticle *parent = (TGenParticle*)((*fGens)[pGen->parent]);
+	TGenParticle *parent = getParticle(pGen->parent);
 	if(abs(parent->pdgId)==iPDGID) return true;
       }
     }
     if (mode.find("cs")==0) {
       if(abs(pGen->pdgId)==4 || abs(pGen->pdgId)==3) {
 	if(pGen->parent<0) continue;
-	TGenParticle *parent = (TGenParticle*)((*fGens)[pGen->parent]);
+	TGenParticle *parent = getParticle(pGen->parent);
 	if(abs(parent->pdgId)==iPDGID) return true;
       }
     }
@@ -161,16 +169,16 @@ bool GenLoader::isType(std::string boson,std::string mode)
 
 bool GenLoader::hard(int &iP)
 {
-  TGenParticle *p = (TGenParticle*)((*fGens)[iP]);
+  TGenParticle *p = getParticle(iP);
   // if particle itself from hard process                                                                                                                                                                                                                     
   if(p->status>20 && p->status<30) return true;
   return false;
 }
 bool GenLoader::hasChild(int &iparent, bool beHard)
 {
-  TGenParticle *parent = (TGenParticle*)((*fGens)[iparent]);
+  TGenParticle *parent = getParticle(iparent);
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
-    TGenParticle *child = (TGenParticle*)((*fGens)[i0]);
+    TGenParticle *child = getParticle(i0);
     if (child->pdgId != parent->pdgId)
       continue;
     if (beHard && !hard(i0))
@@ -185,7 +193,7 @@ bool GenLoader::hasChild(int &iparent, bool beHard)
 TGenParticle* GenLoader::findDaughter(int iparent, int dauId)
 {
   for(int k = iparent+1; k < fGens->GetEntriesFast(); k++) {
-    TGenParticle *genp = (TGenParticle*)((*fGens)[k]);
+    TGenParticle *genp = getParticle(k);
     if(genp->parent == iparent) {
       if(abs(genp->pdgId) == dauId) {
         return genp;
@@ -197,7 +205,7 @@ TGenParticle* GenLoader::findDaughter(int iparent, int dauId)
 int GenLoader::findDaughterId(int iparent, int dauId)
 {
   for(int k = iparent+1; k < fGens->GetEntriesFast(); k++) {
-    const baconhep::TGenParticle *genp = (TGenParticle*)((*fGens)[k]);;
+    const baconhep::TGenParticle *genp = getParticle(k);;
     if(genp->parent == iparent) {
       if(abs(genp->pdgId) == dauId) {
         return k;
@@ -220,7 +228,7 @@ void GenLoader::findBoson(int iId, int lOption){
   reset();
   float pbosonPt(-1),pbosonPhi(-999),pbosonMass(-1),pbosonEta(-999);
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
-    TGenParticle *genp0 = (TGenParticle*)((*fGens)[i0]);
+    TGenParticle *genp0 = getParticle(i0);
 
     // find highest Pt boson G(22)                                                                                                                                                                                                                            
     if(lOption == 0){
@@ -237,7 +245,7 @@ void GenLoader::findBoson(int iId, int lOption){
       if(fabs(genp0->pdgId)==iId){
         int iL0 = findLastParent(i0,iId);
         for(int k0 = 0; k0 < fGens->GetEntriesFast(); k0++) {
-          TGenParticle *genp1 = (TGenParticle*)((*fGens)[k0]);
+          TGenParticle *genp1 = getParticle(k0);
           if(k0==iL0){
             pbosonPt = genp1->pt;
             pbosonPhi = genp1->phi;
@@ -268,15 +276,15 @@ void GenLoader::findBoson(int iId, int lOption){
       if(fabs(genp0->pdgId)==iId) {
         int iW0 = findLastParent(i0,24);
         for(int k0 = 0; k0 < fGens->GetEntriesFast(); k0++) {
-          TGenParticle *dau0 = (TGenParticle*)((*fGens)[k0]);
+          TGenParticle *dau0 = getParticle(k0);
           TGenParticle *ele0 = findDaughter(iW0, 11); TGenParticle *muo0 = findDaughter(iW0, 13);
           if(k0==iW0 && (ele0 || muo0)){
             for(int i1=iW0+1; i0 < fGens->GetEntriesFast(); i1++) {
-              TGenParticle *genp1 = (TGenParticle*)((*fGens)[i1]);
+              TGenParticle *genp1 = getParticle(i1);
               if(genp1->pdgId == iId) {
                 int iW1 = findLastParent(i1,24);
                 for(int k1 = 0; k1 < fGens->GetEntriesFast(); k1++) {
-                  TGenParticle *dau1 = (TGenParticle*)((*fGens)[k1]);
+                  TGenParticle *dau1 = getParticle(k1);
                   TGenParticle *ele1 = findDaughter(iW1, 11); TGenParticle *muo1 = findDaughter(iW1, 13);
                   if(k1==iW1 && (ele1 || muo1)){
                     TLorentzVector vDau0; vDau0.SetPtEtaPhiM(dau0->pt, dau0->eta, dau0->phi, dau0->mass);
@@ -314,47 +322,70 @@ void GenLoader::findBoson(int iId, int lOption){
   fBosonEta = pbosonEta;
   fBosonPdgId = iId;
 }
+
 // is W(qq) in Top->Wb?                                                                                                                                                                                                                                       
-int GenLoader::isHadronicWInTop(TGenParticle *genp,int j,TLorentzVector jet,double dR,double &wMatching, double &wSize)
+// Return 1 if W(light)
+// Return 2 if W(cs)
+// If b quark inside dR, add 8
+//  i.e. (x&8)==8 lets you know if true
+int GenLoader::getHadronicWInTopFlavor(TGenParticle *genp,int iW,TLorentzVector jet,double dR,double &wMatching, double &wSize)
 {
-  TLorentzVector vW,vDau1,vDau2;
-  wMatching = -999.; wSize = -999.;
-  double tmpWMatching(0), tmpWSize(0);
-  if(abs(genp->pdgId)==24) {
-    int iW = j;
-    vW.SetPtEtaPhiM(genp->pt, genp->eta, genp->phi, genp->mass);
-    int iQ=0, jQ=0;
-    for (; iQ<fGens->GetEntriesFast(); ++iQ) {
-      TGenParticle *dau1 = (TGenParticle*)((*fGens)[iQ]);
-      if(dau1->parent==iW && abs(dau1->pdgId)<6) {
-        vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
-        // if (vDau1.DeltaR(jet) > dR) return false;                                                                                                                                                                                                          
-        tmpWMatching = TMath::Max(tmpWMatching,jet.DeltaR(vDau1));
-        tmpWSize     = TMath::Max(tmpWSize,vW.DeltaR(vDau1));
-        //std::cout << "found the first quark: tmpWMatching = " << jet.DeltaR(vDau1) <<  std::endl;                                                                                                                                                           
-        //std::cout << "found the first quark: tmpWSize = " << vW.DeltaR(vDau1) <<  std::endl;                                                                                                                                                                
-        break; // found the first quark                                                                                                                                                                                                                       
-      }
-    }
-    for (jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
-      TGenParticle *dau2 = (TGenParticle*)((*fGens)[jQ]);
-      if(dau2->parent==iW && abs(dau2->pdgId)<6) {
-        vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
-        // if (vDau2.DeltaR(jet) > dR) return false;                                                                                                                                                                                                          
-        tmpWMatching = TMath::Max(tmpWMatching,jet.DeltaR(vDau2));
-        tmpWSize     = TMath::Max(tmpWSize,vW.DeltaR(vDau2));
-        wMatching    = tmpWMatching;
-        wSize        = tmpWSize;
-        //std::cout << "found the second quark: tmpWMatching = " << jet.DeltaR(vDau2) <<  std::endl;                                                                                                                                                          
-        //std::cout << "found the second quark: tmpWSize = " << vW.DeltaR(vDau2) <<  std::endl;                                                                                                                                                               
-        //std::cout << "best quark: wMatching = " << wMatching <<  std::endl;                                                                                                                                                                                 
-        //std::cout << "best quark: tmpWSize = " << wSize <<  std::endl;                                                                                                                                                                                      
-        return 1;
-      }
+  TLorentzVector vW,vDau1,vDau2,b;
+  TGenParticle *dau1{nullptr};
+  TGenParticle *dau2{nullptr};
+
+  vW.SetPtEtaPhiM(genp->pt, genp->eta, genp->phi, genp->mass);
+  int iWlast = findLastParent(iW, 24);
+
+  int iQ=0, jQ=0;
+  for (; iQ<fGens->GetEntriesFast(); ++iQ) {
+    dau1 = getParticle(iQ);
+    if(dau1->parent==iWlast && abs(dau1->pdgId)<6) {
+      vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
+      wMatching = jet.DeltaR(vDau1);
+      wSize     = vW.DeltaR(vDau1);
+      break; // found the first quark                                                                                                                                                                                                                       
     }
   }
-  return 0;
+  for (jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
+    dau2 = getParticle(jQ);
+    if(dau2->parent==iWlast && abs(dau2->pdgId)<6) {
+      vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
+      wMatching = TMath::Max(wMatching,jet.DeltaR(vDau2));
+      wSize     = TMath::Max(wSize,vW.DeltaR(vDau2));
+      break;
+    }
+  }
+  
+  // Missing gen particles from the list?
+  if ( dau1 == nullptr || dau2 == nullptr ) return -2;
+
+  int wType = 0;
+  if ( std::abs(dau1->pdgId) <= 3 && std::abs(dau2->pdgId) <= 3 ) wType = 1;
+  else if ( std::abs(dau1->pdgId) == 4 || std::abs(dau2->pdgId) == 4 ) wType = 2;
+
+  // Check if b is in jet cone
+  int iTop = genp->parent;
+  while ( std::abs(getParticle(iTop)->pdgId) == 24 ) {
+    iTop = getParticle(iTop)->parent;
+  }
+  if ( std::abs(getParticle(iTop)->pdgId) == 6 || std::abs(getParticle(iTop)->pdgId) == 624 ) {
+    TGenParticle* genB = nullptr;
+    for(int iB=0; iB<fGens->GetEntriesFast(); ++iB) {
+      TGenParticle* p = getParticle(iB);
+      if ( p->parent == iTop && std::abs(p->pdgId) == 5 ) {
+        genB = p;
+        break;
+      }
+    }
+    if ( genB == nullptr ) return -1;
+    b.SetPtEtaPhiM(genB->pt, genB->eta, genB->phi, genB->mass);
+    if ( b.DeltaR(jet) < dR ) wType += 8;
+  }
+  // One could in principle check the other W in the Z' case as well
+  return wType;
 }
+
 // t->W(qq)b                                                                                                                                                                                                                                                  
 int GenLoader::isHadronicTop(TGenParticle *genp,int j,TLorentzVector jet,double dR,double &topMatching, double &topSize)
 {
@@ -378,7 +409,7 @@ int GenLoader::isHadronicTop(TGenParticle *genp,int j,TLorentzVector jet,double 
 
     int iQ=0, jQ=0;
     for (; iQ<fGens->GetEntriesFast(); ++iQ) {
-      TGenParticle *dau1 = (TGenParticle*)((*fGens)[iQ]);
+      TGenParticle *dau1 = getParticle(iQ);
       if(dau1->parent==iW && abs(dau1->pdgId)<6) {
         vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
         // if (vDau1.DeltaR(jet) > dR) return false;                                                                                                                                                                                                          
@@ -388,7 +419,7 @@ int GenLoader::isHadronicTop(TGenParticle *genp,int j,TLorentzVector jet,double 
       }
     }
     for (jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
-      TGenParticle *dau2 = (TGenParticle*)((*fGens)[jQ]);
+      TGenParticle *dau2 = getParticle(jQ);
       if(dau2->parent==iW && abs(dau2->pdgId)<6) {
         vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
         // if (vDau2.DeltaR(jet) > dR) return false;                                                                                                                                                                                                          
@@ -403,6 +434,7 @@ int GenLoader::isHadronicTop(TGenParticle *genp,int j,TLorentzVector jet,double 
   }
   return 0;
 }
+
 // jet matched to V(qq)                                                                                                                                                                                                                                       
 int GenLoader::isHadronicV(TGenParticle *genp,int j,int iId, TLorentzVector jet,double dR,double &vMatching, double &vSize)
 {
@@ -415,7 +447,7 @@ int GenLoader::isHadronicV(TGenParticle *genp,int j,int iId, TLorentzVector jet,
 
     int iQ=0, jQ=0;
     for (; iQ<fGens->GetEntriesFast(); ++iQ) {
-      TGenParticle *dau1 = (TGenParticle*)((*fGens)[iQ]);
+      TGenParticle *dau1 = getParticle(iQ);
       if(dau1->parent==iV && abs(dau1->pdgId)<6) {
         vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
         tmpVMatching = TMath::Max(tmpVMatching,jet.DeltaR(vDau1));
@@ -424,7 +456,7 @@ int GenLoader::isHadronicV(TGenParticle *genp,int j,int iId, TLorentzVector jet,
       }
     }
     for (jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
-      TGenParticle *dau2 = (TGenParticle*)((*fGens)[jQ]);
+      TGenParticle *dau2 = getParticle(jQ);
       if(dau2->parent==iV && abs(dau2->pdgId)<6) {
         vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
         tmpVMatching = TMath::Max(tmpVMatching,jet.DeltaR(vDau2));
@@ -446,76 +478,61 @@ int GenLoader::isHadronicV(TGenParticle *genp,int j,int iId, TLorentzVector jet,
 int GenLoader::getHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector jet,double dR,double &vMatching, double &vSize)
 {
   TLorentzVector vV,vDau1,vDau2;
-  vMatching = -999.; vSize = -999.;
   TGenParticle *dau1{nullptr}, *dau2{nullptr};
-  if(abs(genp->pdgId)==iId){
-    vV.SetPtEtaPhiM(genp->pt, genp->eta, genp->phi, genp->mass);
-    int iV = findLastParent(j,iId);
 
-    int iQ;
-    for (iQ=0; iQ<fGens->GetEntriesFast(); ++iQ) {
-      dau1 = (TGenParticle*)((*fGens)[iQ]);
-      if(dau1->parent==iV) {
-        vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
-        vMatching = jet.DeltaR(vDau1);
-        vSize     = vV.DeltaR(vDau1);
-        break;
-      }
+  vV.SetPtEtaPhiM(genp->pt, genp->eta, genp->phi, genp->mass);
+  int iV = findLastParent(j, iId);
+
+  int iQ;
+  for (iQ=0; iQ<fGens->GetEntriesFast(); ++iQ) {
+    dau1 = getParticle(iQ);
+    if(dau1->parent==iV) {
+      vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
+      vMatching = jet.DeltaR(vDau1);
+      vSize     = vV.DeltaR(vDau1);
+      break;
     }
-    for (int jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
-      dau2 = (TGenParticle*)((*fGens)[jQ]);
-      if(dau2->parent==iV) {
-        vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
-        vMatching = TMath::Max(vMatching,jet.DeltaR(vDau2));
-        vSize     = TMath::Max(vSize,vV.DeltaR(vDau2));
-        break;
-      }
-    }
-
-    // Missing gen particles from the list?
-    if ( dau1 == nullptr || dau2 == nullptr ) return 0;
-
-    if ( std::abs(dau1->pdgId) <= 3 && std::abs(dau2->pdgId) <= 3 ) return 1;
-    else if ( std::abs(dau1->pdgId) == 4 || std::abs(dau2->pdgId) == 4 ) return 2;
-    else if ( std::abs(dau1->pdgId) == 5 || std::abs(dau2->pdgId) == 5 ) return 3;
-    // W'(tb) ?
-    else return 0;
   }
-  return 0;
+  for (int jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
+    dau2 = getParticle(jQ);
+    if(dau2->parent==iV) {
+      vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
+      vMatching = TMath::Max(vMatching,jet.DeltaR(vDau2));
+      vSize     = TMath::Max(vSize,vV.DeltaR(vDau2));
+      break;
+    }
+  }
+
+  // Missing gen particles from the list?
+  if ( dau1 == nullptr || dau2 == nullptr ) return 0;
+
+  if ( std::abs(dau1->pdgId) <= 3 && std::abs(dau2->pdgId) <= 3 ) return 1;
+  else if ( std::abs(dau1->pdgId) == 4 || std::abs(dau2->pdgId) == 4 ) return 2;
+  else if ( std::abs(dau1->pdgId) == 5 || std::abs(dau2->pdgId) == 5 ) return 3;
+  // W'(tb) ?
+  else return 0;
 }
 
-// jet matched to something,                                                                                                                                                                                                                                  
-// For topcitos(6, or 624 in 2016 sample?) result = 1                                                                                                                                                                                                         
-// For bosons(24,23,10031,25,55) if result:                                                                                                                                                                                                                   
-// 1: V(qq)                                                                                                                                                                                                                                                   
-// 2: W->ud, Z->dd, H->dd                                                                                                                                                                                                                                     
-// 3: W->cs, Z->cc, H->cc                                                                                                                                                                                                                                     
-// 4: Z->bb; H->bb                                                                                                                                                                                                                                            
+// jet matched to something,
+// For tops (6, or 624 in 2016 sample?) result = flavor of matched W
+//   if (result&8)==8, then the b quark is within dR of the jet
+// Z' to WW (9000001) result = flavor of matched W
+// For bosons(24,23,10031,25,55) result = flavor:
+// 1: light quark, e.g. W(ud), Z(ss)
+// 2: c quark, e.g. W(cs), Z(cc), H(cc)
+// 3: b quark, e.g. Z(bb), H(bb)
+// In all cases, 0 = unmatched if matching or size are -999, otherwise an error occurred
 int GenLoader::ismatchedJet(TLorentzVector jet0, double dR,double &matching, double &size, int iId){
-  //std::cout << "New event" << std::endl;                                                                                                                                                                                                                    
   int result=0;
+  matching = -999;
+  size = -999;
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
-    TGenParticle *genp0 = (TGenParticle*)((*fGens)[i0]);
-    //std::cout << "gen id " << genp0->pdgId << " iD " << iId << std::endl;
+    TGenParticle *genp0 = getParticle(i0);
     TLorentzVector mcMom; mcMom.SetPtEtaPhiM(genp0->pt,genp0->eta,genp0->phi,genp0->mass);
     if (mcMom.DeltaR(jet0) < dR) {
-      if(iId == 624 && isHadronicWInTop(genp0,i0,jet0,dR,matching,size)==1) {
-        result= 1;
-        //std::cout<< result << " isMatched "<<iId << std::endl;                                                                                                                                                                                              
-        //std::cout<< " matching "<< matching << std::endl;                                                                                                                                                                                                   
-        //std::cout<< " size "<< size << std::endl;                                                                 
+      if( (iId == 624 || iId == 6 || iId == 9000001) && std::abs(genp0->pdgId)==24 ) {
+        result = getHadronicWInTopFlavor(genp0,i0,jet0,dR,matching,size);
 	break;
-      }
-      //if(iId == 6 && isHadronicTop(genp0,i0,jet0,dR,matching,size)==1)
-      //	result= 1;
-      if(iId == 6 && isHadronicWInTop(genp0,i0,jet0,dR,matching,size)==1){
-	//std::cout << "matched " << matching << size << std::endl;
-        result= 1;
-	break;
-      }
-      if(iId == 9000001 && isHadronicWInTop(genp0,i0,jet0,dR,matching,size)==1){
-	result= 1;
-        break;
       }
       if( iId == std::abs(genp0->pdgId) && (iId == 24 || iId == 23 || iId == 10031 || iId == 25 || iId == 55) ){
         result = getHadronicVflav(genp0,i0,iId,jet0,dR,matching,size);
@@ -526,10 +543,11 @@ int GenLoader::ismatchedJet(TLorentzVector jet0, double dR,double &matching, dou
   //std::cout << "return matched " << matching << size << std::endl;
   return result;
 }
+
 int GenLoader::ismatchedSubJet(TLorentzVector subjet0){
   int lOption =0;
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
-    TGenParticle *genp0 = (TGenParticle*)((*fGens)[i0]);
+    TGenParticle *genp0 = getParticle(i0);
     TLorentzVector vq;
     if(abs(genp0->pdgId)==5) {
       vq.SetPtEtaPhiM(genp0->pt, genp0->eta, genp0->phi, 5);
@@ -545,20 +563,20 @@ int GenLoader::ismatchedSubJet(TLorentzVector subjet0){
 }
 int GenLoader::isHadronicBoson(int iV,int iId, float &genSize)
 {
-  TGenParticle *genV = (TGenParticle*)((*fGens)[iV]);
+  TGenParticle *genV = getParticle(iV);
   TLorentzVector vV,vDau1,vDau2;
   if(abs(genV->pdgId)==iId) {
     vV.SetPtEtaPhiM(genV->pt, genV->eta, genV->phi, genV->mass);
     int iQ=0, jQ=0;
     for (; iQ<fGens->GetEntriesFast(); ++iQ) {
-      TGenParticle *dau1 = (TGenParticle*)((*fGens)[iQ]);
+      TGenParticle *dau1 = getParticle(iQ);
       if(dau1->parent==iV && abs(dau1->pdgId)<6) {
         vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
         break; // found the first quark                                                                                                                                                                                                                       
       }
     }
     for (jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
-      TGenParticle *dau2 = (TGenParticle*)((*fGens)[jQ]);
+      TGenParticle *dau2 = getParticle(jQ);
       if(dau2->parent==iV && abs(dau2->pdgId)<6) { // found second                                                                                                                                                                                            
         vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
         genSize = TMath::Max(vV.DeltaR(vDau1),vV.DeltaR(vDau2));
@@ -569,14 +587,14 @@ int GenLoader::isHadronicBoson(int iV,int iId, float &genSize)
   return 0;
 }
 int GenLoader::isHWWsemilepBoson(int iH,int iId,int iIdDau,float &genSize){
-  TGenParticle *genH = (TGenParticle*)((*fGens)[iH]);
+  TGenParticle *genH = getParticle(iH);
   TLorentzVector vH,vDau1,vDau2,vDau3,vDau4;
   std::vector<TGenParticle*> lDaus;
   std::vector<int> lDausIndex;
   if(abs(genH->pdgId)==iId) {
     vH.SetPtEtaPhiM(genH->pt, genH->eta, genH->phi, genH->mass);
     for (int iD=0; iD<fGens->GetEntriesFast(); ++iD) {
-      TGenParticle *dau = (TGenParticle*)((*fGens)[iD]);
+      TGenParticle *dau = getParticle(iD);
       if(dau->parent==iH && abs(dau->pdgId)!=23) {
 	lDaus.push_back(dau); lDausIndex.push_back(iD);
       }
@@ -589,7 +607,7 @@ int GenLoader::isHWWsemilepBoson(int iH,int iId,int iIdDau,float &genSize){
     if(lMax == 2){
       if( abs(lDaus[0]->pdgId)==iIdDau && abs(lDaus[1]->pdgId)==iIdDau) {
 	for (int i0=0; i0<fGens->GetEntriesFast(); ++i0) {
-	  TGenParticle *pGen = (TGenParticle*)((*fGens)[i0]);
+	  TGenParticle *pGen = getParticle(i0);
 	  if(pGen->parent==lDausIndex[0] || pGen->parent==lDausIndex[1]) {
 	    if ( abs(pGen->pdgId)>=11 && abs(pGen->pdgId)<=14 ) lLeps.push_back(pGen);
             if ( abs(pGen->pdgId)>=14 && abs(pGen->pdgId)<=5 ) lQuarks.push_back(pGen);
@@ -603,7 +621,7 @@ int GenLoader::isHWWsemilepBoson(int iH,int iId,int iIdDau,float &genSize){
       for(unsigned int i0 = 0; i0 < lMax; i0++){
 	if( abs(lDaus[i0]->pdgId)==iIdDau ) {
 	  for (int i1=0; i1<fGens->GetEntriesFast(); ++i1) {
-	    TGenParticle *pGen = (TGenParticle*)((*fGens)[i1]);
+	    TGenParticle *pGen = getParticle(i1);
 	    if ( pGen->parent==lDausIndex[i0] ){
 	      if ( abs(pGen->pdgId)>=11 && abs(pGen->pdgId)<=14 ) lLeps.push_back(pGen);
 	      if ( abs(pGen->pdgId)>=14 && abs(pGen->pdgId)<=5 ) lQuarks.push_back(pGen);
@@ -647,7 +665,7 @@ int GenLoader::isHDau(int iId, int iDauId, TLorentzVector jet, int iHiggs){
   std::vector<TLorentzVector> lParts;
   std::vector<int> lHiggs;
   for(int i0 = 0; i0 < fGens->GetEntriesFast(); i0++) {
-    TGenParticle *pGen = (TGenParticle*)((*fGens)[i0]);
+    TGenParticle *pGen = getParticle(i0);
     if(fabs(pGen->pdgId == iId)) {
       lHiggs.push_back(findLastParent(i0,iId));
     }
@@ -659,20 +677,20 @@ int GenLoader::isHDau(int iId, int iDauId, TLorentzVector jet, int iHiggs){
     {
       int iD(-1);
       iH = lHiggs[i0];
-      TGenParticle *pH = (TGenParticle*)((*fGens)[iH]);
+      TGenParticle *pH = getParticle(iH);
       TLorentzVector ivH; ivH.SetPtEtaPhiM(pH->pt, pH->eta, pH->phi, pH->mass);
       fgenHPt[i0] = pH->pt;
       fgenHEta[i0] = pH->eta;
       fgenHPhi[i0] = pH->phi;
       fgenHMass[i0] = pH->mass;
       for(int i1 = 0; i1 < fGens->GetEntriesFast(); i1++) {
-        TGenParticle *pGen = (TGenParticle*)((*fGens)[i1]);
+        TGenParticle *pGen = getParticle(i1);
         if(pGen->parent == iH) {
           //if(fabs(pGen->pdgId) == iDauId) {
 	  iD += 1;
 	  if(iD > 3) break;
 	  int iP = findLastParent(i1,iDauId);
-	  TGenParticle *pP = (TGenParticle*)((*fGens)[iP]);
+	  TGenParticle *pP = getParticle(iP);
 	  //std::cout << i1 << " iD  "<<  iD << std::endl;
 	  //std::cout << pP->pt << " id " << pP->pdgId << std::endl;
 	  fgenHDauPt[i0][iD] = pP->pt;
@@ -681,7 +699,7 @@ int GenLoader::isHDau(int iId, int iDauId, TLorentzVector jet, int iHiggs){
 	  fgenHDauM[i0][iD] = pP->mass;
 	  fgenHDauId[i0][iD] = pP->pdgId;
 	  for(int i2 = 0; i2 < fGens->GetEntriesFast(); i2++) {
-	    TGenParticle *pPart = (TGenParticle*)((*fGens)[i2]);
+	    TGenParticle *pPart = getParticle(i2);
 	    TLorentzVector vPart; vPart.SetPtEtaPhiM(pPart->pt, pPart->eta, pPart->phi, pPart->mass);
 	    if(fabs(pPart->parent) ==iP) {
 	      fgenHDauDecay[i0][iD] = pPart->pdgId;
@@ -709,10 +727,10 @@ int GenLoader::isttbarType(int lepPdgId)
   assert(fGens);
   int nlep=0;
   for(int i0=0; i0<fGens->GetEntriesFast(); i0++) {
-    TGenParticle *pGen = (TGenParticle*)((*fGens)[i0]);
+    TGenParticle *pGen = getParticle(i0);
     if(abs(pGen->pdgId)==abs(lepPdgId)) {
       if(pGen->parent<0) continue;
-      TGenParticle *lparent = (TGenParticle*)((*fGens)[pGen->parent]);
+      TGenParticle *lparent = getParticle(pGen->parent);
       if(abs(lparent->pdgId)==24) nlep++;
     }
   }
@@ -733,7 +751,7 @@ float GenLoader::computeTTbarCorr() {
   const int TOP_PDGID = 6;
   double pt1=0, pt2=0;
   for(int i0=0; i0 < fGens->GetEntriesFast(); i0++) {
-    TGenParticle *p = (TGenParticle*)((*fGens)[i0]);
+    TGenParticle *p = getParticle(i0);
     if(p->pdgId ==  TOP_PDGID) {
       pt1 = p->pt;
       fTopPt = pt1;
