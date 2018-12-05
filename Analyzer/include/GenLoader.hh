@@ -18,6 +18,7 @@ public:
   void load (int iEvent);
 
   // Helpers
+  TGenParticle* getParticle(int i);
   bool isType(std::string boson,std::string mode);
   bool hard(int &iP);
   bool hasChild(int &iparent, bool beHard=false);
@@ -27,10 +28,10 @@ public:
   void findBoson(int iId, int lOption);
 
   // Matching
-  int isHadronicWInTop(TGenParticle *genp,int j,TLorentzVector jet,double dR,double &topMatching, double &topSize);
+  int getHadronicWInTopFlavor(TGenParticle *genp,int iW,TLorentzVector jet,double dR,double &topMatching, double &topSize);
   int isHadronicTop(TGenParticle *genp,int j,TLorentzVector jet,double dR,double &topMatching, double &topSize);
   int isHadronicV(TGenParticle *genp,int j,int iId,TLorentzVector jet,double dR,double &vMatching, double &vSize);
-  int isHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector jet,double dR,double &vMatching, double &vSize, int dauId);
+  int getHadronicVflav(TGenParticle *genp,int j,int iId, TLorentzVector jet,double dR,double &vMatching, double &vSize);
   int ismatchedJet(TLorentzVector jet0, double dR,double &matching, double &size, int iId = 6);
   int ismatchedSubJet(TLorentzVector subjet0);
   int isHadronicBoson(int iV,int iId, float &genSize);
