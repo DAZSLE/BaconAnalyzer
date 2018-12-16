@@ -105,7 +105,11 @@ void VJetLoader::setupTree(TTree *iTree, std::string iJetLabel, bool iHWW) {
   fLabels.push_back("pt_JERUp");
   fLabels.push_back("pt_JERDown");
   fLabels.push_back("deepdoubleb");
+  fLabels.push_back("deepdoublec");
+  fLabels.push_back("deepdoublecvb");
   fLabels.push_back("deepdoubleb_nomasssculptpen");
+  fLabels.push_back("deepdoublec_nomasssculptpen");
+  fLabels.push_back("deepdoublecvb_nomasssculptpen");
 
   if(iHWW) {
     fLabels.push_back("lepCPt");
@@ -440,8 +444,13 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     iVals[lBase+i0*lNLabel+36] = jetPtJERUp;
     iVals[lBase+i0*lNLabel+37] = jetPtJERDown;
     iVals[lBase+i0*lNLabel+38] = pAddJet->deepdoubleb;
-    iVals[lBase+i0*lNLabel+39] = pAddJet->deepdoubleb_nomasssculptpen;
-    int iN = 39;
+    iVals[lBase+i0*lNLabel+39] = pAddJet->deepdoublec;
+    iVals[lBase+i0*lNLabel+40] = pAddJet->deepdoublecvb;
+    iVals[lBase+i0*lNLabel+41] = pAddJet->deepdoubleb_nomasssculptpen;
+    iVals[lBase+i0*lNLabel+42] = pAddJet->deepdoublec_nomasssculptpen;
+    iVals[lBase+i0*lNLabel+43] = pAddJet->deepdoublecvb_nomasssculptpen;
+
+    int iN = 43;
 
     if (iHWW) {
       iVals[lBase+i0*lNLabel+iN+1] = pAddJet->lepCPt;
