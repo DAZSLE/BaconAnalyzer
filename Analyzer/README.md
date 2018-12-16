@@ -10,10 +10,10 @@ Setup
  * Setup BaconProd, BaconAna, and add the missing python module
  * Setup BaconAnalyzer, Development Packages
  * Compile
- * For tag:14 of BaconProd/BaconAna, CMSSW_VERSION = CMSSW_9_4_7
+ * For tag:14 of BaconProd/BaconAna, CMSSW_VERSION = CMSSW_10_2_6
 ```
-cmsrel CMSSW_9_4_7
-cd CMSSW_9_4_7/src
+cmsrel CMSSW_10_2_6
+cd CMSSW_10_2_6/src
 cmsenv
 git clone https://github.com/ksung25/BaconProd
 git clone https://github.com/ksung25/BaconAna
@@ -24,7 +24,7 @@ git merge jmgd/add_python
 cd ..
 git clone https://github.com/DAZSLE/BaconAnalyzer
 git fetch
-git checkout -b 94x origin/94x
+git checkout -b 102x origin/102x
 scram b clean
 scram b -j 10
 cd BaconAnalyzer
@@ -68,17 +68,17 @@ python submitZprime.py -s SAMPLE -t TAG --monitor sub # (to submit)
 
 LPC instructions
 -----------
-94X is supposed to run @ CMSLPC cluster.
+102X is supposed to run @ CMSLPC cluster.
 
 EVERYTIME after compiling: re-tar CMSSW environment and data/ dir
 
-For v14 (BaconProd,BaconAna)
-CMSMSW_VERSION = CMSSW_9_4_7
+For v15 (BaconProd,BaconAna)
+CMSMSW_VERSION = CMSSW_10_2_6
 
 ```
 cd ../../
-tar --exclude-caches-all --exclude-vcs --exclude-caches-all --exclude-vcs -cvzf CMSSW_9_4_7.tgz CMSSW_9_4_7 --exclude=src --exclude=tmp --exclude="*.scram" --exclude="*.SCRAM"
-cd CMSSW_9_4_7/src/BaconAnalyzer/Analyzer/
+tar --exclude-caches-all --exclude-vcs --exclude-caches-all --exclude-vcs -cvzf CMSSW_10_2_6.tgz CMSSW_10_2_6 --exclude=src --exclude=tmp --exclude="*.scram" --exclude="*.SCRAM"
+cd CMSSW_10_2_6/src/BaconAnalyzer/Analyzer/
 tar -zcvf data.tgz data
 ```
 

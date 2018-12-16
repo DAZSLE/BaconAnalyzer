@@ -51,8 +51,8 @@ if len(args) < 1 and not options.monitor: sys.exit('Error -- must specify ANALYZ
 njobs = options.njobs if options.njobs > 0 else 1
 njobs_per_file = options.njobs_per_file
 nfiles_per_job = options.nfiles_per_job
-cmssw = os.getenv('CMSSW_VERSION', 'CMSSW_9_4_7')
-cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_9_4_7')
+cmssw = os.getenv('CMSSW_VERSION', 'CMSSW_10_2_6')
+cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_10_2_6')
 
 # write job
 def write_job(exec_line, out, analyzer, i, n, j, eosout=''):

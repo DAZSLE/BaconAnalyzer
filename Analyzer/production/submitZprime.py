@@ -35,18 +35,17 @@ samplesDict['SingleMuonrereco'] = {
     'SingleMuonRun2017F_17Nov2017_v1': 'rereco17',
 }
 samplesDict['Hbb'] = {
-    #'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp': 'mc',
-    #'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp': 'mc',
+    'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
     'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',
     'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8': 'mc',
-    #'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
-    'GluGluHToCC_M125_13TeV_powheg_pythia8': 'mc',
-    #'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
-    #'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
-    #'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-    #'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-    #'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
-    #'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
+    'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
+    'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
+    'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
     }
 samplesDict['QCD_8X'] = {
     # 'QCD_HT1000to1500_13TeV_8X': 'mc',
@@ -67,13 +66,13 @@ samplesDict['QCD_8X'] = {
     }
 # 5
 samplesDict['QCD'] = {       
-    'QCD_HT1000to1500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    #'QCD_HT1000to1500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    #'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     'QCD_HT2000toInf_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT200to300_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    #'QCD_HT200to300_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    #'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    #'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     }
 samplesDict['SingleTop'] = {
@@ -272,8 +271,10 @@ if __name__ == '__main__':
                       help="samples to produce")
     parser.add_option('-e','--executable',dest="executable", default="runZprime", 
                       help = "executable name")
-    parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v14.01", 
+    parser.add_option('-t','--tag',dest="tag", default = "zprimebits-v15.01", 
                       help = "tag, which is the same as folder") 
+    parser.add_option('--production',dest="production", default = "15",
+                      help="bacon production") 
     parser.add_option('-b','--batch',dest="sub", default = False, 
                       help = "use condor or batch system")
     parser.add_option("--njobs-per-file",dest="njobs_per_file",type='int',default=1,
@@ -319,12 +320,5 @@ if __name__ == '__main__':
     exec_me('%s mkdir -p /eos/uscms/%s/%s'%(EOS,eosOutDir,analysisDir))  
     for label, isMc in samples.iteritems():
         exec_me('%s mkdir -p /eos/uscms/%s/%s/%s'%(EOS,eosOutDir,analysisDir,label))
-        if isMc in ['prompt17','rereco17']:
-            #listLabel = '../lists/production14/%s.txt'%label
-            listLabel = '../lists/production13/%s.txt'%label
-        elif isMc in ['data','rereco']:
-            listLabel = '../lists/production12a/%s.txt'%label
-        else:
-            listLabel = '../lists/production14/%s.txt'%label
-
+        listLabel = '../lists/production%s/%s.txt'%(options.production,label)
         exec_me("python %s %s %s --list 1:%s --outdir $PWD/../%s/%s_%s --eosoutdir %s/%s/%s %s"%(execPython,executable,optionsDataMc[isMc],listLabel,analysisDir,label,isMc,eosOutDir,analysisDir,label,monitorOption),options.dryRun)

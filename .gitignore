@@ -20,6 +20,7 @@ Analyzer/scripts/
 Analyzer/python/
 Analyzer/plot/ZprimePlots
 Analyzer/plot/ggHbbPlots
+Analyzer/zprimebits*
 *.d
 *.so
 *.o
