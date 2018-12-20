@@ -35,17 +35,17 @@ samplesDict['SingleMuonrereco'] = {
     'SingleMuonRun2017F_17Nov2017_v1': 'rereco17',
 }
 samplesDict['Hbb'] = {
-    'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_herwigpp': 'mc',
-    'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
-    'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',
-    'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8': 'mc',
-    'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
-    'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
-    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
-    'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-    'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-    'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
-    'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
+   'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+   'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',
+   'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8': 'mc',
+   'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
+   'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
+   'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
+   'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+   'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+   'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
+   'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
     }
 samplesDict['QCD_8X'] = {
     # 'QCD_HT1000to1500_13TeV_8X': 'mc',
@@ -196,11 +196,11 @@ samplesDict['DY'] = {
     }
 # 5
 samplesDict['TT'] = {
-    #'TTToHadronic_TuneCP5_13TeV_powheg_pythia8': 'mc',
-    #'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    'TTToHadronic_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8': 'mc',
     #'TTToSemiLeptonic_WspTgt150_TuneCUETP8M2T4_13TeV_powheg_pythia8': 'mc',
-    #'TTTo2L2Nu_TuneCP5_13TeV_powheg_pythia8': 'mc',
-    'TTJets_TuneCP5_13TeV_amcatnloFXFX_pythia8': 'mc',
+    'TTTo2L2Nu_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    #'TTJets_TuneCP5_13TeV_amcatnloFXFX_pythia8': 'mc',
     }
 samplesDict['TT_8X'] = {
     'TT_TuneCUETP8M2T4_13TeV_powheg_pythia8_8X': 'mc',
