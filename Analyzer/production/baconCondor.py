@@ -113,7 +113,7 @@ def submit_jobs(lofjobs):
         condor_file.write('request_memory = 5000\n')
         condor_file.write('Should_Transfer_Files = YES\n')
         condor_file.write('WhenToTransferOutput = ON_EXIT\n')
-        condor_file.write('Transfer_Input_Files = %s/src/BaconAnalyzer/Analyzer/production/cmsset_default.sh, %s.tgz, %s/bin/slc6_amd64_gcc630/runZprime, %s/src/BaconAnalyzer/Analyzer/data.tgz\n'%(cmssw_base,cmssw_base,cmssw_base,cmssw_base))
+        condor_file.write('Transfer_Input_Files = %s/src/BaconAnalyzer/Analyzer/production/cmsset_default.sh, %s.tgz, %s/bin/slc6_amd64_gcc700/runZprime, %s/src/BaconAnalyzer/Analyzer/data.tgz\n'%(cmssw_base,cmssw_base,cmssw_base,cmssw_base))
         condor_file.write('use_x509userproxy = true\n')
         condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
         condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
