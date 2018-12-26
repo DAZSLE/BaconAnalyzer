@@ -34,3 +34,4 @@ Analyzer/skim/.__afs*
 Analyzer/production/.__afs*
 *core.*
 Analyzer/training/
+Analyzer/*.tgz
