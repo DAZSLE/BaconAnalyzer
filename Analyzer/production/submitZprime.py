@@ -66,14 +66,14 @@ samplesDict['QCD_8X'] = {
     }
 # 5
 samplesDict['QCD'] = {       
-    #'QCD_HT1000to1500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    'QCD_HT1000to1500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     #'QCD_HT100to200_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT2000toInf_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    #'QCD_HT1500to2000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    #'QCD_HT2000toInf_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     #'QCD_HT200to300_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     #'QCD_HT300to500_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    #'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8': 'mc',
-    'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    'QCD_HT500to700_TuneCP5_13TeV_madgraph_pythia8': 'mc',
+    #'QCD_HT700to1000_TuneCP5_13TeV_madgraph_pythia8': 'mc',
     }
 samplesDict['SingleTop'] = {
     #'ST_s_channel_4f_leptonDecays_TuneCP5_13TeV_amcatnlo_pythia8_noPF': 'mc',
@@ -287,10 +287,11 @@ if __name__ == '__main__':
     if options.monitor is not '':
         monitorOption = '--monitor %s'%options.monitor
     
-    jsonPrompt = "$PWD/../data/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt"
-    jsonRereco = "$PWD/../data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"
+    jsonPrompt16 = "Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt"
+    jsonRereco16 = "Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"
     jsonPrompt17 = "Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt"
     jsonRereco17 = "Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt"
+    jsonPrompt18 = "Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt"
 
     analysisDir = options.tag
     if 'runHWW' in options.executable:
@@ -304,8 +305,8 @@ if __name__ == '__main__':
         EOS = ''
         optionsDataMc = {
             'mc': "Output.root -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
-            'data': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt,options.njobs_per_file),        
-            'rereco': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonRereco,options.njobs_per_file),
+            'data': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt16,options.njobs_per_file),        
+            'rereco': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonRereco16,options.njobs_per_file),
             }
     else:
         eosOutDir = '/store/user/lpcbacon/dazsle'

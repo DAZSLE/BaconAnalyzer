@@ -15,13 +15,6 @@
 #include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
 #include "JetMETCorrections/Modules/interface/JetResolution.h"
 
-// B-tag scale factors
-#include "SJBTagUnc.hh"
-#include "CondFormats/BTauObjects/interface/BTagEntry.h"
-#include "CondFormats/BTauObjects/interface/BTagCalibration.h"
-//#include "CondFormats/BTauObjects/interface/BTagCalibrationReader.h"
-#include "BTagCalibrationStandalone.h"
-
 #include "TRandom3.h"
 
 using namespace baconhep;
