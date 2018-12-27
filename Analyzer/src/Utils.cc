@@ -213,7 +213,7 @@ bool passEleHEEPSel(const baconhep::TElectron *electron, const double rho, const
     if(fabs(electron->dEtaInSeed)      >= 0.00400)                                         return false;
     if(fabs(electron->dPhiIn)          >= 0.06000)                                         return false;
     if(electron->hovere                >= (1/(electron->ecalEnergy))+0.05)                 return false;
-    if((electron->e2x5/electron->e5x5) <= 0.94 || (electron->e1x5/electron->e1x5) <= 0.83) return false;
+    if((electron->e2x5/electron->e5x5) <= 0.94 || (electron->e1x5/electron->e5x5) <= 0.83) return false;
     if(electron->hcalDepth1Iso         >= 2.0+0.03*met+0.28*rho)                           return false;
     if(electron->trkIso                >= 5)                                               return false;
     if(electron->nMissingHits          >  1)                                               return false;
