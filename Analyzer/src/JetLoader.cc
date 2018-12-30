@@ -2,17 +2,13 @@
 #include <cmath>
 #include <iostream> 
 #include <sstream>
-
+1;95;0c
 using namespace baconhep;
 
 JetLoader::JetLoader(TTree *iTree, bool iData) { 
   fJets  = new TClonesArray("baconhep::TJet");
   iTree->SetBranchAddress("AK4Puppi",       &fJets);
   fJetBr = iTree->GetBranch("AK4Puppi");
-
-  //fJetsCHS  = new TClonesArray("baconhep::TJet");
-  //iTree->SetBranchAddress("AK4CHS",       &fJetsCHS);
-  //fJetBrCHS = iTree->GetBranch("AK4CHS");
 
   fN = 4; // number of jets to save
   fNV = 3; // max number of V jets to consider for dR anti-matching
@@ -25,8 +21,6 @@ JetLoader::JetLoader(TTree *iTree, bool iData) {
 JetLoader::~JetLoader() { 
   delete fJets;
   delete fJetBr;
-  //delete fJetsCHS;
-  //delete fJetBrCHS;
 }
 void JetLoader::reset() { 
   fNJetsPt30           = 0;
@@ -230,7 +224,6 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     double jetCorrPt = JEC*(pJet->ptRaw);
     double jetCorrE = JEC*(vPJet.E());
     JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, pJet->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; 
-    // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
     float sigma_MC = resolution.getResolution(parameters);
     float sf = resolution_sf.getScaleFactor(parameters);
     float sfUp = resolution_sf.getScaleFactor(parameters, Variation::UP);
@@ -302,10 +295,10 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
       }
     }
 	
-    if(jetCorrPtSmear  <=  30)                                            continue;    
+    if(jetCorrPtSmear  <=  30) continue;
     if(fabs(pJet->eta) > 2.5 && fabs(pJet->eta) < 4.5) lNFwdPt30++;
-    if(fabs(pJet->eta) >= 2.5)                                            continue;
-    if(!passJetTightSel(pJet))                                            continue;
+    if(fabs(pJet->eta) >= 2.5) continue;
+    if(!passJetTightSel(pJet)) continue;
     x1List.push_back(x1);
     x2List.push_back(x2);
     x3List.push_back(x3);
@@ -323,7 +316,6 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     }
     
     //https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation94X
-
     // jet and b-tag multiplicity
     for (int i1 = 0; i1 < int(iVJets.size()); i1++) {
       if(iVJets[i1].Pt()>200 && vPJet.DeltaR(iVJets[i1])>0.8) {
@@ -377,7 +369,6 @@ void JetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<doub
     double x1 = x1List[i0];
     double jetEnergySmearFactor = 1.0;    
     JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; 
-    // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED) -- I // NOT SURE IF THIS SHOULD CHANGE FOR Summer16_25nsV1_MC
     float sigma_MC = resolution.getResolution(parameters);
     float sf = resolution_sf.getScaleFactor(parameters);    
     if (!isData) {      
@@ -480,32 +471,6 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
     double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
     double jetPtJERDown = jetCorrPt*jetEnergySmearFactorDown;
-    /*
-    if (true){
-      std::cout << "Jet" << std::endl;
-      std::cout << "i0 =" << i0 << std::endl;
-      std::cout << "ptraw = " << iObjects[i0]->ptRaw << std::endl;
-      std::cout << "eta = " << iObjects[i0]->eta << std::endl;
-      std::cout << "rho = " << iRho << std::endl;
-      std::cout << "runNum = " << runNum << std::endl;
-      std::cout << "sf = " << sf << ", " <<  sfUp << ", " << sfDown << std::endl;
-      std::cout << "sigma_MC = " << sigma_MC << std::endl;    
-      std::cout << "runNum = " << runNum << std::endl;
-      std::cout << "unc_old = " << unc_old << std::endl;
-      std::cout << "unc = " << unc << std::endl;
-      std::cout << "JEC_old = " << JEC_old << std::endl;
-      std::cout << "JEC = " << JEC << std::endl;
-      std::cout << "x1 = " << x1 << std::endl;
-      std::cout << "x2 = " << x2 << std::endl;
-      std::cout << "x3 = " << x3 << std::endl;
-      std::cout << "ptcorr = " << jetCorrPt << std::endl;
-      std::cout << "ptcorrsmear = " << jetCorrPtSmear << std::endl;
-      std::cout << "jesup = " << jetPtJESUp << std::endl;
-      std::cout << "jesdown = " << jetPtJESDown << std::endl;
-      std::cout << "jerup = " << jetPtJERUp << std::endl;
-      std::cout << "jerdown = " << jetPtJERDown << std::endl;
-    }
-    */
     iVals[lBase+i0*fNOtherVars+0] = JEC*jetEnergySmearFactor*(iObjects[i0]->mass);
     iVals[lBase+i0*fNOtherVars+1] = iObjects[i0]->csv;
     iVals[lBase+i0*fNOtherVars+2] = iObjects[i0]->qgid;
@@ -584,6 +549,7 @@ void JetLoader::loadJECs(bool isData) {
     }
 
 }
+// 2017 rereco
 void JetLoader::loadJECs_Rereco2017(bool isData) {
     std::cout << "JetLoader: loading 2017 Rereco jet energy correction constants" << std::endl;
     // initialize
