@@ -1738,6 +1738,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0001/Output_1743.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0001/Output_1744.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0001/Output_1745.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0001/Output_1746.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0001/Output_1747.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0001/Output_1748.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0001/Output_1749.root
@@ -2149,6 +2150,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2157.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2158.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2159.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2160.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2161.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2162.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2163.root
@@ -2785,6 +2787,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2794.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2795.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2796.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2797.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2799.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2800.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2801.root
@@ -2843,6 +2846,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2854.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2855.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2856.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2857.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2858.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2859.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2860.root
@@ -2903,6 +2907,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2915.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2916.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2917.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2918.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2919.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2920.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0002/Output_2921.root
@@ -3377,6 +3382,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3390.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3391.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3392.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3393.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3394.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3395.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3396.root
@@ -3775,6 +3781,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3789.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3790.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3791.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3792.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3793.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3794.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0003/Output_3795.root
@@ -4030,6 +4037,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4046.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4047.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4048.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4049.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4050.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4051.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4052.root
@@ -4411,6 +4419,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4431.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4432.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4434.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4435.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4436.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4437.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4438.root
@@ -4498,8 +4507,11 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4521.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4522.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4523.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4524.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4525.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4526.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4527.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4528.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4529.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4530.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHT/CRAB3/181208_161542/0004/Output_4531.root

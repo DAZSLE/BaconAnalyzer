@@ -1547,6 +1547,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07A
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1547.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1548.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1549.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1550.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1551.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1552.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1553.root
@@ -1616,6 +1617,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07A
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1617.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1618.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1619.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1620.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1621.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1622.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1623.root
@@ -1839,6 +1841,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07A
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1841.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1842.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1843.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1844.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1845.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1846.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1847.root
@@ -1891,6 +1894,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07A
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1894.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1895.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1896.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1897.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1898.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1899.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1900.root
@@ -1925,6 +1929,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07A
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1929.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1930.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1931.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1932.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1933.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1934.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1935.root
@@ -1933,6 +1938,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07A
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1938.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1939.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1940.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1941.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1942.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1943.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1944.root
@@ -1952,6 +1958,7 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07A
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1958.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1959.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1960.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1961.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1962.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1963.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/SingleMuonRun2016C_07Aug17_v1/SingleMuon/CRAB3/181221_043958/0001/Output_1964.root
