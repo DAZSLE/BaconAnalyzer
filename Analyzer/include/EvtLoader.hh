@@ -80,7 +80,6 @@ public:
   float fEwkCorr_CENT, fEwkCorr_UP, fEwkCorr_DO;
   float fkfactor;
 
-  int fselectBits;
   int fNVtx;
 protected: 
   TBranch      *fEvtBr;

@@ -40,8 +40,6 @@ EvtLoader::~EvtLoader() {
 void EvtLoader::reset() { 
   fEvtV         = 0; 
   fITrigger     = 0; 
-  fIMoreTrigger = 0;
-  fselectBits   = 0;
   fNVtx         = 0; 
   fNPU          = 0;
   fPUWeight     = 0; 
@@ -69,8 +67,6 @@ void EvtLoader::setupTree(TTree *iTree) {
   fTree->Branch("passJson"        ,&fPassJson       ,"fPassJson/i");
   fTree->Branch("metfilter"       ,&fMetFilters     ,"fMetFilters/i");
   fTree->Branch("triggerBits"     ,&fITrigger       ,"fITrigger/i");
-  fTree->Branch("moreTriggerBits" ,&fIMoreTrigger   ,"fIMoreTrigger/l");
-  fTree->Branch("selectBits"      ,&fselectBits     ,"fselectBits/i");
  
   fTree->Branch("npu"             ,&fNPU            ,"fNPU/i");
   fTree->Branch("npv"             ,&fNVtx           ,"fNVtx/i");
@@ -108,9 +104,7 @@ void EvtLoader::fillEvent(unsigned int trigBit,float lWeight, unsigned int passJ
   fRho          = fEvt->rhoJet;
   fPassJson     = passJson;
   fNVtx         = nVtx();
-  fITrigger     = trigBit;
-  fIMoreTrigger = triggerBit();
-  fselectBits   = 1;
+  fITrigger     = triggerBit();
   fPUWeight     = puWeight(float(fNPU)); 
   fScale        = lWeight;
   fevtWeight    = 1;

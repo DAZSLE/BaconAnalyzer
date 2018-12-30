@@ -159,84 +159,51 @@ int main( int argc, char **argv ) {
     // Primary vertex requirement
     if(!fEvt->PV()) continue;
     
-    // Triggerbits
-    unsigned int trigbits=1;   
-    if(lOption.find("data")!=std::string::npos){
-      if(
-	 fEvt ->passTrigger("HLT_AK8PFJet400_TrimMass30_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFJet420_TrimMass30_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFHT800_TrimMass50_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFHT850_TrimMass50_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFHT900_TrimMass50_v*") ||
-	 fEvt ->passTrigger("HLT_PFJet500_v*") ||
-	 fEvt ->passTrigger("HLT_PFHT1050_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFJet500_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFJet550_v*") ||
-	 fEvt ->passTrigger("HLT_CaloJet500_NoJetID_v*") ||
-	 fEvt ->passTrigger("HLT_CaloJet550_NoJetId_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*") ||
-	 fEvt ->passTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p1_v*")
-	 )  trigbits = trigbits | 2;  // hadronic signal region
-      if( fEvt ->passTrigger("HLT_Mu50_v*") ||
-	  fEvt ->passTrigger("HLT_TkMu50_v*")
-	  ) trigbits = trigbits | 4; // single muon control region
-      if( fEvt ->passTrigger("HLT_Ele45_WPLoose_v*") ||
-	  fEvt ->passTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*")
-	  ) trigbits = trigbits | 8; // single electron control region 
-      if(
-	 fEvt ->passTrigger("HLT_DoublePFJets100MaxDeta1p6_DoubleCaloBTagCSV_p33_v*") ||
-	 fEvt ->passTrigger("HLT_DoublePFJets116MaxDeta1p6_DoubleCaloBTagCSV_p33_v*") ||
-	 fEvt ->passTrigger("HLT_DoublePFJets128MaxDeta1p6_DoubleCaloBTagCSV_p33_v*") 
-	)   trigbits = trigbits | 16; // AK4maxDeta + doubleBTag  
-    }
-    // More trigger bits
+    // Trigger
+    // muon triggers
+    fEvt ->addTrigger("HLT_Mu50_v*");
+    fEvt ->addTrigger("HLT_TkMu50_v*");
+    fEvt ->addTrigger("HLT_Mu100_v*");
+    fEvt ->addTrigger("HLT_OldMu100_v*");
 
-    //Add the triggers we want
-    fEvt ->addTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*");
+    // HT triggers
     fEvt ->addTrigger("HLT_PFHT800_v*");//pre-scaled in 2017
     fEvt ->addTrigger("HLT_PFHT900_v*");//pre-scaled in 2017
     fEvt ->addTrigger("HLT_PFHT1050_v*")  ; 
     fEvt ->addTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*");
     fEvt ->addTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*");
-    fEvt ->addTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*");
     fEvt ->addTrigger("HLT_PFJet450_v*");
     fEvt ->addTrigger("HLT_PFJet500_v*");
+    fEvt ->addTrigger("HLT_CaloJet500_NoJetID_v*");
+    fEvt ->addTrigger("HLT_CaloJet550_NoJetId_v*");
+    fEvt ->addTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*");
 
-    fEvt ->addTrigger("HLT_IsoMu24_v*"); // W(munu)H(bb)
-    fEvt ->addTrigger("HLT_IsoTkMu24_v*"); // W(munu)H(bb)
-    fEvt ->addTrigger("HLT_Mu50_v*");
-    fEvt ->addTrigger("HLT_TkMu50_v*");
-    
-    fEvt ->addTrigger("HLT_Ele27_WPTight_Gsf_v*"); // W(enu)H(bb)
-    fEvt ->addTrigger("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v*"); //Z(ee)H(bb)
-    fEvt ->addTrigger("HLT_Ele45_WPLoose_v*");
-    fEvt ->addTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*"); 
-
-    fEvt ->addTrigger("HLT_PFMET110_PFMHT110_IDTight_v*"); // Z(nunu)H(bb) 
-    fEvt ->addTrigger("HLT_PFMET120_PFMHT120_IDTight_v*"); // Z(nunu)H(bb)
-    fEvt ->addTrigger("HLT_PFMET170_NoiseCleaned_v*"); // Z(nunu)H(bb)
-    fEvt ->addTrigger("HLT_PFMET170_HBHECleaned_v*"); // Z(nunu)H(bb)
-    fEvt ->addTrigger("HLT_PFMET170_HBHE_BeamHaloCleaned_v*"); // Z(nunu)H(bb)
-
-    //ggH(bb)
+    // single jet triggers
     fEvt ->addTrigger("HLT_AK8PFJet360_TrimMass30_v*");//pre-scaled in 2017
     fEvt ->addTrigger("HLT_AK8PFJet380_TrimMass30_v*");//pre-scaled in 2017
     fEvt ->addTrigger("HLT_AK8PFJet400_TrimMass30_v*");
     fEvt ->addTrigger("HLT_AK8PFJet420_TrimMass30_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*");
     fEvt ->addTrigger("HLT_AK8PFHT800_TrimMass50_v*");
     fEvt ->addTrigger("HLT_AK8PFHT850_TrimMass50_v*");
     fEvt ->addTrigger("HLT_AK8PFHT900_TrimMass50_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet500_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet550_v*");
+    fEvt ->addTrigger("HLT_AK8PFJetFwd200_v*");
+    fEvt ->addTrigger("HLT_AK8PFJetFwd400_v*");
+
+    // + b=tag or double b-tag triggrs
     fEvt ->addTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*");
     fEvt ->addTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p1_v*");
     fEvt ->addTrigger("HLT_DoublePFJets100MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
     fEvt ->addTrigger("HLT_DoublePFJets116MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
     fEvt ->addTrigger("HLT_DoublePFJets128MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
-    fEvt ->addTrigger("HLT_CaloJet500_NoJetID_v*");
-    fEvt ->addTrigger("HLT_CaloJet550_NoJetId_v*");
-    fEvt ->addTrigger("HLT_AK8PFJet500_v*");
-    fEvt ->addTrigger("HLT_AK8PFJet550_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np2_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_p02_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17_v*");
 
-    fEvt      ->fillEvent(trigbits,lWeight,passJson);
+    fEvt      ->fillEvent(1,lWeight,passJson);
     
     // Objects
     gErrorIgnoreLevel=kError;
@@ -253,12 +220,10 @@ int main( int argc, char **argv ) {
     // CA15Puppi Jets
     fVJet15   ->load(i0);
     fVJet15   ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,1.5,fEvt->fRho,fEvt->fRun);
-    if(fVJet15->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 4;
       
     // AK8Puppi Jets    
     fVJet8    ->load(i0);
     fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho,fEvt->fRun);
-    if(fVJet8->selectedVJets.size()>0) fEvt->fselectBits =  fEvt->fselectBits | 2;
 
     // Match leading AK8 Puppi jet with CA15 Puppi jet within dR = 0.4 (to get pT ratio)
     if(fVJet8->selectedVJets.size()>0) fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4);
@@ -266,10 +231,6 @@ int main( int argc, char **argv ) {
     // AK4Puppi Jets
     fJet4     ->load(i0); 
     fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho,fEvt->fRun);
-
-    // Select at least one AK8 or one CA15 jet
-    //if(!(fEvt->fselectBits & 2) || !(fEvt->fselectBits & 4)) continue;
-    //if((fVJet8->selectedVJets[0].Pt() < 200) || (fVJet15->selectedVJets[0].Pt() < 200)) continue;
 
     // TTbar, EWK and kFactor correction
     if(lName.find("ZJets")!=std::string::npos || lName.find("DYJets")!=std::string::npos){
@@ -284,9 +245,7 @@ int main( int argc, char **argv ) {
       if(fVJet8->selectedVJets.size()>0)  fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,24);
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,24);
     }
-    if(lName.find("ZPrime")!=std::string::npos || lName.find("VectorDiJet")!=std::string::npos){
-      // 55 for newer, public samples (to be consistent with DM samples) 
-      //fGen->findBoson(10031,0);
+    if(lName.find("VectorDiJet")!=std::string::npos){
       fGen->findBoson(55,1);
       if(fGen->fBosonPt>0)      fEvt->computeCorr(fGen->fBosonPt,"ZJets_012j_NLO/nominal","ZJets_LO/inv_pt","EWKcorr/Z","ZJets_012j_NLO");
       if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,10031);
@@ -297,8 +256,6 @@ int main( int argc, char **argv ) {
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,9000001);
     }
     if(lName.find("Spin0")!=std::string::npos){
-      // 9900032 for older, private samples
-      // 55 for newer, public samples (to be consistent with DM samples)
       fGen->findBoson(55,1);
       if(fVJet8->selectedVJets.size()>0) fVJet8->fisHadronicV = fGen->ismatchedJet(fVJet8->selectedVJets[0],0.8,fVJet8->fvMatching,fVJet8->fvSize,55);
       if(fVJet15->selectedVJets.size()>0) fVJet15->fisHadronicV = fGen->ismatchedJet(fVJet15->selectedVJets[0],1.5,fVJet15->fvMatching,fVJet15->fvSize,55);
