@@ -27,7 +27,6 @@ public:
   //Fillers
   void fillEvent(unsigned int trigBit, float lWeight, unsigned int passJson);
   bool passSkim();
-  TLorentzVector Met(int iOption);
   //Trigger
   bool passFilter();
   void addTrigger(std::string iName);
@@ -45,24 +44,13 @@ public:
 		   std::string iHist2,
 		   std::string iNLO,
                    std::string ikfactor="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/kfactors.root");
-  //MET and mT
-  void         fillRecoil(std::vector<TLorentzVector> &iVecCorr,std::vector<TLorentzVector> iPhotons);
-  void         fillmT(float iMet, float iMetPhi,float iFMet, float iFMetPhi, std::vector<TLorentzVector> &lCorr, float &fmT);
-  float        mT(float iMet,float iMetPhi,TLorentzVector &iVec);
+
   //Vars
   float fRho;
   float fMetPhi;
   float fMet;
   float fPuppEtPhi;
   float fPuppEt;
-  float fCaloMet;
-  float fCaloMetPhi;
-  float fMetNoMu;
-
-  float fFMetPhi;
-  float fFMet;
-  float fFPuppEtPhi;
-  float fFPuppEt;
 
   unsigned int fRun;
   unsigned int fEvtV;
@@ -76,9 +64,7 @@ public:
   float fevtWeight;
   float fScale;
 
-  float fkFactor_CENT;
-  float fEwkCorr_CENT, fEwkCorr_UP, fEwkCorr_DO;
-  float fkfactor;
+  float fkfactorQCD,fkfactorEWK;
 
   int fNVtx;
 protected: 
@@ -98,13 +84,9 @@ protected:
   std::vector<std::string> fTrigString;
 
   char*  fSample;
-  unsigned int fITrigger;
-  ULong64_t  fIMoreTrigger;
+  ULong64_t  fITrigger;
   unsigned int fMetFilters;
   unsigned int fNPU;
-  unsigned int fNPUP;
-  unsigned int fNPUM;
 
   float fPUWeight;
-  float fMetSig;
 };

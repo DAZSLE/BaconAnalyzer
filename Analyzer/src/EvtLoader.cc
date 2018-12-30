@@ -23,7 +23,8 @@ EvtLoader::EvtLoader(TTree *iTree,std::string iName,std::string iHLTFile,std::st
   fVertices = new TClonesArray("baconhep::TVertex");
   iTree->SetBranchAddress("PV",       &fVertices);
   fVertexBr     = iTree->GetBranch("PV");
-  
+
+  // only valid for 2016 pu weight
   TFile *lFile = TFile::Open(iPUWeight.c_str()); 
   fPUWeightHist =  (TH1F*) lFile->Get("puw");
   fPUWeightHist->SetDirectory(0);
@@ -47,16 +48,13 @@ void EvtLoader::reset() {
   fevtWeight    = 1;
   fRho          = 0;
 
-  fkfactor      = 1;
-  fkFactor_CENT = 1;
-  fEwkCorr_CENT = 1;
+  fkfactorQCD   = 1;
+  fkfactorEWK   = 1;
 
   fMet          = 0; 
   fMetPhi       = 0; 
   fPuppEt       = 0; 
   fPuppEtPhi    = 0; 
-  fCaloMet      = 0;
-  fCaloMetPhi   = 0;
 }
 void EvtLoader::setupTree(TTree *iTree) {
   reset();
@@ -66,7 +64,7 @@ void EvtLoader::setupTree(TTree *iTree) {
   fTree->Branch("evtNum"          ,&fEvtV           ,"fEvtV/i");
   fTree->Branch("passJson"        ,&fPassJson       ,"fPassJson/i");
   fTree->Branch("metfilter"       ,&fMetFilters     ,"fMetFilters/i");
-  fTree->Branch("triggerBits"     ,&fITrigger       ,"fITrigger/i");
+  fTree->Branch("triggerBits"     ,&fITrigger       ,"fITrigger/l");
  
   fTree->Branch("npu"             ,&fNPU            ,"fNPU/i");
   fTree->Branch("npv"             ,&fNVtx           ,"fNVtx/i");
@@ -75,8 +73,8 @@ void EvtLoader::setupTree(TTree *iTree) {
   fTree->Branch("scale1fb"        ,&fScale          ,"fScale/F");  
   fTree->Branch("evtWeight"       ,&fevtWeight      ,"fevtWeight/F");
 
-  fTree->Branch("kfactor"         ,&fkfactor        ,"fkfactor/F");
-  fTree->Branch("kfactorNLO"      ,&fkFactor_CENT   ,"fkFactor_CENT/F");
+  fTree->Branch("kfactorQCD"      ,&fkfactorQCD     ,"fkfactorQCD/F");
+  fTree->Branch("kfactorEWK"      ,&fkfactorEWK     ,"fkfactorEWK/F");
 
   fTree->Branch("pfmet"           ,&fMet            ,"fMet/F");
   fTree->Branch("pfmetphi"        ,&fMetPhi         ,"fMetPhi/F");
@@ -110,11 +108,10 @@ void EvtLoader::fillEvent(unsigned int trigBit,float lWeight, unsigned int passJ
   fevtWeight    = 1;
   fMetFilters   = fEvt->metFilterFailBits;
   fEvtV         = fEvt->evtNum;
-  fkfactor      = 1;
+  fkfactorQCD   = 1;
+  fkfactorEWK   = 1;
   fMet          = fEvt->pfMETC;
   fMetPhi       = fEvt->pfMETCphi;
-  fCaloMet      = fEvt->caloMET;
-  fCaloMetPhi   = fEvt->caloMETphi;
   fPuppEt       = fEvt->puppETC;
   fPuppEtPhi    = fEvt->puppETCphi;
   return;
@@ -141,6 +138,7 @@ int EvtLoader::nVtx() {
 bool EvtLoader::PV(){
   return fEvt->hasGoodPV;
 }
+// Trigger
 void EvtLoader::addTrigger(std::string iName) { 
   fTrigString.push_back(iName);
 }
@@ -162,29 +160,14 @@ unsigned int EvtLoader::triggerBit() {
   }
   return lBit;
 }
-// puWeight
+// puWeight 2016
 float EvtLoader::puWeight(float iNPU) { 
   float lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(iNPU)));
   if(iNPU > 50) lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(50)));
   if(iNPU <  1) lNPVW = Float_t(fPUWeightHist->GetBinContent(fPUWeightHist->FindBin(0)));
   return lNPVW;
 }
-// mT
-float  EvtLoader::mT(float iMet,float iMetPhi,TLorentzVector &iVec) { 
-  float lDPhi = fabs(iMetPhi-iVec.Phi());
-  if(fabs(lDPhi) > TMath::Pi()*2.-lDPhi) lDPhi = TMath::Pi()*2.-lDPhi;
-  float lMt = sqrt(2.0*(iVec.Pt()*iMet*(1.0-cos(lDPhi))));
-  return lMt;
-}
-void  EvtLoader::fillmT(float iMet, float iMetPhi,float iFMet, float iFMetPhi, std::vector<TLorentzVector> &lCorr, float &fmT) {
-  if(lCorr.size()>0){
-    TLorentzVector lVecCorr;
-    for(unsigned int i0 =0; i0 < lCorr.size(); i0++) lVecCorr += lCorr[i0];
-    fmT = (lVecCorr.Pt()>0) ?  mT(iMet,     iMetPhi,     lVecCorr): -999;
-    if(iFMet>0) fmT = (lVecCorr.Pt()>0) ? mT(iFMet,     iFMetPhi,     lVecCorr): -999;
-  }
-}
-// kFactor and EWK
+// kFactors
 void EvtLoader::computeCorr(float iPt,std::string iHist0,std::string iHist1,std::string iHist2,std::string iNLO,std::string ikfactor){
   std::string isuffix = "";
   if(iNLO.find("G")!=std::string::npos) isuffix ="_G";
@@ -198,17 +181,15 @@ void EvtLoader::computeCorr(float iPt,std::string iHist0,std::string iHist1,std:
   fHist2->SetDirectory(0);
   lFile->Close();
 
-  fHist2->Divide(fHist1);
-  fHist0->Divide(fHist1);
+  fHist2->Divide(fHist1); // EWK correction = NLO*ewk/LO
+  fHist0->Divide(fHist1); // Old QCD correction
 
-  fkFactor_CENT = Float_t(fHist0->GetBinContent(fHist0->FindBin(iPt)));
-  //if(iPt > 700) fkFactor_CENT = Float_t(fHist0->GetBinContent(fHist0->FindBin(700)));
-  if(iPt < 100) fkFactor_CENT = Float_t(fHist0->GetBinContent(fHist0->FindBin(100)));
+  int iPtMin(200), iPtMax(1000);
+  fkfactorQCD = Float_t(fHist0->GetBinContent(fHist0->FindBin(iPt)));
+  if(iPt > iPtMax) fkfactorQCD = Float_t(fHist0->GetBinContent(fHist0->FindBin(iPtMax)));
+  if(iPt < iPtMin) fkfactorQCD = Float_t(fHist0->GetBinContent(fHist0->FindBin(iPtMin)));
   
-  fEwkCorr_CENT = Float_t(fHist2->GetBinContent(fHist2->FindBin(iPt)));
-  //if(iPt > 700) fEwkCorr_CENT = Float_t(fHist2->GetBinContent(fHist2->FindBin(700)));
-  if(iPt < 100) fEwkCorr_CENT = Float_t(fHist2->GetBinContent(fHist2->FindBin(100)));
-
-  fkfactor = fEwkCorr_CENT; //(NLO*ewk/LO)
-
+  fkfactorEWK = Float_t(fHist2->GetBinContent(fHist2->FindBin(iPt)));
+  if(iPt > iPtMax) fkfactorEWK = Float_t(fHist2->GetBinContent(fHist2->FindBin(iPtMax)));
+  if(iPt < iPtMin) fkfactorEWK = Float_t(fHist2->GetBinContent(fHist2->FindBin(iPtMin)));
 }
