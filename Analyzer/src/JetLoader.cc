@@ -45,8 +45,8 @@ void JetLoader::reset() {
   selectedJets8.clear();
   selectedJets15.clear();
   x1List.clear();
-  x2List.clear();
-  x3List.clear();    
+  //x2List.clear();
+  //x3List.clear();    
   for(int i0 = 0; i0 < int(fNJetsPt30dR08.size()); i0++) {
     fNJetsPt30dR08[i0] = -999;
     fNJetsPt30dR08jesUp[i0] = -999;
@@ -229,15 +229,15 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     float sfUp = resolution_sf.getScaleFactor(parameters, Variation::UP);
     float sfDown = resolution_sf.getScaleFactor(parameters, Variation::DOWN);
     double x1 = r->Gaus();
-    double x2 = r->Gaus();
-    double x3 = r->Gaus();
+    //double x2 = r->Gaus();
+    //double x3 = r->Gaus();
     double jetEnergySmearFactor = 1.0; 
     double jetEnergySmearFactorUp = 1.0; 
     double jetEnergySmearFactorDown = 1.0;    
     if (!isData) {      
       jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
-      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
+      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
+      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     }    
     double unc = getJecUnc( jetCorrPt, pJet->eta, runNum ); //use run=999 as default
     
@@ -300,8 +300,8 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     if(fabs(pJet->eta) >= 2.5) continue;
     if(!passJetTightSel(pJet)) continue;
     x1List.push_back(x1);
-    x2List.push_back(x2);
-    x3List.push_back(x3);
+    //x2List.push_back(x2);
+    //x3List.push_back(x3);
     addJet(pJet,fTightJets);
     fGoodJets.push_back(pJet);
     
@@ -455,15 +455,15 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
 
     
     double x1 = x1List[i0];
-    double x2 = x2List[i0];
-    double x3 = x3List[i0];
+    //double x2 = x2List[i0];
+    //double x3 = x3List[i0];
     double jetEnergySmearFactor = 1.0; 
     double jetEnergySmearFactorUp = 1.0; 
     double jetEnergySmearFactorDown = 1.0;    
     if (!isData) {      
       jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
-      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
+      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
+      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     }    
     
     //double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;

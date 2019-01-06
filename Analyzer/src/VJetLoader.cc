@@ -48,8 +48,8 @@ void VJetLoader::reset() {
   selectedVJets.clear();
   fLooseVJets.clear();
   x1List.clear();
-  x2List.clear();
-  x3List.clear();    
+  //x2List.clear();
+  //x3List.clear();    
   for(unsigned int i0 = 0; i0 < fVars.size(); i0++) fVars[i0] = -999;
   resetZprime();  
 }
@@ -237,15 +237,15 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
     float sfUp = resolution_sf.getScaleFactor(parameters, Variation::UP);
     float sfDown = resolution_sf.getScaleFactor(parameters, Variation::DOWN);
     double x1 = r->Gaus();
-    double x2 = r->Gaus();
-    double x3 = r->Gaus();
+    //double x2 = r->Gaus();
+    //double x3 = r->Gaus();
     double jetEnergySmearFactor = 1.0; 
     double jetEnergySmearFactorUp = 1.0; 
     double jetEnergySmearFactorDown = 1.0;    
     if (!isData) {      
       jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
-      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
+      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
+      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     }    
     double unc = getJecUnc( jetCorrPt, pVJet->eta, runNum ); //use run=999 as default
     
@@ -274,8 +274,8 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
     addJet(pVJet,fLooseVJets);
     lCount++;
     x1List.push_back(x1);
-    x2List.push_back(x2);
-    x3List.push_back(x3);
+    //x2List.push_back(x2);
+    //x3List.push_back(x3);
     if(!passJetTightLepVetoSel(pVJet))                                     continue;
     lCountT++;
   }
@@ -345,8 +345,8 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     TAddJet *pAddJet = getAddJet(iObjects[i0]);
     //JEC    
     double x1 = x1List[i0];
-    double x2 = x2List[i0];
-    double x3 = x3List[i0];
+    //double x2 = x2List[i0];
+    //double x3 = x3List[i0];
     
     double JEC_old = (iObjects[i0]->pt)/(iObjects[i0]->ptRaw);
     TLorentzVector vPJet;
@@ -370,8 +370,8 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
 
     
     double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-    double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x2;
-    double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x3;
+    double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
+    double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     
     
     //double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
