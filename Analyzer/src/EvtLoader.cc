@@ -152,11 +152,14 @@ bool EvtLoader::passTrigger() {
 bool EvtLoader::passTrigger(std::string iTrigger) {
   return fTrigger->pass(iTrigger,fEvt->triggerBits);
 }
-unsigned int EvtLoader::triggerBit() {
-  unsigned int lBit = 0;
-  //std::cout << "trig size " <<fTrigString.size() << std::endl;
-  for(unsigned int i0 = 0; i0 < fTrigString.size(); i0++) { 
-    if(fTrigger->pass(fTrigString[i0],fEvt->triggerBits))  lBit |= 1 << i0;
+ULong64_t EvtLoader::triggerBit() {
+  ULong64_t lBit = 0;
+  for(ULong64_t i0 = 0; i0 < fTrigString.size(); i0++) { 
+    if(fTrigger->pass(fTrigString[i0],fEvt->triggerBits)) {
+      ULong64_t lBittmp = 0; 
+      lBittmp = lBit |= 1;
+      lBit = lBittmp << i0;
+    }
   }
   return lBit;
 }

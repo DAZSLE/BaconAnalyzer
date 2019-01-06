@@ -32,7 +32,7 @@ public:
   void addTrigger(std::string iName);
   bool passTrigger();
   bool passTrigger(std::string iTrigger);
-  unsigned int triggerBit();
+  ULong64_t triggerBit();
   //PU
   float        puWeight(float iPU);
   int          nVtx();
