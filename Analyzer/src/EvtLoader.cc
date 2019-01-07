@@ -156,9 +156,10 @@ ULong64_t EvtLoader::triggerBit() {
   ULong64_t lBit = 0;
   for(ULong64_t i0 = 0; i0 < fTrigString.size(); i0++) { 
     if(fTrigger->pass(fTrigString[i0],fEvt->triggerBits)) {
-      ULong64_t lBittmp = 0; 
-      lBittmp = lBit |= 1;
-      lBit = lBittmp << i0;
+      ULong64_t lBittmp(0),lBitor(0); 
+      lBittmp = 1L << i0;
+      lBitor = (lBittmp |= lBit);
+      lBit = lBitor;
     }
   }
   return lBit;
