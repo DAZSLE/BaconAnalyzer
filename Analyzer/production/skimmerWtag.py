@@ -17,6 +17,10 @@ PT_CUT = 200.
 fLCSV = 0.5803
 fMCSV = 0.8838
 fTCSV = 0.9693
+#DeepCSV 94X
+fLDCSV = 0.1522
+fMDCSV = 0.4941
+fTDCSV = 0.8001
 #Pu
 #fpuDir = "root://cmsxrootd.fnal.gov//store/group/lpcbacon/dazsle/zprimebits-v12.07-Pu/hadd/"
 fDataDir = CMSSW+"/src/BaconAnalyzer/Analyzer/data/"
@@ -45,51 +49,6 @@ def setupMassCorrection():
     fcorrRECO_for.SetParameter(4,1.45375e-13)
     fcorrRECO_for.SetParameter(5,-1.50389e-17)
     return fcorrGEN,fcorrRECO_cen,fcorrRECO_for
-
-# 2018 k-factors for now
-def setupkFactors(iPt,iType,iFilename=fDataDir+"kfactors.root"):
-    iPtMin=150; iPtMax=1000;
-    f_kfactors = ROOT.TFile.Open(iFilename)
-    hQCD_Z = f_kfactors.Get('ZJets_012j_NLO/nominal')
-    hQCD_W = f_kfactors.Get('WJets_012j_NLO/nominal')
-    hLO_Z = f_kfactors.Get('ZJets_LO/inv_pt')
-    hLO_W = f_kfactors.Get('WJets_LO/inv_pt')
-    hEWK_Z = f_kfactors.Get('EWKcorr/Z')
-    hEWK_W = f_kfactors.Get('EWKcorr/W')
-    hQCD_Z.SetDirectory(0)
-    hQCD_W.SetDirectory(0)
-    hLO_Z.SetDirectory(0)
-    hLO_W.SetDirectory(0)
-    hEWK_Z.SetDirectory(0)
-    hEWK_W.SetDirectory(0)
-    f_kfactors.Close()
-    iPtMin = hQCD_Z.GetBinCenter(1);
-    iPtMax = hQCD_Z.GetBinCenter(hQCD_Z.GetNbinsX())
-    if iPt < iPtMin: iPt = iPtMin
-    if iPt > iPtMax: iPt = iPtMax
-    hEWK_Z.Divide(hQCD_Z);
-    hEWK_W.Divide(hQCD_W);
-    hQCD_Z.Divide(hLO_Z);
-    hQCD_W.Divide(hLO_W);
-    if iType == 0: #VectorDiJet                                                                                                                                             
-        iQCDKF = hQCD_Z.GetBinContent(hQCD_Z.FindBin(bosonpt));
-        ivjetsKF = DY_SF*iQCDKF;
-    elif iType == 1: #Wjets                                                                                                                                                       
-        iQCDKF = hQCD_W.GetBinContent(hQCD_W.FindBin(bosonpt));
-        iEWKKF = hEWK_W.GetBinContent(hEWK_W.FindBin(bosonpt));
-        ivjetsKF = W_SF*iEWKKF*iQCDKF;
-        wscale=[1.0,1.0,1.0,1.20,1.25,1.25,1.0];
-        ptscale=[0, 500, 600, 700, 800, 900, 1000,3000];
-        ptKF=1.
-        for i in range(0, len(ptscale)):
-            if iPt > ptscale[i] and iPt<ptscale[i+1]:  ptKF=wscale[i]
-        ivjetsKF = W_SF*iEWKKF*iQCDKF*ptKF;
-    elif iType == 2: #DYJets                                                                                                                                                    
-        iEWKKF = hEWK_Z.GetBinContent(hEWK_Z.FindBin(bosonpt));
-        ivjetsKF = DY_SF*iEWKKF;
-    else:
-        ivjetsKF = 1;
-    return ivjetsKF;
 
 def setuph2ddt(ifilename=fDataDir+"GridOutput_v13.root",iddt="Rho2D"):
     f_h2ddt = ROOT.TFile.Open(ifilename)
@@ -126,12 +85,10 @@ def setuppuw(ifilename=fDataDir+"puWeights_All.root"):
 
 # 2017 puweights
 def setuppuw2017(iSample):
-    print fpuDir2017+'/'+iSample+'.root'
     f_puMC = ROOT.TFile.Open(fpuDir2017+'/'+iSample+'.root')
-    lpuMC= f_puMC.Get("Pu")
+    lpuMC= f_puMC.Get("Pu").Clone()
     lpuMC.Scale(1/lpuMC.Integral())
     lpuMC.SetDirectory(0)
-    f_puMC.Close()
     f_puData = ROOT.TFile.Open(fpuData)
     lpuData= f_puData.Get("pileup")
     lpuData.Scale(1/lpuData.Integral())
@@ -183,13 +140,13 @@ class miniTreeProducer:
             self.cutFormula = "1==1"
             if isPu:
                 self.Pu = True
-                print 'loading puweight from file '
-                #self.puw,self.puw_up,self.puw_down = setuppuw2017(self.ibase.replace('_1000pb_weighted',''))
-                self.puw,self.puw_up,self.puw_down = setuppuw2017(self.sample)
+                self.puw = None
+                self.puw_up = None
+                self.puw_down = None
             else:
                 self.puw, self.puw_up, self.puw_down = setuppuw()
         else:
-            self.cutFormula = "(triggerBits&4)&&passJson"
+            self.cutFormula = "(triggerBits&1)&&passJson" # 2017
         self.ofile = ofile
         self.otree = otree
         self.ifile = ifile
@@ -203,7 +160,6 @@ class miniTreeProducer:
         genCorr =  self.corrGEN.Eval( iPt )
         if( abs(iEta)  < 1.3 ): recoCorr = self.corrRECO_cen.Eval( iPt )
         else: recoCorr = self.corrRECO_for.Eval( iPt )
-        #print recoCorr*genCorr
         return iMass*recoCorr*genCorr
 
     def runProducer(self,ih2ddt,fmutrig_eff,fmuid_eff,fmuiso_eff):
@@ -211,7 +167,9 @@ class miniTreeProducer:
         self.Puppijet0_N2 = array('f', [-100.0])
         self.Puppijet0_Tau21 = array('f', [-100.0])
         self.Puppijet0_N2DDT = array('f', [-100.0])
-        self.Puppijet0_doublecsv = array('f', [-100.0])
+        self.Puppijet0_doublecsv = array('f', [-100.0])   
+        self.Puppijet0_deepdoubleb = array('f', [-100.0])
+        self.Puppijet0_deepdoubleb_nomasssculptpen = array('f', [-100.0])
         self.Puppijet0_pt = array('f', [-100.0])
         self.Puppijet0_msd = array('f', [-100.0])
         self.Puppijet0_vMatching = array('f', [-100.0])
@@ -257,6 +215,8 @@ class miniTreeProducer:
         self.otree.Branch('Puppijet0_Tau21', self.Puppijet0_Tau21, 'Puppijet0_Tau21/F')
         self.otree.Branch('Puppijet0_N2DDT', self.Puppijet0_N2DDT, 'Puppijet0_N2DDT/F')
         self.otree.Branch('Puppijet0_doublecsv', self.Puppijet0_doublecsv, 'Puppijet0_doublecsv/F')
+        self.otree.Branch('Puppijet0_deepdoubleb', self.Puppijet0_deepdoubleb, 'Puppijet0_deepdoubleb/F')
+        self.otree.Branch('Puppijet0_deepdoubleb_nomasssculptpen', self.Puppijet0_deepdoubleb_nomasssculptpen, 'Puppijet0_deepdoubleb_nomasssculptpen/F')
         self.otree.Branch('Puppijet0_pt', self.Puppijet0_pt, 'Puppijet0_pt/F')
         self.otree.Branch('Puppijet0_msd', self.Puppijet0_msd, 'Puppijet0_msd/F')
         self.otree.Branch('Puppijet0_vMatching', self.Puppijet0_vMatching, 'Puppijet0_vMatching/F')
@@ -281,6 +241,11 @@ class miniTreeProducer:
         self.bb8 = ROOT.TH1F("bb8", "After VSize Jet", 3, -0.5, 1.5)
 
         self.f1 = ROOT.TFile.Open(self.ifile,'read')
+
+        if self.Pu:
+            print 'loading puweight from file '
+            self.puw,self.puw_up,self.puw_down = setuppuw2017(self.sample)
+
         self.treeMine = self.f1.Get(self.itree)
         try:
             if not self.treeMine.InheritsFrom("TTree"):
@@ -314,6 +279,8 @@ class miniTreeProducer:
             lTight = getattr(self.treeMine,"%sPuppijet0_isTightVJet"%(self.jet));
             lN2 = getattr(self.treeMine,"%sPuppijet0_N2sdb1"%(self.jet));
             lDcsv = getattr(self.treeMine,"%sPuppijet0_doublecsv"%(self.jet));
+            lDDcsv =  getattr(self.treeMine,"%sPuppijet0_deepdoubleb"%(self.jet));
+            lDDMcsv = getattr(self.treeMine,"%sPuppijet0_deepdoubleb_nomasssculptpen"%(self.jet));
             lVMatching = getattr(self.treeMine,"%sPuppijet0_vMatching"%(self.jet));
             lVHadronic = getattr(self.treeMine,"%sPuppijet0_isHadronicV"%(self.jet));
             lVSize = getattr(self.treeMine,"%sPuppijet0_vSize"%(self.jet));
@@ -329,6 +296,8 @@ class miniTreeProducer:
             self.Puppijet0_Tau21[0] = lTau21
             self.Puppijet0_N2DDT[0] = lN2DDT
             self.Puppijet0_doublecsv[0] = lDcsv
+            self.Puppijet0_deepdoubleb[0] = lDDcsv
+            self.Puppijet0_deepdoubleb_nomasssculptpen[0] = lDDMcsv
             self.Puppijet0_pt[0] = lPt
             self.Puppijet0_msd[0] = lMass
             self.Puppijet0_vMatching[0] = lVMatching
@@ -377,24 +346,13 @@ class miniTreeProducer:
                 puweight_up = self.puw_up.GetBinContent(self.puw_up.FindBin(nPuForWeight))
                 puweight_down = self.puw_down.GetBinContent(self.puw_down.FindBin(nPuForWeight))
 
-            #kfactor
-            #if 'WJets' in self.ifile:
-            #    vjetsKF = setupkFactors(2,self.treeMine.fBosonPt)
-            #elif 'DYJets' in self.ifile:
-            #    vjetsKF = setupkFactors(3,self.treeMine.fBosonPt)
-            #else:
             vjetsKF = 1;
 
             # final weight
             if self.isMc is False:
                 self.weight[0] = 1
             if self.isMc is True:
-                #print 'lumi weight ',self.Lumi
-                #print 'scale ',self.treeMine.scale1fb
-                #print 'pu ',puweight
                 self.weight[0] = puweight*self.treeMine.scale1fb*vjetsKF*mutrigweight*muidweight*muisoweight*self.Lumi
-                #print 'puweight scale1fb vjets ltrig lid liso ',puweight,self.treeMine.scale1fb,vjetsKF,mutrigweight,muidweight,muisoweight
-                #self.weight[0] = puweight*vjetsKF*mutrigweight # scale1fb is useless if sample not Norm
 
             # evt cuts
             self.triggerpassbb[0] = 1.
@@ -488,7 +446,8 @@ class miniTreeProducer:
                 lAK4Phi = getattr(self.treeMine,"AK4Puppijet%i_phi"%i0);
                 lAK4Eta = getattr(self.treeMine,"AK4Puppijet%i_eta"%i0);
                 lAK4Csv = getattr(self.treeMine,"AK4Puppijet%i_csv"%i0);
-                
+                lAK4DCsv =  getattr(self.treeMine,"AK4Puppijet%i_deepcsvb"%i0)+getattr(self.treeMine,"AK4Puppijet%i_deepcsvbb"%i0);
+
                 # (AK4,tight muon): DPhi,DR      
                 lDPhi_AK4Jet_TightMuon = lAK4Phi - lmuPhi
                 if lDPhi_AK4Jet_TightMuon >= math.pi:
@@ -508,9 +467,13 @@ class miniTreeProducer:
                 lDR_AK4Jet_Jet = math.sqrt((lAK4Eta - lEta)*(lAK4Eta - lEta)+lDPhi_AK4Jet_Jet*lDPhi_AK4Jet_Jet)
                 if lDR_AK4Jet_Jet < lConeSize:
                     lDR_Jet_Matched = 1
-
-                if abs(lAK4Eta) < 2.4 and lAK4Csv > fMCSV and lDR_TightMuon_Matched ==0 and lDR_Jet_Matched == 0 and lAK4Pt > 30.:
-                    lnBTaggedAK4Jet += 1
+                    
+                # CSV
+                # if abs(lAK4Eta) < 2.4 and lAK4Csv > fMCSV and lDR_TightMuon_Matched ==0 and lDR_Jet_Matched == 0 and lAK4Pt > 30.:
+                #     lnBTaggedAK4Jet += 1
+                # DCSV
+                if abs(lAK4Eta) < 2.4 and lAK4DCsv > fMDCSV  and lDR_TightMuon_Matched ==0 and lDR_Jet_Matched == 0 and lAK4Pt > 30.:
+                    lnBTaggedAK4Jet += 1   
 
             if lnBTaggedAK4Jet > 0:
                 self.bb4.Fill(self.triggerpassbb[0])
@@ -552,16 +515,16 @@ def main(options,args):
 
     ftrans_h2ddt = setuph2ddt(fDataDir+options.ddt,options.iddt)
 
-    f_mutrig = ROOT.TFile.Open(fDataDir+"EfficienciesAndSF_RunBtoF_Nov17Nov2017.root", "read")
+    f_mutrig = ROOT.TFile.Open(fDataDir+"/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root", "read")
     fmutrig_eff = f_mutrig.Get("Mu50_PtEtaBins/efficienciesDATA/pt_abseta_DATA")
     fmutrig_eff.Sumw2()
     fmutrig_eff.SetDirectory(0)
     f_mutrig.Close()
     
-    with open(fDataDir+"RunBCDEF_data_ID.json") as ID_input_file:
+    with open(fDataDir+"/RunBCDEF_data_ID.json") as ID_input_file:
         fmuid_eff = json.load(ID_input_file)
         
-    with open(fDataDir+"RunBCDEF_data_ISO.json") as ISO_input_file:
+    with open(fDataDir+"/RunBCDEF_data_ISO.json") as ISO_input_file:
         fmuiso_eff = json.load(ISO_input_file)
 
     for i in range(len(tags)):
@@ -579,6 +542,7 @@ def main(options,args):
             oFile =  ROOT.TFile.Open(OutDir+'/'+basename, 'recreate')
             oFile.cd()
             oTree =  ROOT.TTree('otree2', 'otree2')
+            print 'IFILE ',iFile
             prod = miniTreeProducer(options.isMc, options.isPu,oFile,oTree, iFile, options.itree, options.jet, tags[i][0], options.lumi)
             prod.runProducer(ftrans_h2ddt,fmutrig_eff,fmuid_eff,fmuiso_eff)
             oFile.cd()
@@ -597,7 +561,7 @@ if __name__ == '__main__':
     parser.add_option("--ddt", type=str, default='GridOutput_v13.root', help="ddt")
     parser.add_option("--iddt", type=str, default='Rho2D', help="iddt")
     parser.add_option('--jet', dest='jet', default='AK8', help='jet type')
-    parser.add_option('--itree', dest='itree', default='otree', help='itree name')
+    parser.add_option('--itree', dest='itree', default='Events', help='itree name')
     parser.add_option('-s','--sample',dest="sample", default="All",type='string', help="samples to produce")
     parser.add_option('--lumi', type = float, dest='lumi',default=1,help="lumi weight")
     (options, args) = parser.parse_args()
