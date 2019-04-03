@@ -1,0 +1,1 @@
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2018D_PromptReco_v1_v2/JetHT/CRAB3/190306_155556/0000/Output_1.root
