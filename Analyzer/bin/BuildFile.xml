@@ -5,3 +5,4 @@
 <bin file="runZprime.cpp" name="runZprime"> </bin>
 <bin file="runHWW.cpp" name="runHWW"> </bin>
 <bin file="../src/NormalizeNtuple.cc" name="NormalizeNtuple"> </bin>
+<bin file="RemoveDuplicateEvents.cpp" name="RemoveDuplicateEvents"> </bin>
