@@ -10,12 +10,12 @@ from optparse import OptionParser
 from submitZprime import samplesDict, exec_me
 
 EOS = 'eos root://cmseos.fnal.gov'
-cmssw = os.getenv('CMSSW_VERSION', 'CMSSW_9_4_7')
-cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_9_4_7')
+cmssw = os.getenv('CMSSW_VERSION', 'CMSSW_10_2_6')
+cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_10_2_6')
 
 import ROOT
 
-filesToTransfer = "{0}.tgz, {0}/bin/slc6_amd64_gcc630/NormalizeNtuple, {0}/src/BaconAnalyzer/Analyzer/data.tgz".format(cmssw_base)
+filesToTransfer = "{0}.tgz, {0}/bin/slc6_amd64_gcc700/NormalizeNtuple, {0}/src/BaconAnalyzer/Analyzer/data.tgz".format(cmssw_base)
 filesToTransfer += ",{0}/src/BaconAnalyzer/Analyzer/production/skimmer.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerDDT.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerN2.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerWtag.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerHWW.py, {0}/src/BaconAnalyzer/Analyzer/production/submitZprime.py".format(cmssw_base)
 
 fpuDir2017 = "../data/pu2017"
@@ -57,7 +57,7 @@ def getNentries(iFiles):
 
 def getLumiWeight(iLabel,iFiles,iLumi):
     print 'get Lumi Weight for label %s, file %s and lumi %3.2f'%(iLabel,iFiles,iLumi)
-    fXSec = getXSection(xsecdict[iLabel])
+    fXSec = getXSection(iLabel)
     fNentries = getNentries(iFiles)
     fWeight = (iLumi * fXSec * 1000) / fNentries
     print 'lumi %.2f, xsec %.2f , 1000, nent %.3f: weight %f'%(iLumi,fXSec,fNentries,fWeight)
@@ -81,12 +81,12 @@ def getPuHistogram(iFiles,iSample):
             else:
                 lHPu.Add(lTmp)
             lHPu.SetDirectory(0)
-            fOut=ROOT.TFile.Open(lPuPath,'RECREATE')
-            lHPu.Write()
-            fOut.Close()
-        return lPuPath
+        fOut=ROOT.TFile.Open(lPuPath,'RECREATE')
+        lHPu.Write()
+        fOut.Close()
+    return lPuPath
 
-def addCommand(iBasename,isMc,options,iLumi=1,iFile=None):
+def addCommand(iBasename,isMc,options,iLumi=1,iFile=None,iHPuFile=None):
     if iFile is None:
         pCommand = 'python %s -i $PWD/hadd/ -o $PWD/skim/ -s %s '%(options.skimmer,iBasename.replace('.root',''))
     else:
@@ -111,14 +111,18 @@ def main(options,args):
     exec_me('%s mkdir -p /%s/%s'%(EOS,iOutDir,skimDir),options.dryRun)
 
     for iLabel, isMc in lSamples.iteritems():
+        if '_10X' in options.sample:
+            iLabel = iLabel.replace('_10X','')
+            if '_PS' in iLabel:
+                iLabel = iLabel.replace('_PS','')
         if options.savePu:
             print 'saving pu histogram'
             lFiles = []
             lBadFiles = []
-            lFiles, lBadFiles = getFiles(iDataDir,iLabel+'*',None,None)
+            lFiles, lBadFiles = getFiles(iDataDir,iLabel+'/',None,None)
             print "bad files = ", lBadFiles
             print "files = ",lFiles
-            getPuHistogram(lFiles,iLabel)
+            puhist = getPuHistogram(lFiles,iLabel)
             continue
 
         pBasename = iLabel + '.root'
@@ -132,12 +136,17 @@ def main(options,args):
         lFiles = []
         lBadFiles = []
         if 'Wtag' in options.skimmer:
-            lFiles, lBadFiles = getFiles(iDataDir,iLabel+'*',None,None)
-            iLumi = getLumiWeight(iLabel,lFiles,1)
+            lFiles, lBadFiles = getFiles(iDataDir,iLabel+'/',None,None)
+            if isMc=="mc":
+                iLumi = getLumiWeight(iLabel,lFiles,1)
+            else:
+                iLumi = 1
+                iHPu = None
         else:
             lFiles, lBadFiles = getFiles(iDataDir,iLabel+'/',None,None)
             iLumi = 1
-        #print "files To Convert = ",lFiles
+            iHPu = None
+        print "files To Convert = ",lFiles
         print "bad files = ", lBadFiles
 
 
@@ -147,7 +156,7 @@ def main(options,args):
         pCommand += 'pwd\n'
         pCommand += 'tar -xf %s.tgz\n'% (cmssw)
         pCommand += 'rm %s.tgz\n'% (cmssw)
-        pCommand += 'export SCRAM_ARCH=slc6_amd64_gcc630\n'
+        pCommand += 'export SCRAM_ARCH=slc6_amd64_gcc700\n'
         pCommand += 'scramv1 project CMSSW %s\n'%cmssw
         pCommand += 'tar -xzf %s.tgz\n'% (cmssw)
         pCommand += 'ls %s/bin\n'%cmssw
@@ -175,6 +184,7 @@ def main(options,args):
             pFin = i0*nFiles+len(lFiles[i0*nFiles:(i0+1)*nFiles])
             for i1 in range(pInit,pFin):
                 pFile = lFiles[i1]
+                print pFile
                 pCommand += addCommand(pBasename,isMc,options,iLumi,pFile)
             pCommand += 'hadd -f $PWD/hadd/%s $PWD/skim/* \n'%(pBasename_i)
             pCommand += 'xrdcp -s $PWD/hadd/%s root://cmseos.fnal.gov//%s/%s/%s\n'%(pBasename_i,iOutDir,skimDir,pBasename_i)
@@ -260,10 +270,11 @@ def getFiles(dir,searchstring,additionalstring = None, skipString = None):
                 continue
         else:
             if options.savePu or 'Wtag' in options.skimmer:
-                filename = 'root://cmseos.fnal.gov//%s'%(fi[0])
+                #filename = 'root://cmseos.fnal.gov//%s'%(fi[0])
+                filename = 'root://cmseos.fnal.gov//%s/%s/%s'%(dir,thesearchstring,fi[0])
             else:
                 filename = 'root://cmseos.fnal.gov//%s/%s/%s'%(dir,thesearchstring,fi[0])
-            print 'filenmae',filename
+            print 'filename',filename
             cfiles.append(filename)
                 
     return cfiles, badfiles
