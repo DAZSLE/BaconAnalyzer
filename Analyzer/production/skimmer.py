@@ -77,6 +77,13 @@ def sklimAdd(fn,odir,mass=0):
     newscale1fb = array( 'f', [ 0. ] )
     tree.SetBranchAddress("scale1fb",newscale1fb)
 
+    fvbf = ROOT.TFile.Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/vbf_ptH_n3lo.root")
+    h_vbf_num = fvbf.Get('h_nnnlo_ptH')
+    h_vbf_den = fvbf.Get('h_lo_ptH')
+    h_vbf_num.SetDirectory(0)
+    h_vbf_den.SetDirectory(0)
+    fvbf.Close()
+
     for i in range(nent):
 
         if( nent/100 > 0 and i % (1 * nent/100) == 0):
