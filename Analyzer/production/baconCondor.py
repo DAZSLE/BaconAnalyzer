@@ -31,7 +31,8 @@ parser.add_option("-a", "--args", dest="args", default=[], action="append",
                   help="Pass executable args n:arg OR named arguments name:arg. Multiple args can be passed with <val1,val2...> or lists of integers with [min,max,stepsize]")
 parser.add_option("-v", "--verbose", dest="verbose", default=False, action="store_true", 
                   help="Spit out more info")
-
+parser.add_option("--dat", dest="dat", default=False, action="store_true",
+                  help="output is txt instead of root")
 # Make condor submission scripts options
 parser.add_option("-n", "--njobs", dest="njobs", type='int', default=-1,
                   help="Split into n jobs, will automatically produce submission scripts")
@@ -233,50 +234,61 @@ for job_i in range(njobs):
         # exec line
         nfiles_i = 0
         outfile = 'Output_job%d'%job_i
-        job_hadd = 'hadd -f %s.root '%outfile
+        if options.dat:
+            job_hadd = 'cat *.dat > %s.dat '%outfile
+        else:
+            job_hadd = 'hadd -f %s.root '%outfile
         for fil_i, fil in enumerate(files):
             if not fil[1]: continue
             exec_line_i = exec_line.replace('subjob_i','%d'%subjob_i)
             exec_line_i = exec_line_i.replace('Output.root','Output_%d.root'%fil_i)
             exec_line_i = exec_line_i.replace('fileinput', " " + fil[0] + " ")
             job_exec += exec_line_i + '; '
-            job_hadd += 'Output_%d.root '%fil_i
+            if not options.dat:
+                job_hadd += 'Output_%d.root '%fil_i
             nfiles_i += 1
 
         # hadd and copy
         job_exec += '\n' +job_hadd + ';\n '
         lOut = ''
-        if options.eosoutdir:
-            if njobs_per_file > 1:                    
-                lOut = 'root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d_subjob%d.root'%(
-                    options.eosoutdir, outfile, job_i, lIFile, lFFile, subjob_i)
-            else:
-                lOut = 'root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d.root'%(
-                    options.eosoutdir, outfile, job_i, lIFile, lFFile)
-            job_copy = 'xrdcp -s %s.root %s; \n' %( outfile, lOut)
+        if njobs_per_file > 1:
+            lPOut ='%s_job%d_file%dto%d_subjob%d'%(outfile, job_i, lIFile, lFFile, subjob_i)
         else:
-            if njobs_per_file > 1:
-                lOut = '%s/%s_job%d_file%dto%d_subjob%d.root'%(
-                    options.outdir, outfile, job_i, lIFile, lFFile, subjob_i)
+            lPOut = '%s_job%d_file%dto%d'%(outfile, job_i, lIFile, lFFile)
+        if options.eosoutdir:
+            if options.dat:
+                lOut = 'root://cmseos.fnal.gov/'+options.eosoutdir+'/'+lPOut+'.dat'
+                job_copy = 'xrdcp -s %s.dat %s; \n' %( outfile, lOut)
             else:
-                lOut = '%s/%s_job%d_file%dto%d.root'%(
-                    options.outdir, outfile, job_i, lIFile, lFFile)
-            job_copy = 'mv %s.root %s; \n'%( outfile, lOut)
+                lOut = 'root://cmseos.fnal.gov/'+options.eosoutdir+'/'+lPOut+'.root'
+                job_copy = 'xrdcp -s %s.root %s; \n' %( outfile, lOut)
+        else:
+            if options.dat:
+                lOut = options.outdir+'/'+lPOut+'.dat'
+                job_copy = 'mv %s.dat %s; \n'%( outfile, lOut)
+            else:
+                lOut = options.outdir+'/'+lPOut+'.root'
+                job_copy = 'mv %s.root %s; \n'%( outfile, lOut)
 
-        # add security if hadd does not work
-        job_size = 'file=%s.root \n'%outfile
-        job_size += 'minimumsize=1000 \n'
-        job_size += 'actualsize=$(wc -c <"$file") \n'
-        job_size += 'if [ $actualsize -ge $minimumsize ]; then \n'
-        job_size += '\t echo size is over $minimumsize bytes: all good \n'
-        job_size += '\t %s \n'%job_copy
-        job_size += 'else \n'
-        job_size += '\t echo size is under $minimumsize bytes \n'
-        for fil_i, fil in enumerate(files):
-            job_size += '\t xrdcp -s Output_%d.root %s ;\n'%(fil_i,lOut.replace('.root','_%d.root'%fil_i))
-        job_size += 'fi \n'
+        if not options.dat:
+            # add security if hadd does not work
+            job_size = 'file=%s.root \n'%outfile
+            job_size += 'minimumsize=1000 \n'
+            job_size += 'actualsize=$(wc -c <"$file") \n'
+            job_size += 'if [ $actualsize -ge $minimumsize ]; then \n'
+            job_size += '\t echo size is over $minimumsize bytes: all good \n'
+            job_size += '\t %s \n'%job_copy
+            job_size += 'else \n'
+            job_size += '\t echo size is under $minimumsize bytes \n'
+            for fil_i, fil in enumerate(files):
+                job_size += '\t xrdcp -s Output_%d.root %s ;\n'%(fil_i,lOut.replace('.root','_%d.root'%fil_i))
+            job_size += 'fi \n'
 
-        job_exec += job_size
+            job_exec += job_size
+        else:
+            job_size = '%s \n'%job_copy
+            job_exec += job_size
+
         if options.verbose: print "VERB -- job exec line --> ", job_exec
 
         if options.dryRun:
