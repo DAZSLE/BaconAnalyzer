@@ -10,28 +10,23 @@ LSFJOB*
 # no python compiled files:
 *pyc
 # no python init file
-python/__init__.py
-Analyzer/python/__init__.py
+*__init__.py
+# no root files
 *.root
-Analyzer/scratch/
-Analyzer/zprimebits/
-Analyzer/zprime/
+# no strange folders
 Analyzer/scripts/
 Analyzer/python/
-Analyzer/plot/ZprimePlots
-Analyzer/plot/ggHbbPlots
+Analyzer/plot/
 Analyzer/zprimebits*
+Analyzer/*pfjets*
+# no compiled
 *.d
 *.so
 *.o
 *.pyc
 *.pcm
-./#*
-./__afs*
-Analyzer/macros/.__afs*
-Analyzer/plot/.__afs*
-Analyzer/skim/.__afs*
-Analyzer/production/.__afs*
+.__afs*
+*docker*
 *core.*
-Analyzer/training/
 Analyzer/*.tgz
+Analyzer/production/*_jobs*
