@@ -4,12 +4,13 @@
 #include "TLorentzVector.h"
 #include "BaconAna/DataFormats/interface/TGenEventInfo.hh"
 #include "BaconAna/DataFormats/interface/TGenParticle.hh"
+#include "BaconAna/DataFormats/interface/TPSWeight.hh"
 
 using namespace baconhep;
 
 class GenLoader { 
 public:
-  GenLoader(TTree *iTree);
+  GenLoader(TTree *iTree, bool isPs=false);
   ~GenLoader();
   void reset();
   void setupTree(TTree *iTree,float iXSIn = 1);
@@ -40,11 +41,17 @@ public:
   void saveTTbarType();
   float computeTTbarCorr();
 
+  // ps weights (only for some samples)
+  void setPSWeights(TTree *iTree);
+  void loadPSWeights(int iEvent);
+  void fillPSWeights();
+
   TClonesArray  *fGens;
   TBranch       *fGenBr;
   TGenEventInfo *fGenInfo;
   TBranch       *fGenInfoBr;
-
+  TClonesArray  *fPSWeights;
+  TBranch       *fPSWeightBr;
   float fWeight;
   float fBosonPt;
   float fBosonPhi;
@@ -58,11 +65,9 @@ public:
   float fAntitopPt;
   float fTopPtWeight;
 
-  float fGenPt;
-  float fGenEta;
-  float fGenPhi;
-  float fGenSize;
-  float fGenPdgId;
+  float fgenbPt,fgenbPhi,fgenbMass,fgenbEta;
+  float fgenlPt,fgenlPhi,fgenlEta;
+  int fgenlId;
 
   std::vector<float> fgenHPt;
   std::vector<float> fgenHEta;
@@ -75,6 +80,9 @@ public:
   std::vector<std::vector<float>> fgenHDauM;
   std::vector<std::vector<float>> fgenHDauId;  
   std::vector<std::vector<float>> fgenHDauDecay;
+
+  int fNWeights = 50; // # of weights
+  std::vector<float> fgenPSWeight;
 protected: 
   TTree         *fTree;
 };

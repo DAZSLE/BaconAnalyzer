@@ -7,7 +7,7 @@
 
 using namespace baconhep;
 
-GenLoader::GenLoader(TTree *iTree) { 
+GenLoader::GenLoader(TTree *iTree, bool isPs) { 
   fGenInfo  = new TGenEventInfo();
   iTree->SetBranchAddress("GenEvtInfo",       &fGenInfo);
   fGenInfoBr  = iTree->GetBranch("GenEvtInfo");
@@ -16,6 +16,11 @@ GenLoader::GenLoader(TTree *iTree) {
   iTree->SetBranchAddress("GenParticle",       &fGens);
   fGenBr  = iTree->GetBranch("GenParticle");
 
+  if(isPs) {
+    fPSWeights  = new TClonesArray("baconhep::TPSWeight");
+    iTree->SetBranchAddress("PSWeight", &fPSWeights);
+    fPSWeightBr  = iTree->GetBranch("PSWeight");
+  }
 }
 GenLoader::~GenLoader() { 
   delete fGenInfo;
@@ -23,6 +28,9 @@ GenLoader::~GenLoader() {
 
   delete fGens;
   delete fGenBr;
+
+  delete fPSWeights;
+  delete fPSWeightBr;
 }
 void GenLoader::reset() { 
   fBosonPt  = -1;
@@ -53,6 +61,14 @@ void GenLoader::setupTree(TTree *iTree,float iXSIn) {
   fTree->Branch("topPtWeight"     ,&fTopPtWeight   ,"fTopPtWeight/F");
 }
 void GenLoader::resetHiggs() {
+  fgenbPt = -999;
+  fgenbEta = -999;
+  fgenbPhi = -999;
+  fgenbMass = -999;
+  fgenlPt = -999;
+  fgenlEta = -999;
+  fgenlPhi = -999;
+  fgenlId = -999;
   for(int i0 = 0; i0 < int(fgenHPt.size()); i0++) {
     fgenHPt[i0] = -99;
     fgenHEta[i0] = -99;
@@ -71,6 +87,14 @@ void GenLoader::resetHiggs() {
 void GenLoader::setupTreeHiggs(TTree *iTree) {
   resetHiggs();
   fTree = iTree;
+  fTree->Branch("genbPt"     ,&fgenbPt   ,"fgenbPt/F");
+  fTree->Branch("genbPhi"    ,&fgenbPhi  ,"fgenbPhi/F");
+  fTree->Branch("genbMass"    ,&fgenbMass  ,"fgenbMass/F");
+  fTree->Branch("genbEta"    ,&fgenbEta  ,"fgenbEta/F");
+  fTree->Branch("genlPt"     ,&fgenlPt   ,"fgenlPt/F");
+  fTree->Branch("genlPhi"    ,&fgenlPhi  ,"fgenlPhi/F");
+  fTree->Branch("genlId"    ,&fgenlId  ,"fgenlId/I");
+  fTree->Branch("genlEta"    ,&fgenlEta  ,"fgenlEta/F");
   fgenHPt.clear(); fgenHEta.clear(); fgenHPhi.clear(); fgenHMass.clear(); 
   fgenHDauPt.clear(); fgenHDauEta.clear(); fgenHDauPhi.clear(); fgenHDauM.clear(); fgenHDauId.clear(); fgenHDauDecay.clear();
   for(int i0 = 0; i0 < 2; i0++) {
@@ -332,6 +356,7 @@ int GenLoader::getHadronicWInTopFlavor(TGenParticle *genp,int iW,TLorentzVector 
   TLorentzVector vW,vDau1,vDau2,b;
   TGenParticle *dau1{nullptr};
   TGenParticle *dau2{nullptr};
+  TGenParticle *glep{nullptr};
 
   vW.SetPtEtaPhiM(genp->pt, genp->eta, genp->phi, genp->mass);
   int iWlast = findLastParent(iW, 24);
@@ -339,16 +364,16 @@ int GenLoader::getHadronicWInTopFlavor(TGenParticle *genp,int iW,TLorentzVector 
   int iQ=0, jQ=0;
   for (; iQ<fGens->GetEntriesFast(); ++iQ) {
     dau1 = getParticle(iQ);
-    if(dau1->parent==iWlast && abs(dau1->pdgId)<6) {
+    if( dau1->parent==iWlast && (abs(dau1->pdgId)<6 || abs(dau1->pdgId)<15)) {
       vDau1.SetPtEtaPhiM(dau1->pt, dau1->eta, dau1->phi, dau1->mass);
       wMatching = jet.DeltaR(vDau1);
       wSize     = vW.DeltaR(vDau1);
-      break; // found the first quark                                                                                                                                                                                                                       
+      break; // found the first quark                                                                                                                                            
     }
   }
   for (jQ=iQ+1; jQ<fGens->GetEntriesFast(); ++jQ) {
     dau2 = getParticle(jQ);
-    if(dau2->parent==iWlast && abs(dau2->pdgId)<6) {
+    if(dau2->parent==iWlast && (abs(dau2->pdgId)<6 || abs(dau1->pdgId)<15)) {
       vDau2.SetPtEtaPhiM(dau2->pt, dau2->eta, dau2->phi, dau2->mass);
       wMatching = TMath::Max(wMatching,jet.DeltaR(vDau2));
       wSize     = TMath::Max(wSize,vW.DeltaR(vDau2));
@@ -362,6 +387,15 @@ int GenLoader::getHadronicWInTopFlavor(TGenParticle *genp,int iW,TLorentzVector 
   int wType = 0;
   if ( std::abs(dau1->pdgId) <= 3 && std::abs(dau2->pdgId) <= 3 ) wType = 1;
   else if ( std::abs(dau1->pdgId) == 4 || std::abs(dau2->pdgId) == 4 ) wType = 2;
+  else if ( std::abs(dau1->pdgId) == 11 || std::abs(dau2->pdgId) == 11 ) wType = 3;
+  else if ( std::abs(dau1->pdgId) == 13 || std::abs(dau2->pdgId) == 13 ) wType = 4;
+
+  // save gen info
+  if ( std::abs(dau1->pdgId) == 11 || std::abs(dau1->pdgId) == 13 ) glep = dau1;
+  if ( std::abs(dau2->pdgId) == 11 || std::abs(dau2->pdgId) == 13 ) glep = dau2;
+  if ( glep != nullptr ) {
+    fgenlPt = glep->pt; fgenlPhi = glep->phi; fgenlId = glep->pdgId; fgenlEta =glep->eta;
+  }
 
   // Check if b is in jet cone
   int iTop = genp->parent;
@@ -378,6 +412,9 @@ int GenLoader::getHadronicWInTopFlavor(TGenParticle *genp,int iW,TLorentzVector 
       }
     }
     if ( genB == nullptr ) return -1;
+    if ( glep != nullptr ) { //save b only for lep W
+      fgenbPt = genB->pt;fgenbPhi = genB->phi; fgenbMass =genB->mass; fgenbEta =genB->eta;
+    }
     b.SetPtEtaPhiM(genB->pt, genB->eta, genB->phi, genB->mass);
     if ( b.DeltaR(jet) < dR ) wType += 8;
   }
@@ -490,7 +527,7 @@ int GenLoader::isHWWsemilepBoson(int iH,int iId,int iIdDau,float &genSize){
 	lDaus.push_back(dau); lDausIndex.push_back(iD);
       }
     }
-    std::cout << "dau size "<< lDaus.size() << std::endl;
+    //std::cout << "dau size "<< lDaus.size() << std::endl;
     unsigned int lMax =4;
     if(lDaus.size()<lMax) lMax = lDaus.size();
     std::vector<TGenParticle*> lLeps,lQuarks;
@@ -652,4 +689,25 @@ float GenLoader::computeTTbarCorr() {
   double w2 = exp(0.0615 - 0.0005*pt2);
   fTopPtWeight = sqrt(w1*w2);
   return sqrt(w1*w2);
+}
+void GenLoader::setPSWeights(TTree *iTree) {
+  fTree = iTree;
+  fgenPSWeight.clear();
+  for(int i1 = 0; i1 < fNWeights; i1++ ) {
+    fgenPSWeight.push_back(-99);
+  }
+  for(int i0 = 0; i0 < fNWeights; i0++) {
+    std::stringstream pSPSWeight; pSPSWeight << "psWeight" << i0;
+    fTree->Branch(pSPSWeight.str().c_str()   ,&fgenPSWeight[i0]   ,(pSPSWeight.str()+"/F").c_str());
+  }
+}
+void GenLoader::loadPSWeights(int iEvent) {
+  fPSWeights    ->Clear();
+  fPSWeightBr   ->GetEntry(iEvent);
+}
+void GenLoader::fillPSWeights(){
+  for(int i1 = 0; i1 < fNWeights; i1++) {
+    TPSWeight *psweight = (TPSWeight*)((*fPSWeights)[i1]);
+    fgenPSWeight[i1] = psweight->weight;
+  }
 }
