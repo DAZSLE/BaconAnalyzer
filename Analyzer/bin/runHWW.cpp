@@ -63,10 +63,9 @@ int main( int argc, char **argv ) {
   const std::string lName        = argv[1];
   const std::string lOption      = argv[2];
   const std::string lJSON        = argv[3];
-  const double      lXS          = atof(argv[4]);
-  //const double      weight       = atof(argv[5]);
-  const int      iSplit          = atoi(argv[6]);
-  const int      maxSplit        = atoi(argv[7]);
+  const std::string lOutput      = argv[4];
+  const int         iSplit       = atoi(argv[5]);
+  const int         maxSplit     = atoi(argv[6]);
 
   fRangeMap = new RunLumiRangeMap();
   if(lJSON.size() > 0) fRangeMap->AddJSONFile(lJSON.c_str());
@@ -74,8 +73,9 @@ int main( int argc, char **argv ) {
   bool isData;
   if(lOption.compare("data")!=0) isData = false;
   else isData = true;
-				   
+		
   TTree *lTree = load(lName); 
+
   // Declare Readers 
   fEvt       = new EvtLoader     (lTree,lName);                                             // fEvt, fEvtBr, fVertices, fVertexBr
   fMuon      = new MuonLoader    (lTree);                                                   // fMuon and fMuonBr, fN = 2 - muonArr and muonBr
@@ -83,10 +83,10 @@ int main( int argc, char **argv ) {
   fTau       = new TauLoader     (lTree);                                                   // fTaus and fTaurBr, fN = 1
   fPhoton    = new PhotonLoader  (lTree);                                                   // fPhotons and fPhotonBr, fN = 1
   fJet4      = new JetLoader     (lTree, isData);                                           // fJets, fJetBr => AK4PUPPI, sorted by pT
-  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi",3, isData,true);           // fVJets, fVJetBr => AK8PUPPI
+  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi",3, isData,false);          // fVJets, fVJetBr => AK8PUPPI
   if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                     // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
 
-  TFile *lFile = TFile::Open("Output.root","RECREATE");
+  TFile *lFile = TFile::Open(lOutput.c_str(),"RECREATE");
   TTree *lOut  = new TTree("Events","Events");
 
   //Setup histograms containing total number of processed events (for normalization)
@@ -94,18 +94,20 @@ int main( int argc, char **argv ) {
   TH1F *SumWeights = new TH1F("SumWeights", "SumWeights", 1, 0.5, 1.5);
   TH1F *SumScaleWeights = new TH1F("SumScaleWeights", "SumScaleWeights", 6, -0.5, 5.5);
   TH1F *SumPdfWeights = new TH1F("SumPdfWeights", "SumPdfWeights", NUM_PDF_WEIGHTS, -0.5, NUM_PDF_WEIGHTS-0.5);
-  
-    
+  TH1F *Pu = new TH1F("Pu", "Pu", 100, 0, 100);      
+
   // Setup Tree
-  fEvt      ->setupTree      (lOut); 
-  fVJet8    ->setupTree      (lOut,"AK8Puppijet",true);  // Hww
+  fEvt      ->setupTree      (lOut);
+  fVJet8    ->setupTree      (lOut,"AK8Puppijet",true); // Hww
+  fVJet8    ->setupTreeZprime(lOut,"AK8Puppijet");
   fJet4     ->setupTree      (lOut,"AK4Puppijet");
-  fMuon     ->setupTree      (lOut); 
-  fElectron ->setupTree      (lOut); 
+  fMuon     ->setupTree      (lOut);
+  fElectron ->setupTree      (lOut);
   fTau      ->setupTree      (lOut);
-  if(lOption.compare("data")!=0) {
-    fGen ->setupTree (lOut,float(lXS));
-    fGen ->setupTreeHiggs(lOut);
+  fPhoton   ->setupTree      (lOut);
+  if(lOption.compare("data")!=0){
+    fGen->setupTree     (lOut);
+    fGen->setupTreeHiggs(lOut);
   }
 
   // Loop over events i0 = iEvent
@@ -114,18 +116,8 @@ int main( int argc, char **argv ) {
   int minEventsPerJob = neventsTotal / maxSplit;
   int minEvent = iSplit * minEventsPerJob;
   int maxEvent = (iSplit+1) * minEventsPerJob;
-  // int nwhad(0), nwlep(0);
-  // int nwhadR(0), nwlepR(0);
-  // int nwhadC(0), nwlepC(0);
-  // int nhbb(0), nhWW(0), nhZZ(0), nhcc(0), nhqq(0), nhtt(0), nhgg(0), nhpp(0);
   if (iSplit + 1 == maxSplit) maxEvent = neventsTotal;
-  std::cout << neventsTotal << " total events" << std::endl;
-  std::cout << iSplit << " iSplit " << std::endl;
-  std::cout << maxSplit << " maxSplit " << std::endl;
-  std::cout << minEvent << " min event" << std::endl;
-  std::cout << maxEvent << " max event" << std::endl;  
   for(int i0 = minEvent; i0 < maxEvent; i0++) {
-    //for(int i0 = 0; i0 < int(10000); i0++){ // for testing
     if (i0%1000 == 0) std::cout << i0 << " events processed " << std::endl;
     // Check GenInfo
     fEvt->load(i0);
@@ -135,6 +127,7 @@ int main( int argc, char **argv ) {
       fGen->load(i0);
       lWeight = fGen->fWeight;
       passJson = 1;
+      Pu->Fill(fEvt->fPu); // no weight?                                                                                                                                         
     }
     else{
       if(passEvent(fEvt->fRun,fEvt->fLumi)) passJson = 1;
@@ -147,41 +140,56 @@ int main( int argc, char **argv ) {
     if(!fEvt->PV()) continue;
     
     // Triggerbits
-    unsigned int trigbits=1;   
+    // muon triggers                                                                                                                                                           
+    fEvt ->addTrigger("HLT_Mu50_v*");
+    fEvt ->addTrigger("HLT_TkMu50_v*");
+    fEvt ->addTrigger("HLT_Mu100_v*");
+    fEvt ->addTrigger("HLT_OldMu100_v*");
 
-    if(fEvt ->passTrigger("HLT_AK8PFJet360_TrimMass30_v*") ||
-       fEvt ->passTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*") ||
-       fEvt ->passTrigger("HLT_PFHT800_v*") || 
-       fEvt ->passTrigger("HLT_PFHT900_v*") || 
-       fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*") ||
-       fEvt ->passTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*") ||
-       fEvt ->passTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*") || 
-       fEvt ->passTrigger("HLT_PFJet450_v*") ||
-       fEvt ->passTrigger("HLT_AK8PFHT750_TrimMass50_v*") ||
-       fEvt ->passTrigger("HLT_AK8PFHT800_TrimMass50_v*") ||
-       fEvt ->passTrigger("HLT_AK8PFHT850_TrimMass50_v*") ||
-       fEvt ->passTrigger("HLT_AK8PFHT900_TrimMass50_v*") ||
-       fEvt ->passTrigger("HLT_AK8PFJet400_TrimMass30_v*") ||
-       fEvt ->passTrigger("HLT_AK8PFJet500_v*") ||
-       fEvt ->passTrigger("HLT_PFJet500_v*") ||
-       fEvt ->passTrigger("HLT_AK8PFJetFwd450_v*")
-       )  {
-      trigbits = trigbits | 2;  // hadronic signal region 2016
-    }
-    if( fEvt ->passTrigger("HLT_Mu50_v*") ||
-	fEvt ->passTrigger("HLT_TkMu50_v*")
-	) { trigbits = trigbits | 4; 
-    } // single muon control region
-    if( fEvt ->passTrigger("HLT_Ele45_WPLoose_v*") ||
-	fEvt ->passTrigger("HLT_Ele105_CaloIdVT_GsfTrkIdT_v*")
-	) { trigbits = trigbits | 8; // single electron control region
-    }
-    fEvt      ->fillEvent(trigbits,lWeight,passJson);
+    // HT triggers
+    fEvt ->addTrigger("HLT_PFHT800_v*");//pre-scaled in 2017                                                                                                                    
+    fEvt ->addTrigger("HLT_PFHT900_v*");//pre-scaled in 2017
+    fEvt ->addTrigger("HLT_PFHT1050_v*")  ;
+    fEvt ->addTrigger("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v*");
+    fEvt ->addTrigger("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*");
+    fEvt ->addTrigger("HLT_PFJet450_v*");
+    fEvt ->addTrigger("HLT_PFJet500_v*");
+    fEvt ->addTrigger("HLT_CaloJet500_NoJetID_v*");
+    fEvt ->addTrigger("HLT_CaloJet550_NoJetId_v*");
+    fEvt ->addTrigger("HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20_v*");
+
+    // single jet triggers
+    fEvt ->addTrigger("HLT_AK8PFJet360_TrimMass30_v*");//pre-scaled in 2017
+    fEvt ->addTrigger("HLT_AK8PFJet380_TrimMass30_v*");//pre-scaled in 2017
+    fEvt ->addTrigger("HLT_AK8PFJet400_TrimMass30_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet420_TrimMass30_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT800_TrimMass50_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT850_TrimMass50_v*");
+    fEvt ->addTrigger("HLT_AK8PFHT900_TrimMass50_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet500_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet550_v*");
+    fEvt ->addTrigger("HLT_AK8PFJetFwd200_v*");
+    fEvt ->addTrigger("HLT_AK8PFJetFwd400_v*");
+
+    // + b=tag or double b-tag triggers
+    fEvt ->addTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p17_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_PFAK8BTagCSV_p1_v*");
+    fEvt ->addTrigger("HLT_DoublePFJets100MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
+    fEvt ->addTrigger("HLT_DoublePFJets116MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
+    fEvt ->addTrigger("HLT_DoublePFJets128MaxDeta1p6_DoubleCaloBTagCSV_p33_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np2_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_p02_v*");
+    fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17_v*");
+
+    // Event info
+    fEvt      ->fillEvent(1,lWeight,passJson);
     
     // Objects
     gErrorIgnoreLevel=kError;
     std::vector<TLorentzVector> cleaningMuons, cleaningElectrons, cleaningPhotons; 
-    std::vector<TLorentzVector> Muons, Electrons;
+    std::vector<TLorentzVector> Muons, Electrons; // empty cleaning electrons from jets
     fMuon     ->load(i0);
     fMuon     ->selectMuons(Muons,fEvt->fMet,fEvt->fMetPhi);
     fElectron ->load(i0);
@@ -191,31 +199,46 @@ int main( int argc, char **argv ) {
     fPhoton   ->load(i0);
     fPhoton   ->selectPhotons(fEvt->fRho,cleaningElectrons,cleaningPhotons);
 
-    // AK8Puppi Jets    
+    // AK8Puppi Jets
     fVJet8    ->load(i0);
     fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho,fEvt->fRun,true);
 
-    if(lName.find("BulkGrav")!=std::string::npos){
-      for (int i0=0; i0<int(fVJet8->selectedVJets.size()); i0++){
-	fVJet8->fisMatchedVJet[i0] = fGen->isHDau(25, 24, fVJet8->selectedVJets[i0], 2);
-      }
-    }
-    
     // AK4Puppi Jets
     fJet4     ->load(i0);
     fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho,fEvt->fRun);
 
+    // Gen matching
+    int iGen = 0;
+    if(lName.find("WJets")!=std::string::npos){
+      fGen->findBoson(24,1);
+      if(fGen->fBosonPt>0)      fEvt->computeCorr(fGen->fBosonPt,"WJets_012j_NLO/nominal","WJets_LO/inv_pt","EWKcorr/W","WJets_012j_NLO");
+      iGen = 24;
+    }
+    if(lName.find("TT_")!=std::string::npos || lName.find("TTTo")!=std::string::npos){
+      float ttbarPtWeight = fGen->computeTTbarCorr();
+      fEvt->fevtWeight *= ttbarPtWeight;
+      fGen->fWeight *= ttbarPtWeight;
+      fGen->saveTTbarType();
+      iGen = 624;
+    }
+    if(lName.find("ST_")!=std::string::npos){
+      iGen = 624;
+    }
+    if(iGen!=0) {
+      for(int i0 = 0; i0 < int(fVJet8->selectedVJets.size()); i0++) {
+        fVJet8->fisHadronicV[i0] = fGen->ismatchedJet(fVJet8->selectedVJets[i0],0.8,fVJet8->fvMatching[i0],fVJet8->fvSize[i0],iGen);
+      }
+    }
+
     lOut->Fill();
     neventstest++;
   }
-
   std::cout << neventstest << std::endl;
   std::cout << lTree->GetEntriesFast() << std::endl;
   lFile->cd();
-  lOut->Write();  
+  lOut->Write();
   NEvents->Write();
   SumWeights->Write();
-  SumScaleWeights->Write();
-  SumPdfWeights->Write();
+  Pu->Write();
   lFile->Close();
 }
