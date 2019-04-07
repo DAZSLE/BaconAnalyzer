@@ -10,13 +10,14 @@
 #include "CondFormats/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
 #include "JetMETCorrections/Modules/interface/JetResolution.h"
+#include "JECLoader.hh"
 #include "TRandom3.h"
 
 using namespace baconhep;
 
 class JetLoader { 
 public:
-  JetLoader(TTree *iTree, bool iData=false);
+  JetLoader(TTree *iTree,  bool iData=false,  std::string iLabel="2017");
   ~JetLoader();
   void reset();
   void setupTree(TTree *iTree, std::string iJetLabel);
@@ -31,22 +32,6 @@ public:
   void addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals);
   void fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<double> &iVals, std::vector<TLorentzVector> iVJets, double iRho, unsigned int runNum);
   
-  // JEC tools
-  std::vector<FactorizedJetCorrector*> getJetCorrector() { return JetCorrector; }
-  std::vector<std::pair<int,int> > getJetCorrectionsIOV() { return JetCorrectionsIOV; }
-  double getJecUnc( float pt, float eta, int run );  
-  double JetEnergyCorrectionFactor( double jetRawPt, double jetEta, double jetPhi, double jetE,
-				    double rho, double jetArea,
-				    int run,
-				    std::vector<std::pair<int,int> > JetCorrectionsIOV,
-				    std::vector<FactorizedJetCorrector*> jetcorrector,  
-				    int jetCorrectionLevel = -1,
-				    bool printDebug = false);
-  double JetEnergyCorrectionFactor( double jetRawPt, double jetEta, double jetPhi, double jetE,
-				    double rho, double jetArea,					  
-				    FactorizedJetCorrector* jetcorrector,  
-				    int jetCorrectionLevel = -1,
-				    bool printDebug = false);
   TRandom3* r;
 
   //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
@@ -77,6 +62,9 @@ protected:
   TBranch      *fJetBrCHS;
 
   TTree        *fTree;
+
+  JECLoader    *fJEC;
+
   int           fNFwdPt30;
   int           fNBTagsLPt30;
   int           fNBTagsMPt30;
@@ -97,29 +85,12 @@ protected:
   std::vector<int>           fNBTagsMPt150dR08;
   std::vector<int>           fNBTagsTPt150dR08;
 
-  int           fN;
-  int           fNV;
-  
-  std::vector<double>      fVars;
-  FactorizedJetCorrector   *fJetCorr;
-
-  std::string cmsswPath;
-  
-  // for jet energy corrections
+  int  fN;
+  int  fNV;
   bool isData;
-  void loadCMSSWPath();
-  void loadJECs(bool isData);
-  void loadJECs_Rereco2017(bool isData);
-  std::vector<std::vector<JetCorrectorParameters> > correctionParameters;
-  std::vector<FactorizedJetCorrector*> JetCorrector;
-  std::vector<JetCorrectionUncertainty*> jecUnc;
-  std::vector<std::pair<int,int> > JetCorrectionsIOV;
-  JME::JetResolution resolution;
-  JME::JetResolutionScaleFactor resolution_sf;
+  std::vector<double>      fVars;
+
   // Gaussian random numbers (one for each jet)
   std::vector<double> x1List;
-  std::vector<double> x2List;
-  std::vector<double> x3List;
-  
 };
 #endif
