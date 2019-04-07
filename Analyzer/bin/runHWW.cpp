@@ -62,10 +62,11 @@ int main( int argc, char **argv ) {
   gROOT->ProcessLine("#include <vector>");
   const std::string lName        = argv[1];
   const std::string lOption      = argv[2];
-  const std::string lJSON        = argv[3];
-  const std::string lOutput      = argv[4];
-  const int         iSplit       = atoi(argv[5]);
-  const int         maxSplit     = atoi(argv[6]);
+  const std::string lLabel       = argv[3];
+  const std::string lJSON        = argv[4];
+  const std::string lOutput      = argv[5];
+  const int         iSplit       = atoi(argv[6]);
+  const int         maxSplit     = atoi(argv[7]);
 
   fRangeMap = new RunLumiRangeMap();
   if(lJSON.size() > 0) fRangeMap->AddJSONFile(lJSON.c_str());
@@ -82,8 +83,8 @@ int main( int argc, char **argv ) {
   fElectron  = new ElectronLoader(lTree);                                                   // fElectrons and fElectronBr, fN = 2
   fTau       = new TauLoader     (lTree);                                                   // fTaus and fTaurBr, fN = 1
   fPhoton    = new PhotonLoader  (lTree);                                                   // fPhotons and fPhotonBr, fN = 1
-  fJet4      = new JetLoader     (lTree, isData);                                           // fJets, fJetBr => AK4PUPPI, sorted by pT
-  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi",3, isData,false);          // fVJets, fVJetBr => AK8PUPPI
+  fJet4      = new JetLoader     (lTree, isData, lLabel);                                   // fJets, fJetBr => AK4PUPPI, sorted by pT
+  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi",3, isData, lLabel);        // fVJets, fVJetBr => AK8PUPPI
   if(lOption.compare("data")!=0) fGen      = new GenLoader     (lTree);                     // fGenInfo, fGenInfoBr => GenEvtInfo, fGens and fGenBr => GenParticle
 
   TFile *lFile = TFile::Open(lOutput.c_str(),"RECREATE");

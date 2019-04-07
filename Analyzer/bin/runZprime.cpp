@@ -63,10 +63,11 @@ int main( int argc, char **argv ) {
   gROOT->ProcessLine("#include <vector>");
   const std::string lName        = argv[1];
   const std::string lOption      = argv[2];
-  const std::string lJSON        = argv[3];
-  const std::string lOutput      = argv[4];
-  const int         iSplit       = atoi(argv[5]);
-  const int         maxSplit     = atoi(argv[6]);
+  const std::string lLabel       = argv[3];
+  const std::string lJSON        = argv[4];
+  const std::string lOutput      = argv[5];
+  const int         iSplit       = atoi(argv[6]);
+  const int         maxSplit     = atoi(argv[7]);
 
   std::cout << argv[1] << " " << argv[2] << " "<< argv[3] << " " << argv[4] << " " << argv[5] << std::endl;
   std::string lJson="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/";
@@ -93,9 +94,9 @@ int main( int argc, char **argv ) {
   fElectron  = new ElectronLoader(lTree);          
   fTau       = new TauLoader     (lTree);          
   fPhoton    = new PhotonLoader  (lTree);          
-  fJet4      = new JetLoader     (lTree, isData);  
-  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi",3, isData);  
-  fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi",3, isData);
+  fJet4      = new JetLoader     (lTree, isData, lLabel);  
+  fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi",3, isData, lLabel);  
+  fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi",3, isData, lLabel);
   if(lOption.compare("data")!=0) {
     if(lOption.compare("ps")==0) fGen      = new GenLoader     (lTree,true);
     else fGen      = new GenLoader     (lTree);                 
@@ -231,9 +232,6 @@ int main( int argc, char **argv ) {
     fVJet8    ->load(i0);
     fVJet8    ->selectVJets(cleaningElectrons,cleaningMuons,cleaningPhotons,0.8,fEvt->fRho,fEvt->fRun);
 
-    // Match leading AK8 Puppi jet with CA15 Puppi jet within dR = 0.4 (to get pT ratio)
-    if(fVJet8->selectedVJets.size()>0) fVJet8 ->matchJet15(fVJet15->selectedVJets,fVJet8->selectedVJets[0],0.4);
-    
     // AK4Puppi Jets
     fJet4     ->load(i0); 
     fJet4     ->selectJets(cleaningElectrons,cleaningMuons,cleaningPhotons,fVJet8->selectedVJets,fEvt->fRho,fEvt->fRun);
