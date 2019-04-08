@@ -51,9 +51,6 @@ samplesDict['SingleMuonprompt_10X'] = {
     'SingleMuonRun2018A_17Sep2018_v2': 'prompt18',
     'SingleMuonRun2018B_17Sep2018_v1': 'prompt18',
     'SingleMuonRun2018C_17Sep2018_v1': 'prompt18',
-    'SingleMuonRun2018C_PromptReco_v1': 'prompt18',
-    'SingleMuonRun2018C_PromptReco_v2': 'prompt18',
-    'SingleMuonRun2018C_PromptReco_v3': 'prompt18',
     'SingleMuonRun2018D_PromptReco_v2': 'prompt18',
     }
 
@@ -326,7 +323,7 @@ if __name__ == '__main__':
         'prompt17': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -a 4:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,jsonPrompt17,options.njobs_per_file,options.nfiles_per_job),
         'rereco17': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -a 4:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,jsonRereco17,options.njobs_per_file,options.nfiles_per_job),
         'prompt18': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -a 4:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,jsonPrompt18,options.njobs_per_file,options.nfiles_per_job),
-        'mc': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:mc -a 3:%s -a 3:none -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,options.njobs_per_file,options.nfiles_per_job),
+        'mc': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:mc -a 3:%s -a 4:none -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,options.njobs_per_file,options.nfiles_per_job),
         }
     
     exec_me('%s mkdir -p /eos/uscms/%s/%s'%(EOS,eosOutDir,analysisDir))  
