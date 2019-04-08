@@ -41,6 +41,7 @@ void JECLoader::loadJECs(bool iData,std::string iLabel,std::string iJet) {
   std::string jerpath = "";
   std::string jerrespath = "";
   std::string jersfpath = "";
+  std::stringstream jecMC;
   if(labelEra==label2016){
     jerpath = jer2016;
     jerrespath = jerres2016;
@@ -87,10 +88,11 @@ void JECLoader::loadJECs(bool iData,std::string iLabel,std::string iJet) {
       JetCorrectionsIOV.push_back( std::pair<int,int>( 278802, 99999999 ));
     }
   }
-  else if(labelEra==label2017){
+  if(labelEra==label2017){
+    std::cout << "loading for " << label2017 << std::endl;
     jerpath = jer2017;
     jerrespath = jerres2017;
-    jersfpath =jersf2017;
+    jersfpath = jersf2017;
     if (isData) {
       //IOV: 2017B
       std::vector<JetCorrectorParameters> correctionParametersB = std::vector<JetCorrectorParameters> ();
@@ -145,29 +147,79 @@ void JECLoader::loadJECs(bool iData,std::string iLabel,std::string iJet) {
       jecUnc.push_back(jecUncF);
       JetCorrectionsIOV.push_back( std::pair<int,int>( 305044, 99999999 ));
     }
-    std::stringstream jecMC; jecMC << jecPathname << "/" << jetRecalib2017MC <<"/" << jetRecalib2017MC;
+    jecMC.str(""); jecMC.clear();
+    jecMC << jecPathname << "/" << jetRecalib2017MC <<"/" << jetRecalib2017MC;
   }
-  else if(labelEra==label2018){
+  if(labelEra==label2018){
     jerpath = jer2018;
     jerrespath = jerres2018;
-    jersfpath =jersf2018;
-    std::stringstream jecMC; jecMC << jecPathname << "/" << jetRecalib2018MC <<"/" << jetRecalib2017MC;
-  }
-  else{
-    jerpath = jer2017;
-    jerrespath = jerres2017;
-    jersfpath =jersf2017;
-    std::stringstream jecMC; jecMC << jecPathname << "/" << jetRecalib2017MC <<"/" << jetRecalib2017MC;
+    jersfpath = jersf2018;
+    if (isData) {
+      //IOV 2018A
+      std::vector<JetCorrectorParameters> correctionParametersA = std::vector<JetCorrectorParameters> ();
+      std::stringstream jec2018A; jec2018A << jecPathname << "/" << jetRecalib2018A << "/" << jetRecalib2018A;
+      correctionParametersA.push_back(JetCorrectorParameters(Form("%s_L1FastJet_%s.txt", jec2018A.str().c_str(), jetType.c_str())));
+      correctionParametersA.push_back(JetCorrectorParameters(Form("%s_L2Relative_%s.txt", jec2018A.str().c_str(), jetType.c_str())));
+      correctionParametersA.push_back(JetCorrectorParameters(Form("%s_L3Absolute_%s.txt", jec2018A.str().c_str(), jetType.c_str())));
+      correctionParametersA.push_back(JetCorrectorParameters(Form("%s_L2L3Residual_%s.txt", jec2018A.str().c_str(), jetType.c_str())));
+      FactorizedJetCorrector *JetCorrectorA = new FactorizedJetCorrector(correctionParametersA);
+      JetCorrectionUncertainty *jecUncA = new JetCorrectionUncertainty(Form("%s_Uncertainty_%s.txt", jec2018A.str().c_str(), jetType.c_str()));
+      correctionParameters.push_back(correctionParametersA);
+      JetCorrector.push_back( JetCorrectorA );
+      jecUnc.push_back(jecUncA);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 299329 ));
+      //IOV 2018B
+      std::vector<JetCorrectorParameters> correctionParametersB = std::vector<JetCorrectorParameters> ();
+      std::stringstream jec2018B; jec2018B << jecPathname << "/" << jetRecalib2018B << "/" << jetRecalib2018B;
+      correctionParametersB.push_back(JetCorrectorParameters(Form("%s_L1FastJet_%s.txt", jec2018B.str().c_str(), jetType.c_str())));
+      correctionParametersB.push_back(JetCorrectorParameters(Form("%s_L2Relative_%s.txt", jec2018B.str().c_str(), jetType.c_str())));
+      correctionParametersB.push_back(JetCorrectorParameters(Form("%s_L3Absolute_%s.txt", jec2018B.str().c_str(), jetType.c_str())));
+      correctionParametersB.push_back(JetCorrectorParameters(Form("%s_L2L3Residual_%s.txt", jec2018B.str().c_str(), jetType.c_str())));
+      FactorizedJetCorrector *JetCorrectorB = new FactorizedJetCorrector(correctionParametersB);
+      JetCorrectionUncertainty *jecUncB = new JetCorrectionUncertainty(Form("%s_Uncertainty_%s.txt", jec2018B.str().c_str(), jetType.c_str()));
+      correctionParameters.push_back(correctionParametersB);
+      JetCorrector.push_back( JetCorrectorB );
+      jecUnc.push_back(jecUncB);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 299329 ));
+      //IOV 2018C
+      std::vector<JetCorrectorParameters> correctionParametersC = std::vector<JetCorrectorParameters> ();
+      std::stringstream jec2018C; jec2018C << jecPathname << "/" << jetRecalib2018C << "/" << jetRecalib2018C;
+      correctionParametersC.push_back(JetCorrectorParameters(Form("%s_L1FastJet_%s.txt", jec2018C.str().c_str(), jetType.c_str())));
+      correctionParametersC.push_back(JetCorrectorParameters(Form("%s_L2Relative_%s.txt", jec2018C.str().c_str(), jetType.c_str())));
+      correctionParametersC.push_back(JetCorrectorParameters(Form("%s_L3Absolute_%s.txt", jec2018C.str().c_str(), jetType.c_str())));
+      correctionParametersC.push_back(JetCorrectorParameters(Form("%s_L2L3Residual_%s.txt", jec2018C.str().c_str(), jetType.c_str())));
+      FactorizedJetCorrector *JetCorrectorC = new FactorizedJetCorrector(correctionParametersC);
+      JetCorrectionUncertainty *jecUncC = new JetCorrectionUncertainty(Form("%s_Uncertainty_%s.txt", jec2018C.str().c_str(), jetType.c_str()));
+      correctionParameters.push_back(correctionParametersC);
+      JetCorrector.push_back( JetCorrectorC );
+      jecUnc.push_back(jecUncC);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 299329 ));
+      //IOV 2018D
+      std::vector<JetCorrectorParameters> correctionParametersD = std::vector<JetCorrectorParameters> ();
+      std::stringstream jec2018D; jec2018D << jecPathname << "/" << jetRecalib2018D << "/" << jetRecalib2018D;
+      correctionParametersD.push_back(JetCorrectorParameters(Form("%s_L1FastJet_%s.txt", jec2018D.str().c_str(), jetType.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(Form("%s_L2Relative_%s.txt", jec2018D.str().c_str(), jetType.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(Form("%s_L3Absolute_%s.txt", jec2018D.str().c_str(), jetType.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(Form("%s_L2L3Residual_%s.txt", jec2018D.str().c_str(), jetType.c_str())));
+      FactorizedJetCorrector *JetCorrectorD = new FactorizedJetCorrector(correctionParametersD);
+      JetCorrectionUncertainty *jecUncD = new JetCorrectionUncertainty(Form("%s_Uncertainty_%s.txt", jec2018D.str().c_str(), jetType.c_str()));
+      correctionParameters.push_back(correctionParametersD);
+      JetCorrector.push_back( JetCorrectorD );
+      jecUnc.push_back(jecUncD);
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 99999999 ));
+    }
+    jecMC.str(""); jecMC.clear();
+    jecMC << jecPathname << "/" << jetRecalib2018MC <<"/" << jetRecalib2018MC;
   }
 
+
   std::stringstream respath; respath << jecPathname << "/" << jerpath << "/" << jerrespath << jetType << ".txt";
-  std::stringstream ressfpath; ressfpath << jecPathname << "/" << jerpath << "/" <<jerrespath << jetType << ".txt";
+  std::stringstream ressfpath; ressfpath << jecPathname << "/" << jerpath << "/" << jersfpath << jetType << ".txt";
   resolution = JME::JetResolution(respath.str().c_str());
   resolution_sf = JME::JetResolutionScaleFactor(ressfpath.str().c_str());
   if (!isData) {
     std::vector<JetCorrectorParameters> correctionParametersMC = std::vector<JetCorrectorParameters> ();
-    std::stringstream jecMC; jecMC << jecPathname << "/" << jetRecalib2017MC << "/" << jetRecalib2017MC;
-    correctionParametersMC.push_back(JetCorrectorParameters(Form("%s_L1MCastJet_%s.txt", jecMC.str().c_str(), jetType.c_str())));
+    correctionParametersMC.push_back(JetCorrectorParameters(Form("%s_L1FastJet_%s.txt", jecMC.str().c_str(), jetType.c_str())));
     correctionParametersMC.push_back(JetCorrectorParameters(Form("%s_L2Relative_%s.txt", jecMC.str().c_str(), jetType.c_str())));
     correctionParametersMC.push_back(JetCorrectorParameters(Form("%s_L3Absolute_%s.txt", jecMC.str().c_str(), jetType.c_str())));
     correctionParametersMC.push_back(JetCorrectorParameters(Form("%s_L2L3Residual_%s.txt", jecMC.str().c_str(), jetType.c_str())));

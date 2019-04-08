@@ -232,7 +232,7 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
 						 runNum);
     double jetCorrPt = JEC*(pVJet->ptRaw);
     double jetCorrE = JEC*(vPJet.E());
-    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, pVJet->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
+    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, pVJet->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; 
     float sigma_MC = fJEC->resolution.getResolution(parameters);
     float sf = fJEC->resolution_sf.getScaleFactor(parameters);
     float sfUp = fJEC->resolution_sf.getScaleFactor(parameters, Variation::UP);
@@ -303,7 +303,7 @@ void VJetLoader::fillJetCorr(int iN,std::vector<TJet*> &iObjects,std::vector<dou
     double jetCorrPt = JEC*(iObjects[i0]->ptRaw);
     double x1 = x1List[i0];
     double jetEnergySmearFactor = 1.0;    
-    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
+    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; 
     float sigma_MC = fJEC->resolution.getResolution(parameters);
     float sf = fJEC->resolution_sf.getScaleFactor(parameters);    
     if (!isData) {      
@@ -352,7 +352,7 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     
     double unc = fJEC->getJecUnc( jetCorrPt, iObjects[i0]->eta, runNum ); //use run=999 as default
     
-    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; // max 44.30 for Spring16_25nsV6_MC JER (CHANGE ONCE UPDATED)
+    JME::JetParameters parameters = {{JME::Binning::JetPt, jetCorrPt}, {JME::Binning::JetEta, iObjects[i0]->eta}, {JME::Binning::Rho, TMath::Min(iRho,44.30)}}; 
     float sigma_MC = fJEC->resolution.getResolution(parameters);
     float sf = fJEC->resolution_sf.getScaleFactor(parameters);
     float sfUp = fJEC->resolution_sf.getScaleFactor(parameters, Variation::UP);
@@ -361,7 +361,9 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
     double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
     double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
-        
+    //std::cout << "JER SF " << sf << " up " << sfUp <<  " dn " << sfDown << " sigma_MC " << sigma_MC << " x1 " << x1 << std::endl;
+    //std::cout << "smearup " << jetEnergySmearFactorUp << " dn "<< jetEnergySmearFactorDown << std::endl;
+
     //double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
@@ -378,13 +380,11 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
       std::cout << "sf = " << sf << ", " <<  sfUp << ", " << sfDown << std::endl;
       std::cout << "sigma_MC = " << sigma_MC << std::endl;    
       std::cout << "runNum = " << runNum << std::endl;
-      //std::cout << "unc_old = " << unc_old << std::endl;
       std::cout << "unc = " << unc << std::endl;
       std::cout << "JEC_old = " << JEC_old << std::endl;
       std::cout << "JEC = " << JEC << std::endl;
       std::cout << "x1 = " << x1 << std::endl;
       std::cout << "ptcorr = " << jetCorrPt << std::endl;
-      //std::cout << "ptcorrsmear = " << jetCorrPtSmear << std::endl;
       std::cout << "jesup = " << jetPtJESUp << std::endl;
       std::cout << "jesdown = " << jetPtJESDown << std::endl;
       std::cout << "jerup = " << jetPtJERUp << std::endl;
