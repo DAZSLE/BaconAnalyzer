@@ -21,17 +21,17 @@ with open(args.list, 'r') as mylist:
 
 job_i = args.index
 files=[]
+lIFile = job_i*args.nfiles_per_job
 for subjob_i in range(args.nfiles_per_job):
     files.append(allfiles[job_i*args.nfiles_per_job+subjob_i])
+    lFFile = lIFile+subjob_i
 print 'files ',files
 
-lIFile = job_i*args.nfiles_per_job
 cwd = os.getcwd()
 for subjob_i in range(args.njobs_per_file):
     lDir = 'tmp_%s_job%i_subjob%i'%(args.list,job_i,subjob_i)
     os.system('mkdir -p %s'%lDir)
     os.chdir(lDir)
-    lFFile = lIFile+subjob_i
     nfiles_i = 0
     outfile = 'Output_job%d'%job_i
     job_hadd = 'hadd -f %s.root '%outfile
@@ -46,6 +46,8 @@ for subjob_i in range(args.njobs_per_file):
         job_hadd += 'Output_%d.root '%fil_i
         nfiles_i += 1
         
+    print 'to hadd'
+    os.listdir(os.getcwd())
     # hadd and copy
     print job_hadd
     os.system(job_hadd)
@@ -57,6 +59,7 @@ for subjob_i in range(args.njobs_per_file):
         lOut = 'root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d.root'%(
             args.eosoutdir, outfile, job_i, lIFile, lFFile)
     job_copy = 'xrdcp -s %s.root %s; \n' %( outfile, lOut)
-    print job_copy
     os.system(job_copy)
+    os.listdir(os.getcwd())
+    os.system('rm *.root')
     os.chdir(cwd)
