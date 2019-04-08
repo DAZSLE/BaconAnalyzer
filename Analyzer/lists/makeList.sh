@@ -12,7 +12,7 @@ fi
 prod=$1
 
 if [[ -d production${prod} ]]; then
-  echo "prodution${prod} exists already!"
+  echo "production${prod} exists already!"
   exit 1
 fi
 
