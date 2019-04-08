@@ -213,7 +213,6 @@ int main( int argc, char **argv ) {
     fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_p02_v*");
     fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17_v*");
 
-    std::cout << "pass json " << passJson << std::endl;
     fEvt      ->fillEvent(1,lWeight,passJson);
     
     // Objects
