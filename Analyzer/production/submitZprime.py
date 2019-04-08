@@ -13,31 +13,32 @@ samplesDict['JetHTrereco_8X'] = {
     'JetHTRun2016G_07Aug17_v1_ddb8X': 'rereco16',
     'JetHTRun2016H_07Aug17_v1_ddb8X': 'rereco16',
     }
-samplesDict['JetHTrereco_8X_withPF'] = {
-    'JetHTRun2016B_07Aug17_ver1_v1_8X_withPF': 'rereco16',
-    'JetHTRun2016B_07Aug17_ver2_v1_8X_withPF': 'rereco16',
-    'JetHTRun2016C_07Aug17_v1_8X_withPF': 'rereco16',
-    'JetHTRun2016D_07Aug17_v1_8X_withPF': 'rereco16',
-    'JetHTRun2016E_07Aug17_v1_8X_withPF': 'rereco16',
-    'JetHTRun2016F_07Aug17_v1_8X_withPF': 'rereco16',
-    'JetHTRun2016G_07Aug17_v1_8X_withPF': 'rereco16',
-    'JetHTRun2016H_07Aug17_v1_8X_withPF': 'rereco16',
-    }
 samplesDict['JetHTrereco_9X'] = {
-    #'JetHTRun2017B_17Nov2017_v1': 'rereco17',
-    #'JetHTRun2017C_17Nov2017_v1': 'rereco17',
-    #'JetHTRun2017D_17Nov2017_v1': 'rereco17',
-    #'JetHTRun2017E_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017B_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017C_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017D_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017E_17Nov2017_v1': 'rereco17',
     'JetHTRun2017F_17Nov2017_v1': 'rereco17',
-    #'JetHTRun2017F_17Nov2017_v1_try2': 'rereco17',
-    #'JetHTRun2017F_17Nov2017_v1_try2_missingjson': 'rereco17', 
     }
-samplesDict['JetHTrereco_9X_13'] = {
-    'JetHTRun2017B_17Nov2017_v1_noPF': 'rereco17',
-    'JetHTRun2017C_17Nov2017_v1_noPF': 'rereco17',
-    'JetHTRun2017D_17Nov2017_v1_noPF': 'rereco17',
-    'JetHTRun2017E_17Nov2017_v1_noPF': 'rereco17',
-    'JetHTRun2017F_17Nov2017_v1_noPF': 'rereco17',
+samplesDict['JetHTprompt_10X'] = {
+    'JetHTRun2018A_17Sep2018_v1': 'prompt18',
+    'JetHTRun2018B_17Sep2018_v1': 'prompt18', 
+    'JetHTRun2018C_PromptReco_v1': 'prompt18',  
+    'JetHTRun2018C_PromptReco_v2': 'prompt18',   
+    'JetHTRun2018C_PromptReco_v3': 'prompt18',
+    'JetHTRun2018D_PromptReco_v1': 'prompt18',
+    'JetHTRun2018D_PromptReco_v2': 'prompt18',
+    }
+
+samplesDict['SingleMuonrereco_8X'] = {
+    'SingleMuonRun2016B_07Aug17_ver1_v1_ddb8X': 'rereco16', 
+    'SingleMuonRun2016C_07Aug17_v1_ddb8X': 'rereco16',
+    'SingleMuonRun2016E_07Aug17_v1_ddb8X': 'rereco16',
+    'SingleMuonRun2016G_07Aug17_v1_ddb8X': 'rereco16',
+    'SingleMuonRun2016B_07Aug17_ver2_v1_ddb8X': 'rereco16',
+    'SingleMuonRun2016D_07Aug17_v1_ddb8X': 'rereco16',
+    'SingleMuonRun2016F_07Aug17_v1_ddb8X': 'rereco16',
+    'SingleMuonRun2016H_07Aug17_v1_ddb8X': 'rereco16',
     }
 samplesDict['SingleMuonrereco_9X'] = { 
     'SingleMuonRun2017B_17Nov2017_v1': 'rereco17',
@@ -45,43 +46,17 @@ samplesDict['SingleMuonrereco_9X'] = {
     'SingleMuonRun2017D_17Nov2017_v1': 'rereco17',
     'SingleMuonRun2017E_17Nov2017_v1': 'rereco17',
     'SingleMuonRun2017F_17Nov2017_v1': 'rereco17',
-}
-samplesDict['JetHTprompt_10X'] = {
-    # 'JetHTRun2018A_17Sep2018_pilot_v1': 'prompt18',
-    # 'JetHTRun2018A_17Sep2018_v1': 'prompt18',
-    # 'JetHTRun2018A_22May2018_v1': 'prompt18',
-    # 'JetHTRun2018A_PromptReco_v1': 'prompt18', #
-    # 'JetHTRun2018A_PromptReco_v2': 'prompt18',
-    # 'JetHTRun2018A_PromptReco_v3': 'prompt18', #
-    # 'JetHTRun2018B_17Sep2018_v1': 'prompt18',
-    # 'JetHTRun2018B_26Sep2018_HEM_v1': 'prompt18',
-    # 'JetHTRun2018B_26Sep2018_HEMmitigation_v1': 'prompt18',
-    # 'JetHTRun2018B_26Sep2018_v1': 'prompt18',
-    # 'JetHTRun2018B_PromptReco_v1': 'prompt18',
-    # 'JetHTRun2018B_PromptReco_v2': 'prompt18',
-    # 'JetHTRun2018C_PromptReco_v1': 'prompt18',
-    # 'JetHTRun2018C_PromptReco_v2': 'prompt18',
-    # 'JetHTRun2018C_PromptReco_v3': 'prompt18',
-    # 'JetHTRun2018D_PromptReco_v1': 'prompt18',
-    'JetHTRun2018D_PromptReco_v2': 'prompt18', #
-    #'JetHTRun2018E_PromptReco_v1': 'prompt18',
-}                                                                                                                                                                 
+    }
 samplesDict['SingleMuonprompt_10X'] = {
-    'SingleMuonRun2018A_PromptReco_v1': 'prompt18', #
-    'SingleMuonRun2018A_PromptReco_v2': 'prompt18',
-    'SingleMuonRun2018A_PromptReco_v3': 'prompt18', #
-    'SingleMuonRun2018B_PromptReco_v1': 'prompt18',
-    'SingleMuonRun2018B_PromptReco_v2': 'prompt18',
-    'SingleMuonRun2018C_PromptReco_v1': 'prompt18',
-    'SingleMuonRun2018C_PromptReco_v2': 'prompt18', #
-    'SingleMuonRun2018C_PromptReco_v3': 'prompt18', #
-    'SingleMuonRun2018D_PromptReco_v2': 'prompt18', #
-    'SingleMuonRun2018A_22May2018_v1': 'prompt18', #
-    'SingleMuonRun2018A_06Jun2018_v1': 'prompt18',
-    'SingleMuonRun2018A_17Sep2018_v2': 'prompt18', #
+    'SingleMuonRun2018A_17Sep2018_v2': 'prompt18',
     'SingleMuonRun2018B_17Sep2018_v1': 'prompt18',
     'SingleMuonRun2018C_17Sep2018_v1': 'prompt18',
+    'SingleMuonRun2018C_PromptReco_v1': 'prompt18',
+    'SingleMuonRun2018C_PromptReco_v2': 'prompt18',
+    'SingleMuonRun2018C_PromptReco_v3': 'prompt18',
+    'SingleMuonRun2018D_PromptReco_v2': 'prompt18',
     }
+
 samplesDict['Hcc_9X'] = {
     'GluGluHToCC_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8': 'mc',
     'VBFHToCC_M-125_13TeV_powheg_pythia8': 'mc',
@@ -93,32 +68,60 @@ samplesDict['Hcc_9X'] = {
     'ZH_HToCC_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
     'ggZH_HToCC_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
     }
+
+samplesDict['Hbb_8X'] = {
+    'ttHTobb_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_8X': 'mc',
+    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext_8X': 'mc',
+    'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'ZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_ext_8X': 'mc',
+    'ggZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'GluGluHToBB_M125_13TeV_powheg_pythia8_8X': 'mc',
+    'GluGluHToBB_M125_13TeV_powheg_pythia8_ext_8X': 'mc',
+}
 samplesDict['Hbb_9X'] = {
-   'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
-   'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
-   'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',
-   'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8': 'mc',
-   'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
-   'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
-   'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
-   'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-   'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
-   'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
-   'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
-   }
+    'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
+    'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8': 'mc',
+    'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8': 'mc',
+    'GluGluHToBB_M125_13TeV_powheg_pythia8': 'mc',
+    'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8': 'mc',
+    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix': 'mc',
+    'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
+    'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8': 'mc',
+    }
 samplesDict['Hbb_10X'] = {
-   #'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8': 'mc',
-   'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
-   'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_10X': 'mc',
-   'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8_10X': 'mc',
-   'GluGluHToBB_M125_13TeV_powheg_pythia8_10X': 'mc',
-   'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8_10X': 'mc',
-   'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_10X': 'mc',
-   'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
-   'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
-   'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_10X': 'mc',
-   'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
-   }
+    'ggZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_10X': 'mc',
+    'ggZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
+    'GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8_10X': 'mc',
+    'GluGluHToBB_M125_LHEHpT_250_Inf_13TeV_amcatnloFXFX_pythia8_10X': 'mc',
+    'GluGluHToBB_M125_13TeV_powheg_pythia8_10X': 'mc',
+    'ttHTobb_M125_TuneCP5_13TeV_powheg_pythia8_10X': 'mc',
+    'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_10X': 'mc',
+    'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
+    'WplusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
+    'ZH_HToBB_ZToNuNu_M125_13TeV_powheg_pythia8_10X': 'mc',
+    'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
+    }
+
+samplesDict['QCD_8X'] = {
+    'QCD_HT1000to1500_13TeV_8X': 'mc',
+    'QCD_HT1000to1500_13TeV_ext_8X': 'mc',
+    'QCD_HT1500to2000_13TeV_8X': 'mc',
+    'QCD_HT1500to2000_13TeV_ext_8X': 'mc',
+    'QCD_HT2000toInf_13TeV_8X': 'mc',
+    'QCD_HT2000toInf_13TeV_ext_8X': 'mc',
+    'QCD_HT300to500_13TeV_8X': 'mc',
+    'QCD_HT500to700_13TeV_8X': 'mc',
+    'QCD_HT700to1000_13TeV_8X': 'mc',
+    }
 samplesDict['QCD_9X'] = {       
     'QCD_HT1000to1500_TuneCP5_13TeV-madgraphMLM-pythia8': 'mc',
     'QCD_HT1500to2000_TuneCP5_13TeV-madgraphMLM-pythia8': 'mc',
@@ -133,6 +136,16 @@ samplesDict['QCD_10X'] = {
     'QCD_HT500to700_TuneCP5_13TeV-madgraphMLM-pythia8_10X': 'mc',
     'QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8_10X': 'mc',
     }
+
+samplesDict['SingleTop_8X'] = {
+    'ST_t_channel_antitop_4f_inclusiveDecays_13TeV_powhegV2_madspin_pythia8_TuneCUETP8M1_8X': 'mc',
+    'ST_tW_antitop_5f_inclusiveDecays_13TeV_powheg_pythia8_TuneCUETP8M2T4_8X': 'mc',
+    'ST_tW_top_5f_inclusiveDecays_13TeV_powheg_pythia8_TuneCUETP8M2T4_8X': 'mc',
+    'ST_t_channel_antitop_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin_8X': 'mc',
+    'ST_t_channel_top_4f_inclusiveDecays_13TeV_powhegV2_madspin_pythia8_TuneCUETP8M1_8X': 'mc',
+    'ST_s_channel_4f_leptonDecays_13TeV_amcatnlo_pythia8_TuneCUETP8M1_8X': 'mc',
+    'ST_t_channel_top_4f_inclusiveDecays_TuneCUETP8M2T4_13TeV_powhegV2_madspin_8X': 'mc',
+    }
 samplesDict['SingleTop_9X'] = {
     'ST_t_channel_antitop_4f_inclusiveDecays_TuneCP5_13TeV_powhegV2_madspin_pythia8': 'mc',
     'ST_t_channel_top_4f_inclusiveDecays_TuneCP5_13TeV_powhegV2_madspin_pythia8': 'mc',
@@ -146,17 +159,24 @@ samplesDict['SingleTop_10X'] = {
     'ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV_powheg_pythia8_10X': 'mc',
     'ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV_powheg_pythia8_10X': 'mc',
     'ST_s_channel_4f_hadronicDecays_TuneCP5_13TeV_madgraph_pythia8_10X': 'mc',
-    #'ST_s_channel_4f_leptonDecays_TuneCP5_13TeV_amcatnlo_pythia8': 'mc',
     }
+
+samplesDict['W_8X'] = {
+    'WJetsToQQ_HT180_13TeV': 'mc',
+}
 samplesDict['W_9X'] = {
-    #'WJetsToQQ_HT400to600_qc19_3j_TuneCP5_13TeV': 'mc',
-    #'WJetsToQQ_HT600to800_qc19_3j_TuneCP5_13TeV': 'mc',
+    'WJetsToQQ_HT400to600_qc19_3j_TuneCP5_13TeV': 'mc',
+    'WJetsToQQ_HT600to800_qc19_3j_TuneCP5_13TeV': 'mc',
     'WJetsToQQ_HT-800toInf_qc19_3j_TuneCP5_13TeV': 'mc',
     }
 samplesDict['W_10X'] = {
-    #'WJetsToQQ_HT400to600_qc19_3j_TuneCP5_13TeV_PS_10X': 'mc',
-    #'WJetsToQQ_HT600to800_qc19_3j_TuneCP5_13TeV_PS_10X': 'mc',
+    'WJetsToQQ_HT400to600_qc19_3j_TuneCP5_13TeV_PS_10X': 'mc',
+    'WJetsToQQ_HT600to800_qc19_3j_TuneCP5_13TeV_PS_10X': 'mc',
     'WJetsToQQ_HT_800toInf_qc19_3j_TuneCP5_13TeV_PS_10X': 'mc',
+}
+
+samplesDict['DY_8X'] = {
+    'DYJetsToQQ_HT180_13TeV': 'mc',
 }
 samplesDict['DY_9X'] = {
     'ZJetsToQQ_HT400to600_qc19_4j_TuneCP5_13TeV': 'mc',
@@ -168,15 +188,27 @@ samplesDict['DY_10X'] = {
     'ZJetsToQQ_HT600to800_qc19_4j_TuneCP5_13TeV_PS_10X': 'mc',
     'ZJetsToQQ_HT_800toInf_qc19_4j_TuneCP5_13TeV_PS_10X': 'mc',
 }
+
+samplesDict['TT_8X'] = {
+    'TT_TuneCUETP8M2T4_13TeV_powheg_pythia8_8X': 'mc',
+    'TT_Mtt_1000toInf_TuneCUETP8M2T4_13TeV_powheg_pythia8_8X': 'mc',
+    'TT_Mtt_700to1000_TuneCUETP8M2T4_13TeV_powheg_pythia8_8X': 'mc',
+}
 samplesDict['TT_9X'] = {
     'TTToHadronic_TuneCP5_13TeV_powheg_pythia8': 'mc',
     'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8': 'mc',
     'TTTo2L2Nu_TuneCP5_13TeV_powheg_pythia8': 'mc',
     }
 samplesDict['TT_10X'] = {
-    #'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_10X': 'mc',
-    #'TTToHadronic_TuneCP5_13TeV-powheg-pythia8_10X': 'mc',
+    'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_10X': 'mc',
+    'TTToHadronic_TuneCP5_13TeV-powheg-pythia8_10X': 'mc',
     'TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8_PS_10X': 'mc'
+}
+
+samplesDict['VV_8X'] = {
+    'WW_13TeV_pythia8_8X': 'mc',
+    'WZ_13TeV_pythia8_8X': 'mc',
+    'ZZ_13TeV_pythia8_8X': 'mc',
 }
 samplesDict['VV_9X'] = {
     'WW_TuneCP5_13TeV_pythia8': 'mc',
@@ -188,36 +220,53 @@ samplesDict['VV_10X'] = {
     'WZ_TuneCP5_13TeV_pythia8_10X': 'mc',
     'ZZ_TuneCP5_13TeV_pythia8_10X': 'mc',
     }
+
+samplesDict['WLNu_8X'] = {
+    'WJetsToLNu_HT_100To200_13TeV_8X': 'mc',
+    'WJetsToLNu_HT_1200To2500_13TeV_8X': 'mc',
+    'WJetsToLNu_HT_200To400_13TeV_8X': 'mc',
+    'WJetsToLNu_HT_2500ToInf_13TeV_8X': 'mc',
+    'WJetsToLNu_HT_400To600_13TeV_8X': 'mc',
+    'WJetsToLNu_HT_600To800_13TeV_8X': 'mc',
+    'WJetsToLNu_HT_800To1200_13TeV_8X': 'mc',
+}
 samplesDict['WLNu_9X'] = {
-    # 'WJetsToLNu_HT_100To200_TuneCP5_13TeV': 'mc',
-    # 'WJetsToLNu_HT_200To400_TuneCP5_13TeV': 'mc',
-    # 'WJetsToLNu_HT_400To600_TuneCP5_13TeV': 'mc',
-    # 'WJetsToLNu_HT_600To800_TuneCP5_13TeV': 'mc',
-    #'WJetsToLNu_HT_800To1200_TuneCP5_13TeV': 'mc',
-    # 'WJetsToLNu_HT_1200To2500_TuneCP5_13TeV': 'mc',
-    #'WJetsToLNu_HT_2500ToInf_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_100To200_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_200To400_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_400To600_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_600To800_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_800To1200_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_1200To2500_TuneCP5_13TeV': 'mc',
+    'WJetsToLNu_HT_2500ToInf_TuneCP5_13TeV': 'mc',
     }
 samplesDict['WLNu_10X'] = {
-    # 'WJetsToLNu_HT_100To200_TuneCP5_13TeV_10X': 'mc',
-    # 'WJetsToLNu_HT_200To400_TuneCP5_13TeV_10X': 'mc',
-    # 'WJetsToLNu_HT_400To600_TuneCP5_13TeV_10X': 'mc',
-    # 'WJetsToLNu_HT_600To800_TuneCP5_13TeV_10X': 'mc',
+    'WJetsToLNu_HT_100To200_TuneCP5_13TeV_10X': 'mc',
+    'WJetsToLNu_HT_200To400_TuneCP5_13TeV_10X': 'mc',
+    'WJetsToLNu_HT_400To600_TuneCP5_13TeV_10X': 'mc',
+    'WJetsToLNu_HT_600To800_TuneCP5_13TeV_10X': 'mc',
     'WJetsToLNu_HT_800To1200_TuneCP5_13TeV_10X': 'mc',
-    #'WJetsToLNu_HT_1200To2500_TuneCP5_13TeV_10X': 'mc',
-    #'WJetsToLNu_HT_2500ToInf_TuneCP5_13TeV_10X': 'mc',
+    'WJetsToLNu_HT_1200To2500_TuneCP5_13TeV_10X': 'mc',
+    'WJetsToLNu_HT_2500ToInf_TuneCP5_13TeV_10X': 'mc',
+}
+
+samplesDict['DYLL_8X'] = {
+    'DYJetsToLL_Pt_100To250_13TeV_amcatnloFXFX_pythia8_8X': 'mc',
+    'DYJetsToLL_Pt_250To400_13TeV_amcatnloFXFX_pythia8_8X': 'mc',
+    'DYJetsToLL_Pt_400To650_13TeV_amcatnloFXFX_pythia8_8X': 'mc',
+    'DYJetsToLL_Pt_50To100_13TeV_amcatnloFXFX_pythia8_8X': 'mc',
+    'DYJetsToLL_Pt_650ToInf_13TeV_amcatnloFXFX_pythia8_8X': 'mc',
 }
 samplesDict['DYLL_9X'] = {
-    # 'DYJetsToLL_M_50_HT_100to200_TuneCP5_13TeV': 'mc',
-    # 'DYJetsToLL_M_50_HT_200to400_TuneCP5_13TeV': 'mc',
-    # 'DYJetsToLL_M_50_HT_400to600_TuneCP5_13TeV': 'mc',
-    # 'DYJetsToLL_M_50_HT_600to800_TuneCP5_13TeV': 'mc',
-    # 'DYJetsToLL_M_50_HT_800to1200_TuneCP5_13TeV': 'mc',
+    'DYJetsToLL_M_50_HT_100to200_TuneCP5_13TeV': 'mc',
+    'DYJetsToLL_M_50_HT_200to400_TuneCP5_13TeV': 'mc',
+    'DYJetsToLL_M_50_HT_400to600_TuneCP5_13TeV': 'mc',
+    'DYJetsToLL_M_50_HT_600to800_TuneCP5_13TeV': 'mc',
+    'DYJetsToLL_M_50_HT_800to1200_TuneCP5_13TeV': 'mc',
     'DYJetsToLL_M_50_HT_1200to2500_TuneCP5_13TeV': 'mc',
     'DYJetsToLL_M_50_HT_2500toInf_TuneCP5_13TeV': 'mc',
     }
 samplesDict['DYLL_10X'] = {
     'DYJetsToLL_M_50_TuneCP5_13TeV_10X': 'mc',
-    #'DY3JetsToLL_M_50_TuneCP5_13TeV_10X': 'mc',
     }
 
 def exec_me(command, dryRun=False):
@@ -240,8 +289,6 @@ if __name__ == '__main__':
                       help = "tag, which is the same as folder") 
     parser.add_option('--production',dest="production", default = "15",
                       help="bacon production") 
-    parser.add_option('-b','--batch',dest="sub", default = False, 
-                      help = "use condor or batch system")
     parser.add_option("--njobs-per-file",dest="njobs_per_file",type='int',default=1,
                       help="Split into n jobs per file, will automatically produce submission scripts")
     parser.add_option("--nfiles-per-job", dest="nfiles_per_job", type='int', default=1,
@@ -264,29 +311,24 @@ if __name__ == '__main__':
     executable = options.executable
     samples = samplesDict[options.sample]
 
-    if options.sub:
-        eosOutDir = '/eos/cms/store/group/phys_exotica/dijet/dazsle'
-        execPython = 'baconBatch.py'
-        EOS = ''
-        optionsDataMc = {
-            'mc': "Output.root -a 6:subjob_i -a 7:%i -a 2:mc -a 3:none  -n 8000 -q 2nw4cores --njobs-per-file %d"%(options.njobs_per_file,options.njobs_per_file),
-            'data': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonPrompt16,options.njobs_per_file),        
-            'rereco': "Output.root -a 5:1 -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -n 8000 -q 1nd --njobs-per-file %d"%(options.njobs_per_file,jsonRereco16,options.njobs_per_file),
-            }
-    else:
-        eosOutDir = '/store/user/lpcbacon/dazsle'
-        if 'runHWW' in options.executable:
-            eosOutDir = '/store/user/cmantill/baconbits/'
-        execPython = 'baconCondor.py'
-        EOS = ''#eos root://cmseos.fnal.gov'
-        optionsDataMc = {
-            'rereco16': "-a 4:Output.root -a 5:subjob_i -a 6:%i -a 2:data -a 3:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,jsonRereco16,options.njobs_per_file,options.nfiles_per_job),
-            'prompt17': "-a 4:Output.root -a 5:subjob_i -a 6:%i -a 2:data -a 3:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,jsonPrompt17,options.njobs_per_file,options.nfiles_per_job),
-            'rereco17': "-a 4:Output.root -a 5:subjob_i -a 6:%i -a 2:data -a 3:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,jsonRereco17,options.njobs_per_file,options.nfiles_per_job),
-            'prompt18': "-a 4:Output.root -a 5:subjob_i -a 6:%i -a 2:data -a 3:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,jsonPrompt18,options.njobs_per_file,options.nfiles_per_job),
-            'mc': "-a 4:Output.root -a 5:subjob_i -a 6:%i -a 2:mc -a 3:none -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,options.njobs_per_file,options.nfiles_per_job),
-            }
+    year="2017" # year by default
+    if '_8X' in options.sample: year="2016"
+    if '_9X' in options.sample: year="2017"
+    if '_10X' in options.sample: year="2018"
 
+    eosOutDir = '/store/user/lpcbacon/dazsle'
+    if 'runHWW' in options.executable:
+        eosOutDir = '/store/user/cmantill/baconbits/'
+    execPython = 'baconCondor.py'
+    EOS = ''#eos root://cmseos.fnal.gov'
+    optionsDataMc = {
+        'rereco16': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -a 4:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,jsonRereco16,options.njobs_per_file,options.nfiles_per_job),
+        'prompt17': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -a 4:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,jsonPrompt17,options.njobs_per_file,options.nfiles_per_job),
+        'rereco17': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -a 4:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,jsonRereco17,options.njobs_per_file,options.nfiles_per_job),
+        'prompt18': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:data -a 3:%s -a 4:%s -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,jsonPrompt18,options.njobs_per_file,options.nfiles_per_job),
+        'mc': "-a 5:Output.root -a 6:subjob_i -a 7:%i -a 2:mc -a 3:%s -a 3:none -n 8000 --njobs-per-file %d --nfiles-per-job %d"%(options.njobs_per_file,year,options.njobs_per_file,options.nfiles_per_job),
+        }
+    
     exec_me('%s mkdir -p /eos/uscms/%s/%s'%(EOS,eosOutDir,analysisDir))  
     for label, isMc in samples.iteritems():
         if '_10X' in options.sample:
