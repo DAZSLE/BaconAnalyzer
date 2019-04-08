@@ -17,14 +17,8 @@ cd CMSSW_10_2_6/src
 cmsenv
 git clone https://github.com/ksung25/BaconProd
 git clone https://github.com/ksung25/BaconAna
-cd BaconAna
-git remote add jmgd https://github.com/jmduarte/BaconAna
-git fetch jmgd
-git merge jmgd/add_python
-cd ..
 git clone https://github.com/DAZSLE/BaconAnalyzer
 git fetch
-git checkout -b 102x origin/102x
 scram b clean
 scram b -j 10
 cd BaconAnalyzer
@@ -41,25 +35,31 @@ Triggers are listed in
 /src/BaconAna/DataFormats/data/HLTFile_25ns
 ```
 
-For other types of Jets  e.g:
+In general, you can define a new object and include it in bin/run$YOURANALYSIS.cpp, e.g. for VJets:
 ```
-    VJetLoader      *fVJet15CHS     = 0;
-    fVJet15CHS    = new VJetLoader    (lTree,"CA15CHS","AddCA15CHS");
-    fVJet15CHS   ->setupTree      (lOut,"bst15_CHSjet");
+VJetLoader      *fVJet15CHS     = 0;
+fVJet15CHS    = new VJetLoader    (lTree,"CA15CHS","AddCA15CHS");
+fVJet15CHS   ->setupTree      (lOut,"CHSjet");
 ```
 
 IMPORTANT
 ```
 After modifications compile before running.
+Also, if you are submitting to condor, make sure you re-tar your environment after compiling.
 ```
 
 Baconbits production
 -----------
-Define samples on submitZprime.py
 
-Run makeList.sh on $PROD.txt to list bacon files.
+For e.g. `Zprime` samples submission.
 
-Run submitZprime.py for a given SAMPLE and TAG as following:
+Define samples in `production/submitZprime.py`
+
+List all samples in `$PROD.txt` e.g. `ls $EOSDIR > $PROD.txt`.
+
+Run `makeList.sh` on `$PROD` to list bacon files: `bash makeList.sh $PROD`. This will produce a `production${PROD}` folder inside list.
+
+Run `submitZprime.py` for a given SAMPLE and TAG as following:
 
 ```
 python submitZprime.py -s SAMPLE -t TAG (to create submission files)
@@ -68,12 +68,11 @@ python submitZprime.py -s SAMPLE -t TAG --monitor sub # (to submit)
 
 LPC instructions
 -----------
-102X is supposed to run @ CMSLPC cluster.
+Since 90X BaconAnalyzer is configured to run @ CMSLPC cluster. It should also work on lxplus but you need to modify eosdir input and output...
 
-EVERYTIME after compiling: re-tar CMSSW environment and data/ dir
+EVERYTIME after compiling: re-tar `CMSSW environment` and `data/` dir
 
-For v15 (BaconProd,BaconAna)
-CMSMSW_VERSION = CMSSW_10_2_6
+For v15 (BaconProd,BaconAna): `CMSMSW_VERSION = CMSSW_10_2_6`
 
 ```
 cd ../../
@@ -84,7 +83,7 @@ tar -zcvf data.tgz data
 
 Those are transferred to condor. Follow same instructions to produce submission files.
 
-Also, DON'T FORGET TO initialize your proxy before submitting jobs.
+Also, DO NOT FORGET TO initialize your proxy before submitting jobs.
 ```
 voms-proxy-init --voms cms --valid 168:00
 ```
@@ -97,7 +96,7 @@ In cmslpc:
 (Before doing cmsenv)
 cd lists/
 eosls /store/group/lpcbacon/${PROD} > ${PROD}.txt
-bash makeList.sh ${PROD}.txt
+bash makeList.sh ${PROD}
 ```
 
 Also, add the new samples to `submitZprime.py`.
@@ -107,8 +106,8 @@ To produce skim
 Skim is a version of baconbits with usually a simple pT cut e.g. 350 GeV. In cmslpc do:
 
 ```
-e.g. EOSDIR = /eos/uscms//store/user/lpcbacon/dazsle/zprimebits-v14.01/
+e.g. EOSDIR = /eos/uscms//store/user/lpcbacon/dazsle/zprimebits-v15.01/
 python skim.py -s SAMPLE -i EOSDIR --files-to-hadd NFILES
 ```
 
-Skimmed files should appear on sub-dir of baconbits. It can also hadd files for you.
+Skimmed files should appear on sub-dir of baconbits.
