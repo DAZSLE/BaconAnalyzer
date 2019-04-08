@@ -167,7 +167,7 @@ void JECLoader::loadJECs(bool iData,std::string iLabel,std::string iJet) {
       correctionParameters.push_back(correctionParametersA);
       JetCorrector.push_back( JetCorrectorA );
       jecUnc.push_back(jecUncA);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 299329 ));
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 315257, 316995 ));
       //IOV 2018B
       std::vector<JetCorrectorParameters> correctionParametersB = std::vector<JetCorrectorParameters> ();
       std::stringstream jec2018B; jec2018B << jecPathname << "/" << jetRecalib2018B << "/" << jetRecalib2018B;
@@ -180,7 +180,7 @@ void JECLoader::loadJECs(bool iData,std::string iLabel,std::string iJet) {
       correctionParameters.push_back(correctionParametersB);
       JetCorrector.push_back( JetCorrectorB );
       jecUnc.push_back(jecUncB);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 299329 ));
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 317080, 319077 ));
       //IOV 2018C
       std::vector<JetCorrectorParameters> correctionParametersC = std::vector<JetCorrectorParameters> ();
       std::stringstream jec2018C; jec2018C << jecPathname << "/" << jetRecalib2018C << "/" << jetRecalib2018C;
@@ -193,7 +193,7 @@ void JECLoader::loadJECs(bool iData,std::string iLabel,std::string iJet) {
       correctionParameters.push_back(correctionParametersC);
       JetCorrector.push_back( JetCorrectorC );
       jecUnc.push_back(jecUncC);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 299329 ));
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 319337, 320065 ));
       //IOV 2018D
       std::vector<JetCorrectorParameters> correctionParametersD = std::vector<JetCorrectorParameters> ();
       std::stringstream jec2018D; jec2018D << jecPathname << "/" << jetRecalib2018D << "/" << jetRecalib2018D;
@@ -206,7 +206,7 @@ void JECLoader::loadJECs(bool iData,std::string iLabel,std::string iJet) {
       correctionParameters.push_back(correctionParametersD);
       JetCorrector.push_back( JetCorrectorD );
       jecUnc.push_back(jecUncD);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 99999999 ));
+      JetCorrectionsIOV.push_back( std::pair<int,int>( 320413, 325172 ));
     }
     jecMC.str(""); jecMC.clear();
     jecMC << jecPathname << "/" << jetRecalib2018MC <<"/" << jetRecalib2018MC;
