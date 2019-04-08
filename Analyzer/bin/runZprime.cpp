@@ -70,7 +70,7 @@ int main( int argc, char **argv ) {
   const int         iSplit       = atoi(argv[6]);
   const int         maxSplit     = atoi(argv[7]);
 
-  std::cout << argv[1] << " " << argv[2] << " "<< argv[3] << " " << argv[4] << " " << argv[5] << std::endl;
+  std::cout << "args " << argv[1] << " " << argv[2] << " "<< argv[3] << " " << argv[4] << " " << argv[5] << std::endl;
   std::string lJson="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/";
   lJson.append(lJSON);
   const std::string cmssw_base = getenv("CMSSW_BASE");
@@ -87,8 +87,10 @@ int main( int argc, char **argv ) {
   bool isData;
   if(lOption.compare("data")!=0) isData = false;
   else isData = true;
-				   
-  TTree *lTree = load(lName); 
+		
+  TFile *lInputFile = TFile::Open(lName.c_str());
+  TTree *lTree = (TTree*) lInputFile->FindObjectAny("Events");		   
+
   // Declare Readers 
   fEvt       = new EvtLoader     (lTree,lName);    
   fMuon      = new MuonLoader    (lTree);          
@@ -211,6 +213,7 @@ int main( int argc, char **argv ) {
     fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_p02_v*");
     fEvt ->addTrigger("HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17_v*");
 
+    std::cout << "pass json " << passJson << std::endl;
     fEvt      ->fillEvent(1,lWeight,passJson);
     
     // Objects
@@ -303,4 +306,5 @@ int main( int argc, char **argv ) {
   SumWeights->Write();
   Pu->Write();
   lFile->Close();
+  lInputFile->Close();
 }
