@@ -48,7 +48,8 @@ const int NUM_PDF_WEIGHTS = 60;
 TTree* load(std::string iName) { 
   TFile *lFile = TFile::Open(iName.c_str());
   TTree *lTree = (TTree*) lFile->FindObjectAny("Events");
-  fHist        = (TH1F* ) lFile->FindObjectAny("TotalEvents");
+  lTree->SetDirectory(0);
+  lFile->Close();
   return lTree;
 }
 
@@ -238,12 +239,12 @@ int main( int argc, char **argv ) {
 
     // TTbar, EWK and kFactor correction
     int iGen = 0;
-    if(lName.find("ZJets")!=std::string::npos || lName.find("DYJets")!=std::string::npos){
+    if(lName.find("ZJetsToQQ")!=std::string::npos || lName.find("DYJetsToQQ")!=std::string::npos){
       fGen->findBoson(23,0);
       if(fGen->fBosonPt>0)      fEvt->computeCorr(fGen->fBosonPt,"ZJets_012j_NLO/nominal","ZJets_LO/inv_pt","EWKcorr/Z","ZJets_012j_NLO");
       iGen = 23;
     }
-    if(lName.find("WJets")!=std::string::npos){
+    if(lName.find("WJetsToQQ")!=std::string::npos){
       fGen->findBoson(24,1);
       if(fGen->fBosonPt>0)      fEvt->computeCorr(fGen->fBosonPt,"WJets_012j_NLO/nominal","WJets_LO/inv_pt","EWKcorr/W","WJets_012j_NLO");
       iGen = 24;
@@ -291,9 +292,6 @@ int main( int argc, char **argv ) {
 	fVJet15->fisHadronicV[i0] = fGen->ismatchedJet(fVJet15->selectedVJets[i0],1.5,fVJet15->fvMatching[i0],fVJet15->fvSize[i0],iGen);
       }
     }
-
-
-
     lOut->Fill();
     neventstest++;
   }

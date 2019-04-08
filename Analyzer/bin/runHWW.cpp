@@ -47,7 +47,8 @@ const int NUM_PDF_WEIGHTS = 60;
 TTree* load(std::string iName) { 
   TFile *lFile = TFile::Open(iName.c_str());
   TTree *lTree = (TTree*) lFile->FindObjectAny("Events");
-  fHist        = (TH1F* ) lFile->FindObjectAny("TotalEvents");
+  lTree->SetDirectory(0);
+  lFile->Close();
   return lTree;
 }
 
