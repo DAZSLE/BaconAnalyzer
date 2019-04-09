@@ -474,8 +474,10 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     double jetEnergySmearFactorDown = 1.0;    
     if (!isData) {      
       jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
+      if(sfUp < 1) jetEnergySmearFactorUp = jetEnergySmearFactor;
+      else jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
+      if(sfDown < 1) jetEnergySmearFactorDown = jetEnergySmearFactor;
+      else jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     }    
     
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);

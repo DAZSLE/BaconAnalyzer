@@ -244,8 +244,10 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
     double jetEnergySmearFactorDown = 1.0;    
     if (!isData) {      
       jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
+      if(sfUp < 1) jetEnergySmearFactorUp = jetEnergySmearFactor;
+      else jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
+      if(sfDown < 1) jetEnergySmearFactorDown = jetEnergySmearFactor;
+      else jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     }    
     double unc = fJEC->getJecUnc( jetCorrPt, pVJet->eta, runNum ); //use run=999 as default
     
@@ -360,10 +362,12 @@ void VJetLoader::fillVJet(int iN,std::vector<TJet*> &iObjects,std::vector<double
     float sfDown = fJEC->resolution_sf.getScaleFactor(parameters, Variation::DOWN);
 
     double jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-    double jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
-    double jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
-    //std::cout << "JER SF " << sf << " up " << sfUp <<  " dn " << sfDown << " sigma_MC " << sigma_MC << " x1 " << x1 << std::endl;
-    //std::cout << "smearup " << jetEnergySmearFactorUp << " dn "<< jetEnergySmearFactorDown << std::endl;
+    double jetEnergySmearFactorUp;
+    double jetEnergySmearFactorDown;
+    if(sfUp < 1) jetEnergySmearFactorUp = jetEnergySmearFactor;
+    else jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
+    if(sfDown < 1) jetEnergySmearFactorDown = jetEnergySmearFactor;
+    else jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
 
     //double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
