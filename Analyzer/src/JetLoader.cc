@@ -18,6 +18,29 @@ JetLoader::JetLoader(TTree *iTree, bool iData, std::string iLabel) {
   fJEC = new JECLoader(iData,iLabel,"AK4PFPuppi");
   r = new TRandom3(1988);
   isData=iData;
+
+  // modify B-tag wp by year
+  if(iLabel==label2016){
+    DEEPCSVL = fdeepCSVL2016; 
+    DEEPCSVM = fdeepCSVM2016;
+    DEEPCSVT = fdeepCSVT2016;
+  }
+  else if(iLabel==label2017){
+    DEEPCSVL = fdeepCSVL2017;
+    DEEPCSVM = fdeepCSVM2017;
+    DEEPCSVT = fdeepCSVT2017;
+  }
+  else if(iLabel==label2018){
+    DEEPCSVL = fdeepCSVL2018;
+    DEEPCSVM = fdeepCSVM2018;
+    DEEPCSVT = fdeepCSVT2018;
+  }
+  else {
+    DEEPCSVL = fdeepCSVL2017;
+    DEEPCSVM = fdeepCSVM2017;
+    DEEPCSVT = fdeepCSVT2017;
+  }
+
 }
 JetLoader::~JetLoader() { 
   delete fJets;
@@ -278,10 +301,10 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     double jetEnergySmearFactorDown = 1.0;    
     if (!isData) {      
       jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorUp = 1.0 + sqrt(fabs(sfUp*sfUp - 1.0))*sigma_MC*x1;
-      jetEnergySmearFactorDown = 1.0 + sqrt(fabs(sfDown*sfDown - 1.0))*sigma_MC*x1;
-      //jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
-      //jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
+      if(sfUp < 1) jetEnergySmearFactorUp = jetEnergySmearFactor;
+      else jetEnergySmearFactorUp = 1.0 + sqrt(fabs(sfUp*sfUp - 1.0))*sigma_MC*x1;
+      if(sfDown < 1) jetEnergySmearFactorDown = jetEnergySmearFactor;
+      else jetEnergySmearFactorDown = 1.0 + sqrt(fabs(sfDown*sfDown - 1.0))*sigma_MC*x1;
     }    
     double unc = fJEC->getJecUnc( jetCorrPt, pJet->eta, runNum ); //use run=999 as default
     
@@ -321,21 +344,21 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
       MetYCorrjerDown += -1 * (thisJetJERDown.Py() - thisJet.Py());
     }    
 
-    if (jetCorrPtSmear  > 30) lCountPt30++;
-    if (jetPtJESUp  > 30) lCountPt30jesUp++;
-    if (jetPtJESDown  > 30) lCountPt30jesDown++;
-    if (jetPtJERUp  > 30) lCountPt30jerUp++;
-    if (jetPtJERDown  > 30) lCountPt30jerDown++;
+    if (jetCorrPtSmear > 30) lCountPt30++;
+    if (jetPtJESUp     > 30) lCountPt30jesUp++;
+    if (jetPtJESDown   > 30) lCountPt30jesDown++;
+    if (jetPtJERUp     > 30) lCountPt30jerUp++;
+    if (jetPtJERDown   > 30) lCountPt30jerDown++;
     
     // jet and b-tag multiplicity    
     vPJet.SetPtEtaPhiE(jetCorrPtSmear, pJet->eta, pJet->phi, jetCorrESmear);
     for (int i1 = 0; i1 < int(iVJets.size()); i1++) {      
       if(iVJets[i1].Pt()>200 && vPJet.DeltaR(iVJets[i1])>0.8) {
 	if (jetCorrPtSmear  > 30) fNJetsPt30dR08[i1]++;
-	if (jetPtJESUp  > 30) fNJetsPt30dR08jesUp[i1]++;
-	if (jetPtJESDown  > 30) fNJetsPt30dR08jesDown[i1]++;
-	if (jetPtJERUp  > 30) fNJetsPt30dR08jerUp[i1]++;
-	if (jetPtJERDown  > 30) fNJetsPt30dR08jerDown[i1]++;
+	if (jetPtJESUp      > 30) fNJetsPt30dR08jesUp[i1]++;
+	if (jetPtJESDown    > 30) fNJetsPt30dR08jesDown[i1]++;
+	if (jetPtJERUp      > 30) fNJetsPt30dR08jerUp[i1]++;
+	if (jetPtJERDown    > 30) fNJetsPt30dR08jerDown[i1]++;
       }
     }
 	
@@ -347,34 +370,37 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     addJet(pJet,fTightJets);
     fGoodJets.push_back(pJet);
     
-    if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVL){
-      lNBTagLPt30++;
-    }    
-    if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVM){ 
-      lNBTagMPt30++;
-    }
-    if(fabs(pJet->eta) < 2.5 && pJet->csv > CSVT){ 
-      lNBTagTPt30++;
+    if(fabs(pJet->eta) < 2.5){
+      if((pJet->deepcsvbb + pJet->deepcsvb) > DEEPCSVL) lNBTagLPt30++;
+      if((pJet->deepcsvbb + pJet->deepcsvb) > DEEPCSVM) lNBTagMPt30++;
+      if((pJet->deepcsvbb + pJet->deepcsvb) > DEEPCSVT) lNBTagTPt30++;
     }
     
-    //https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation94X
+    //https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation
     // jet and b-tag multiplicity
     for (int i1 = 0; i1 < int(iVJets.size()); i1++) {
       if(iVJets[i1].Pt()>200 && vPJet.DeltaR(iVJets[i1])>0.8) {
-	if(pJet->pt>50 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt50dR08[i1]++;
-	if(pJet->pt>100 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt100dR08[i1]++;
-	if(pJet->pt>150 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVL) fNBTagsLPt150dR08[i1]++;
-	
-	if(pJet->pt>50 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVM) fNBTagsMPt50dR08[i1]++;
-	if(pJet->pt>100 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVM) fNBTagsMPt100dR08[i1]++;
-	if(pJet->pt>150 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVM) fNBTagsMPt150dR08[i1]++;
-	
-	if(pJet->pt>50 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVT) fNBTagsTPt50dR08[i1]++;
-	if(pJet->pt>100 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVT) fNBTagsTPt100dR08[i1]++;
-	if(pJet->pt>150 && fabs(pJet->eta) < 2.5 && pJet->csv > CSVT) fNBTagsTPt150dR08[i1]++;
+	if(pJet->pt>50 && fabs(pJet->eta) < 2.5) {
+	  if((pJet->deepcsvbb + pJet->deepcsvb) > DEEPCSVL) {
+	    fNBTagsLPt50dR08[i1]++;
+	    if(pJet->pt>100) fNBTagsLPt100dR08[i1]++;
+            if(pJet->pt>150) fNBTagsLPt150dR08[i1]++;
+	  }
+          if((pJet->deepcsvbb + pJet->deepcsvb) > DEEPCSVM) {
+            fNBTagsMPt50dR08[i1]++;
+            if(pJet->pt>100) fNBTagsMPt100dR08[i1]++;
+            if(pJet->pt>150) fNBTagsMPt150dR08[i1]++;
+          }
+          if((pJet->deepcsvbb + pJet->deepcsvb) > DEEPCSVT) {
+            fNBTagsTPt50dR08[i1]++;
+            if(pJet->pt>100) fNBTagsTPt100dR08[i1]++;
+            if(pJet->pt>150) fNBTagsTPt150dR08[i1]++;
+          }
+	}
       }
     }
-  }
+
+  } //end loop over jets
   addVJet(fTightJets,selectedJets);
   fNJetsPt30           = lCountPt30;
   fNJetsPt30jesUp      = lCountPt30jesUp;
@@ -451,7 +477,6 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
       jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     }    
     
-    //double jetCorrPtSmear = jetCorrPt*jetEnergySmearFactor;
     double jetPtJESUp = jetCorrPt*jetEnergySmearFactor*(1+unc);
     double jetPtJESDown = jetCorrPt*jetEnergySmearFactor/(1+unc);
     double jetPtJERUp = jetCorrPt*jetEnergySmearFactorUp;
@@ -478,6 +503,5 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     iVals[lBase+i0*fNOtherVars+15] = iObjects[i0]->deepcmvac;
     iVals[lBase+i0*fNOtherVars+16] = iObjects[i0]->deepcmval;
     iVals[lBase+i0*fNOtherVars+17] = iObjects[i0]->deepcmvabb;
-
   }
 }

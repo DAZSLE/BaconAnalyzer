@@ -34,10 +34,10 @@ public:
   
   TRandom3* r;
 
-  //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-  const double CSVL = 0.5803; // CSVv2 WP
-  const double CSVM = 0.8838;
-  const double CSVT = 0.9693;
+  // default is 2017
+  double DEEPCSVL;
+  double DEEPCSVM;
+  double DEEPCSVT;
 
   int           fNJetsPt30;
   int           fNJetsPt30jesUp;
@@ -92,5 +92,26 @@ protected:
 
   // Gaussian random numbers (one for each jet)
   std::vector<double> x1List;
+
+  // b-tag WP
+  // https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation2016Legacy
+  double fdeepCSVL2016 = 0.2217;
+  double fdeepCSVM2016 = 0.6321;
+  double fdeepCSVT2016 = 0.8953;
+
+  // https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
+  double fdeepCSVL2017 = 0.1522;
+  double fdeepCSVM2017 = 0.4941;
+  double fdeepCSVT2017 = 0.8001;
+
+  // https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation102X
+  double fdeepCSVL2018 = 0.1241;
+  double fdeepCSVM2018 = 0.4184;
+  double fdeepCSVT2018 = 0.7527;
+
+  std::string label2016 = "2016";
+  std::string label2017 = "2017";
+  std::string label2018 = "2018";
+
 };
 #endif
