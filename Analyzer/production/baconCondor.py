@@ -111,6 +111,7 @@ def write_condor(odir, exe='runjob.sh', arguments = [], files = [],nqueue=1):
     out += 'Should_Transfer_Files = YES\n'
     out += 'WhenToTransferOutput = ON_EXIT\n'
     out += 'Transfer_Input_Files = %s\n'%(','.join(files))
+    out += 'request_memory = 2.5GB\n'
     out += 'Output = %s_$(Cluster)_$(Process).stdout\n'%(job_name)
     out += 'Error  = %s_$(Cluster)_$(Process).stderr\n'%(job_name)
     out += 'Log    = %s_$(Cluster)_$(Process).log\n'   %(job_name)
