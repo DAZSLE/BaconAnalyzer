@@ -7,12 +7,12 @@
 
 using namespace baconhep;
 
-ElectronLoader::ElectronLoader(TTree *iTree){
+ElectronLoader::ElectronLoader(TTree *iTree,std::string iLabel){
   fElectrons  = new TClonesArray("baconhep::TElectron");
   iTree->SetBranchAddress("Electron",       &fElectrons);
   fElectronBr  = iTree->GetBranch("Electron");
   fN = 2;
-
+  fYear = iLabel;
   for(int i0 = 0; i0 < fN*3.; i0++) {double pVar = 0; fVars.push_back(pVar);}
   for(int i0 = 0; i0 <     4; i0++) {double pVar = 0; fVars.push_back(pVar);}
 }
@@ -55,18 +55,18 @@ void ElectronLoader::selectElectrons(double iRho, double iMet, std::vector<TLore
     if(pElectron->pt        <=  10)                                            continue;
     if(fabs(pElectron->eta) >=  2.5)                                           continue;
     if(fabs(pElectron->eta) > 1.4442 && fabs(pElectron->eta) < 1.566)          continue;
-    if(!passEleLooseSel(pElectron, iRho))                                      continue;
+    if(!passEleLooseSel(pElectron, iRho,fYear))                                continue;
     lCount++;
     addElectron(pElectron,fLooseElectrons);
 
-    if(passEleTightSel(pElectron,iRho) && pElectron->pt>40 && fabs(pElectron->eta)<2.5){
+    if(passEleTightSel(pElectron,iRho,fYear) && pElectron->pt>40 && fabs(pElectron->eta)<2.5){
       if(lCount==1) fisele0Tight = 1;
       if(lCount==2) fisele1Tight = 1;
       lTCount++;
       addElectron(pElectron,fTightElectrons);
     }
 
-    if(passEleHEEPSel(pElectron, iRho, iMet) && pElectron->pt>40 && fabs(pElectron->eta)<2.5){
+    if(passEleHEEPSel(pElectron, iRho, iMet,fYear) && pElectron->pt>40 && fabs(pElectron->eta)<2.5){
       lHEEPCount++;
       addElectron(pElectron,fHEEPElectrons);
     }

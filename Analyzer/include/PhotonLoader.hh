@@ -11,7 +11,7 @@ using namespace baconhep;
 
 class PhotonLoader { 
 public:
-  PhotonLoader(TTree *iTree);
+  PhotonLoader(TTree *iTree,std::string iLabel="2017");
   ~PhotonLoader();
   void reset();
   void setupTree(TTree *iTree);
@@ -31,5 +31,6 @@ protected:
   std::vector<double> fVars;
   int           fN;
   double        fIso;
+  std::string   fYear;
 };
 #endif

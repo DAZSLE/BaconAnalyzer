@@ -4,11 +4,12 @@
 
 using namespace baconhep;
 
-TauLoader::TauLoader(TTree *iTree) { 
+TauLoader::TauLoader(TTree *iTree,std::string iLabel) { 
   fTaus  = new TClonesArray("baconhep::TTau");
   iTree->SetBranchAddress("Tau",       &fTaus);
   fTauBr  = iTree->GetBranch("Tau");
   fN = 1;
+  fYear = iLabel;
 }
 TauLoader::~TauLoader() { 
   delete fTaus;
@@ -38,10 +39,10 @@ void TauLoader::selectTaus(std::vector<TLorentzVector> &iElectrons, std::vector<
     if(passVeto(pTau->eta,pTau->phi,0.4,iMuons))     continue;
     if(pTau->pt        <=  20)                       continue;
     if(fabs(pTau->eta) >=  2.3)                      continue;
-    if(!passTauSel(pTau))                            continue;
-    addTau(pTau,fSelTaus);
+    if(!passTauSel(pTau,fYear))                      continue;
     lCount++;
     if(passTauTightSel(pTau)) lCountTight ++;
+    addTau(pTau,fSelTaus);
   }
   fNTaus = lCount;
   fNTausTight = lCountTight;

@@ -43,10 +43,6 @@ protected:
   bool isData;
   void loadCMSSWPath();
 
-  std::string label2016 = "2016";
-  std::string label2017 = "2017";
-  std::string label2018 = "2018";
-
   // JECs
   // 2016: 07Aug2017
   std::string jetRecalib2016BCD = "Summer16_07Aug2017BCD_V11_DATA";

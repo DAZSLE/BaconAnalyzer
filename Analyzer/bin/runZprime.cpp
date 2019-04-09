@@ -93,10 +93,10 @@ int main( int argc, char **argv ) {
 
   // Declare Readers 
   fEvt       = new EvtLoader     (lTree,lName);    
-  fMuon      = new MuonLoader    (lTree);          
-  fElectron  = new ElectronLoader(lTree);          
-  fTau       = new TauLoader     (lTree);          
-  fPhoton    = new PhotonLoader  (lTree);          
+  fMuon      = new MuonLoader    (lTree,lLabel);          
+  fElectron  = new ElectronLoader(lTree,lLabel);          
+  fTau       = new TauLoader     (lTree,lLabel);          
+  fPhoton    = new PhotonLoader  (lTree,lLabel);          
   fJet4      = new JetLoader     (lTree, isData, lLabel);  
   fVJet8     = new VJetLoader    (lTree,"AK8Puppi","AddAK8Puppi",3, isData, lLabel);  
   fVJet15    = new VJetLoader    (lTree,"CA15Puppi","AddCA15Puppi",3, isData, lLabel);

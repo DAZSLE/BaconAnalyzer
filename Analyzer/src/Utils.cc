@@ -1,7 +1,7 @@
 #include "../include/Utils.hh"
 //================================================================================================
 //
-// Various functions using 80X recommendations
+// Various functions using 8X/9X/10X recommendations
 //
 //________________________________________________________________________________________________
 
@@ -18,194 +18,293 @@
 
 //=== FUNCTION DEFINITIONS ======================================================================================
 
+std::string label2016="2016";
+std::string label2017="2017";
+std::string label2018="2018";
+
 // JETS
-// https://twiki.cern.ch/twiki/bin/view/CMS/JetID13TeVRun2017
-//--------------------------------------------------------------------------------------------------
-/*bool passJetLooseSel(const baconhep::TJet *jet)
+bool passJetTightSel(const baconhep::TJet *jet,std::string iLabel)
 {
-  if(fabs(jet->eta)<= 2.7){
-    if(jet->neuHadFrac >= 0.99) return false;
-    if(jet->neuEmFrac  >= 0.99) return false;
-    if(jet->nParticles <= 1)    return false;
+  // https://twiki.cern.ch/twiki/bin/view/CMS/JetID13TeVRun2016
+  if(iLabel==label2016){
+    if(fabs(jet->eta)<= 2.7){
+      if(jet->neuHadFrac >= 0.90) return false;
+      if(jet->neuEmFrac  >= 0.90) return false;
+      if(jet->nParticles <= 1)    return false;
+      if(fabs(jet->eta)<= 2.4) {
+	if(jet->chHadFrac == 0)     return false;
+	if(jet->nCharged  == 0)     return false;
+	if(jet->chEmFrac  >= 0.90)  return false;
+      }
+    }
+    if(fabs(jet->eta) > 2.7 && fabs(jet->eta) <= 3.0) {
+      if(jet->neuEmFrac <= 0.01)  return false;
+      if(jet->neuHadFrac >= 0.98) return false;
+      if(jet->nNeutrals <= 2)     return false;
+    }
+    if(fabs(jet->eta) > 3.0) {
+      if(jet->neuEmFrac >= 0.90)  return false;
+      if(jet->nNeutrals <= 10)    return false;
+    }
+    return true;
   }
-  if(fabs(jet->eta)<= 2.4) {
-    if(jet->chHadFrac == 0)     return false;
-    if(jet->nCharged  == 0)     return false;
-    if(jet->chEmFrac  >= 0.99)  return false;
+  //https://twiki.cern.ch/twiki/bin/view/CMS/JetID13TeVRun2017
+  if(iLabel==label2017){
+    if(fabs(jet->eta)<= 2.7){
+      if(jet->neuHadFrac >= 0.90) return false;
+      if(jet->neuEmFrac  >= 0.90) return false;
+      if(jet->nParticles <= 1)    return false;
+      if(fabs(jet->eta)<= 2.4) {
+	if(jet->chHadFrac == 0)     return false;
+	if(jet->nCharged  == 0)     return false;
+      }
+    }
+    if(fabs(jet->eta) > 2.7 && fabs(jet->eta) <= 3.0) {
+      if(jet->neuEmFrac <= 0.02)  return false;
+      if(jet->neuHadFrac >= 0.99) return false;
+      if(jet->nNeutrals <= 2)     return false;
+    }
+    if(fabs(jet->eta) > 3.0) {
+      if(jet->neuEmFrac >= 0.90)  return false;
+      if(jet->neuHadFrac <= 0.02) return false;
+      if(jet->nNeutrals <= 10)    return false;
+    }
+    return true;
   }
-  if(fabs(jet->eta) > 2.7 && fabs(jet->eta) <= 3.0) {
-    if(jet->neuEmFrac <= 0.01)  return false;
-    if(jet->neuHadFrac >= 0.98) return false;
-    if(jet->nNeutrals <= 2)     return false;
-  }
-  if(fabs(jet->eta) > 3.0) {
-    if(jet->neuEmFrac >= 0.90)  return false;
-    if(jet->nNeutrals <= 10)    return false;
-  }
-  return true;
-}*/
-//--------------------------------------------------------------------------------------------------
-bool passJetTightSel(const baconhep::TJet *jet)
-{
-  if(fabs(jet->eta)<= 2.7){
-    if(jet->neuHadFrac >= 0.90) return false;
-    if(jet->neuEmFrac  >= 0.90) return false;
-    if(jet->nParticles <= 1)    return false;
-    if(fabs(jet->eta)<= 2.4) {
+  // this is very prelim and no puppi? https://twiki.cern.ch/twiki/bin/view/CMS/JetID13TeVRun2018
+  if(iLabel==label2018){
+    if(fabs(jet->eta)<= 2.6){
+      if(jet->neuHadFrac >= 0.90) return false;
+      if(jet->neuEmFrac  >= 0.90) return false;
+      if(jet->nParticles <= 1)    return false;
       if(jet->chHadFrac == 0)     return false;
       if(jet->nCharged  == 0)     return false;
     }
+    if(fabs(jet->eta) > 2.6 && fabs(jet->eta) <= 2.7) {
+      if(jet->neuHadFrac >= 0.90) return false;
+      if(jet->neuEmFrac  >= 0.99) return false;
+      if(jet->nCharged  == 0)     return false;
+    }
+    if(fabs(jet->eta) > 2.7 && fabs(jet->eta) <= 3.0) {
+      if(jet->neuEmFrac <= 0.02)  return false;
+      if(jet->neuHadFrac >= 0.99) return false;
+      if(jet->nNeutrals <= 2)     return false;
+    }
+    if(fabs(jet->eta) > 3.0) {
+      if(jet->neuEmFrac >= 0.90)  return false;
+      if(jet->neuHadFrac <= 0.2) return false;
+      if(jet->nNeutrals <= 10)    return false;
+    }
+    return true;
   }
-  if(fabs(jet->eta) > 2.7 && fabs(jet->eta) <= 3.0) {
-    if(jet->neuEmFrac <= 0.02)  return false;
-    if(jet->neuHadFrac >= 0.99) return false;
-    if(jet->nNeutrals <= 2)     return false;
-  }
-  if(fabs(jet->eta) > 3.0) {
-    if(jet->neuEmFrac >= 0.90)  return false;
-    if(jet->neuHadFrac <= 0.02) return false;
-    if(jet->nNeutrals <= 10)    return false;
-  }
-  return true;
+  return false;
 }
 //--------------------------------------------------------------------------------------------------
-bool passJetTightLepVetoSel(const baconhep::TJet *jet)
+bool passJetTightLepVetoSel(const baconhep::TJet *jet,std::string iLabel)
 {
-  if(fabs(jet->eta)<= 2.7){
-    if(jet->neuHadFrac >= 0.90) return false;
-    if(jet->neuEmFrac  >= 0.90) return false;
-    if(jet->nParticles <= 1)    return false;
-    if(jet->muonFrac   >= 0.8)  return false;
+  if(iLabel==label2016){
+    if(fabs(jet->eta)<= 2.7){
+      if(jet->neuHadFrac >= 0.90) return false;
+      if(jet->neuEmFrac  >= 0.90) return false;
+      if(jet->nParticles <= 1)    return false;
+      if(jet->muonFrac   >= 0.8)  return false;
+    }
     if(fabs(jet->eta)<= 2.4) {
+      if(jet->chHadFrac == 0)     return false;
+      if(jet->nCharged  == 0)     return false;
+      if(jet->chEmFrac  >= 0.90)  return false;
+    }
+    return true;
+  }
+  if(iLabel==label2017){
+    if(fabs(jet->eta)<= 2.7){
+      if(jet->neuHadFrac >= 0.90) return false;
+      if(jet->neuEmFrac  >= 0.90) return false;
+      if(jet->nParticles <= 1)    return false;
+      if(jet->muonFrac   >= 0.8)  return false;
+      if(fabs(jet->eta)<= 2.4) {
+	if(jet->chHadFrac == 0)     return false;
+	if(jet->nCharged  == 0)     return false;
+	if(jet->chEmFrac  >= 0.80)  return false;
+      }
+    }
+    return true;
+  }
+  if(iLabel==label2018){
+    if(fabs(jet->eta)<= 2.6){
+      if(jet->neuHadFrac >= 0.90) return false;
+      if(jet->neuEmFrac  >= 0.90) return false;
+      if(jet->nParticles <= 1)    return false;
+      if(jet->muonFrac   >= 0.8)  return false;
       if(jet->chHadFrac == 0)     return false;
       if(jet->nCharged  == 0)     return false;
       if(jet->chEmFrac  >= 0.80)  return false;
     }
+    if(fabs(jet->eta) > 2.6 && fabs(jet->eta) <= 2.7) {
+      if(jet->neuHadFrac >= 0.90) return false;
+      if(jet->neuEmFrac  >= 0.99) return false;
+      if(jet->muonFrac   >= 0.8)  return false;
+    if(jet->nCharged  == 0)     return false;
+    if(jet->chEmFrac  >= 0.80)  return false;
+    }
+    return true;
   }
-  return true;
+  return false;
 }
 // ELECTRONS
 // https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedElectronIdentificationRun2#Working_points_for_2016_data_for
+// 2018=2017
 //--------------------------------------------------------------------------------------------------
-bool passEleVetoSel(const baconhep::TElectron *electron, const double rho)
-{
-  if(electron->isConv) return false;
-
-  double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea(electron->eta)) );
-
-  if(fabs(electron->scEta)<=1.479) {
-    if(iso >= 0.168*(electron->pt)) return false;
-
-    if(electron->sieie              >= 0.01280)                        return false;
-    if(fabs(electron->dEtaInSeed)   >= 0.00523)                        return false;
-    if(fabs(electron->dPhiIn)       >= 0.15900)                        return false;
-    if(electron->hovere             >= 0.05 + 1.12/(electron->ecalEnergy) + 0.036*rho/(electron->ecalEnergy))                                          return false;
-    if(fabs(1.0 - electron->eoverp) >= 0.19300*(electron->ecalEnergy)) return false;
-    if(electron->nMissingHits       >  2)                              return false;
-  } else {
-    if(iso >= 0.185*(electron->pt)) return false;
-
-    if(electron->sieie              >= 0.04450)                        return false;
-    if(fabs(electron->dEtaInSeed)   >= 0.00984)                        return false;
-    if(fabs(electron->dPhiIn)       >= 0.15700)                        return false;
-    if(electron->hovere             >= 0.05 + 0.5/(electron->ecalEnergy) + 0.201*rho/(electron->ecalEnergy))                                           return false;
-    if(fabs(1.0 - electron->eoverp) >= 0.09620*(electron->ecalEnergy)) return false;
-    if(electron->nMissingHits       >  3)                              return false;
+bool passEleVetoSel(const baconhep::TElectron *electron, const double rho,std::string iLabel)
+{  
+  if(iLabel==label2016){
+    if(electron->isConv) return false;
+    double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea2016(electron->eta)) );
+    if(fabs(electron->scEta)<1.479) {
+      if(iso >= 0.175*(electron->pt)) return false;
+      if(electron->sieie              >= 0.01150)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00749)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.22800)                        return false;
+      if(electron->hovere             >= 0.35600)                        return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.29900*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  2)                              return false;
+    } else {
+      if(iso >= 0.159*(electron->pt)) return false;
+      if(electron->sieie              >= 0.03700)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00895)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.21300)                        return false;
+      if(electron->hovere             >= 0.21100)                        return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.15000*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  3)                              return false;
+    }
+    return true;
   }
-
-  return true;
+  if(iLabel==label2017||iLabel==label2018){
+    if(electron->isConv) return false;
+    double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea2017(electron->eta)) );
+    if(fabs(electron->scEta)<=1.479) {
+      if(iso >= 0.198*(electron->pt)) return false;
+      if(electron->sieie              >= 0.01260)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00463)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.14800)                        return false;
+      if(electron->hovere             >= 0.05 + 1.16/(electron->ecalEnergy) + 0.0324*rho/(electron->ecalEnergy))                                          return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.209*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  2)                              return false;
+    } else {
+      if(iso >= 0.203*(electron->pt)) return false;
+      if(electron->sieie              >= 0.04570)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00814)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.19000)                        return false;
+      if(electron->hovere             >= 0.05 + 2.54/(electron->ecalEnergy) + 0.183*rho/(electron->ecalEnergy))                                           return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.132*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  3)                              return false;
+    }
+    return true;
+  }
+  return false;
 }
 //--------------------------------------------------------------------------------------------------
-bool passEleLooseSel(const baconhep::TElectron *electron, const double rho)
+bool passEleLooseSel(const baconhep::TElectron *electron, const double rho,std::string iLabel)
 {
-  if(electron->isConv) return false;
-
-  double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea(electron->eta)) );
-
-  if(fabs(electron->scEta)<=1.479) {
-    if(iso >= 0.133*(electron->pt)) return false;
-
-    if(electron->sieie              >= 0.0105)                        return false;
-    if(fabs(electron->dEtaInSeed)   >= 0.00387)                       return false;
-    if(fabs(electron->dPhiIn)       >= 0.0761)                        return false;
-    if(electron->hovere             >= 0.05 + 1.12/(electron->ecalEnergy) + 0.036*rho/(electron->ecalEnergy))                                         return false;
-    if(fabs(1.0 - electron->eoverp) >= 0.129*(electron->ecalEnergy))  return false;
-    if(electron->nMissingHits       >  1)                             return false;
-  } else {
-    if(iso >= 0.146*(electron->pt)) return false;
-
-    if(electron->sieie              >= 0.03560)                        return false;
-    if(fabs(electron->dEtaInSeed)   >= 0.00720)                        return false;
-    if(fabs(electron->dPhiIn)       >= 0.14700)                        return false;
-    if(electron->hovere             >= 0.0414 + 0.5/(electron->ecalEnergy) + 0.201*rho/(electron->ecalEnergy))                                         return false;
-    if(fabs(1.0 - electron->eoverp) >= 0.08750*(electron->ecalEnergy)) return false;
-    if(electron->nMissingHits       >  1)                              return false;
+  if(iLabel==label2016){
+    if(electron->isConv) return false;
+    double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea2016(electron->eta)) );
+    if(fabs(electron->scEta)<1.479) {
+      if(iso >= 0.0994*(electron->pt)) return false;
+      if(electron->sieie              >= 0.01100)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00477)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.22200)                        return false;
+      if(electron->hovere             >= 0.29800)                        return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.24100*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  1)                              return false;
+    } else {
+      if(iso >= 0.107*(electron->pt)) return false;
+      if(electron->sieie              >= 0.03140)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00868)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.21300)                        return false;
+      if(electron->hovere             >= 0.10100)                        return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.14000*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  1)                              return false;
+    }
+    return true;
   }
-
-  return true;
+  if(iLabel==label2017||iLabel==label2018){
+    if(electron->isConv) return false;
+    double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea2017(electron->eta)) );
+    if(fabs(electron->scEta)<=1.479) {
+      if(iso >= 0.133*(electron->pt)) return false;
+      if(electron->sieie              >= 0.0112)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00377)                       return false;
+      if(fabs(electron->dPhiIn)       >= 0.0884)                        return false;
+      if(electron->hovere             >= 0.05 + 1.16/(electron->ecalEnergy) + 0.0324*rho/(electron->ecalEnergy))                                         return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.112*(electron->ecalEnergy))  return false;
+      if(electron->nMissingHits       >  1)                             return false;
+    } else {
+      if(iso >= 0.146*(electron->pt)) return false;
+      if(electron->sieie              >= 0.0425)                         return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00674)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.169)                          return false;
+      if(electron->hovere             >= 0.0441 + 2.54/(electron->ecalEnergy) + 0.183*rho/(electron->ecalEnergy))                                         return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.108*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  1)                              return false;
+    }
+    return true;
+  }
+  return false;
+}
+bool passEleTightSel(const baconhep::TElectron *electron, const double rho,std::string iLabel)
+{
+  if(iLabel==label2016){
+    if(electron->isConv) return false;
+    double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea2016(electron->eta)) );
+    if(fabs(electron->scEta)<1.479) {
+      if(iso >= 0.0588*(electron->pt)) return false;
+      if(electron->sieie              >= 0.00998)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00308)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.08160)                        return false;
+      if(electron->hovere             >= 0.04140)                        return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.12900*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  1)                              return false;
+    } else {
+      if(iso >= 0.0571*(electron->pt)) return false;
+      if(electron->sieie              >= 0.02920)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00605)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.03940)                        return false;
+      if(electron->hovere             >= 0.06410)                        return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.12900*(electron->ecalEnergy)) return false;
+      if(electron->nMissingHits       >  1)                              return false;
+    }
+    return true;
+  }
+  if(iLabel==label2017||iLabel==label2018){
+    if(electron->isConv) return false;
+    double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea2017(electron->eta)) );
+    if(fabs(electron->scEta)<1.479) {
+      if(iso >= 0.0287*(electron->pt)) return false;
+      if(electron->sieie              >= 0.01040)                        return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00255)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.02200)                        return false;
+      if(electron->hovere             >= 0.026 + 1.15/(electron->ecalEnergy) + 0.0324*rho/(electron->ecalEnergy))                                         return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.159*(electron->ecalEnergy))   return false;
+      if(electron->nMissingHits       >  1)                              return false;
+    } else {
+      if(iso >= 0.0445*(electron->pt)) return false;
+      if(electron->sieie              >= 0.0353)                         return false;
+      if(fabs(electron->dEtaInSeed)   >= 0.00501)                        return false;
+      if(fabs(electron->dPhiIn)       >= 0.0236)                         return false;
+      if(electron->hovere             >= 0.0188 + 2.06/(electron->ecalEnergy) + 0.183*rho/(electron->ecalEnergy))                                         return false;
+      if(fabs(1.0 - electron->eoverp) >= 0.0197*(electron->ecalEnergy))  return false;
+      if(electron->nMissingHits       >  1)                              return false;
+    }
+    return true;
+  }
+  return false;
 }
 //--------------------------------------------------------------------------------------------------
-bool passEleMediumSel(const baconhep::TElectron *electron, const double rho)
-{
-  if(electron->isConv) return false;
-
-  double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea(electron->eta)) );
-
-  if(fabs(electron->scEta)<=1.479) {
-    if(iso >= 0.0718*(electron->pt)) return false;
-
-    if(electron->sieie              >= 0.01050)                        return false;
-    if(fabs(electron->dEtaInSeed)   >= 0.00365)                        return false;
-    if(fabs(electron->dPhiIn)       >= 0.05880)                        return false;
-    if(electron->hovere             >= 0.026 + 1.12/(electron->ecalEnergy) + 0.036*rho/(electron->ecalEnergy))                                         return false;
-    if(fabs(1.0 - electron->eoverp) >= 0.03270*(electron->ecalEnergy)) return false;
-    if(electron->nMissingHits       >  1)                              return false;
-  } else {
-    if(iso >= 0.143*(electron->pt)) return false;
-
-    if(electron->sieie              >= 0.03090)                        return false;
-    if(fabs(electron->dEtaInSeed)   >= 0.00625)                        return false;
-    if(fabs(electron->dPhiIn)       >= 0.03550)                        return false;
-    if(electron->hovere             >= 0.026 + 0.5/(electron->ecalEnergy) + 0.201*rho/(electron->ecalEnergy))                                          return false;
-    if(fabs(1.0 - electron->eoverp) >= 0.03350*(electron->ecalEnergy)) return false;
-    if(electron->nMissingHits       >  1)                              return false;
-  }
-
-  return true;
-}
-//--------------------------------------------------------------------------------------------------
-bool passEleTightSel(const baconhep::TElectron *electron, const double rho)
-{
-  if(electron->isConv) return false;
-
-  double iso = electron->chHadIso + TMath::Max( 0.0,(electron->gammaIso + electron->neuHadIso - rho*eleEffArea(electron->eta)) );
-
-  if(fabs(electron->scEta)<=1.479) {
-    if(iso >= 0.0361*(electron->pt)) return false;
-
-    if(electron->sieie              >= 0.01040)                        return false;
-    if(fabs(electron->dEtaInSeed)   >= 0.00353)                        return false;
-    if(fabs(electron->dPhiIn)       >= 0.04990)                        return false;
-    if(electron->hovere             >= 0.026 + 1.12/(electron->ecalEnergy) + 0.036*rho/(electron->ecalEnergy))                                         return false;
-    if(fabs(1.0 - electron->eoverp) >= 0.02780*(electron->ecalEnergy)) return false;
-    if(electron->nMissingHits       >  1)                              return false;
-  } else {
-    if(iso >= 0.094*(electron->pt)) return false;
-
-    if(electron->sieie              >= 0.03050)                        return false;
-    if(fabs(electron->dEtaInSeed)   >= 0.00567)                        return false;
-    if(fabs(electron->dPhiIn)       >= 0.01650)                        return false;
-    if(electron->hovere             >= 0.026 + 0.5/(electron->ecalEnergy) + 0.201*rho/(electron->ecalEnergy))                                          return false;
-    if(fabs(1.0 - electron->eoverp) >= 0.01580*(electron->ecalEnergy)) return false;
-    if(electron->nMissingHits       >  1)                              return false;
-  }
-
-  return true;
-}
-//--------------------------------------------------------------------------------------------------                                                            
 // HEEP Electrons
 // https://twiki.cern.ch/twiki/bin/view/CMS/HEEPElectronIdentificationRun2#Selection_Cuts_HEEP_V7_0_recomme
-bool passEleHEEPSel(const baconhep::TElectron *electron, const double rho, const double met)
+// 2016=2017=2018
+bool passEleHEEPSel(const baconhep::TElectron *electron, const double rho, const double met,std::string iLabel)
 {
   if(fabs(electron->scEta)<1.442) {
     if(met                             <= 35)                                              return false;
@@ -213,7 +312,7 @@ bool passEleHEEPSel(const baconhep::TElectron *electron, const double rho, const
     if(fabs(electron->dEtaInSeed)      >= 0.00400)                                         return false;
     if(fabs(electron->dPhiIn)          >= 0.06000)                                         return false;
     if(electron->hovere                >= (1/(electron->ecalEnergy))+0.05)                 return false;
-    if((electron->e2x5/electron->e5x5) <= 0.94 || (electron->e1x5/electron->e1x5) <= 0.83) return false;
+    if((electron->e2x5/electron->e5x5) <= 0.94 || (electron->e1x5/electron->e5x5) <= 0.83) return false;
     if(electron->hcalDepth1Iso         >= 2.0+0.03*met+0.28*rho)                           return false;
     if(electron->trkIso                >= 5)                                               return false;
     if(electron->nMissingHits          >  1)                                               return false;
@@ -244,142 +343,262 @@ bool passEleHEEPSel(const baconhep::TElectron *electron, const double rho, const
   return true;
 }
 // PHOTONS
-// https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedPhotonIdentificationRun2#Recommended_Working_points_for_2
+// https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedPhotonIdentificationRun2
+// 2018=2017 for now
 //--------------------------------------------------------------------------------------------------
-bool passPhoLooseSel(const baconhep::TPhoton *photon, const double rho)
+bool passPhoLooseSel(const baconhep::TPhoton *photon, const double rho,std::string iLabel)
 {
-  double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea(photon->scEta, 0), (double)0.);
-  double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea(photon->scEta, 1), (double)0.);
-  double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea(photon->scEta, 2), (double)0.);
+  if(iLabel==label2016){
+    double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea2016(photon->scEta, 0), (double)0.);
+    double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea2016(photon->scEta, 1), (double)0.);
+    double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea2016(photon->scEta, 2), (double)0.);
+    
+    double maxneuHadIsoB = 10.910+0.0148*photon->pt+0.000017*photon->pt*photon->pt;
+    double maxneuHadIsoE = 5.931+0.0163*photon->pt+0.000014*photon->pt*photon->pt;
 
-  double maxneuHadIsoB = 9.188+0.0126*photon->pt+0.000026*photon->pt*photon->pt;
-  double maxneuHadIsoE = 10.471+0.0119*photon->pt+0.000025*photon->pt*photon->pt;
-
-  if(fabs(photon->scEta) <= 1.479) {
-    if(photon->hovere   > 0.1050)                                      return false;
-    if(photon->sieie    > 0.01030)                                     return false;
-    if(chHadIso         > 2.839)                                       return false;
-    if(neuHadIso        > maxneuHadIsoB)                               return false;                                  
-    if(phoIso           > 2.956 + 0.0035*photon->pt)                   return false;
-
-  } else {
-    if(photon->hovere   > 0.0290)                                      return false;
-    if(photon->sieie    > 0.02760)                                     return false;
-    if(chHadIso         > 2.150)                                       return false;
-    if(neuHadIso        > maxneuHadIsoE)                               return false;
-    if(phoIso           > 4.895 + 0.0040*photon->pt)                   return false;
+    if(fabs(photon->scEta) <= 1.479) {
+      if(photon->hovere   > 0.0597)                                      return false;
+      if(photon->sieie    > 0.01031)                                     return false;
+      if(chHadIso         > 1.295)                                       return false;
+      if(neuHadIso        > maxneuHadIsoB)                               return false;                                  
+      if(phoIso           > 3.630 + 0.0047*photon->pt)                   return false;
+      
+    } else {
+      if(photon->hovere   > 0.0481)                                      return false;
+      if(photon->sieie    > 0.03013)                                     return false;
+      if(chHadIso         > 1.011)                                       return false;
+      if(neuHadIso        > maxneuHadIsoE)                               return false;
+      if(phoIso           > 6.641 + 0.0034*photon->pt)                   return false;
+    }
+    return true;
   }
+  if(iLabel==label2017||iLabel==label2018){
+    double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea2017(photon->scEta, 0), (double)0.);
+    double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea2017(photon->scEta, 1), (double)0.);
+    double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea2017(photon->scEta, 2), (double)0.);
+    
+    double maxneuHadIsoB = 24.032+0.01512*photon->pt+0.00002259*photon->pt*photon->pt;
+    double maxneuHadIsoE = 19.722+0.0117*photon->pt+0.000023*photon->pt*photon->pt;
 
-  return true;
+    if(fabs(photon->scEta) <= 1.479) {
+      if(photon->hovere   > 0.04596)                                     return false;
+      if(photon->sieie    > 0.0106)                                      return false;
+      if(chHadIso         > 1.694)                                       return false;
+      if(neuHadIso        > maxneuHadIsoB)                               return false;                                  
+      if(phoIso           > 2.876 + 0.004017*photon->pt)                 return false;
+    } else {
+      if(photon->hovere   > 0.0590)                                      return false;
+      if(photon->sieie    > 0.0272)                                      return false;
+      if(chHadIso         > 2.089)                                       return false;
+      if(neuHadIso        > maxneuHadIsoE)                               return false;
+      if(phoIso           > 4.162 + 0.0037*photon->pt)                   return false;
+    }
+    return true;
+  }
+  return false;
 }
 //--------------------------------------------------------------------------------------------------
-bool passPhoMediumSel(const baconhep::TPhoton *photon, const double rho)
+bool passPhoMediumSel(const baconhep::TPhoton *photon, const double rho,std::string iLabel)
 {
-  double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea(photon->scEta, 0), (double)0.);
-  double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea(photon->scEta, 1), (double)0.);
-  double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea(photon->scEta, 2), (double)0.);
-
-  double maxneuHadIsoB = 2.491+0.0126*photon->pt+0.000026*photon->pt*photon->pt;
-  double maxneuHadIsoE = 9.131+0.0119*photon->pt+0.000025*photon->pt*photon->pt;
-
-  if(fabs(photon->scEta) <= 1.479) {
-    if(photon->hovere   > 0.0350)                                      return false;
-    if(photon->sieie    > 0.01030)                                     return false;
-    if(chHadIso         > 1.416)                                       return false;
-    if(neuHadIso        > maxneuHadIsoB)                               return false;
-    if(phoIso           > 2.952 + 0.0040*photon->pt)                   return false;
-
-  } else {
-    if(photon->hovere   > 0.0270)                                      return false;
-    if(photon->sieie    > 0.02710)                                     return false;
-    if(chHadIso         > 1.012)                                       return false;
-    if(neuHadIso        > maxneuHadIsoE)                               return false;
-    if(phoIso           > 4.095 + 0.0040*photon->pt)                   return false;
+  if(iLabel==label2016){
+    double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea2016(photon->scEta, 0), (double)0.);
+    double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea2016(photon->scEta, 1), (double)0.);
+    double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea2016(photon->scEta, 2), (double)0.);
+    
+    double maxneuHadIsoB = 2.725+0.0148*photon->pt+0.000017*photon->pt*photon->pt;
+    double maxneuHadIsoE = 1.715+0.0163*photon->pt+0.000014*photon->pt*photon->pt;
+    
+    if(fabs(photon->scEta) <= 1.479) {
+      if(photon->hovere   > 0.0396)                                      return false;
+      if(photon->sieie    > 0.01022)                                     return false;
+      if(chHadIso         > 0.441)                                       return false;
+      if(neuHadIso        > maxneuHadIsoB)                               return false;
+      if(phoIso           > 2.571 + 0.0047*photon->pt)                   return false;
+    } else {
+      if(photon->hovere   > 0.0219)                                      return false;
+      if(photon->sieie    > 0.03001)                                     return false;
+      if(chHadIso         > 0.442)                                       return false;
+      if(neuHadIso        > maxneuHadIsoE)                               return false;
+      if(phoIso           > 3.863 + 0.0034*photon->pt)                   return false;
+    }
+    return true;
   }
-
-  return true;
+  if(iLabel==label2017||iLabel==label2018){
+    double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea2017(photon->scEta, 0), (double)0.);
+    double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea2017(photon->scEta, 1), (double)0.);
+    double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea2017(photon->scEta, 2), (double)0.);
+    
+    double maxneuHadIsoB = 1.189+0.01512*photon->pt+0.00002259*photon->pt*photon->pt;
+    double maxneuHadIsoE = 2.718+0.0117*photon->pt+0.000023*photon->pt*photon->pt;
+    
+    if(fabs(photon->scEta) <= 1.479) {
+      if(photon->hovere   > 0.02197)                                     return false;
+      if(photon->sieie    > 0.01015)                                     return false;
+      if(chHadIso         > 1.141)                                       return false;
+      if(neuHadIso        > maxneuHadIsoB)                               return false;
+      if(phoIso           > 2.08 + 0.004017*photon->pt)                  return false;
+    } else {
+      if(photon->hovere   > 0.0326)                                      return false;
+      if(photon->sieie    > 0.0272)                                      return false;
+      if(chHadIso         > 1.051)                                       return false;
+      if(neuHadIso        > maxneuHadIsoE)                               return false;
+      if(phoIso           > 3.867 + 0.0037*photon->pt)                   return false;
+    }
+    return true;
+  }
+  return false;
 }
 //--------------------------------------------------------------------------------------------------
-bool passPhoTightSel(const baconhep::TPhoton *photon, const double rho)
+bool passPhoTightSel(const baconhep::TPhoton *photon, const double rho, std::string iLabel)
 {
-  double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea(photon->scEta, 0), (double)0.);
-  double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea(photon->scEta, 1), (double)0.);
-  double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea(photon->scEta, 2), (double)0.);
-
-  double maxneuHadIsoB = 1.267+0.0126*photon->pt+0.000026*photon->pt*photon->pt;
-  double maxneuHadIsoE = 8.916+0.0119*photon->pt+0.000025*photon->pt*photon->pt;
-
-  if(fabs(photon->scEta) <= 1.479) {
-    if(photon->hovere   > 0.0200)                                      return false;
-    if(photon->sieie    > 0.01030)                                     return false;
-    if(chHadIso         > 1.158)                                       return false;
-    if(neuHadIso        > maxneuHadIsoB)                               return false;
-    if(phoIso           > 2.065 + 0.0035*photon->pt)                   return false;
-
-  } else {
-    if(photon->hovere   > 0.0250)                                      return false;
-    if(photon->sieie    > 0.02710)                                     return false;
-    if(chHadIso         > 0.575)                                       return false;
-    if(neuHadIso        > maxneuHadIsoE)                               return false;
-    if(phoIso           > 3.272 + 0.0040*photon->pt)                   return false;
+  if(iLabel==label2016){
+    double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea2016(photon->scEta, 0), (double)0.);
+    double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea2016(photon->scEta, 1), (double)0.);
+    double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea2016(photon->scEta, 2), (double)0.);
+    
+    double maxneuHadIsoB = 0.264+0.0148*photon->pt+0.000017*photon->pt*photon->pt;
+    double maxneuHadIsoE = 0.586+0.0163*photon->pt+0.000014*photon->pt*photon->pt;
+    
+    if(fabs(photon->scEta) <= 1.479) {
+      if(photon->hovere   > 0.0269)                                      return false;
+      if(photon->sieie    > 0.00994)                                     return false;
+      if(chHadIso         > 0.202)                                       return false;
+      if(neuHadIso        > maxneuHadIsoB)                               return false;
+      if(phoIso           > 2.362 + 0.0047*photon->pt)                   return false;
+    } else {
+      if(photon->hovere   > 0.0213)                                      return false;
+      if(photon->sieie    > 0.03000)                                     return false;
+      if(chHadIso         > 0.034)                                       return false;
+      if(neuHadIso        > maxneuHadIsoE)                               return false;
+      if(phoIso           > 2.617 + 0.0034*photon->pt)                   return false;
+    }
+    return true;
   }
-
-  return true;
+  if(iLabel==label2017||iLabel==label2018){
+    double chHadIso  = TMath::Max(photon->chHadIso  - rho*phoEffArea2017(photon->scEta, 0), (double)0.);
+    double neuHadIso = TMath::Max(photon->neuHadIso - rho*phoEffArea2017(photon->scEta, 1), (double)0.);
+    double phoIso    = TMath::Max(photon->gammaIso  - rho*phoEffArea2017(photon->scEta, 2), (double)0.);
+    
+    double maxneuHadIsoB = 0.317+0.01512*photon->pt+0.0000229*photon->pt*photon->pt;
+    double maxneuHadIsoE = 2.716+0.0117*photon->pt+0.000023*photon->pt*photon->pt;
+    
+    if(fabs(photon->scEta) <= 1.479) {
+      if(photon->hovere   > 0.02148)                                     return false;
+      if(photon->sieie    > 0.00996)                                     return false;
+      if(chHadIso         > 0.65)                                        return false;
+      if(neuHadIso        > maxneuHadIsoB)                               return false;
+      if(phoIso           > 2.044 + 0.004017*photon->pt)                 return false;
+    } else {
+      if(photon->hovere   > 0.0321)                                      return false;
+      if(photon->sieie    > 0.0271)                                      return false;
+      if(chHadIso         > 0.517)                                       return false;
+      if(neuHadIso        > maxneuHadIsoE)                               return false;
+      if(phoIso           > 3.032 + 0.0037*photon->pt)                   return false;
+    }
+    return true;
+  }
+  return false;
 }
 //--------------------------------------------------------------------------------------------------
 // Effective Areas
-// https://github.com/lsoffi/cmssw/blob/CMSSW_9_2_X_TnP/RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_92X.txt
-extern double eleEffArea(const double eta)
+//https://github.com/ikrav/cmssw/blob/egm_id_80X_v1/RecoEgamma/ElectronIdentification/data/Summer16/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_80X.txt
+extern double eleEffArea2016(const double eta)
 {
-  if     (fabs(eta) >= 0.0000 && fabs(eta) < 1.0000) { return 0.1566; }
-  else if(fabs(eta) >= 1.0000 && fabs(eta) < 1.4790) { return 0.1626; }
-  else if(fabs(eta) >= 1.4790 && fabs(eta) < 2.0000) { return 0.1073; }
-  else if(fabs(eta) >= 2.0000 && fabs(eta) < 2.2000) { return 0.0854; }
-  else if(fabs(eta) >= 2.2000 && fabs(eta) < 2.3000) { return 0.1051; }
-  else if(fabs(eta) >= 2.3000 && fabs(eta) < 2.4000) { return 0.1204; }
-  else                                               { return 0.1524; }
+  if     (fabs(eta) >= 0.0000 && fabs(eta) < 1.0000) { return 0.1703; }
+  else if(fabs(eta) >= 1.0000 && fabs(eta) < 1.4790) { return 0.1715; }
+  else if(fabs(eta) >= 1.4790 && fabs(eta) < 2.0000) { return 0.1213; }
+  else if(fabs(eta) >= 2.0000 && fabs(eta) < 2.2000) { return 0.1230; }
+  else if(fabs(eta) >= 2.2000 && fabs(eta) < 2.3000) { return 0.1635; }
+  else if(fabs(eta) >= 2.3000 && fabs(eta) < 2.4000) { return 0.1937; }
+  else                                               { return 0.2393; }
+}
+// https://github.com/cms-sw/cmssw/blob/CMSSW_10_2_X/RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_94X.txt
+extern double eleEffArea2017(const double eta)
+{
+  if     (fabs(eta) >= 0.0000 && fabs(eta) < 1.0000) { return 0.1440; }
+  else if(fabs(eta) >= 1.0000 && fabs(eta) < 1.4790) { return 0.1562; }
+  else if(fabs(eta) >= 1.4790 && fabs(eta) < 2.0000) { return 0.1032; }
+  else if(fabs(eta) >= 2.0000 && fabs(eta) < 2.2000) { return 0.0859; }
+  else if(fabs(eta) >= 2.2000 && fabs(eta) < 2.3000) { return 0.1116; }
+  else if(fabs(eta) >= 2.3000 && fabs(eta) < 2.4000) { return 0.1321; }
+  else                                               { return 0.1654; }
 }
 //--------------------------------------------------------------------------------------------------
-//https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedPhotonIdentificationRun2#Offline_selection_criteria
-extern double phoEffArea(const double eta, const int type)
+//https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedPhotonIdentificationRun2
+extern double phoEffArea2016(const double eta, const int type)
 {
   const int kCH_HAD  = 0;
   const int kNEU_HAD = 1;
   const int kPHOTON  = 2;
 
   if(type==kCH_HAD) {
-    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.0385; }
-    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.0468; }
-    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0435; }
-    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.0378; }
-    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.0338; }
-    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.0314; }
-    else                                             { return 0.0269; }
+    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.0360; }
+    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.0377; }
+    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0306; }
+    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.0283; }
+    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.0254; }
+    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.0217; }
+    else                                             { return 0.0167; }
 
   } else if(type==kNEU_HAD) {
-    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.0636; }
-    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.1103; }
-    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0759; }
-    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.0236; }
-    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.0151; }
-    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.00007; }
-    else                                             { return 0.0132; }
+    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.0597; }
+    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.0807; }
+    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0629; }
+    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.0197; }
+    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.0184; }
+    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.0284; }
+    else                                             { return 0.0591; }
 
   } else if(type==kPHOTON) {
-    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.1240; }
-    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.1093; }
-    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0631; }
-    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.0779; }
-    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.0999; }
-    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.1155; }
-    else                                             { return 0.1373; }
+    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.1210; }
+    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.1107; }
+    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0699; }
+    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.1056; }
+    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.1457; }
+    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.1719; }
+    else                                             { return 0.1998; }
+
+  } else { assert(0); }
+}
+extern double phoEffArea2017(const double eta, const int type)
+{
+  const int kCH_HAD  = 0;
+  const int kNEU_HAD = 1;
+  const int kPHOTON  = 2;
+
+  if(type==kCH_HAD) {
+    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.0112; }
+    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.0108; }
+    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0106; }
+    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.01002; }
+    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.0098; }
+    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.0089; }
+    else                                             { return 0.0087; }
+
+  } else if(type==kNEU_HAD) {
+    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.0668; }
+    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.1054; }
+    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0786; }
+    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.0233; }
+    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.0078; }
+    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.0028; }
+    else                                             { return 0.0137; }
+
+  } else if(type==kPHOTON) {
+    if     (fabs(eta) >= 0.0   && fabs(eta) < 1.0)   { return 0.1113; }
+    else if(fabs(eta) >= 1.0   && fabs(eta) < 1.479) { return 0.0953; }
+    else if(fabs(eta) >= 1.479 && fabs(eta) < 2.0)   { return 0.0619; }
+    else if(fabs(eta) >= 2.0   && fabs(eta) < 2.2)   { return 0.0837; }
+    else if(fabs(eta) >= 2.2   && fabs(eta) < 2.3)   { return 0.1070; }
+    else if(fabs(eta) >= 2.3   && fabs(eta) < 2.4)   { return 0.1212; }
+    else                                             { return 0.1466; }
 
   } else { assert(0); }
 }
 // MUONS
 // https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideMuonIdRun2 
 //-------------------------------------------------------------------------------------------------
-bool passMuonLooseSel(const baconhep::TMuon *muon)
+bool passMuonLooseSel(const baconhep::TMuon *muon,std::string iLabel)
 {
   if(!(muon->pogIDBits & baconhep::kPOGLooseMuon)) return false;
 
@@ -390,7 +609,7 @@ bool passMuonLooseSel(const baconhep::TMuon *muon)
   return true;
 }
 //-------------------------------------------------------------------------------------------------
-bool passMuonMediumSel(const baconhep::TMuon *muon)
+bool passMuonMediumSel(const baconhep::TMuon *muon,std::string iLabel)
 {
   if(!(muon->pogIDBits & baconhep::kPOGMediumMuon)) return false;
 
@@ -401,7 +620,7 @@ bool passMuonMediumSel(const baconhep::TMuon *muon)
   return true;
 }
 //-------------------------------------------------------------------------------------------------
-bool passMuonTightSel(const baconhep::TMuon *muon)
+bool passMuonTightSel(const baconhep::TMuon *muon,std::string iLabel)
 {
   if(!(muon->pogIDBits & baconhep::kPOGTightMuon)) return false;
 
@@ -411,7 +630,7 @@ bool passMuonTightSel(const baconhep::TMuon *muon)
   return true;
 }
 //-------------------------------------------------------------------------------------------------
-bool passMuonSoftSel(const baconhep::TMuon *muon)
+bool passMuonSoftSel(const baconhep::TMuon *muon,std::string iLabel)
 {
   if(!(muon->pogIDBits & baconhep::kPOGSoftMuon)) return false;
 
@@ -421,7 +640,7 @@ bool passMuonSoftSel(const baconhep::TMuon *muon)
   return true;
 }
 //-------------------------------------------------------------------------------------------------
-bool passMuonHighPtSel(const baconhep::TMuon *muon)
+bool passMuonHighPtSel(const baconhep::TMuon *muon,std::string iLabel)
 {
   if(!(muon->pogIDBits & baconhep::kPOGHighPtMuon)) return false;
 
@@ -432,7 +651,7 @@ bool passMuonHighPtSel(const baconhep::TMuon *muon)
 }
 // TAUS https://twiki.cern.ch/twiki/bin/view/CMS/TauIDRecommendation13TeV#2017v2_discriminators
 //--------------------------------------------------------------------------------------------------
-bool passTauSel(const baconhep::TTau *tau)
+bool passTauSel(const baconhep::TTau *tau, std::string iLabel)
 {
   if(!(tau->hpsDisc & baconhep::kByDecayModeFinding)) return false;
   if(tau->rawIso3Hits > 4.5)                           return false;
@@ -440,7 +659,7 @@ bool passTauSel(const baconhep::TTau *tau)
   return true;
 }
 // old decay mode finding? + tight MVA isolation + loose anti-electron MVA + tight anti-muon cut
-bool passTauTightSel(const baconhep::TTau *tau)
+bool passTauTightSel(const baconhep::TTau *tau, std::string iLabel)
 {
   if(!(tau->hpsDisc & baconhep::kByDecayModeFinding)) return false;
   if(!(tau->hpsDisc & baconhep::kByVTightIsolationMVA3oldDMwLT)) return false;
@@ -448,6 +667,7 @@ bool passTauTightSel(const baconhep::TTau *tau)
   if(!(tau->hpsDisc & baconhep::kByTightMuonRejection3)) return false;
   return true;
 }
+
 // Tools
 //--------------------------------------------------------------------------------------------------
 bool passVeto(double iEta,double iPhi,double idR, std::vector<TLorentzVector> &iVetoes) { 

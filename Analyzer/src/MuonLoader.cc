@@ -7,12 +7,13 @@
 
 using namespace baconhep;
 
-MuonLoader::MuonLoader(TTree *iTree) { 
+MuonLoader::MuonLoader(TTree *iTree,std::string iLabel) { 
   fMuons  = new TClonesArray("baconhep::TMuon");
   iTree->SetBranchAddress("Muon",       &fMuons);
   fMuonBr  = iTree->GetBranch("Muon");
   fN = 2;
 
+  fYear = iLabel;
   for(int i0 = 0; i0 < fN*3.; i0++) {double pVar = 0; fVars.push_back(pVar);}
   for(int i0 = 0; i0 <     4; i0++) {double pVar = 0; fVars.push_back(pVar);}
 }
@@ -58,17 +59,17 @@ void MuonLoader::selectMuons(std::vector<TLorentzVector> &iMuons, float met, flo
     TMuon *pMuon = (TMuon*)((*fMuons)[i0]);
     if(pMuon->pt        <=  10)                      continue;
     if(fabs(pMuon->eta) >=  2.4)                     continue;
-    if(!passMuonLooseSel(pMuon))                     continue;
+    if(!passMuonLooseSel(pMuon,fYear))               continue;
     lCount++;
 
-    if(!passMuonMediumSel(pMuon))                   lMCount++;
-    if(!passMuonHighPtSel(pMuon))                   lHPCount++;
+    if(!passMuonMediumSel(pMuon,fYear))             lMCount++;
+    if(!passMuonHighPtSel(pMuon,fYear))             lHPCount++;
 
     TVector2 vMu; vMu.SetMagPhi(pMuon->pt, pMuon->phi);
     fvMetNoMu = fvMetNoMu + vMu;
 
     addMuon(pMuon,fLooseMuons);
-    if(pMuon->pt>20 && fabs(pMuon->eta)< 2.4 && passMuonTightSel(pMuon)){
+    if(pMuon->pt>20 && fabs(pMuon->eta)< 2.4 && passMuonTightSel(pMuon,fYear)){
       if(lCount==1) fismu0Tight = 1;
       if(lCount==2) fismu1Tight = 1;
       lTCount++;

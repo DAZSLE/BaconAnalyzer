@@ -1,5 +1,5 @@
-#ifndef MONOXUTILS_HH
-#define MONOXUTILS_HH
+#ifndef UTILS_HH
+#define UTILS_HH
 
 #include "BaconAna/DataFormats/interface/TElectron.hh"
 #include "BaconAna/DataFormats/interface/TMuon.hh"
@@ -18,26 +18,32 @@
 #include <cassert>
 #include <iostream>
 
-bool   passJetLooseSel        (const baconhep::TJet *jet);
-bool   passJetTightSel        (const baconhep::TJet *jet);
-bool   passJetTightLepVetoSel (const baconhep::TJet *jet);
-bool   passEleVetoSel         (const baconhep::TElectron *electron, const double rho);
-bool   passEleLooseSel        (const baconhep::TElectron *electron, const double rho);
-bool   passEleMediumSel       (const baconhep::TElectron *electron, const double rho);
-bool   passEleTightSel        (const baconhep::TElectron *electron, const double rho);
-bool   passEleHEEPSel         (const baconhep::TElectron *electron, const double rho, const double met);
-bool   passPhoLooseSel        (const baconhep::TPhoton *photon, const double rho);
-bool   passPhoMediumSel       (const baconhep::TPhoton *photon, const double rho);
-bool   passPhoTightSel        (const baconhep::TPhoton *photon, const double rho);
-double eleEffArea             (const double eta);
-double phoEffArea             (const double eta, const int type);
-bool   passMuonLooseSel       (const baconhep::TMuon *muon);
-bool   passMuonMediumSel      (const baconhep::TMuon *muon);
-bool   passMuonTightSel       (const baconhep::TMuon *muon);
-bool   passMuonSoftSel        (const baconhep::TMuon *muon);
-bool   passMuonHighPtSel      (const baconhep::TMuon *muon);
-bool   passTauSel             (const baconhep::TTau *tau);
-bool   passTauTightSel        (const baconhep::TTau *tau);
+bool   passJetTightSel        (const baconhep::TJet *jet,std::string iLabel="2017");
+bool   passJetTightLepVetoSel (const baconhep::TJet *jet,std::string iLabel="2017");
+
+bool   passEleVetoSel         (const baconhep::TElectron *electron, const double rho,std::string iLabel="2017");
+bool   passEleLooseSel        (const baconhep::TElectron *electron, const double rho,std::string iLabel="2017");
+bool   passEleTightSel        (const baconhep::TElectron *electron, const double rho,std::string iLabel="2017");
+bool   passEleHEEPSel         (const baconhep::TElectron *electron, const double rho, const double met,std::string iLabel="2017");
+
+bool   passPhoLooseSel        (const baconhep::TPhoton *photon, const double rho,std::string iLabel="2017");
+bool   passPhoMediumSel       (const baconhep::TPhoton *photon, const double rho,std::string iLabel="2017");
+bool   passPhoTightSel        (const baconhep::TPhoton *photon, const double rho,std::string iLabel="2017");
+
+double eleEffArea2016         (const double eta);
+double eleEffArea2017         (const double eta);
+double phoEffArea2016         (const double eta, const int type);
+double phoEffArea2017         (const double eta, const int type);
+
+bool   passMuonLooseSel       (const baconhep::TMuon *muon,std::string iLabel="2017");
+bool   passMuonMediumSel      (const baconhep::TMuon *muon,std::string iLabel="2017");
+bool   passMuonTightSel       (const baconhep::TMuon *muon,std::string iLabel="2017");
+bool   passMuonSoftSel        (const baconhep::TMuon *muon,std::string iLabel="2017");
+bool   passMuonHighPtSel      (const baconhep::TMuon *muon,std::string iLabel="2017");
+
+bool   passTauSel             (const baconhep::TTau *tau,std::string iLabel="2017");
+bool   passTauTightSel        (const baconhep::TTau *tau,std::string iLabel="2017");
+
 double getVal                 (TH1D*h,double val);
 double getVal2D               (TH2D*h,double val1, double val2);
 bool   passVeto               (double iEta,double iPhi,double idR,std::vector<TLorentzVector> &iVetoes);
@@ -47,6 +53,10 @@ void   setupNtuple            (std::string iHeader,TTree *iTree,int iN,std::vect
 void   setupNtupleVector      (std::string iHeader,TTree *iTree,std::vector<double> &pt, std::vector<double> &eta, std::vector<double> &phi);
 void   setupNtupleVector      (std::string iHeader,TTree *iTree,std::vector< std::vector<double> > &iValVectors,std::vector<std::string> &iLabels);
 void   setupNtupleVector      (std::string iHeader,TTree *iTree,std::vector< std::vector<float> > &iValVectors,std::vector<std::string> &iLabels);
+
+extern std::string label2016;
+extern std::string label2017;
+extern std::string label2018;
 
 template<class T> void addObject(T *iObject,std::vector<T*> &iObjects) {
   bool lFill = false;
@@ -79,8 +89,6 @@ template<class T> void addVetoV(std::vector<T*> &iObjects,std::vector<TLorentzVe
     iVetoes.push_back(lVec);
   }
 }
-
-
 
 #define addElectron  addObject<baconhep::TElectron>
 #define addMuon      addObject<baconhep::TMuon>

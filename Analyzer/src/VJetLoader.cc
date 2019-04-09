@@ -22,6 +22,7 @@ VJetLoader::VJetLoader(TTree *iTree,std::string iJet,std::string iAddJet,int iN,
   fJEC = new JECLoader(iData,iLabel,"AK8PFPuppi");
   r = new TRandom3(1988);
   isData=iData;
+  fYear=iLabel;
 }
 VJetLoader::~VJetLoader() { 
   delete fVJets;
@@ -243,10 +244,8 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
     double jetEnergySmearFactorDown = 1.0;    
     if (!isData) {      
       jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
-      jetEnergySmearFactorUp = 1.0 + sqrt(fabs(sfUp*sfUp - 1.0))*sigma_MC*x1;
-    jetEnergySmearFactorDown = 1.0 + sqrt(fabs(sfDown*sfDown - 1.0))*sigma_MC*x1;
-      //jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
-      //jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
+      jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
+      jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     }    
     double unc = fJEC->getJecUnc( jetCorrPt, pVJet->eta, runNum ); //use run=999 as default
     
@@ -270,18 +269,18 @@ void VJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons, std::vecto
     
     if(jetCorrPtSmear   <=  200)                                           continue;
     if(fabs(pVJet->eta) >=  2.5)                                           continue;
-    if(!passJetTightSel(pVJet))                                            continue;
+    if(!passJetTightSel(pVJet,fYear))                                      continue;
 
     addJet(pVJet,fLooseVJets);
     lCount++;
     x1List.push_back(x1);
-    if(!passJetTightLepVetoSel(pVJet))                                     continue;
+    if(!passJetTightLepVetoSel(pVJet,fYear))                               continue;
     lCountT++;
   }
   addVJet(fLooseVJets,selectedVJets);
 
   for  (int i0 = 0; i0 < int(selectedVJets.size()); i0++) { 
-    if(passJetTightLepVetoSel(fLooseVJets[i0])) fisTightVJet[i0] = 1;
+    if(passJetTightLepVetoSel(fLooseVJets[i0],fYear)) fisTightVJet[i0] = 1;
   }
   fNLooseVJets = lCount;
   fNTightVJets = lCountT;
@@ -327,9 +326,9 @@ void VJetLoader::selectVJetsByDoubleB(std::vector<TLorentzVector> &iElectrons, s
     if(passVeto(pVJet->eta,pVJet->phi,dR,iElectrons))                      continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iMuons))                          continue;
     if(passVeto(pVJet->eta,pVJet->phi,dR,iPhotons))                        continue;
-    if(!passJetTightSel(pVJet))                                            continue;
+    if(!passJetTightSel(pVJet,fYear))                                      continue;
     addJet(pVJet,fLooseVJetsByDoubleB);
-    if(!passJetTightLepVetoSel(pVJet))                                     continue;
+    if(!passJetTightLepVetoSel(pVJet,fYear))                               continue;
   }
   addVJet(fLooseVJetsByDoubleB,selectedVJetsByDoubleB);
 }

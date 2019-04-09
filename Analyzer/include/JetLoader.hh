@@ -55,6 +55,7 @@ public:
 
   int           fNVars;
   int           fNOtherVars; 
+
 protected: 
   TClonesArray *fJets;
   TBranch      *fJetBr;
@@ -109,9 +110,6 @@ protected:
   double fdeepCSVM2018 = 0.4184;
   double fdeepCSVT2018 = 0.7527;
 
-  std::string label2016 = "2016";
-  std::string label2017 = "2017";
-  std::string label2018 = "2018";
-
+  std::string fYear;
 };
 #endif

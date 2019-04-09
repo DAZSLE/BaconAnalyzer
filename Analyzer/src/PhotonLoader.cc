@@ -4,11 +4,12 @@
 
 using namespace baconhep;
 
-PhotonLoader::PhotonLoader(TTree *iTree) { 
+PhotonLoader::PhotonLoader(TTree *iTree,std::string iLabel) { 
   fPhotons  = new TClonesArray("baconhep::TPhoton");
   iTree->SetBranchAddress("Photon",       &fPhotons);
   fPhotonBr  = iTree->GetBranch("Photon");
   fN = 1;
+  fYear = iLabel;
   for(int i0 = 0; i0 < fN*3.; i0++) {double pVar = 0; fVars.push_back(pVar);}
 }
 PhotonLoader::~PhotonLoader() { 
@@ -26,7 +27,7 @@ void PhotonLoader::setupTree(TTree *iTree) {
   reset();
   fTree = iTree;
   fTree->Branch("nphoLoose",   &fNPhotonsLoose, "fNPhotonsLoose/I");  // loose photon multiplicity 
-  fTree->Branch("nphoTight",   &fNPhotonsTight, "fNPhotonsTight/I");  // medium(tight) photon multiplicity
+  fTree->Branch("nphoTight",   &fNPhotonsTight, "fNPhotonsTight/I");  // tight photon multiplicity
   fTree->Branch("ispho0Tight", &fispho0Tight,   "fispho0Tight/I");
   setupNtuple("vpho",iTree,fN,fVars);                                 // pho0_pt,_eta,_phi (1*3=3)
 }
@@ -43,12 +44,12 @@ void PhotonLoader::selectPhotons(double iRho,std::vector<TLorentzVector> &iVetoe
     if(pPhoton->pt        <=  15)                       continue;
     if(fabs(pPhoton->eta) >=  2.5)                      continue;
     if(passVeto(pPhoton->eta,pPhoton->phi,0.4,iVetoes)) continue;
-    if(!passPhoLooseSel(pPhoton,iRho))                  continue;
+    if(!passPhoLooseSel(pPhoton,iRho,fYear))            continue;
     lCount++;
 
     if(pPhoton->pt        <= 175)                       continue;
     if(fabs(pPhoton->eta) >= 1.4442)                    continue;
-    if(!passPhoMediumSel(pPhoton, iRho))                continue;
+    if(!passPhoTightSel(pPhoton, iRho,fYear))           continue;
     lTCount++;
 
     if(lCount==1) fispho0Tight = 1;

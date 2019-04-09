@@ -18,6 +18,7 @@ JetLoader::JetLoader(TTree *iTree, bool iData, std::string iLabel) {
   fJEC = new JECLoader(iData,iLabel,"AK4PFPuppi");
   r = new TRandom3(1988);
   isData=iData;
+  fYear=iLabel;
 
   // modify B-tag wp by year
   if(iLabel==label2016){
@@ -302,9 +303,9 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     if (!isData) {      
       jetEnergySmearFactor = 1.0 + sqrt(sf*sf - 1.0)*sigma_MC*x1;
       if(sfUp < 1) jetEnergySmearFactorUp = jetEnergySmearFactor;
-      else jetEnergySmearFactorUp = 1.0 + sqrt(fabs(sfUp*sfUp - 1.0))*sigma_MC*x1;
+      else jetEnergySmearFactorUp = 1.0 + sqrt(sfUp*sfUp - 1.0)*sigma_MC*x1;
       if(sfDown < 1) jetEnergySmearFactorDown = jetEnergySmearFactor;
-      else jetEnergySmearFactorDown = 1.0 + sqrt(fabs(sfDown*sfDown - 1.0))*sigma_MC*x1;
+      else jetEnergySmearFactorDown = 1.0 + sqrt(sfDown*sfDown - 1.0)*sigma_MC*x1;
     }    
     double unc = fJEC->getJecUnc( jetCorrPt, pJet->eta, runNum ); //use run=999 as default
     
@@ -365,7 +366,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
     if(jetCorrPtSmear  <=  30) continue;
     if(fabs(pJet->eta) > 2.5 && fabs(pJet->eta) < 4.5) lNFwdPt30++;
     if(fabs(pJet->eta) >= 2.5) continue;
-    if(!passJetTightSel(pJet)) continue;
+    if(!passJetTightSel(pJet,fYear)) continue;
     x1List.push_back(x1);
     addJet(pJet,fTightJets);
     fGoodJets.push_back(pJet);

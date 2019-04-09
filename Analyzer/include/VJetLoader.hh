@@ -45,14 +45,6 @@ public:
   std::vector<TJet*> fLooseVJetsByDoubleB; 
   std::vector<TLorentzVector> selectedVJetsByDoubleB; 
 
-  // 2017
-  double CSVL = 0.5803; // CSVv2SubJet WP
-  double CSVM = 0.8838;
-
-  // 2016
-  double CSVL2016 = 0.5426; 
-  double CSVM2016 = 0.8484;
-
   TRandom3* r;
 
 protected: 
@@ -71,6 +63,7 @@ protected:
   std::vector<double> fVars, fVarsZprime;
   std::vector<std::string> fLabels, fLabelsZprime;
   std::vector<std::string> fTrigString;
+  std::string fYear;
 
   int  fN;
   bool isData;

@@ -13,7 +13,7 @@ using namespace baconhep;
 
 class MuonLoader { 
 public:
-  MuonLoader(TTree *iTree);
+  MuonLoader(TTree *iTree,std::string iLabel="2017");
   ~MuonLoader();
   void reset();
   void setupTree(TTree *iTree);
@@ -38,5 +38,6 @@ protected:
   TTree        *fTree;
   std::vector<double> fVars;
   int           fN;
+  std::string   fYear;
 };
 #endif

@@ -11,7 +11,7 @@ using namespace baconhep;
 
 class TauLoader { 
 public:
-  TauLoader(TTree *iTree);
+  TauLoader(TTree *iTree,std::string iLabel="2017");
   ~TauLoader();
   void reset();
   void setupTree(TTree *iTree);
@@ -26,5 +26,6 @@ protected:
   TBranch      *fTauBr;
   TTree        *fTree;
   int           fN;
+  std::string   fYear;
 };
 #endif
