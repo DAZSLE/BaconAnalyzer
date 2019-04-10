@@ -78,7 +78,7 @@ def write_job(exec_line, out, analyzer):
     cwd = os.getcwd()
     analyzer_short = analyzer.split("/")[-1]
     exec_line = exec_line.replace(analyzer, analyzer_short)
-    sub_file = open('%s/sub_%s.sh' % (out, analyzer_short), 'w')
+    sub_file = open('%s/sub_%s_%s.sh' % (out, analyzer_short,out.split("/")[-1]), 'w')
     sub_file.write('#!/bin/bash\n')
     sub_file.write('source /cvmfs/cms.cern.ch/cmsset_default.sh\n')
     sub_file.write('pwd\n')
@@ -213,7 +213,7 @@ if __name__ == "__main__":
         arguments = []
         write_job(job_exec, options.outdir, analyzer)
         print 'odir  ',options.outdir
-        write_condor(options.outdir,'sub_%s.sh'%(analyzer.split("/")[-1]), arguments, filesTransfer,njobs)
+        write_condor(options.outdir,'sub_%s_%s.sh'%(analyzer.split("/")[-1],options.outdir.split("/")[-1]), arguments, filesTransfer,njobs)
     else:
         print "Running: ", job_exec
         os.system(job_exec)
