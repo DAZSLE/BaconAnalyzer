@@ -77,39 +77,27 @@ def sklimAdd(fn,odir,mass=0):
     newscale1fb = array( 'f', [ 0. ] )
     tree.SetBranchAddress("scale1fb",newscale1fb)
 
-    fvbf = ROOT.TFile.Open("${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/vbf_ptH_n3lo.root")
-    h_vbf_num = fvbf.Get('h_nnnlo_ptH')
-    h_vbf_den = fvbf.Get('h_lo_ptH')
-    h_vbf_num.SetDirectory(0)
-    h_vbf_den.SetDirectory(0)
-    fvbf.Close()
-
     for i in range(nent):
 
         if( nent/100 > 0 and i % (1 * nent/100) == 0):
             sys.stdout.write("\r[" + "="*int(20*i/nent) + " " + str(round(100.*i/nent,0)) + "% done here")
             sys.stdout.flush()
 
-        tree.GetEntry(i)
+         tree.GetEntry(i)
 
-        if (tree.AK8Puppijet0_pt > PT_CUT or 
-            tree.AK8Puppijet0_pt_JESUp > PT_CUT or 
-            tree.AK8Puppijet0_pt_JERUp > PT_CUT or 
-            tree.AK8Puppijet0_pt_JESDown > PT_CUT or 
-            tree.AK8Puppijet0_pt_JERDown > PT_CUT or 
-            tree.CA15Puppijet0_pt > PT_CUT or 
-            tree.CA15Puppijet0_pt_JESUp > PT_CUT or 
-            tree.CA15Puppijet0_pt_JERUp > PT_CUT or 
-            tree.CA15Puppijet0_pt_JESDown > PT_CUT or 
-            tree.CA15Puppijet0_pt_JERDown > PT_CUT ) :
-	    if 'GluGluHToBB_M125_13TeV_powheg' in fn:  		
-	        newscale1fb[0] = tree.scale1fb*NLOcorr(tree.genVPt )
-            elif 'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix' in fn and tree.genVPt<1000. : 
-                newscale1fb[0] = tree.scale1fb*h_vbf_num.GetBinContent( h_vbf_num.FindBin(tree.genVPt) )/h_vbf_den.GetBinContent( h_vbf_den.FindBin(tree.genVPt) )
-            else:
-                newscale1fb[0] = tree.scale1fb
-            otree.Fill()   
-
+         if (tree.AK8Puppijet0_pt > PT_CUT or 
+             tree.AK8Puppijet0_pt_JESUp > PT_CUT or 
+             tree.AK8Puppijet0_pt_JERUp > PT_CUT or 
+             tree.AK8Puppijet0_pt_JESDown > PT_CUT or 
+             tree.AK8Puppijet0_pt_JERDown > PT_CUT or 
+             tree.CA15Puppijet0_pt > PT_CUT or 
+             tree.CA15Puppijet0_pt_JESUp > PT_CUT or 
+             tree.CA15Puppijet0_pt_JERUp > PT_CUT or 
+             tree.CA15Puppijet0_pt_JESDown > PT_CUT or 
+             tree.CA15Puppijet0_pt_JERDown > PT_CUT ) :
+             newscale1fb[0] = tree.scale1fb
+             otree.Fill()   
+             
     print "\n"
     otree.AutoSave()
     ofile.cd()
@@ -118,10 +106,7 @@ def sklimAdd(fn,odir,mass=0):
     return 0
 
 def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = None):
-	
-    # thesearchstring = "_"+searchstring+"_"
     thesearchstring = searchstring
-
     theadditionalstring = None
     if not additionalstring == None: 
         theadditionalstring = additionalstring
@@ -137,18 +122,6 @@ def getFilesRecursively(dir,searchstring,additionalstring = None, skipString = N
                     cfiles.append(os.path.join(root, file))
     return cfiles
 
-def NLOcorr(Hpt=200.):
-    NLO_= ROOT.TF1("NLO_", "pol2", 200, 1200)
-    NLO_.SetParameter(0, 2.70299e+00)
-    NLO_.SetParameter(1, -2.18233e-03)
-    NLO_.SetParameter(2,5.22287e-07 )
-    
-    Weight = 1.
-    if (Hpt>200) :
-        Weight = NLO_.Eval(Hpt)
-        print Weight
-    return Weight
- 	
 if __name__ == '__main__':
 
     parser = OptionParser()
