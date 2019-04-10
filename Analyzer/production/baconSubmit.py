@@ -41,8 +41,9 @@ for subjob_i in range(args.njobs_per_file):
         new_line = exec_line.replace('fileinput'," "+fil[0]+" ")
         new_line = new_line.replace('subjob_i','%d'%subjob_i)
         new_line = new_line.replace('Output.root','Output_%d.root'%fil_i)
-        print new_line
-        os.system(new_line)
+        time_line = "timeout 5m "
+        print time_line+new_line
+        os.system(time_line+new_line)
         job_hadd += 'Output_%d.root '%fil_i
         nfiles_i += 1
         
@@ -53,11 +54,11 @@ for subjob_i in range(args.njobs_per_file):
     os.system(job_hadd)
     lOut = ''
     if args.njobs_per_file > 1:                    
-        lOut = 'root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d_subjob%d.root'%(
-            args.eosoutdir, outfile, job_i, lIFile, lFFile, subjob_i)
+        lOut = 'root://cmseos.fnal.gov/%s/%s_file%dto%d_subjob%d.root'%(
+            args.eosoutdir, outfile, lIFile, lFFile, subjob_i)
     else:
-        lOut = 'root://cmseos.fnal.gov/%s/%s_job%d_file%dto%d.root'%(
-            args.eosoutdir, outfile, job_i, lIFile, lFFile)
+        lOut = 'root://cmseos.fnal.gov/%s/%s_file%dto%d.root'%(
+            args.eosoutdir, outfile, lIFile, lFFile)
     job_copy = 'xrdcp -s %s.root %s; \n' %( outfile, lOut)
     os.system(job_copy)
     os.listdir(os.getcwd())
