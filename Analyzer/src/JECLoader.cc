@@ -87,6 +87,8 @@ void JECLoader::loadJECs(bool iData,std::string iLabel,std::string iJet) {
       jecUnc.push_back(jecUncGH);
       JetCorrectionsIOV.push_back( std::pair<int,int>( 278802, 99999999 ));
     }
+    jecMC.str(""); jecMC.clear();
+    jecMC << jecPathname << "/" << jetRecalib2016MC <<"/" << jetRecalib2016MC;
   }
   if(labelEra==label2017){
     std::cout << "loading for " << label2017 << std::endl;
