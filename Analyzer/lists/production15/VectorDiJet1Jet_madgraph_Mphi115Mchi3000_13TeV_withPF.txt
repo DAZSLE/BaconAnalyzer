@@ -1,0 +1,13 @@
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF_0.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_1.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_17.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_18.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_2.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_20.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_21.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_23.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_24.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_25.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_3.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_4.root
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF/VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV/CRAB3/190514_182922/0000/Output_5.root

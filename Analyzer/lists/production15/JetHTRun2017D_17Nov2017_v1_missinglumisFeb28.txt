@@ -1,0 +1,1 @@
+root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017D_17Nov2017_v1_missinglumisFeb28/JetHTRun2017D_17Nov2017_v1_missinglumis_0.root

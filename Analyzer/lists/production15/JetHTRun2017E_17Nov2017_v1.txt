@@ -941,11 +941,3 @@ root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov201
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_97.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_98.root
 root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_99.root
-root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_missinglumis_0.root
-root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_missinglumis_1.root
-root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_missinglumis_2.root
-root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_missinglumis_3.root
-root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_missinglumis_4.root
-root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_missinglumis_5.root
-root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_missinglumis_6.root
-root://cmseos.fnal.gov//eos/uscms/store/group/lpcbacon/15/JetHTRun2017E_17Nov2017_v1/JetHTRun2017E_17Nov2017_v1_missinglumis_7.root
