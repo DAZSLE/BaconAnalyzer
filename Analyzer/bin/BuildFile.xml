@@ -6,3 +6,5 @@
 <bin file="runHWW.cpp" name="runHWW"> </bin>
 <bin file="../src/NormalizeNtuple.cc" name="NormalizeNtuple"> </bin>
 <bin file="RemoveDuplicateEvents.cpp" name="RemoveDuplicateEvents"> </bin>
+<bin file="runPFJetsToJUNIPR.cpp" name="runPFJetsToJUNIPR"> </bin>
+<bin file="runQbert.cpp" name="runQbert"> </bin>
