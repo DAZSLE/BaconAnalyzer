@@ -40,27 +40,46 @@ for subjob_i in range(args.njobs_per_file):
         if not fil[1]: continue
         new_line = exec_line.replace('fileinput'," "+fil[0]+" ")
         new_line = new_line.replace('subjob_i','%d'%subjob_i)
-        new_line = new_line.replace('Output.root','Output_%d.root'%fil_i)
-        time_line = "timeout 5m "
+        if 'runPFJetsToJUNIPR' not in args.arguments:
+            new_line = new_line.replace('Output.root','Output_%d.root'%fil_i)
+        else:
+            print 'new_line ',new_line
+            new_line = new_line.replace('Output.json','%s.json'%outfile)
+
+        time_line = "timeout 10m "
+        if 'runQbert' in args.arguments:
+            time_line = ""
         print time_line+new_line
         os.system(time_line+new_line)
         job_hadd += 'Output_%d.root '%fil_i
         nfiles_i += 1
         
-    print 'to hadd'
     os.listdir(os.getcwd())
     # hadd and copy
-    print job_hadd
-    os.system(job_hadd)
-    lOut = ''
-    if args.njobs_per_file > 1:                    
-        lOut = 'root://cmseos.fnal.gov/%s/%s_file%dto%d_subjob%d.root'%(
-            args.eosoutdir, outfile, lIFile, lFFile, subjob_i)
+    print args.arguments
+    if 'runPFJetsToJUNIPR' not in args.arguments:
+        os.system(job_hadd)
+        lOut = ''
+        if args.njobs_per_file > 1:                    
+            lOut = 'root://cmseos.fnal.gov/%s/%s_file%dto%d_subjob%d.root'%(
+                args.eosoutdir, outfile, lIFile, lFFile, subjob_i)
+        else:
+            lOut = 'root://cmseos.fnal.gov/%s/%s_file%dto%d.root'%(
+                args.eosoutdir, outfile, lIFile, lFFile)
+        job_copy = 'xrdcp -s %s.root %s; \n' %( outfile, lOut)
+        print job_copy
+        os.system(job_copy)
+        os.listdir(os.getcwd())
+        os.system('rm *.root')
+        os.chdir(cwd)
     else:
-        lOut = 'root://cmseos.fnal.gov/%s/%s_file%dto%d.root'%(
+        outfile = 'JUNIPR_format_Output_job%d'%job_i
+        lOut = 'root://cmseos.fnal.gov/%s/%s_file%dto%d.json'%(
             args.eosoutdir, outfile, lIFile, lFFile)
-    job_copy = 'xrdcp -s %s.root %s; \n' %( outfile, lOut)
-    os.system(job_copy)
-    os.listdir(os.getcwd())
-    os.system('rm *.root')
-    os.chdir(cwd)
+        job_copy = 'xrdcp -s %s.json %s; \n' %( outfile, lOut)
+        print job_copy
+        os.system(job_copy)
+        os.listdir(os.getcwd())
+        #os.system('rm *.json')
+        os.chdir(cwd)
+

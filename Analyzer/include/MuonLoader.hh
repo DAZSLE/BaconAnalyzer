@@ -17,6 +17,7 @@ public:
   ~MuonLoader();
   void reset();
   void setupTree(TTree *iTree);
+  void setupTreeQbert(TTree *iTree);
   void load(int iEvent);
   void selectMuons(std::vector<TLorentzVector> &iMuons, float met, float metPhi);
   std::vector<TMuon*> fLooseMuons, fMediumMuons, fTightMuons, fHighPtMuons;

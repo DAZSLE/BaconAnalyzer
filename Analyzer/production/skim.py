@@ -5,7 +5,6 @@ import math
 from array import array
 import sys
 import time
-from cfg import *
 from optparse import OptionParser
 from submitZprime import samplesDict, exec_me
 
@@ -16,9 +15,12 @@ cmssw_base = os.getenv('CMSSW_BASE', 'CMSSW_10_2_6')
 import ROOT
 
 filesToTransfer = "{0}.tgz, {0}/bin/slc6_amd64_gcc700/NormalizeNtuple, {0}/src/BaconAnalyzer/Analyzer/data.tgz".format(cmssw_base)
-filesToTransfer += ",{0}/src/BaconAnalyzer/Analyzer/production/skimmer.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerDDT.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerN2.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerWtag.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerHWW.py, {0}/src/BaconAnalyzer/Analyzer/production/submitZprime.py".format(cmssw_base)
+filesToTransfer += ",{0}/src/BaconAnalyzer/Analyzer/production/skimmer.py, {0}/src/BaconAnalyzer/Analyzer/production/skimmerWtag.py, {0}/src/BaconAnalyzer/Analyzer/production/submitZprime.py".format(cmssw_base)
 
 fpuDir2017 = "../data/pu2017"
+fpuDir2016 = "../data/pu2016"
+fpuDir2018 = "../data/pu2018"
+fpuDir = fpuDir2016
 fXSecFile = '../data/xSections.dat'
 def getXSection(fDataSet):
     thisXsection = 1.0
@@ -64,18 +66,16 @@ def getLumiWeight(iLabel,iFiles,iLumi):
     return fWeight
 
 def getPuHistogram(iFiles,iSample):
-    lPuPath = fpuDir2017+'/'+iSample+'.root'
+    lPuPath = fpuDir+'/'+iSample+'.root'
     print lPuPath
     if os.path.isfile(lPuPath):
         return lPuPath
     else:
         for i0,itf in enumerate(iFiles):
-            print itf
             f_puMC = ROOT.TFile.Open(itf)
             lTmp = f_puMC.Get("Pu")
             lTmp.SetDirectory(0)
             f_puMC.Close()
-            print i0
             if i0 == 0:
                 lHPu = lTmp.Clone()
             else:
@@ -95,7 +95,9 @@ def addCommand(iBasename,isMc,options,iLumi=1,iFile=None,iHPuFile=None):
         pCommand+= '--jet %s --ddt %s --iddt %s --lumi %s '%(options.jet,options.ddt,options.iddt,iLumi)
         if isMc=='mc':
             pCommand+= '--isMc '
-            pCommand+= '--isPu '
+            ##pCommand+= '--isPu '
+    if options.nsplit!=-1:
+        pCommand += ' --nsplit %i --isplit ${1}'%(options.nsplit)
     pCommand += '\n'
     return pCommand
 
@@ -115,13 +117,17 @@ def main(options,args):
             iLabel = iLabel.replace('_10X','')
             if '_PS' in iLabel:
                 iLabel = iLabel.replace('_PS','')
+        if '_8X' in options.sample:
+            iLabel = iLabel.replace('_8X','')
+            if '_v2_withPF' in iLabel:
+                iLabel = iLabel.replace('_v2_withPF','')
+            if '_withPF' in iLabel:
+                iLabel = iLabel.replace('_withPF','')
         if options.savePu:
             print 'saving pu histogram'
             lFiles = []
             lBadFiles = []
             lFiles, lBadFiles = getFiles(iDataDir,iLabel+'/',None,None)
-            print "bad files = ", lBadFiles
-            print "files = ",lFiles
             puhist = getPuHistogram(lFiles,iLabel)
             continue
 
@@ -146,7 +152,7 @@ def main(options,args):
             lFiles, lBadFiles = getFiles(iDataDir,iLabel+'/',None,None)
             iLumi = 1
             iHPu = None
-        print "files To Convert = ",lFiles
+        #print "files To Convert = ",lFiles
         print "bad files = ", lBadFiles
 
 
@@ -162,7 +168,6 @@ def main(options,args):
         pCommand += 'ls %s/bin\n'%cmssw
         pCommand += 'rm %s.tgz\n'% (cmssw)
         pCommand += 'cd %s/src\n'%cmssw
-        #pCommand += 'scram b ProjectRename\n'
         pCommand += 'eval `scramv1 runtime -sh`\n'
         pCommand += 'pwd\n'
         pCommand += 'echo "CMSSW: "$CMSSW_BASE \n'
@@ -178,46 +183,86 @@ def main(options,args):
         pCommand += 'rm -r $PWD/skim\n'
         pCommand += 'mkdir -p $PWD/hadd \n'
         pCommand += 'mkdir -p $PWD/skim \n'
+        added = ''
+        print 'len files',len(lFiles),nFiles
         for i0 in range(0,len(lFiles)/nFiles+1):
+            lCommand = ''
             pBasename_i = pBasename.replace('.root','_%i.root'%i0)
             pInit = i0*nFiles;
             pFin = i0*nFiles+len(lFiles[i0*nFiles:(i0+1)*nFiles])
             for i1 in range(pInit,pFin):
                 pFile = lFiles[i1]
-                print pFile
-                pCommand += addCommand(pBasename,isMc,options,iLumi,pFile)
-            pCommand += 'hadd -f $PWD/hadd/%s $PWD/skim/* \n'%(pBasename_i)
-            pCommand += 'xrdcp -s $PWD/hadd/%s root://cmseos.fnal.gov//%s/%s/%s\n'%(pBasename_i,iOutDir,skimDir,pBasename_i)
-            pCommand += 'rm -r -f $PWD/hadd/*\n'
-            pCommand += 'rm -r -f $PWD/skim/*\n'
-        pCommand += 'rm -r $PWD/hadd\n'
-        pCommand += 'rm -r $PWD/skim\n'
-            
-        with open('%s/skim_command_%s.sh'%(iJobDir,pBasename),'w') as f:
-            f.write(pCommand)
+                lCommand += addCommand(pBasename,isMc,options,iLumi,pFile)
+            lCommand += 'hadd -f $PWD/hadd/%s $PWD/skim/* \n'%(pBasename_i)
+            if options.nsplit != -1:
+                lCommand += 'mv hadd/%s hadd/%s_${1}.root \n'%(pBasename_i,pBasename_i.replace('.root',''))
+                lCommand += 'xrdcp -s $PWD/hadd/%s_${1}.root root://cmseos.fnal.gov//%s/%s/%s_${1}.root \n'%(pBasename_i.replace('.root',''),iOutDir,skimDir,pBasename_i.replace('.root',''))
+            else:
+                lCommand += 'xrdcp -s $PWD/hadd/%s root://cmseos.fnal.gov//%s/%s/%s \n'%(pBasename_i,iOutDir,skimDir,pBasename_i)
+            lCommand += 'rm -r -f $PWD/hadd/*\n'
+            lCommand += 'rm -r -f $PWD/skim/*\n'
+            if options.nsubmit != 1:
+                newCommand = pCommand
+                newCommand += lCommand
+                newCommand += 'rm -r $PWD/hadd\n'
+                newCommand += 'rm -r $PWD/skim\n'
+                with open('%s/skim_command_%s_%i.sh'%(iJobDir,pBasename,i0),'w') as f:
+                    f.write(newCommand)
+            added += lCommand
 
-        os.system('rm -f %s/skim_command_%s.stdout' % (iJobDir,pBasename))
-        os.system('rm -f %s/skim_command_%s.stderr' % (iJobDir,pBasename))
-        os.system('rm -f %s/skim_command_%s.log' % (iJobDir,pBasename))
-        os.system('rm -f %s/skim_command_%s.jdl'% (iJobDir,pBasename))
-        condor_file = open('%s/skim_command_%s.jdl' % (iJobDir,pBasename), 'w')
-        condor_file.write('universe = vanilla\n')
-        condor_file.write('Executable = %s/skim_command_%s.sh\n'% (iJobDir,pBasename))
-        condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
-        condor_file.write('request_disk = 3000000\n')
-        condor_file.write('request_memory = 10000\n')
-        condor_file.write('Should_Transfer_Files = YES\n')
-        condor_file.write('WhenToTransferOutput = ON_EXIT\n')
-        condor_file.write('Transfer_Input_Files = %s\n'%filesToTransfer)
-        condor_file.write('use_x509userproxy = true\n')
-        condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
-        condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))
-        condor_file.write('Error = %s.stderr\n' % os.path.abspath(condor_file.name))
-        condor_file.write('Log = %s.log\n' % os.path.abspath(condor_file.name))
-        condor_file.write('Queue 1\n')
-        condor_file.close()
-        os.system('chmod +x %s'% os.path.abspath(condor_file.name))
-        exec_me('condor_submit %s'%(os.path.abspath(condor_file.name)),options.dryRun)
+        os.system('rm -f %s/skim_command_%s*.stdout' % (iJobDir,pBasename))
+        os.system('rm -f %s/skim_command_%s*.stderr' % (iJobDir,pBasename))
+        os.system('rm -f %s/skim_command_%s*.log' % (iJobDir,pBasename))
+        os.system('rm -f %s/skim_command_%s*.jdl'% (iJobDir,pBasename))
+        if options.nsubmit == 1:
+            newCommand = pCommand
+            newCommand += added
+            newCommand += 'rm -r $PWD/hadd\n'
+            newCommand += 'rm -r $PWD/skim\n'
+            with open('%s/skim_command_%s.sh'%(iJobDir,pBasename),'w') as f:
+                f.write(newCommand)
+            condor_file = open('%s/skim_command_%s.jdl' % (iJobDir,pBasename), 'w')
+            condor_file.write('universe = vanilla\n')
+            condor_file.write('Executable = %s/skim_command_%s.sh\n'% (iJobDir,pBasename))
+            condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
+            condor_file.write('request_disk = 3000000\n')
+            condor_file.write('request_memory = 10000\n')
+            condor_file.write('Should_Transfer_Files = YES\n')
+            condor_file.write('WhenToTransferOutput = ON_EXIT\n')
+            condor_file.write('Transfer_Input_Files = %s\n'%filesToTransfer)
+            condor_file.write('Output = %s_$(Cluster)_$(Process).stdout\n'%os.path.abspath(condor_file.name))
+            condor_file.write('Error = %s_$(Cluster)_$(Process).stderr\n'%os.path.abspath(condor_file.name))
+            condor_file.write('Log = %s_$(Cluster)_$(Process).log\n'%os.path.abspath(condor_file.name))
+            condor_file.write('Arguments = $(Process)\n')
+            if options.nsplit != -1:
+                condor_file.write('Queue %i\n'%options.nsplit)
+            else:
+                condor_file.write('Queue 1\n')
+            condor_file.close()
+            os.system('chmod +x %s'% os.path.abspath(condor_file.name))
+            exec_me('condor_submit %s'%(os.path.abspath(condor_file.name)),options.dryRun)
+        else:
+            for i0 in range(0,len(lFiles)/nFiles+1):
+                condor_file = open('%s/skim_command_%s_%i.jdl' % (iJobDir,pBasename,i0), 'w')
+                condor_file.write('universe = vanilla\n')
+                condor_file.write('Executable = %s/skim_command_%s_%i.sh\n'% (iJobDir,pBasename,i0))
+                condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
+                condor_file.write('request_disk = 3000000\n')
+                condor_file.write('request_memory = 50000\n')
+                condor_file.write('Should_Transfer_Files = YES\n')
+                condor_file.write('WhenToTransferOutput = ON_EXIT\n')
+                condor_file.write('Transfer_Input_Files = %s\n'%filesToTransfer)
+                condor_file.write('Output = %s_$(Cluster)_$(Process).stdout\n'%os.path.abspath(condor_file.name))
+                condor_file.write('Error = %s_$(Cluster)_$(Process).stderr\n'%os.path.abspath(condor_file.name))
+                condor_file.write('Log = %s_$(Cluster)_$(Process).log\n'%os.path.abspath(condor_file.name))
+                condor_file.write('Arguments = $(Process)\n')
+                if options.nsplit != -1:
+                    condor_file.write('Queue %i\n'%options.nsplit)
+                else:
+                    condor_file.write('Queue 1\n')
+                condor_file.close()
+                os.system('chmod +x %s'% os.path.abspath(condor_file.name))
+                exec_me('condor_submit %s'%(os.path.abspath(condor_file.name)),options.dryRun)
                 
         with open('%s/bad_files_%s.txt'%(iJobDir,pBasename),'w') as f:
             for iBadFile in lBadFiles:
@@ -237,14 +282,12 @@ def getFiles(dir,searchstring,additionalstring = None, skipString = None):
     with open("tmp.txt", 'r') as mylist:
         files = [(myfile.replace('\n', ''), True) for myfile in mylist.readlines()]
     nfiles = len(files)
-    print 'Files',files
     for ifile, fi in enumerate(files):
         if ifile%100==0:
             print '%i/%i files checked in %s'%(ifile,nfiles,dir+'/'+thesearchstring)
         if 'runPu' not in options.executable and not options.savePu and 'Wtag' not in options.skimmer:
             try:
                 filename = 'root://cmseos.fnal.gov//%s/%s/%s'%(dir,thesearchstring,fi[0])
-                print filename
                 f = ROOT.TFile.Open(filename)
                 if f.IsZombie():
                     print 'file is zombie'
@@ -270,11 +313,9 @@ def getFiles(dir,searchstring,additionalstring = None, skipString = None):
                 continue
         else:
             if options.savePu or 'Wtag' in options.skimmer:
-                #filename = 'root://cmseos.fnal.gov//%s'%(fi[0])
                 filename = 'root://cmseos.fnal.gov//%s/%s/%s'%(dir,thesearchstring,fi[0])
             else:
                 filename = 'root://cmseos.fnal.gov//%s/%s/%s'%(dir,thesearchstring,fi[0])
-            print 'filename',filename
             cfiles.append(filename)
                 
     return cfiles, badfiles
@@ -309,14 +350,14 @@ if __name__ == '__main__':
                       help = "skimmer")
     parser.add_option('--files-to-hadd',dest="filestohadd",default=50,type=int,
                       help = "number of files to hadd together after skimming")
+    parser.add_option("--nsplit",type=int, dest='nsplit',default=-1,
+                      help='number of jobs to split file')
+    parser.add_option("--nsubmit",type=int, dest='nsubmit',default=1,
+                      help='number of jobs to submit file')
     (options, args) = parser.parse_args()
-
     global skimDir;
     skimDir = "skim"
-    if 'DDT' in options.skimmer: skimDir +='DDT'
-    if 'N2' in options.skimmer: skimDir +='N2'
     if 'Wtag' in options.skimmer: skimDir +='Wtag%s%s'%(options.jet,options.tagddt)
-    if 'HWW' in  options.skimmer: skimDir +='HWW1a'
 
     if '2016' in options.sample and not 'Wtag' in options.skimmer: skimDir+='2016'
 

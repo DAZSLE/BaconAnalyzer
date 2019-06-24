@@ -85,6 +85,19 @@ void EvtLoader::setupTree(TTree *iTree) {
   fLumi  = 0;
   fPassJson = 0;
 }
+void EvtLoader::setupTreeQbert(TTree *iTree) {
+  reset();
+  fTree = iTree;
+  fTree->Branch("npu"             ,&fNPU            ,"fNPU/i");
+  fTree->Branch("npv"             ,&fNVtx           ,"fNVtx/i");
+  fTree->Branch("pfmet"           ,&fMet            ,"fMet/F");
+  fTree->Branch("pfmetphi"        ,&fMetPhi         ,"fMetPhi/F");
+  fTree->Branch("puppet"          ,&fPuppEt         ,"fPuppEt/F");
+  fTree->Branch("puppetphi"       ,&fPuppEtPhi      ,"fPuppEtPhi/F");
+  fRun   = 0;
+  fLumi  = 0;
+  fPassJson = 0;
+}
 void EvtLoader::load(int iEvent) { 
   fVertices ->Clear();
   fEvtBr    ->GetEntry(iEvent);

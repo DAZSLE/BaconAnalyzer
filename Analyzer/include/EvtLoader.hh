@@ -23,6 +23,7 @@ public:
   ~EvtLoader(); 
   void reset();
   void setupTree  (TTree *iTree);
+  void setupTreeQbert(TTree *iTree);
   void load (int iEvent);
   //Fillers
   void fillEvent(unsigned int trigBit, float lWeight, unsigned int passJson);

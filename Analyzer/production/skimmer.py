@@ -12,10 +12,20 @@ import ROOT
 
 PT_CUT = 350.
 
+def slice_it(li, cols=2):
+    print 'slicing list'
+    start = 0
+    for i in xrange(cols):
+        stop = start + len(li[i::cols])
+        yield li[start:stop]
+        start = stop
+
 def main(options,args):
 
     DataDir = options.idir
     OutDir = options.odir
+    nsplit = options.nsplit
+    isplit = options.isplit
 
     if options.ifile is None:
         try:
@@ -38,10 +48,10 @@ def main(options,args):
         iFile = options.ifile
         print iFile
         tags = [[options.sample,0]]
-        status = sklimAdd(iFile,OutDir,tags[0][1])
+        status = sklimAdd(iFile,OutDir,nsplit,isplit,tags[0][1])
         print status
 
-def sklimAdd(fn,odir,mass=0):
+def sklimAdd(fn,odir,nsplit=-1,isplit=0,mass=0):
 
     basename = os.path.basename( fn )
 
@@ -77,26 +87,37 @@ def sklimAdd(fn,odir,mass=0):
     newscale1fb = array( 'f', [ 0. ] )
     tree.SetBranchAddress("scale1fb",newscale1fb)
 
-    for i in range(nent):
+    nent = tree.GetEntries()
+
+    lEnt = range(0,nent)
+    lEvts_0 = 0; lEvts_1 = nent 
+    if nsplit != -1:
+        lSplit = slice_it(lEnt,nsplit)
+        for iL,iList in enumerate(lSplit):
+            if iL == isplit:
+                lEvts_0 = int(iList[0])
+                lEvts_1 = int(iList[-1])
+
+    for i in range(lEvts_0,lEvts_1):
 
         if( nent/100 > 0 and i % (1 * nent/100) == 0):
             sys.stdout.write("\r[" + "="*int(20*i/nent) + " " + str(round(100.*i/nent,0)) + "% done here")
             sys.stdout.flush()
 
-         tree.GetEntry(i)
+        tree.GetEntry(i)
 
-         if (tree.AK8Puppijet0_pt > PT_CUT or 
-             tree.AK8Puppijet0_pt_JESUp > PT_CUT or 
-             tree.AK8Puppijet0_pt_JERUp > PT_CUT or 
-             tree.AK8Puppijet0_pt_JESDown > PT_CUT or 
-             tree.AK8Puppijet0_pt_JERDown > PT_CUT or 
-             tree.CA15Puppijet0_pt > PT_CUT or 
-             tree.CA15Puppijet0_pt_JESUp > PT_CUT or 
-             tree.CA15Puppijet0_pt_JERUp > PT_CUT or 
-             tree.CA15Puppijet0_pt_JESDown > PT_CUT or 
-             tree.CA15Puppijet0_pt_JERDown > PT_CUT ) :
-             newscale1fb[0] = tree.scale1fb
-             otree.Fill()   
+        if (tree.AK8Puppijet0_pt > PT_CUT or 
+            tree.AK8Puppijet0_pt_JESUp > PT_CUT or 
+            tree.AK8Puppijet0_pt_JERUp > PT_CUT or 
+            tree.AK8Puppijet0_pt_JESDown > PT_CUT or 
+            tree.AK8Puppijet0_pt_JERDown > PT_CUT or 
+            tree.CA15Puppijet0_pt > PT_CUT or 
+            tree.CA15Puppijet0_pt_JESUp > PT_CUT or 
+            tree.CA15Puppijet0_pt_JERUp > PT_CUT or 
+            tree.CA15Puppijet0_pt_JESDown > PT_CUT or 
+            tree.CA15Puppijet0_pt_JERDown > PT_CUT ) :
+            newscale1fb[0] = tree.scale1fb
+            otree.Fill()   
              
     print "\n"
     otree.AutoSave()
@@ -133,6 +154,8 @@ if __name__ == '__main__':
     parser.add_option('-o','--odir', dest='odir', default = 'skim/',help='directory to write skimmed backon bits', metavar='odir')
     parser.add_option('-s','--sample',dest="sample", default="All",type='string',
                       help="samples to produces")
+    parser.add_option("--isplit",   type=int,            dest='isplit',   default=0,             help='split')
+    parser.add_option("--nsplit",   type=int,            dest='nsplit',   default=-1,             help='number of jobs to split file')
 
 
     (options, args) = parser.parse_args()

@@ -21,11 +21,30 @@ fTCSV = 0.9693
 fLDCSV = 0.1522
 fMDCSV = 0.4941
 fTDCSV = 0.8001
+
 #Pu
 #fpuDir = "root://cmsxrootd.fnal.gov//store/group/lpcbacon/dazsle/zprimebits-v12.07-Pu/hadd/"
 fDataDir = CMSSW+"/src/BaconAnalyzer/Analyzer/data/"
+fpuDir2016 = fDataDir+"pu2016/"
+fpuData2016 = fDataDir+"pileUp_Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.root"
 fpuDir2017 = fDataDir+"pu2017/"
-fpuData = fDataDir+"pileup_Cert_294927-306462_13TeV_PromptReco_Collisions17_withVar.root"
+fpuData2017 = fDataDir+"pileup_Cert_294927-306462_13TeV_PromptReco_Collisions17_withVar.root"
+fpuDir2018 = fDataDir+"pu2018/"
+fpuData2018 = fDataDir+"pileUp_Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.root"
+
+#fpuDir = fpuDir2018
+#fpuData = fpuData2018
+
+fpuDir = fpuDir2016
+fpuData = fpuData2016
+
+def slice_it(li, cols=2):
+    print 'slicing list'
+    start = 0
+    for i in xrange(cols):
+        stop = start + len(li[i::cols])
+        yield li[start:stop]
+        start = stop
 
 # msd correction
 def setupMassCorrection():
@@ -52,9 +71,10 @@ def setupMassCorrection():
 
 def setuph2ddt(ifilename=fDataDir+"GridOutput_v13.root",iddt="Rho2D"):
     f_h2ddt = ROOT.TFile.Open(ifilename)
-    if "Rho2D" in iddt:
-        ltrans_h2ddt = f_h2ddt.Get("Rho2D");
+    if "Rho2D" in iddt or 'h1' in iddt:
+        ltrans_h2ddt = f_h2ddt.Get(iddt);
     else:
+        print('warning !! getting quantile')
         lHTmp= f_h2ddt.Get(iddt);
         ltrans_h2ddt = getDDT(lHTmp,0.05)
     ltrans_h2ddt.SetDirectory(0)
@@ -72,7 +92,7 @@ def getN2DDT(iMass,iPt,ih2ddt):
     return ih2ddt.GetBinContent(lRho,lPt);
 
 # 2016 puweights
-def setuppuw(ifilename=fDataDir+"puWeights_All.root"):
+def setuppuw(ifilename=fDataDir+"puWeights_8X.root"):
     f_pu = ROOT.TFile.Open(ifilename)
     lpuw = f_pu.Get("puw")
     lpuw_up = f_pu.Get("puw_p")
@@ -83,9 +103,9 @@ def setuppuw(ifilename=fDataDir+"puWeights_All.root"):
     f_pu.Close()
     return lpuw,lpuw_up,lpuw_down
 
-# 2017 puweights
-def setuppuw2017(iSample):
-    f_puMC = ROOT.TFile.Open(fpuDir2017+'/'+iSample+'.root')
+# weights
+def setuppuwFromFile(iSample):
+    f_puMC = ROOT.TFile.Open(fpuDir+'/'+iSample+'.root')
     lpuMC= f_puMC.Get("Pu").Clone()
     lpuMC.Scale(1/lpuMC.Integral())
     lpuMC.SetDirectory(0)
@@ -130,7 +150,7 @@ def correctEff(iEff,iX,iY,iType=1,iName=""):
     return lweight,lweightUp,lweightDown
 
 class miniTreeProducer:
-    def __init__(self, isMc, isPu, ofile, otree, ifile, itree, ijet = 'AK8', isample = '', iLumi =1):
+    def __init__(self, isMc, isPu, ofile, otree, ifile, itree, ijet = 'AK8', isample = '', iLumi =1, nsplit=-1,isplit=0):
         self.isMc = isMc
         self.ibase = os.path.basename( ifile)
         self.Pu = False
@@ -153,6 +173,8 @@ class miniTreeProducer:
         self.itree = itree
         self.jet = ijet
         self.corrGEN,self.corrRECO_cen,self.corrRECO_for = setupMassCorrection()
+        self.nsplit = nsplit;
+        self.isplit = isplit;
 
     def correct(self,iEta,iPt,iMass):
         genCorr  = 1.
@@ -164,6 +186,8 @@ class miniTreeProducer:
 
     def runProducer(self,ih2ddt,fmutrig_eff,fmuid_eff,fmuiso_eff):
 
+        self.runNum =  array('i', [-100])
+        self.lumiSec =  array('i', [-100])
         self.Puppijet0_N2 = array('f', [-100.0])
         self.Puppijet0_Tau21 = array('f', [-100.0])
         self.Puppijet0_N2DDT = array('f', [-100.0])
@@ -211,6 +235,8 @@ class miniTreeProducer:
         self.weight = array('f',[-100.0])
 
         # branches we need
+        self.otree.Branch('runNum', self.runNum, 'runNum/I')
+        self.otree.Branch('lumiSec', self.lumiSec, 'lumiSec/I')
         self.otree.Branch('Puppijet0_N2', self.Puppijet0_N2, 'Puppijet0_N2/F')
         self.otree.Branch('Puppijet0_Tau21', self.Puppijet0_Tau21, 'Puppijet0_Tau21/F')
         self.otree.Branch('Puppijet0_N2DDT', self.Puppijet0_N2DDT, 'Puppijet0_N2DDT/F')
@@ -244,7 +270,7 @@ class miniTreeProducer:
 
         if self.Pu:
             print 'loading puweight from file '
-            self.puw,self.puw_up,self.puw_down = setuppuw2017(self.sample)
+            self.puw,self.puw_up,self.puw_down = setuppuwFromFile(self.sample)
 
         self.treeMine = self.f1.Get(self.itree)
         try:
@@ -256,7 +282,17 @@ class miniTreeProducer:
         nent = self.treeMine.GetEntries()
         fcutFormula = ROOT.TTreeFormula("cutFormula",self.cutFormula,self.treeMine)
         print self.cutFormula
-        for i in range(0,nent):
+
+        lEnt = range(0,nent)
+        lEvts_0 = 0; lEvts_1 = nent
+        if self.nsplit != -1:
+            lSplit = slice_it(lEnt,self.nsplit)
+            for iL,iList in enumerate(lSplit):
+                if iL == self.isplit:
+                    lEvts_0 = int(iList[0])
+                    lEvts_1 = int(iList[-1])
+
+        for i in range(lEvts_0,lEvts_1):
 
             self.treeMine.LoadTree(i)
             selected = False
@@ -292,6 +328,8 @@ class miniTreeProducer:
             lConeSize = 0.8;
             if 'CA15' in self.jet: lConeSize = 1.5;
 
+            self.runNum[0] =  getattr(self.treeMine,"runNum")
+            self.lumiSec[0] =  getattr(self.treeMine,"lumiSec")
             self.Puppijet0_N2[0] = lN2
             self.Puppijet0_Tau21[0] = lTau21
             self.Puppijet0_N2DDT[0] = lN2DDT
@@ -504,6 +542,8 @@ def main(options,args):
 
     DataDir = options.idir
     OutDir = options.odir
+    nsplit = options.nsplit
+    isplit = options.isplit
 
     try:
         samples = samplesDict[options.sample]
@@ -513,6 +553,7 @@ def main(options,args):
     except KeyError:
         tags = [[options.sample,0]]
 
+    print('data dir ',fDataDir+options.ddt)
     ftrans_h2ddt = setuph2ddt(fDataDir+options.ddt,options.iddt)
 
     f_mutrig = ROOT.TFile.Open(fDataDir+"/EfficienciesAndSF_RunBtoF_Nov17Nov2017.root", "read")
@@ -540,10 +581,11 @@ def main(options,args):
         for iFile in filesToConvert:
             basename = os.path.basename( iFile )
             oFile =  ROOT.TFile.Open(OutDir+'/'+basename, 'recreate')
+            print OutDir+'/'+basename
             oFile.cd()
             oTree =  ROOT.TTree('otree2', 'otree2')
             print 'IFILE ',iFile
-            prod = miniTreeProducer(options.isMc, options.isPu,oFile,oTree, iFile, options.itree, options.jet, tags[i][0], options.lumi)
+            prod = miniTreeProducer(options.isMc, options.isPu,oFile,oTree, iFile, options.itree, options.jet, tags[i][0], options.lumi, nsplit,isplit)
             prod.runProducer(ftrans_h2ddt,fmutrig_eff,fmuid_eff,fmuiso_eff)
             oFile.cd()
             oFile.Write()
@@ -564,6 +606,9 @@ if __name__ == '__main__':
     parser.add_option('--itree', dest='itree', default='Events', help='itree name')
     parser.add_option('-s','--sample',dest="sample", default="All",type='string', help="samples to produce")
     parser.add_option('--lumi', type = float, dest='lumi',default=1,help="lumi weight")
+    parser.add_option("--isplit",   type=int,            dest='isplit',   default=0,             help='split')
+    parser.add_option("--nsplit",   type=int,            dest='nsplit',   default=-1,             help='number of jobs to split file')
+
     (options, args) = parser.parse_args()
 
     print options

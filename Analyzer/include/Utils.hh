@@ -46,6 +46,7 @@ bool   passTauTightSel        (const baconhep::TTau *tau,std::string iLabel="201
 
 double getVal                 (TH1D*h,double val);
 double getVal2D               (TH2D*h,double val1, double val2);
+double deltaR2                (double iEta, double iPhi, double jEta, double jPhi);
 bool   passVeto               (double iEta,double iPhi,double idR,std::vector<TLorentzVector> &iVetoes);
 void   setupNtuple            (std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals);
 void   setupNtuple            (std::string iHeader,TTree *iTree,int iN,std::vector<double> &iVals,int iHead,std::vector<std::string> &iLabels);

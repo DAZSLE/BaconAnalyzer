@@ -16,6 +16,7 @@ public:
   ~ElectronLoader();
   void reset();
   void setupTree(TTree *iTree);
+  void setupTreeQbert(TTree *iTree);
   void load(int iEvent);
   void selectElectrons(double iRho,double iMet, std::vector<TLorentzVector> &iElectrons);
   std::vector<TElectron*> fLooseElectrons, fTightElectrons, fHEEPElectrons;

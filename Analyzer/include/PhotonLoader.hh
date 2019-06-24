@@ -15,6 +15,7 @@ public:
   ~PhotonLoader();
   void reset();
   void setupTree(TTree *iTree);
+  void setupTreeQbert(TTree *iTree);
   void load(int iEvent);
   void selectPhotons(double iRho,std::vector<TLorentzVector> &iVetoes,std::vector<TLorentzVector> &iPhotons);
 

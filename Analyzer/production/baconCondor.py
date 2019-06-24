@@ -186,6 +186,15 @@ if __name__ == "__main__":
     for arg_c in range(1, max(analyzer_args.keys())):
         if arg_c not in analyzer_args.keys(): sys.exit("ERROR -- missing argument %d" % arg_c)
 
+    # check njobs
+    if len(files) < njobs:
+        njobs = len(files)
+    if nfiles_per_job > 1:
+        njobs = njobs//nfiles_per_job
+        if njobs==0 and len(files) > 0:
+            njobs = 1
+            options.nfiles_per_job = len(files)
+
     print 'running executable -- (default call) \n\t%s' % exec_line
     job_exec = 'python baconSubmit.py --eosoutdir %s --list %s --njobs-per-file %s --nfiles-per-job %s %s '%(options.eosoutdir,
                                                                                                              options.list.split('/')[-1],
@@ -194,10 +203,6 @@ if __name__ == "__main__":
                                                                                                              exec_line)
     job_exec+= '--index ${1}'
 
-    if len(files) < njobs:
-        njobs = len(files)
-    if nfiles_per_job > 1:
-        njobs = njobs/nfiles_per_job
     if not options.dryRun and njobs > 0:
         print 'Writing 1 Submission Script for %s to %s (submit after with --monitor sub)' % (njobs, options.outdir)
         print 'with arg ',job_exec
