@@ -1,0 +1,1 @@
+root://cmseos.fnal.gov//eos/uscms/store/group/lpchbb/16/SingleMuonRun2017B_17Nov2017_v1_missinglumis_9X/SingleMuon/CRAB3/190622_003627/0000/Output_1.root

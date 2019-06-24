@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 eoscmd="eos root://cmseos.fnal.gov/"
-prefix="/store/group/lpcbacon/"
+prefix="/store/group/${2}"
 
 if [[ $@ < 1 ]]; then
   echo "Usage: $0 [BaconProd number]"
