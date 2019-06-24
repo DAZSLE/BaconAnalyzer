@@ -22,7 +22,7 @@ samplesDict['JetHTrereco_8X'] = {
     'JetHTRun2016H_07Aug17_v1_8X_withPF': 'rereco16',
     }
 samplesDict['JetHTrereco_9X'] = {
-    #'JetHTRun2017B_17Nov2017_v1': 'rereco17',
+    'JetHTRun2017B_17Nov2017_v1': 'rereco17',
     'JetHTRun2017C_17Nov2017_v1': 'rereco17',
     'JetHTRun2017D_17Nov2017_v1': 'rereco17',
     'JetHTRun2017E_17Nov2017_v1': 'rereco17',
@@ -57,9 +57,9 @@ samplesDict['SingleMuonrereco_9X'] = {
     }
 samplesDict['SingleMuonprompt_10X'] = {
     'SingleMuonRun2018A_17Sep2018_v2_v2': 'prompt18',
-    #'SingleMuonRun2018B_17Sep2018_v1': 'prompt18',
-    #'SingleMuonRun2018C_17Sep2018_v1': 'prompt18',
-    #'SingleMuonRun2018D_PromptReco_v2_v3': 'prompt18',
+    'SingleMuonRun2018B_17Sep2018_v1': 'prompt18',
+    'SingleMuonRun2018C_17Sep2018_v1': 'prompt18',
+    'SingleMuonRun2018D_PromptReco_v2_v3': 'prompt18',
     }
 
 samplesDict['Hcc_9X'] = {
@@ -97,7 +97,7 @@ samplesDict['Hcc_10X'] = {
 }
 
 samplesDict['Hbb_8X'] = {
-    'ttHTobb_M125_13TeV_powheg_pythia8_8X': 'mc',
+    #'ttHTobb_M125_13TeV_powheg_pythia8_8X': 'mc',
     'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_8X': 'mc',
     'VBFHToBB_M_125_13TeV_powheg_pythia8_weightfix_ext_8X': 'mc',
     'WminusH_HToBB_WToQQ_M125_13TeV_powheg_pythia8_8X': 'mc',
@@ -140,12 +140,12 @@ samplesDict['Hbb_10X'] = {
     }
 
 samplesDict['QCD_8X_withPF'] = {
-    #'QCD_HT1000to1500_13TeV_8X_withPF': 'mc',
+    'QCD_HT1000to1500_13TeV_8X_withPF': 'mc',
     'QCD_HT700to1000_13TeV_8X_withPF': 'mc',
-    #'QCD_HT200to300_13TeV_8X_withPF': 'mc',
-    #'QCD_HT1500to2000_13TeV_8X_withPF': 'mc',
-    #'QCD_HT2000toInf_13TeV_8X_withPF': 'mc',
-    #'QCD_HT300to500_13TeV_8X_withPF': 'mc',
+    'QCD_HT200to300_13TeV_8X_withPF': 'mc',
+    'QCD_HT1500to2000_13TeV_8X_withPF': 'mc',
+    'QCD_HT2000toInf_13TeV_8X_withPF': 'mc',
+    'QCD_HT300to500_13TeV_8X_withPF': 'mc',
     'QCD_HT500to700_13TeV_8X_withPF': 'mc',
     }
 samplesDict['QCD_9X'] = {       
@@ -412,6 +412,8 @@ if __name__ == '__main__':
             labelOut = label.replace('_8X','')
             if '_withPF' in options.sample:
                 labelOut = label.replace('_withPF','')
+        elif '_9X' in options.sample:
+            labelOut = label.replace('_9X','')
         else:
             labelOut = label
         exec_me('%s mkdir -p /eos/uscms/%s/%s/%s'%(EOS,eosOutDir,analysisDir,labelOut))
