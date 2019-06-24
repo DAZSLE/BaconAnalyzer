@@ -217,7 +217,7 @@ if __name__ == "__main__":
         #filesTransfer = [x.replace('CMSSW',cmssw_base) for x in filesTransfer]
         # this is a temp fix - 24/06/2019
         # so that all guys submit from my dir
-        crisdir = '/uscms_data/d3/cmantill/bacon/baconbits/CMSSW_10_2_6/'
+        crisdir = '/uscms_data/d3/cmantill/bacon/baconbits/CMSSW_10_2_6'
         filesTransfer = [x.replace('CMSSW',crisdir) for x in filesTransfer]
         arguments = []
         write_job(job_exec, options.outdir, analyzer)
