@@ -70,7 +70,7 @@ int main( int argc, char **argv ) {
   const int         iSplit       = atoi(argv[6]);
   const int         maxSplit     = atoi(argv[7]);
 
-  std::cout << "args " << argv[1] << " " << argv[2] << " "<< argv[3] << " " << argv[4] << " " << argv[5] << std::endl;
+  std::cout << "runZprime args " << argv[1] << " " << argv[2] << " "<< argv[3] << " " << argv[4] << " " << argv[5] << std::endl;
   std::string lJson="${CMSSW_BASE}/src/BaconAnalyzer/Analyzer/data/";
   lJson.append(lJSON);
   const std::string cmssw_base = getenv("CMSSW_BASE");
@@ -81,7 +81,6 @@ int main( int argc, char **argv ) {
   }
 
   fRangeMap = new RunLumiRangeMap();
-  std::cout << "json " << lJson << std::endl;
   if(lJSON.size() > 0) fRangeMap->AddJSONFile(lJson.c_str());
 
   bool isData;
@@ -139,12 +138,13 @@ int main( int argc, char **argv ) {
   int minEvent = iSplit * minEventsPerJob;
   int maxEvent = (iSplit+1) * minEventsPerJob;
   if (iSplit + 1 == maxSplit) maxEvent = neventsTotal;
-  std::cout << neventsTotal << " total events" << std::endl;
-  std::cout << iSplit << " iSplit " << std::endl;
-  std::cout << maxSplit << " maxSplit " << std::endl;
-  std::cout << minEvent << " min event" << std::endl;
-  std::cout << maxEvent << " max event" << std::endl;  
+  std::cout << neventsTotal << " total events, ";
+  std::cout << iSplit << " iSplit, ";
+  std::cout << maxSplit << " maxSplit, ";
+  std::cout << minEvent << " min event ";
+  std::cout << maxEvent << " max event " << std::endl;
   for(int i0 = minEvent; i0 < maxEvent; i0++) {
+    if(neventstest==0) std::cout << "first iteration " << std::endl;
     if (i0%10000 == 0) std::cout << i0 << " events processed " << std::endl;
 
     fEvt->load(i0);
@@ -297,8 +297,7 @@ int main( int argc, char **argv ) {
     lOut->Fill();
     neventstest++;
   }
-  std::cout << neventstest << std::endl;
-  std::cout << lTree->GetEntriesFast() << std::endl;
+  std::cout << neventstest << " out of " << lTree->GetEntriesFast() << std::endl;
   lFile->cd();
   lOut->Write();  
   NEvents->Write();

@@ -45,6 +45,11 @@ void MuonLoader::setupTree(TTree *iTree) {
   fTree->Branch("nmuHighPt" ,&fNMuonsHighPt,"fNMuonsHighPt/I");
   setupNtuple("vmuoLoose"   ,iTree,fN,fVars);       // add leading 2 muons: pt,eta,phi,mass (2*4=8)
 }
+void MuonLoader::setupTreeQbert(TTree *iTree) {
+  reset();
+  fTree = iTree;
+  setupNtuple  ("mu",iTree,fN,fVars);
+}
 void MuonLoader::load(int iEvent) { 
   fMuons  ->Clear();
   fMuonBr ->GetEntry(iEvent);

@@ -10,10 +10,10 @@ JetLoader::JetLoader(TTree *iTree, bool iData, std::string iLabel) {
   iTree->SetBranchAddress("AK4Puppi",       &fJets);
   fJetBr = iTree->GetBranch("AK4Puppi");
 
-  fN = 4; // number of jets to save
-  fNV = 3; // max number of V jets to consider for dR anti-matching
+  fN = 6; // number of jets to save
+  fNV = 4; // max number of V jets to consider for dR anti-matching
   fNVars = 3; // pt, eta, phi
-  fNOtherVars = 18; // Mass, b-tag, qgid, dR, dPhi, pt_old, pt_JESUp, pt_JESDown, pt_JERUp, pt_JERDown + 8 DeepCSV vars
+  fNOtherVars = 20; // Mass, b-tag, qgid, dR, dPhi, pt_old, pt_JESUp, pt_JESDown, pt_JERUp, pt_JERDown + 8 DeepCSV vars + flavors
 
   fJEC = new JECLoader(iData,iLabel,"AK4PFPuppi");
   r = new TRandom3(1988);
@@ -211,6 +211,7 @@ void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<do
     std::stringstream pSMass,pSCSV,pSQGID,pSdR,pSdP,pScen,pSjesUp,pSjesDown,pSjerUp,pSjerDown;
     std::stringstream pSDeepCSVb,pSDeepCSVc,pSDeepCSVl,pSDeepCSVbb;
     std::stringstream pSDeepCMVAb,pSDeepCMVAc,pSDeepCMVAl,pSDeepCMVAbb;
+    std::stringstream pSpartonF,pShadronF;
     pSMass      << iHeader << i0 << "_mass";
     pSCSV       << iHeader << i0 << "_csv";
     pSQGID      << iHeader << i0 << "_qgid";
@@ -229,6 +230,8 @@ void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<do
     pSDeepCMVAc << iHeader << i0 << "_deepcmvac";
     pSDeepCMVAl << iHeader << i0 << "_deepcmval";
     pSDeepCMVAbb<< iHeader << i0 << "_deepcmvabb";
+    pSpartonF   << iHeader << i0 << "_partonFlavor";
+    pShadronF   << iHeader << i0 << "_hadronFlavor";
     iTree->Branch(pSMass     .str().c_str() ,&iVals[lBase+0], (pSMass       .str()+"/D").c_str());
     iTree->Branch(pSCSV      .str().c_str() ,&iVals[lBase+1], (pSCSV        .str()+"/D").c_str());
     iTree->Branch(pSQGID     .str().c_str() ,&iVals[lBase+2], (pSQGID       .str()+"/D").c_str());
@@ -248,6 +251,9 @@ void JetLoader::addOthers(std::string iHeader,TTree *iTree,int iN,std::vector<do
     iTree->Branch(pSDeepCMVAc .str().c_str() ,&iVals[lBase+15],(pSDeepCMVAc .str()+"/D").c_str());
     iTree->Branch(pSDeepCMVAl .str().c_str() ,&iVals[lBase+16],(pSDeepCMVAl .str()+"/D").c_str());
     iTree->Branch(pSDeepCMVAbb.str().c_str() ,&iVals[lBase+17],(pSDeepCMVAbb.str()+"/D").c_str());
+
+    iTree->Branch(pSpartonF   .str().c_str() ,&iVals[lBase+18],(pSpartonF   .str()+"/I").c_str());
+    iTree->Branch(pShadronF   .str().c_str() ,&iVals[lBase+19],(pShadronF   .str()+"/I").c_str());
   }
 }
 void JetLoader::load(int iEvent) { 
@@ -365,7 +371,7 @@ void JetLoader::selectJets(std::vector<TLorentzVector> &iElectrons, std::vector<
 	
     if(jetCorrPtSmear  <=  30) continue;
     if(fabs(pJet->eta) > 2.5 && fabs(pJet->eta) < 4.5) lNFwdPt30++;
-    if(fabs(pJet->eta) >= 2.5) continue;
+    //if(fabs(pJet->eta) >= 2.5) continue;
     if(!passJetTightSel(pJet,fYear)) continue;
     x1List.push_back(x1);
     addJet(pJet,fTightJets);
@@ -506,5 +512,10 @@ void JetLoader::fillOthers(int iN,std::vector<TJet*> &iObjects,std::vector<doubl
     iVals[lBase+i0*fNOtherVars+15] = iObjects[i0]->deepcmvac;
     iVals[lBase+i0*fNOtherVars+16] = iObjects[i0]->deepcmval;
     iVals[lBase+i0*fNOtherVars+17] = iObjects[i0]->deepcmvabb;
+    
+    // flavour
+    iVals[lBase+i0*fNOtherVars+18] = iObjects[i0]->partonFlavor;
+    iVals[lBase+i0*fNOtherVars+19] = iObjects[i0]->hadronFlavor;
+
   }
 }

@@ -757,3 +757,10 @@ double getVal2D(TH2D*h,double val1, double val2) {
   val1 = (val1 < h->GetXaxis()->GetXmin()) ? h->GetXaxis()->GetBinCenter(1) : val1;
   return h->GetBinContent(h->FindBin(val1,val2));
 }
+//--------------------------------------------------------------------------------------------------
+double deltaR2(double iEta, double iPhi, double jEta, double jPhi) {
+  double pDEta = iEta - jEta;
+  double pDPhi = iPhi - jPhi;
+  if(fabs(pDPhi) > 2.*TMath::Pi()-fabs(pDPhi)) pDPhi =  2.*TMath::Pi()-fabs(pDPhi);
+  return pDPhi*pDPhi + pDEta*pDEta;
+}

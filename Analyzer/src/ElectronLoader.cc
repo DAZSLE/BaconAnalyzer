@@ -41,6 +41,11 @@ void ElectronLoader::setupTree(TTree *iTree) {
   fTree->Branch("neleHEEP"    ,&fNElectronsHEEP  ,"fNElectronsHEEP/I");
   setupNtuple  ("veleLoose"   ,iTree,fN,fVars);        // 2 electrons ele*_pt,ele*_eta,ele*_phi (2*4=8)
 }
+void ElectronLoader::setupTreeQbert(TTree *iTree) {
+  reset();
+  fTree = iTree;
+  setupNtuple  ("ele",iTree,fN,fVars);
+}
 void ElectronLoader::load(int iEvent) { 
   fElectrons  ->Clear();
   fElectronBr ->GetEntry(iEvent);

@@ -31,6 +31,11 @@ void PhotonLoader::setupTree(TTree *iTree) {
   fTree->Branch("ispho0Tight", &fispho0Tight,   "fispho0Tight/I");
   setupNtuple("vpho",iTree,fN,fVars);                                 // pho0_pt,_eta,_phi (1*3=3)
 }
+void PhotonLoader::setupTreeQbert(TTree *iTree) {
+  reset();
+  fTree = iTree;
+  setupNtuple("vpho",iTree,fN,fVars);        
+}
 void PhotonLoader::load(int iEvent) { 
   fPhotons  ->Clear();
   fPhotonBr ->GetEntry(iEvent);
