@@ -139,6 +139,11 @@ samplesDict['Hbb_10X'] = {
     'ZH_HToBB_ZToQQ_M125_13TeV_powheg_pythia8_10X': 'mc',
     }
 
+samplesDict['H_8X'] = {
+    'GluGluHToTauTau_M125_13TeV_powheg_pythia8_withPF_8X': 'mc',
+    'GluGluHToWWToLNuQQ_M125_13TeV_powheg_JHUGenV628_pythia8_8X_withPF': 'mc',
+}
+
 samplesDict['QCD_8X_withPF'] = {
     'QCD_HT1000to1500_13TeV_8X_withPF': 'mc',
     'QCD_HT700to1000_13TeV_8X_withPF': 'mc',
@@ -235,13 +240,13 @@ samplesDict['TT_9X'] = {
 samplesDict['TT_10X'] = {
     'TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_10X': 'mc',
     'TTToHadronic_TuneCP5_13TeV-powheg-pythia8_10X': 'mc',
-    'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8_PS_10X': 'ps',
+    'TTToSemiLeptonic_TuneCP5_13TeV_powheg_pythia8_PS_10X': 'mc',
 }
 
 samplesDict['VV_8X'] = {
     'WW_13TeV_pythia8_8X': 'mc',
     'WZ_13TeV_pythia8_8X': 'mc',
-    'ZZ_13TeV_pythia8_8X': 'mc',
+    #'ZZ_13TeV_pythia8_8X': 'mc',
 }
 samplesDict['VV_9X'] = {
     'WW_TuneCP5_13TeV_pythia8': 'mc',
@@ -300,45 +305,70 @@ samplesDict['DYLL_10X'] = {
     'DYJetsToLL_M_50_TuneCP5_13TeV_10X': 'mc',
     }
 
+samplesDict['BulkGravToWW_8X'] = {
+    'BulkGravToWW_narrow_M_1200_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_1400_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_1600_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_1800_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_2000_13TeV_madgraph_ext_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_2000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_2500_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_3000_13TeV_madgraph_ext_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_3000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_3500_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_4000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravToWW_narrow_M_4500_13TeV_madgraph_withPF_8X': 'mc',
+}
+
+samplesDict['BulkGravTohh_8X'] = {
+    'BulkGravTohhTohVVhbb_narrow_M_1000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_1200_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_1400_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_1600_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_1800_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_2000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_2500_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_3000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_3500_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_4000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_4500_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_800_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohVVhbb_narrow_M_900_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_1000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_1200_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_1400_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_1600_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_1800_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_2000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_2500_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_3000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_3500_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_4000_13TeV_madgraph_withPF_8X': 'mc',
+    'BulkGravTohhTohtatahbb_narrow_M_4500_13TeV_madgraph_withPF_8X': 'mc',
+}
+
 samplesDict['VectorDiJet1Jet_9X'] = {
     'VectorDiJet1Jet_madgraph_Mphi100Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi115Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi125Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi150Mchi3000_13TeV_withPF': 'mc',
-    'VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV_withPF': 'mc',
+    #'VectorDiJet1Jet_madgraph_Mphi175Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi200Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi225Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi250Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi275Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi300Mchi3000_13TeV_withPF': 'mc',
     'VectorDiJet1Jet_madgraph_Mphi50Mchi3000_13TeV_withPF': 'mc',
-    #'VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV_withPF': 'mc',
+    'VectorDiJet1Jet_madgraph_Mphi75Mchi3000_13TeV_withPF': 'mc',
 }
 
-samplesDict['HToWW_9X'] = {
+samplesDict['HToWW_8X'] = {
     'GluGluHToWWToLNuQQ_M125_13TeV_powheg_JHUGenV628_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M200_13TeV_powheg_JHUGenV628_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M2500_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M250_13TeV_powheg_JHUGenV628_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M3000_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M300_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M350_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M4000_13TeV_powheg_JHUgenv714_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M400_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M450_13TeV_powheg_JHUgen_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M5000_13TeV_powheg_JHUgenv714_pythia8_8X_withPF': 'mc',
-    #'GluGluHToWWToLNuQQ_M500_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M550_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M600_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M650_13TeV_powheg_JHUgen_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M1000_13TeV_powheg_JHUgen_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M700_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M800_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M900_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M1500_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
-    'GluGluHToWWToLNuQQ_M2000_13TeV_powheg_JHUgenv698_pythia8_8X_withPF': 'mc',
 }
 
+samplesDict['HToTauTau_8X'] = {
+    'GluGluHToWWToLNuQQ_M125_13TeV_powheg_JHUGenV628_pythia8_8X_withPF': 'mc',
+}
 def exec_me(command, dryRun=False):
     print command
     if not dryRun:
