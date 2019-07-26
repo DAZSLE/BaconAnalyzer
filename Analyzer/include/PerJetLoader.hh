@@ -62,7 +62,8 @@ public:
   const double CSVM = 0.8484;
   TRandom3* r;
 
-  bool aktSort = true; 
+  //bool aktSort = true; 
+  bool aktSort = false;
 
   TClonesArray *fVJets;
   TClonesArray *fPFs;

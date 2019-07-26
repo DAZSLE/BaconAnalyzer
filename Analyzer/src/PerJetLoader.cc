@@ -179,6 +179,12 @@ void PerJetLoader::setupTreeQbert(TTree *iTree, std::string iJetLabel) {
   fSingletons["nResonanceProngs"] = 0;
   fSingletons["resonanceType"] = -1;
   fSingletons["decayType"] = -1;
+  fSingletons["decayId1_0"] = -1;
+  fSingletons["decayId1_1"] = -1;
+  fSingletons["decayId2_0"] = -1;
+  fSingletons["decayId2_1"] = -1;
+  fSingletons["decayId2_3"] = -1;
+  fSingletons["decayId2_4"] = -1;
   fSingletons["nB"] = 0; 
   fSingletons["nC"] = 0;
   fSingletons["partonPt"] = 0;
@@ -396,7 +402,6 @@ void PerJetLoader::selectVJets(std::vector<TLorentzVector> &iElectrons,
     if(jetCorrPtSmear   <=  200)                                           continue;
     if(fabs(pVJet->eta) >=  2.5)                                           continue;
     if(!passJetTightSel(pVJet,fYear))                                      continue;
-
     addJet(pVJet,fLooseVJets);
     lCount++;
     x1List.push_back(x1);
@@ -766,6 +771,8 @@ void PerJetLoader::fillVJet(int iN,
         if(abs(pQ1->pdgId) == 23 || abs(pQ2->pdgId) == 23) decay_id = 6;
         if(abs(pQ1->pdgId) == 24 || abs(pQ2->pdgId) == 24) decay_id = 7;
 
+	fSingletons["decayId1_0"] = abs(pQ1->pdgId);
+	fSingletons["decayId1_1"] = abs(pQ2->pdgId);
 
 	if(abs(pQ1->pdgId) == 24 || abs(pQ1->pdgId) == 23 || abs(pQ1->pdgId) == 15) {
 	  TGenParticle *pD1 = 0, *pD2 = 0, *pD3 = 0, *pD4 = 0;
@@ -860,6 +867,10 @@ void PerJetLoader::fillVJet(int iN,
 	  fSingletons["glepsizeR"] = size;
 	  fSingletons["glepsizeJ"] = sizej;
 	  fSingletons["glepdecay"] = decay_id;
+	  fSingletons["decayId2_0"] = abs(pD1->pdgId);
+	  fSingletons["decayId2_1"] = abs(pD2->pdgId);
+	  fSingletons["decayId2_3"] = abs(pD3->pdgId);
+	  fSingletons["decayId2_4"] = abs(pD4->pdgId);
 
           if ((size > 8 * dR2) && (sizej > 8 * dR2)){
             continue;
@@ -929,6 +940,9 @@ void PerJetLoader::fillVJet(int iN,
           continue; 
 	}
 
+	fSingletons["decayId1_0"] = abs(pQ1->pdgId);
+	fSingletons["decayId1_1"] = abs(pQ2->pdgId);
+
 	if(abs(pQ1->pdgId) <= 1 || abs(pQ2->pdgId) <= 2) decay_id = 1;
 	if((abs(pQ1->pdgId) > 2 && abs(pQ1->pdgId) <= 4) || (abs(pQ2->pdgId) > 2 && abs(pQ2->pdgId) <= 4)) decay_id = 2;
         if((abs(pQ1->pdgId) > 4 && abs(pQ1->pdgId) <= 6) || (abs(pQ2->pdgId) > 4 && abs(pQ2->pdgId) <= 6)) decay_id = 3;
@@ -936,6 +950,11 @@ void PerJetLoader::fillVJet(int iN,
         if(abs(pQ1->pdgId) == 21 || abs(pQ2->pdgId) == 21) decay_id = 5;
 	if(abs(pQ1->pdgId) == 23 || abs(pQ2->pdgId) == 23) decay_id = 6;
 	if(abs(pQ1->pdgId) == 24 || abs(pQ2->pdgId) == 24) decay_id = 7;
+
+	fSingletons["decayId2_0"] = abs(pD1->pdgId);
+	fSingletons["decayId2_1"] = abs(pD2->pdgId);
+	fSingletons["decayId2_3"] = abs(pD3->pdgId);
+	fSingletons["decayId2_4"] = abs(pD4->pdgId);
 
         // now calculate the size 
         double size = 0; 
@@ -1095,7 +1114,7 @@ void PerJetLoader::fillVJet(int iN,
     fnVtxFlavor     = iObjects[0]->vtxFlavor;
     fnVtxFlavInfo   = iObjects[0]->vtxFlavInfo;
 
-    if(jetCorrPtSmear <=  400 && pAddJet->mass_sd0 <= 40) continue;
+    if(jetCorrPtSmear <=  400 || pAddJet->mass_sd0 <= 10) continue;
 
     fTree->Fill(); 
 
